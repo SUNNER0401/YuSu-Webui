@@ -28,6 +28,9 @@ import ServerPowerOperations from '@/views/Operations/ServerPowerOperations';
 import Certificates from '@/views/SecurityAndAccess/Certificates';
 import VirtualMedia from '@/views/Operations/VirtualMedia';
 import Power from '@/views/ResourceManagement/Power';
+
+import FanSpeed from '@/views/Operations/FanSpeed';
+
 import i18n from '@/i18n';
 
 const routes = [
@@ -188,6 +191,14 @@ const routes = [
         component: FactoryReset,
         meta: {
           title: i18n.t('appPageTitle.factoryReset'),
+        },
+      },
+      {
+        path: '/operations/fan-speed',
+        name: 'fan-speed',
+        component: FanSpeed,
+        meta: {
+          title: i18n.t('appPageTitle.fanSpeed'),
         },
       },
       {
