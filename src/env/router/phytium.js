@@ -30,7 +30,7 @@ import VirtualMedia from '@/views/Operations/VirtualMedia';
 import Power from '@/views/ResourceManagement/Power';
 
 import FanSpeed from '@/views/Operations/FanSpeed';
-
+import AlarmSetting from '@/views/Settings/AlarmSetting';
 import i18n from '@/i18n';
 
 const routes = [
@@ -231,6 +231,14 @@ const routes = [
         component: PowerRestorePolicy,
         meta: {
           title: i18n.t('appPageTitle.powerRestorePolicy'),
+        },
+      },
+      {
+        path: '/settings/alarm-setting',
+        name: 'alarm-setting',
+        component: AlarmSetting,
+        meta: {
+          title: i18n.t('appPageTitle.alarmSetting'),
         },
       },
       {
