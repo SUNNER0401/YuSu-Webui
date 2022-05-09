@@ -192,6 +192,24 @@
                 </b-form-invalid-feedback>
               </input-password-toggle>
             </b-form-group>
+            <b-form-group
+              :label="$t('pageUserManagement.modal.maxDaysExpired')"
+              label-for="max-days-expired"
+            >
+              <b-form-input
+                id="max-days-expired"
+                v-model="form.maxDaysExpired"
+                data-test-id="userManagement-input-maxDaysExpired"
+                :state="getValidationState($v.form.maxDaysExpired)"
+                class="form-control-with-button"
+                @input="$v.form.maxDaysExpired.$touch()"
+              />
+              <b-form-invalid-feedback role="alert">
+                <template v-if="!$v.form.maxDaysExpired.numeric">
+                  {{ $t('global.form.invalidFormat') }}
+                </template>
+              </b-form-invalid-feedback>
+            </b-form-group>
           </b-col>
         </b-row>
       </b-container>
@@ -230,6 +248,7 @@ import {
   sameAs,
   helpers,
   requiredIf,
+  numeric,
 } from 'vuelidate/lib/validators';
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin.js';
 import InputPasswordToggle from '@/components/Global/InputPasswordToggle';
@@ -258,6 +277,7 @@ export default {
         password: '',
         passwordConfirmation: '',
         manualUnlock: false,
+        maxDaysExpired: '',
       },
     };
   },
@@ -282,6 +302,7 @@ export default {
       this.form.username = value.username;
       this.form.status = value.Enabled;
       this.form.privilege = value.privilege;
+      this.form.maxDaysExpired = value.PasswordExpirationDays;
     },
   },
   validations() {
@@ -312,6 +333,9 @@ export default {
           sameAsPassword: sameAs('password'),
         },
         manualUnlock: {},
+        maxDaysExpired: {
+          numeric,
+        },
       },
     };
   },
@@ -326,6 +350,7 @@ export default {
         userData.status = this.form.status;
         userData.privilege = this.form.privilege;
         userData.password = this.form.password;
+        userData.maxdaysexpired = this.form.maxDaysExpired;
       } else {
         if (this.$v.$invalid) return;
         userData.originalUsername = this.originalUsername;
@@ -341,6 +366,9 @@ export default {
         if (this.$v.form.password.$dirty) {
           userData.password = this.form.password;
         }
+        if (this.$v.form.maxDaysExpired.$dirty) {
+          userData.maxdaysexpired = this.form.maxDaysExpired;
+        }
         if (this.$v.form.manualUnlock.$dirty) {
           // If form manualUnlock control $dirty then
           // set user Locked property to false
@@ -351,7 +379,6 @@ export default {
           return;
         }
       }
-
       this.$emit('ok', { isNewUser: this.newUser, userData });
       this.closeModal();
     },
@@ -367,6 +394,7 @@ export default {
       this.form.privilege = null;
       this.form.password = '';
       this.form.passwordConfirmation = '';
+      this.form.maxDaysExpired = '';
       this.$v.$reset();
       this.$emit('hidden');
     },

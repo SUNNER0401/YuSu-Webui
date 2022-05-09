@@ -172,6 +172,10 @@ export default {
           key: 'status',
           label: this.$t('pageUserManagement.table.status'),
         },
+        // {
+        //   key: 'maxDaysExpired',
+        //   label: this.$t('pageUserManagement.table.maxDaysExpired'),
+        // },
         {
           key: 'actions',
           label: '',
@@ -212,6 +216,7 @@ export default {
             : user.Enabled
             ? 'Enabled'
             : 'Disabled',
+          // maxDaysExpired:user.MaxDaysExpired,
           actions: [
             {
               value: 'edit',

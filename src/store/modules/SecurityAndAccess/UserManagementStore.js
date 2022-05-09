@@ -97,12 +97,16 @@ const UserManagementStore = {
         })
         .catch((error) => console.log(error));
     },
-    async createUser({ dispatch }, { username, password, privilege, status }) {
+    async createUser(
+      { dispatch },
+      { username, password, privilege, status, maxdaysexpired }
+    ) {
       const data = {
         UserName: username,
         Password: password,
         RoleId: privilege,
         Enabled: status,
+        PasswordExpirationDays: +maxdaysexpired,
       };
       return await api
         .post('/redfish/v1/AccountService/Accounts', data)
@@ -122,7 +126,15 @@ const UserManagementStore = {
     },
     async updateUser(
       { dispatch },
-      { originalUsername, username, password, privilege, status, locked }
+      {
+        originalUsername,
+        username,
+        password,
+        privilege,
+        status,
+        locked,
+        maxdaysexpired,
+      }
     ) {
       const data = {};
       if (username) data.UserName = username;
@@ -130,6 +142,7 @@ const UserManagementStore = {
       if (privilege) data.RoleId = privilege;
       if (status !== undefined) data.Enabled = status;
       if (locked !== undefined) data.Locked = locked;
+      if (maxdaysexpired) data.PasswordExpirationDays = +maxdaysexpired;
       return await api
         .patch(`/redfish/v1/AccountService/Accounts/${originalUsername}`, data)
         .then(() => dispatch('getUsers'))
