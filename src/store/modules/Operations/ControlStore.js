@@ -15,6 +15,9 @@ const checkForServerStatus = function (serverStatus) {
       resolve();
       unwatch();
     }, 300000 /*5mins*/);
+    const timer2 = setInterval(() => {
+      this.dispatch('global/getSystemInfo');
+    }, 1000);
     const unwatch = this.watch(
       (state) => state.global.serverStatus,
       (value) => {
@@ -22,6 +25,7 @@ const checkForServerStatus = function (serverStatus) {
           resolve();
           unwatch();
           clearTimeout(timer);
+          clearInterval(timer2);
         }
       }
     );
