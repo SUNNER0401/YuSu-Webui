@@ -55,14 +55,19 @@ export default {
   mixins: [LoadingBarMixin],
   data() {
     return {
-      showDumps: process.env.VUE_APP_ENV_NAME === 'ibm',
+      showDumps: process.env.VUE_APP_ENV_NAME !== 'phytium',
     };
   },
   created() {
     this.startLoader();
-    const dumpsPromise = new Promise((resolve) => {
-      this.$root.$on('overview-dumps-complete', () => resolve());
-    });
+    const dumpsPromise =
+      process.env.VUE_APP_ENV_NAME !== 'phytium'
+        ? new Promise((resolve) => {
+            this.$root.$on('overview-dumps-complete', () => resolve());
+          })
+        : new Promise((resolve) => {
+            resolve();
+          });
     const eventsPromise = new Promise((resolve) => {
       this.$root.$on('overview-events-complete', () => resolve());
     });
