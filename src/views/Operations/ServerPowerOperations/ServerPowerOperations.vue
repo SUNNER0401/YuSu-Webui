@@ -77,6 +77,9 @@
               {{ $t('pageServerPowerOperations.powerOn') }}
             </b-button>
           </template>
+          <template v-else-if="serverStatus === 'unreachable'">
+            <p>{{ serverStatus }}</p>
+          </template>
           <template v-else>
             <!-- Reboot server options -->
             <b-form novalidate class="mb-5" @submit.prevent="rebootServer">
