@@ -138,7 +138,11 @@
                   <dl>
                     <!-- Modified date -->
                     <dt>{{ $t('pageEventLogs.table.modifiedDate') }}:</dt>
-                    <dd v-if="item.modifiedDate">
+                    <dd
+                      v-if="
+                        item.modifiedDate && item.modifiedDate != 'Invalid Date'
+                      "
+                    >
                       {{ item.modifiedDate | formatDate }}
                       {{ item.modifiedDate | formatTime }}
                     </dd>
@@ -170,11 +174,13 @@
           </template>
 
           <!-- Status column -->
+          <!-- Close this button temporary -->
           <template #cell(status)="row">
             <b-form-checkbox
               v-model="row.item.status"
               name="switch"
               switch
+              disabled
               @change="changelogStatus(row.item)"
             >
               <span v-if="row.item.status">
