@@ -1,10 +1,17 @@
 <template>
-  <b-container fluid="xl">
-    <page-title class="mb-4" :description="$t('pageSerialOverLan.subTitle')" />
+  <b-container fluid>
+    <b-row>
+      <b-col>
+        <page-title
+          class="mb-4"
+          :description="$t('pageSerialOverLan.subTitle')"
+        />
 
-    <page-section class="mb-0">
-      <serial-over-lan-console :is-full-window="false" />
-    </page-section>
+        <page-section class="mb-0">
+          <serial-over-lan-console :is-full-window="false" />
+        </page-section>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 

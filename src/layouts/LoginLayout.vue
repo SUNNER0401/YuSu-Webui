@@ -1,38 +1,56 @@
 <template>
-  <main>
-    <div class="login-container">
-      <div class="login-main">
-        <div>
-          <div class="login-brand mb-5">
+  <transition
+    name="animate__animated animate__bounce"
+    leave-active-class="animate__fadeOut"
+  >
+    <main>
+      <div class="login-container">
+        <div class="login-main">
+          <div>
+            <transition-group
+              appear
+              name="animate__animated animate__bounce"
+              enter-active-class="animate__slideInDown"
+            >
+              <div key="1" class="login-brand mb-5">
+                <img
+                  width="353px"
+                  src="@/env/assets/images/phytium-logo.png"
+                  :alt="altLogo"
+                />
+              </div>
+              <h1
+                v-if="customizableGuiName"
+                key="2"
+                class="customizableGuiName h3 mb-5"
+              >
+                {{ customizableGuiName }}
+              </h1>
+            </transition-group>
+            <transition
+              appear
+              name="animate__animated animate__bounce"
+              enter-active-class="animate__fadeInUp"
+            >
+              <router-view class="login=form form-background" />
+            </transition>
+          </div>
+          <div class="two-dimension">
             <img
-              width="90px"
-              src="@/assets/images/login-company-logo.svg"
+              class="two-dimension"
+              src="@/env/assets/images/phytium-two-dimension.jpg"
               :alt="altLogo"
             />
           </div>
-          <h1 v-if="customizableGuiName" class="h3 mb-5">
-            {{ customizableGuiName }}
-          </h1>
-          <router-view class="login=form form-background" />
         </div>
       </div>
-      <div class="login-aside">
-        <div class="login-aside__logo-brand">
-          <!-- Add Secondary brand logo if needed -->
-        </div>
-        <div class="login-aside__logo-bmc">
-          <img
-            height="60px"
-            src="@/assets/images/built-on-openbmc-logo.svg"
-            alt="Built on OpenBMC"
-          />
-        </div>
-      </div>
-    </div>
-  </main>
+    </main>
+  </transition>
 </template>
 
 <script>
+import 'animate.css';
+
 export default {
   name: 'LoginLayout',
   data() {
@@ -45,18 +63,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.animate__bounceOutLeft {
+  animation-duration: 1s;
+}
+.form-background {
+  background: transparent;
+}
 .login-container {
-  background: gray('100');
   display: flex;
   flex-direction: column;
   gap: $spacer * 2;
-  max-width: 1400px;
+  // max-width: 1400px;
   min-width: 320px;
   min-height: 100vh;
   justify-content: space-around;
 
   @include media-breakpoint-up('md') {
-    background: $white;
+    background-color: rgba(0, 0, 0, 0.05);
     flex-direction: row;
   }
 }
@@ -64,15 +87,24 @@ export default {
 .login-main {
   min-height: 50vh;
   padding: $spacer * 3;
-
+  padding-top: $spacer * 2;
   @include media-breakpoint-up('md') {
-    background: gray('100');
+    // background: $login-background-color;
     display: flex;
     flex-direction: column;
     flex: 1 1 75%;
     min-height: 100vh;
     justify-content: center;
     align-items: center;
+  }
+  & > div {
+    position: relative;
+    left: -15vw;
+    img {
+      position: relative;
+      left: 36vw;
+      top: 35vh;
+    }
   }
 }
 
@@ -108,5 +140,27 @@ export default {
     margin-left: $spacer * 1.5;
     vertical-align: middle;
   }
+}
+
+main {
+  position: absolute;
+  top: 0;
+  z-index: 9999;
+  height: 100vh;
+  width: 100vw;
+  background: url('~@/env/assets/images/login-background.jpg') no-repeat fixed
+    center;
+  background-size: 100% 100%;
+  .customizableGuiName {
+    color: #fb0000de;
+    font-size: 29px;
+    font-weight: bold;
+  }
+  overflow: hidden;
+}
+.two-dimension {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
 }
 </style>

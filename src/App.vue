@@ -33,4 +33,7 @@ export default {
 
 <style lang="scss">
 @import '@/assets/styles/_obmc-custom';
+#app {
+  position: relative;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid="xl">
+  <b-container fluid>
     <page-title :description="$t('pagePowerRestorePolicy.description')" />
 
     <b-row>

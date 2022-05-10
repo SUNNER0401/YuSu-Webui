@@ -3,9 +3,22 @@
     <app-header ref="focusTarget" class="app-header" @refresh="refresh" />
     <app-navigation class="app-navigation" />
     <page-container class="app-content">
-      <router-view ref="routerView" :key="routerKey" />
+      <transition
+        name="animate__animated animate__bounce"
+        leave-active-class="animate__fadeOut"
+        enter-active-class="animate__fadeIn"
+        mode="out-in"
+      >
+        <router-view ref="routerView" :key="routerKey" />
+      </transition>
       <!-- Scroll to top button -->
       <button-back-to-top />
+      <div class="two-dimension">
+        <img
+          class="two-dimension"
+          src="@/env/assets/images/phytium-two-dimension.jpg"
+        />
+      </div>
     </page-container>
   </div>
 </template>
@@ -16,6 +29,7 @@ import AppNavigation from '@/components/AppNavigation';
 import PageContainer from '@/components/Global/PageContainer';
 import ButtonBackToTop from '@/components/Global/ButtonBackToTop';
 import JumpLinkMixin from '@/components/Mixins/JumpLinkMixin';
+import 'animate.css';
 
 export default {
   name: 'App',
@@ -54,6 +68,7 @@ export default {
 <style lang="scss" scoped>
 .app-container {
   display: grid;
+  background-color: $Page-background-color;
   grid-template-columns: 100%;
   grid-template-rows: auto;
   grid-template-areas:
@@ -61,10 +76,10 @@ export default {
     'content';
 
   @include media-breakpoint-up($responsive-layout-bp) {
-    grid-template-columns: $navigation-width 1fr;
+    grid-template-columns: 1fr;
     grid-template-areas:
-      'header header'
-      'navigation content';
+      'header'
+      'content';
   }
 }
 
@@ -81,6 +96,16 @@ export default {
 
 .app-content {
   grid-area: content;
-  background-color: $white;
+  overflow: hidden;
+}
+.two-dimension {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 10000;
+}
+.animate__animated {
+  animation-duration: 500ms;
+  -webkit-animation-duration: 500ms;
 }
 </style>

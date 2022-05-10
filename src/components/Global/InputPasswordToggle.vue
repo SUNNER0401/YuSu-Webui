@@ -6,6 +6,7 @@
       variant="link"
       class="input-action-btn btn-icon-only"
       :class="{ isVisible: isVisible }"
+      tab-index="-1"
       @click="toggleVisibility"
     >
       <icon-view-off v-if="isVisible" />

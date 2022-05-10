@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid="xl">
+  <b-container fluid>
     <page-title />
     <div class="terminal-container">
       <kvm-console :is-full-window="false" />

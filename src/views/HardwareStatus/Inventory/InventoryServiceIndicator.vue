@@ -2,7 +2,7 @@
   <page-section
     :section-title="$t('pageInventory.systemIndicator.sectionTitle')"
   >
-    <div class="form-background pl-4 pt-4 pb-1">
+    <b-card bg-variant="light" border-variant="light">
       <b-row>
         <b-col sm="6" md="3">
           <dl>
@@ -34,7 +34,7 @@
           </dl>
         </b-col>
       </b-row>
-    </div>
+    </b-card>
   </page-section>
 </template>
 <script>

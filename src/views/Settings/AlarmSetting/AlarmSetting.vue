@@ -1,9 +1,9 @@
 <template>
-  <b-container fluid="xl">
+  <b-container fluid>
     <page-title :description="$t('pageAlarmSetting.description')" />
-    <remote-network-setting />
     <b-row>
-      <b-col md="8">
+      <b-col md="6">
+        <remote-network-setting id="remote-nerwork-setting" />
         <b-form novalidate @submit.prevent="submitForm">
           <b-form-group>
             <page-section :section-title="$t('pageAlarmSetting.Managers')">
@@ -117,7 +117,10 @@
                 </b-col>
               </b-row>
             </page-section>
-            <b-col offset="8">
+            <b-row
+              id="SNMP-submit-button-group"
+              class="d-flex justify-content-end"
+            >
               <b-button
                 data-test-id="network-button-saveCancel"
                 @click="refresh"
@@ -131,7 +134,7 @@
               >
                 {{ $t('global.action.saveSettings') }}
               </b-button>
-            </b-col>
+            </b-row>
           </b-form-group>
         </b-form>
       </b-col>

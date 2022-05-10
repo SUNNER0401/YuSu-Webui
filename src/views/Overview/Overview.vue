@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid="xl">
+  <b-container fluid>
     <page-title />
     <overview-quick-links class="mb-4" />
     <page-section

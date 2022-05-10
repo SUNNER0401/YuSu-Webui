@@ -25,20 +25,20 @@ $black: #000000;
 $white: #ffffff;
 
 $danger: #f71008;
-$success: #23db2c;
+$success: #61ff00;
 $warning: #FEC91B;
 
-$primary: $classic-indigo;
+$primary: #1b67d9;
 $secondary: $dark-gray;
 $Page-background-color: #f4f4f4;
-$card-background-color: #738ba53b;
-$form-background-color: #f4f4f4;
+$card-background-color: linear-gradient(138deg, #acb6e56b, #86fde83d);
+$form-background-color: transparent;
 $card-header-color: #4eb4cb8a;
 $no-color: #00000000;
 $table-border-color: #3eb78542;
 $navigation-color: #161616;
 $login-background-color: #f4f4f4;
-$header-button-hover-background: #313131;
+$header-button-hover-background: #f8f8f8;
 
 $gray-100: $gray;
 
@@ -70,7 +70,7 @@ div.form-background {
   background-color: $card-header-color;
 }
 .card-body {
-  background-color: $card-background-color;
+  background: $card-background-color;
   .list-group-item {
     background-color: $no-color;
   }
@@ -78,16 +78,54 @@ div.form-background {
 .table {
   border:2px solid;
   border-color: $table-border-color;
+  td {
+    .btn-link {
+      white-space: nowrap;
+    }
+  }
 }
-input.form-control {
+
+// Set all input elements. 
+input.form-control, .form-background .custom-select:focus, .form-background .form-control:focus {
   background-color: $Page-background-color;
   &:focus {
-    background-color: $form-background-color;
+    background-color: white;
+    box-shadow: none !important;
   }
 }
 .btn-primary {
+  border-radius: 20px;
+  border-color: transparent !important;
+  &.btn {
+    border-radius: 20px;
+  }
   &:focus{
-    box-shadow: inset 0 0 0 3px $primary !important;
+    border-color: transparent;
+  }
+}
+.btn-secondary {
+  border-radius: 20px;
+  &.btn {
+    border-radius: 20px;
+  }
+}
+#app {
+  background: url('~@/env/assets/images/layout-background.jpg');
+  .app-container {
+    background: transparent;
+  }
+}
+// Custom datails of app-content
+.app-content {
+  width: calc(100% - 500px);
+  margin: 0 auto;
+  background: linear-gradient(to top, #77a3bd, #dbe5df);
+  padding-top: 10px;
+  margin-top: 24px;
+  #scrollToTopBtn {
+    bottom: 105px;
+    left: 95%;
+    width: 70px;
   }
 }
 // Custom datails of app-header
@@ -95,26 +133,30 @@ input.form-control {
   height: $header-height;
   button {
     &::after {
+      color: #444444;
       transition:all 0.3s;
     }
   }
   &:hover {
     button {
       background-color: $header-button-hover-background;
-      &::after {
-        color: $white;
-      }
     }
   }
 }
 .app-header {
+  .nav-tags {
+    color: #444444;
+  }
   .nav-link {
     .status-icon {
+      vertical-align: middle;
       svg {
+        vertical-align: top;
         transition: all 0.3s;
       }
     }
     &:hover {
+      background-color: white !important;
       .status-icon {
         svg {
           transform: rotate(360deg);
@@ -122,15 +164,30 @@ input.form-control {
       }
     }
   }
+  .btn-link {
+    &:hover {
+      background-color: white !important;
+    }
+  }
 }
 
 .login-container {
-  .d-block {
-    color: $white;
-  }
-  .login-form__section {
-    label {
+  label, dl {
+    dt {
       color: $white;
     }
+    color: $white;
+  }
+  .form-background {
+    background-color: transparent;
+  }
+  .btn-link {
+    &:hover {
+      background-color: transparent;
+      color: $white;
+    }
+  }
+  .alert {
+    width: 360px;
   }
 }

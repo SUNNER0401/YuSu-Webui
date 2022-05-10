@@ -1,48 +1,54 @@
 <template>
   <div>
     <div class="nav-container" :class="{ open: isNavigationOpen }">
-      <nav ref="nav" :aria-label="$t('appNavigation.primaryNavigation')">
-        <b-nav vertical class="mb-4">
-          <template v-for="(navItem, index) in navigationItems">
-            <!-- Navigation items with no children -->
-            <b-nav-item
-              v-if="!navItem.children"
-              :key="index"
-              :to="navItem.route"
-              :data-test-id="`nav-item-${navItem.id}`"
-            >
-              <component :is="navItem.icon" />
-              {{ navItem.label }}
-            </b-nav-item>
-
-            <!-- Navigation items with children -->
-            <li v-else :key="index" class="nav-item">
-              <b-button
-                v-b-toggle="`${navItem.id}`"
-                variant="link"
-                :data-test-id="`nav-button-${navItem.id}`"
+      <div class="nav-container-menu">
+        <nav ref="nav" :aria-label="$t('appNavigation.primaryNavigation')">
+          <b-nav vertical class="mb-4">
+            <template v-for="(navItem, index) in navigationItems">
+              <!-- Navigation items with no children -->
+              <b-nav-item
+                v-if="!navItem.children"
+                :key="index"
+                :to="navItem.route"
+                :data-test-id="`nav-item-${navItem.id}`"
               >
                 <component :is="navItem.icon" />
                 {{ navItem.label }}
-                <icon-expand class="icon-expand" />
-              </b-button>
-              <b-collapse :id="navItem.id" tag="ul" class="nav-item__nav">
-                <li class="nav-item">
-                  <router-link
-                    v-for="(subNavItem, i) of navItem.children"
-                    :key="i"
-                    :to="subNavItem.route"
-                    :data-test-id="`nav-item-${subNavItem.id}`"
-                    class="nav-link"
-                  >
-                    {{ subNavItem.label }}
-                  </router-link>
-                </li>
-              </b-collapse>
-            </li>
-          </template>
-        </b-nav>
-      </nav>
+              </b-nav-item>
+
+              <!-- Navigation items with children -->
+              <li v-else :key="index" class="nav-item">
+                <b-button
+                  v-b-toggle="`${navItem.id}`"
+                  variant="link"
+                  :data-test-id="`nav-button-${navItem.id}`"
+                >
+                  <component :is="navItem.icon" />
+                  {{ navItem.label }}
+                  <icon-expand class="icon-expand" />
+                </b-button>
+                <b-collapse :id="navItem.id" tag="ul" class="nav-item__nav">
+                  <li class="nav-item">
+                    <router-link
+                      v-for="(subNavItem, i) of navItem.children"
+                      :key="i"
+                      :to="subNavItem.route"
+                      :data-test-id="`nav-item-${subNavItem.id}`"
+                      class="nav-link"
+                    >
+                      {{ subNavItem.label }}
+                    </router-link>
+                  </li>
+                </b-collapse>
+              </li>
+            </template>
+          </b-nav>
+        </nav>
+      </div>
+      <button class="zipper1" @click="toggleIsOpen">
+        <chevron-left v-if="isNavigationOpen" style="float: left" />
+        <chevron-right v-else style="float: left" />
+      </button>
     </div>
     <transition name="fade">
       <div
@@ -60,9 +66,15 @@
 //Exact match alias set to support
 //dotenv customizations.
 import AppNavigationMixin from './AppNavigationMixin';
+import chevronLeft from '@carbon/icons-vue/es/chevron--left/32';
+import chevronRight from '@carbon/icons-vue/es/chevron--right/32';
 
 export default {
   name: 'AppNavigation',
+  components: {
+    chevronLeft,
+    chevronRight,
+  },
   mixins: [AppNavigationMixin],
   data() {
     return {
@@ -151,7 +163,11 @@ svg {
   font-weight: $headings-font-weight;
   padding-left: $spacer; // defining consistent padding for links and buttons
   padding-right: $spacer;
-  color: theme-color('secondary');
+  width: 299px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: theme-color-level('secondary', -5);
 
   &:hover {
     background-color: theme-color-level(dark, -10.5);
@@ -159,9 +175,9 @@ svg {
   }
 
   &:focus {
-    background-color: theme-color-level(light, 0);
+    background-color: theme-color-level(light, 5);
     box-shadow: inset 0 0 0 2px theme-color('primary');
-    color: theme-color('dark');
+    color: theme-color('light');
     outline: 0;
   }
 
@@ -201,26 +217,55 @@ svg {
   top: $header-height;
   bottom: 0;
   left: 0;
-  z-index: $zindex-fixed;
-  overflow-y: auto;
-  background-color: theme-color('light');
   transform: translateX(-$navigation-width);
   transition: transform $exit-easing--productive $duration--moderate-02;
-  border-right: 1px solid theme-color-level('light', 2.85);
+  border-right: 1px solid theme-color-level('dark', 2.85);
+  z-index: $zindex-fixed + 2;
 
-  @include media-breakpoint-down(md) {
-    z-index: $zindex-fixed + 2;
-  }
-
-  &.open,
-  &:focus-within {
+  &.open {
     transform: translateX(0);
     transition-timing-function: $entrance-easing--productive;
   }
-
-  @include media-breakpoint-up($responsive-layout-bp) {
-    transition-duration: $duration--fast-01;
-    transform: translateX(0);
+  @include media-breakpoint-down(md) {
+    &:focus-within {
+      transform: translateX(0);
+      transition-timing-function: $entrance-easing--productive;
+    }
+  }
+  // @include media-breakpoint-up($responsive-layout-bp) {
+  //   transition-duration: $duration--fast-01;
+  //   transform: translateX(0);
+  // }
+  .nav-container-menu {
+    position: absolute;
+    height: 100%;
+    background-color: $navigation-color;
+    z-index: 2;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .zipper1 {
+    display: none;
+    @include media-breakpoint-up($responsive-layout-bp) {
+      position: absolute;
+      left: $navigation-width - 3px;
+      top: 50%;
+      margin-top: -30px;
+      height: 60px;
+      width: 30px;
+      border-radius: 0 30px 30px 0;
+      z-index: 1;
+      background-color: $navigation-color;
+      svg {
+        display: inline-block;
+        width: 100%;
+        text-align: left;
+        color: $white;
+      }
+      display: inline;
+    }
   }
 }
 
@@ -249,7 +294,7 @@ svg {
   }
 
   @include media-breakpoint-up($responsive-layout-bp) {
-    display: none;
+    // display: none;
   }
 }
 </style>

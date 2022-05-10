@@ -151,7 +151,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-button {
-  background-color: #a92bc9;
+button[data-v-2c86e14e] {
+  background: #0050ff;
+  border-color: #0050ff;
 }
 </style>

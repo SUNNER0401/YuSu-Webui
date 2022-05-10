@@ -1,6 +1,6 @@
 <template>
   <b-row>
-    <b-col offset="6" md="3" align="right">
+    <b-col align="right">
       <dl>
         <dt v-if="$i18n.locale == 'ch-CH'" id="remote-title-ch">
           {{ $t('pageAlarmSetting.remoteServer.remoteTitleLabel') }}

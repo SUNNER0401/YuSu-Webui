@@ -10,7 +10,7 @@
           <dd v-else>--</dd>
         </dl>
       </b-col>
-      <b-col sm="6" lg="3" class="mb-2 mt-2">
+      <b-col sm="6" lg="2" class="mb-2 mt-2">
         <b-button
           to="/operations/serial-over-lan"
           variant="secondary"

@@ -19,7 +19,9 @@ export default {
 <style lang="scss" scoped>
 main {
   width: 100%;
-  height: 100%;
+  min-height: calc(
+    100vh - #{$header-height}
+  ); // height will never smaller than area current visiable field.
   padding-top: $spacer * 1.5;
   padding-bottom: $spacer * 3;
   padding-left: $spacer;
@@ -33,5 +35,6 @@ main {
   @include media-breakpoint-up($responsive-layout-bp) {
     padding-left: $spacer * 2;
   }
+  // background-image: url('~@/env/assets/images/phytium_logo.jpeg');
 }
 </style>

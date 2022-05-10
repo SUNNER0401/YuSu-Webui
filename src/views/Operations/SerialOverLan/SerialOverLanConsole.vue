@@ -138,6 +138,7 @@ export default {
 
 #terminal {
   overflow: auto;
+  max-width: 95vw;
 }
 
 .full-window-container {

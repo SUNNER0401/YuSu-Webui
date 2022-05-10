@@ -8,8 +8,14 @@
     </alert>
     <div class="change-password__form-container">
       <dl>
-        <dt>{{ $t('pageChangePassword.username') }}</dt>
-        <dd>{{ username }}</dd>
+        <dt>
+          <label for="change-page-username">
+            {{ $t('pageChangePassword.username') }}
+          </label>
+        </dt>
+        <dd>
+          <b-input id="change-page-username" :value="username" readonly />
+        </dd>
       </dl>
       <b-form novalidate @submit.prevent="changePassword">
         <b-form-group

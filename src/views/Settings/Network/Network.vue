@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid="xl">
+  <b-container fluid>
     <page-title :description="$t('pageNetwork.pageDescription')" />
     <!-- Global settings for all interfaces -->
     <network-global-settings />

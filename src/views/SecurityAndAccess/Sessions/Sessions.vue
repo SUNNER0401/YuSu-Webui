@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid="xl">
+  <b-container fluid>
     <page-title />
     <b-row class="align-items-end">
       <b-col sm="6" md="5" xl="4">
@@ -282,7 +282,7 @@ export default {
   },
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 #table-session-logs {
   td .btn-link {
     width: auto !important;

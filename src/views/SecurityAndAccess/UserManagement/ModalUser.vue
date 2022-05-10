@@ -88,6 +88,7 @@
                 data-test-id="userManagement-input-username"
                 :state="getValidationState($v.form.username)"
                 :disabled="!newUser && originalUsername === 'root'"
+                autocomplete="off"
                 @input="$v.form.username.$touch()"
               />
               <b-form-invalid-feedback role="alert">
@@ -211,6 +212,7 @@
                 data-test-id="userManagement-input-maxDaysExpired"
                 :state="getValidationState($v.form.maxDaysExpired)"
                 class="form-control-with-button"
+                autocomplete="off"
                 @input="$v.form.maxDaysExpired.$touch()"
               />
               <b-form-invalid-feedback role="alert">

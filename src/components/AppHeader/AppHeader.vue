@@ -251,13 +251,13 @@ export default {
   .btn-link {
     height: $header-height;
     .responsive-text {
-      color: color('white');
+      color: #444444;
     }
     svg {
-      color: color('white');
+      color: #444444;
       transition: all 0.3s;
     }
-    color: color('white') !important;
+    color: #444444 !important;
     fill: currentColor;
     padding: 0.68rem 1rem !important;
 
@@ -284,7 +284,8 @@ export default {
 
   .navbar {
     padding: 0;
-    background-color: $navbar-color;
+    // background-color: #ffe8e8;
+    background: linear-gradient(to right, #eae5c9, #6cc6cb);
     @include media-breakpoint-up($responsive-layout-bp) {
       height: $header-height;
     }
@@ -325,7 +326,6 @@ export default {
       transition: $focus-transition;
     }
     .nav-tags {
-      color: theme-color-level(light, 3);
       @include media-breakpoint-down(xs) {
         @include sr-only;
       }

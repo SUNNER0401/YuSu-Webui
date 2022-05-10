@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid="xl">
+  <b-container fluid>
     <page-title :description="$t('pageFanSpeed.description')" />
     <b-row class="main-row">
       <b-col sm="12" md="12">
