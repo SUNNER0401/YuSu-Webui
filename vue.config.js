@@ -1,6 +1,27 @@
 const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
+  chainWebpack: (config) => {
+    config.module
+      .rule('vue')
+      .use('vue-loader')
+      .loader('vue-loader')
+      .tap((options) => {
+        options.transformAssetUrls = {
+          img: 'src',
+          image: 'xlink:href',
+          'b-img': 'src',
+          'b-img-lazy': ['src', 'blank-src'],
+          'b-card': 'img-src',
+          'b-card-img': 'src',
+          'b-card-img-lazy': ['src', 'blank-src'],
+          'b-carousel-slide': 'img-src',
+          'b-embed': 'src',
+        };
+
+        return options;
+      });
+  },
   css: {
     loaderOptions: {
       sass: {
@@ -42,7 +63,7 @@ module.exports = {
       '/': {
         target: process.env.BASE_URL,
         headers: {
-          Connection: 'keep-alive',
+          Connection: 'upgrade',
         },
         onProxyRes: (proxyRes) => {
           // This header is ignored in the browser so removing

@@ -126,7 +126,9 @@
     "serverPowerOperations": "@:appPageTitle.serverPowerOperations",
     "certificates": "@:appPageTitle.certificates",
     "virtualMedia": "@:appPageTitle.virtualMedia",
-    "power": "@:appPageTitle.power"
+    "power": "@:appPageTitle.power",
+    "alarmSetting": "@:appPageTitle.alarmSetting",
+    "fanSpeed": "@:appPageTitle.fanSpeed"
   },
   "appPageTitle": {
     "changePassword": "Change password",
@@ -154,7 +156,9 @@
     "serialOverLan": "Serial over LAN (SOL) console",
     "serverPowerOperations": "Server power operations",
     "certificates": "Certificates",
-    "virtualMedia": "Virtual media"
+    "virtualMedia": "Virtual media",
+    "alarmSetting": "Alarm setting",
+    "fanSpeed":"Fan Speed"
   },
   "pageChangePassword": {
     "changePassword": "Change password",
@@ -315,6 +319,40 @@
       "resetToDefaultsError": "Factory reset of BMC and server settings failed."
     }
   },
+  "pageFanSpeed":{
+    "description":"This function is able to control and watch speed of each fans.",
+    "autoControl":"Auto Control mode",
+    "manualControl":"Manual control mode",
+    "currentStatus":"Current status",
+    "normalBalanceMode":"Normal",
+    "chooseMode":"Choose mode",
+    "status":{
+      "currentmode":"Current mode"
+    },
+    "fanModes":{
+      "default":"DEFAULT",
+      "mute":"MUTE",
+      "low":"LOW",
+      "medium":"MEDIUM",
+      "high":"HIGH",
+      "full":"FULL"
+    },
+    "modal":{
+      "confirmMessage":"Are you sure switch fan mode to",
+      "confirmTitle":"Fan mode setting",
+      "errorSaveMessage":"Please choose one mode to switch!"
+    },
+    "toast":{
+      "successSwitch":"Switch mode Successfully",
+      "errorSwitch":"Switch mode failed"
+    },
+    "chart":{
+      "title":{
+        "text":"PWM status",
+        "subtext":"Show PWM ratio of each fan"
+      }
+    }
+  },
   "pageFirmware": {
     "cardActionSwitchToRunning": "Switch to running",
     "cardBodyVersion": "Version",
@@ -343,6 +381,8 @@
       }
     },
     "modal": {
+      "bmcUpdatingTitle": "BMC updating",
+      "bmcUpdatingMessage": "All functions will pause in updating progress. Do not do any operation in page before updating complete.",
       "switchImages": "Switch images",
       "switchRunningImage": "Switch running image",
       "switchRunningImageInfo": "A BMC reboot is required to run the backup image. The application might be unresponsive during this time.",
@@ -350,11 +390,22 @@
       "updateFirmwareInfo": "The BMC will reboot during the update process. The server cannot be powered on until the update is finished.",
       "updateFirmwareInfo2": "The running image (%{running}) will be copied to backup. The backup image will be deleted.",
       "updateFirmwareInfo3": "Are you sure you want to proceed with the update?",
-      "updateFirmwareInfoDefault": "The new image will be uploaded and activated. After that, the BMC or host will reboot automatically to run from the new image."
+      "updateFirmwareInfoDefault": "The new image will be uploaded and activated. After that, the BMC or host will reboot automatically to run from the new image.",
+      "complete": "complete",
+      "updating": "Updating:",
+      "type": "type:",
+      "state": {
+        "uploading": "Uploading",
+        "startBurning": "Start burning",
+        "loadBios":"loading BIOS and driving MTD",
+        "burningBios":"Burning BIOS firmware",
+        "success": "Update successfully!"
+      }
     },
     "toast": {
       "errorSwitchImages": "Error switching running and backup images.",
       "errorUpdateFirmware": "Error starting firmware update.",
+      "errorBurning":"Error Burning image.",
       "rebootStarted": "Reboot started",
       "rebootStartedMessage": "Successfully started reboot from backup image.",
       "updateStarted": "Update started",
@@ -362,7 +413,8 @@
       "verifySwitch": "Verify switch",
       "verifySwitchMessage": "Refresh the application to verify the running and backup images switched.",
       "verifyUpdate": "Verify update",
-      "verifyUpdateMessage": "Refresh the application to verify firmware updated successfully"
+      "verifyUpdateMessage": "Refresh the application to verify firmware updated successfully",
+      "updateSuccessfully": "Update successfully!"
     }
   },
   "pageInventory": {
@@ -509,6 +561,7 @@
       "cannotStartWithANumber": "Cannot start with a number",
       "clickSaveToUnlockAccount": "Click \"Save\" to unlock account",
       "confirmUserPassword": "Confirm user password",
+      "maxDaysExpired":"Max days expired",
       "deleteConfirmMessage": "Are you sure you want to delete user '%{user}'? This action cannot be undone.",
       "manual": "Manual",
       "maxFailedLoginAttempts": "Max failed login attempts",
@@ -525,7 +578,8 @@
     "table": {
       "privilege": "Privilege",
       "status": "Status",
-      "username": "Username"
+      "username": "Username",
+      "maxDaysExpired":"Max days expired"
     },
     "tableRoles": {
       "configureComponentsManagedByThisService": "Configure components managed by this service",
@@ -690,6 +744,42 @@
       "successSaveSettings": "Power restore policy updated successfully."
     }
   },
+  "pageAlarmSetting":{
+    "description": "Set the Simple Network Management Protocol (SNMP) and remote logging server with a host name or IP address and a port.",
+    "Managers": "SNMP Managers",
+    "remoteServer": {
+      "remoteTitleLabel": "REMOTE LOGGING SERVER",
+      "addServer": "add server",
+      "modal": {
+        "header1": "Add Remote Logging Server",
+        "header2": "Edit Remote Logging Server",
+        "address": "Address",
+        "port": "Port",
+        "formText1": "Your address must match ip address format.",
+        "formText2": "1-65535",
+        "invalidfeedback1": "ip format error",
+        "invalidfeedback2": "range error",
+        "confirmDeleteRemoteTitle": "Comfirm to delete remote logging server",
+        "confirmDeleteRemoteMessage": "Are you sure to delete remote logging server?"
+      }
+    },
+    "table": {
+      "addmanager": "Add Manager",
+      "address": "Address",
+      "port": "Port",
+      "staticManagerRow": "Static manager address"
+    },
+    "modal": {
+      "confirmMessage": "Are you sure you want to save setting?",
+      "confirmTitle": "Confirm SNMP save setting",
+      "errorSave": "Save Error",
+      "errorSaveMessage":"Cannot save. Please resolve errors on page."
+    },
+    "toast": {
+      "errorSave": "Cannot save. Please resolve errors on page.",
+      "successSave": "Save setting successfully."
+    }
+  },
   "pageRebootBmc": {
     "lastReboot": "Last BMC reboot",
     "rebootBmc": "Reboot BMC",
@@ -737,7 +827,10 @@
     "powerCapSettingData": "Apply power cap",
     "powerCapSettingLabel": "Power cap setting",
     "powerConsumption": "Current power consumption",
-    "serverPowCapSetting": "Server power cap setting"
+    "serverPowCapSetting": "Server power cap setting",
+    "table": {
+      "title": "Power Chart"
+    }
   },
   "pageSensors": {
     "exportFilePrefix": "sensors_",

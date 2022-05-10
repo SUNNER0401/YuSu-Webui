@@ -51,12 +51,13 @@ exports[`AppHeader.vue should render correctly 1`] = `
         <b-navbar-brand
           class="mr-0"
           data-test-id="appHeader-container-overview"
+          title="Phytium BMC"
           to="/"
         >
           <img
             alt="Built on OpenBMC"
             class="header-logo"
-            src="@/assets/images/logo-header.svg"
+            src="@/env/assets/images/phytium-logo.png"
           />
         </b-navbar-brand>
          

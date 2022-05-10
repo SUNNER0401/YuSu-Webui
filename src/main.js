@@ -11,6 +11,7 @@ import {
   AlertPlugin,
   BadgePlugin,
   ButtonPlugin,
+  ButtonGroupPlugin,
   BVConfigPlugin,
   CardPlugin,
   CollapsePlugin,
@@ -37,6 +38,7 @@ import {
   TabsPlugin,
   ToastPlugin,
   TooltipPlugin,
+  IconsPlugin,
 } from 'bootstrap-vue';
 import Vuelidate from 'vuelidate';
 import i18n from './i18n';
@@ -87,6 +89,7 @@ Vue.filter('formatTime', function (value) {
 Vue.use(AlertPlugin);
 Vue.use(BadgePlugin);
 Vue.use(ButtonPlugin);
+Vue.use(ButtonGroupPlugin);
 Vue.use(BVConfigPlugin, {
   BFormText: { textVariant: 'secondary' },
   BTable: {
@@ -127,6 +130,7 @@ Vue.use(TablePlugin);
 Vue.use(TabsPlugin);
 Vue.use(ToastPlugin);
 Vue.use(TooltipPlugin);
+Vue.use(IconsPlugin);
 Vue.use(Vuelidate);
 
 new Vue({

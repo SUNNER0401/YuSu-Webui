@@ -1,0 +1,136 @@
+@font-face {
+  font-family: "Phytium Lanting";
+  src: url("~@/env/assets/fonts/Phytium_Lanting/FZLTHJW.TTF")
+    format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+$font-family-base: Arial,'Phytium Lanting';
+
+// Custom theme colors
+$classic-indigo: #00b4d1;
+$energy-blue: #00C7FD;
+
+
+$red: #ed1c24;
+$orange: #ffa300;
+$yellow: #f3d54e;
+$green: #c4d600;
+$cyan: $energy-blue;
+$gray: #AEAEAE;
+$dark-gray: #808080;
+$light-gray: #E9E9E9;
+$black: #000000;
+$white: #ffffff;
+
+$danger: #f71008;
+$success: #23db2c;
+$warning: #FEC91B;
+
+$primary: $classic-indigo;
+$secondary: $dark-gray;
+$Page-background-color: #f4f4f4;
+$card-background-color: #738ba53b;
+$form-background-color: #f4f4f4;
+$card-header-color: #4eb4cb8a;
+$no-color: #00000000;
+$table-border-color: #3eb78542;
+$navigation-color: #161616;
+$login-background-color: #f4f4f4;
+$header-button-hover-background: #313131;
+
+$gray-100: $gray;
+
+$loading-color: $cyan;
+$navbar-color: $primary;
+
+//Some basic setting
+$header-height: 48px;
+
+// Custom display details
+.status-icon.secondary {
+  fill: $light-gray !important;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after,
+.custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::before,
+.custom-control-input:checked ~ .custom-control-label::before {
+  background-color: $primary !important;
+}
+
+//Custom details of components
+* {
+  box-sizing: border-box;
+}
+div.form-background {
+  background-color: $form-background-color;
+}
+.card-header {
+  background-color: $card-header-color;
+}
+.card-body {
+  background-color: $card-background-color;
+  .list-group-item {
+    background-color: $no-color;
+  }
+}
+.table {
+  border:2px solid;
+  border-color: $table-border-color;
+}
+input.form-control {
+  background-color: $Page-background-color;
+  &:focus {
+    background-color: $form-background-color;
+  }
+}
+.btn-primary {
+  &:focus{
+    box-shadow: inset 0 0 0 3px $primary !important;
+  }
+}
+// Custom datails of app-header
+#app-header-user {
+  height: $header-height;
+  button {
+    &::after {
+      transition:all 0.3s;
+    }
+  }
+  &:hover {
+    button {
+      background-color: $header-button-hover-background;
+      &::after {
+        color: $white;
+      }
+    }
+  }
+}
+.app-header {
+  .nav-link {
+    .status-icon {
+      svg {
+        transition: all 0.3s;
+      }
+    }
+    &:hover {
+      .status-icon {
+        svg {
+          transform: rotate(360deg);
+        }
+      }
+    }
+  }
+}
+
+.login-container {
+  .d-block {
+    color: $white;
+  }
+  .login-form__section {
+    label {
+      color: $white;
+    }
+  }
+}

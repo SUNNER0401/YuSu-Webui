@@ -8,7 +8,6 @@
       >
         {{ $t('appHeader.skipToContent') }}
       </a>
-
       <b-navbar type="dark" :aria-label="$t('appHeader.applicationHeader')">
         <!-- Left aligned nav items -->
         <b-button
@@ -34,10 +33,11 @@
             class="mr-0"
             to="/"
             data-test-id="appHeader-container-overview"
+            title="Phytium BMC"
           >
             <img
               class="header-logo"
-              src="@/assets/images/logo-header.svg"
+              src="@/env/assets/images/phytium-logo.png"
               :alt="altLogo"
             />
           </b-navbar-brand>
@@ -230,7 +230,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @mixin focus-box-shadow($padding-color: $navbar-color, $outline-color: $white) {
   box-shadow: inset 0 0 0 3px $padding-color, inset 0 0 0 5px $outline-color;
 }
@@ -249,12 +249,25 @@ export default {
   .navbar-text,
   .nav-link,
   .btn-link {
+    height: $header-height;
+    .responsive-text {
+      color: color('white');
+    }
+    svg {
+      color: color('white');
+      transition: all 0.3s;
+    }
     color: color('white') !important;
     fill: currentColor;
     padding: 0.68rem 1rem !important;
 
     &:hover {
       background-color: theme-color-level(light, 10);
+      &#app-header-refresh {
+        svg {
+          transform: rotate(360deg);
+        }
+      }
     }
     &:active {
       background-color: theme-color-level(light, 9);
@@ -374,5 +387,9 @@ export default {
     box-shadow: inset 0 0 0 3px $navbar-color, inset 0 0 0 5px color('white');
     outline: 0;
   }
+}
+
+img {
+  height: 0.8 * $header-height;
 }
 </style>
