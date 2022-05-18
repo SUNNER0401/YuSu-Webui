@@ -175,7 +175,8 @@
     },
     "modal": {
       "disconnectTitle": "Disconnect session| Disconnect sessions",
-      "disconnectMessage": "Are you sure you want to disconnect %{count} session? This action cannot be undone. | Are you sure you want to disconnect %{count} sessions? This action cannot be undone."
+      "disconnectMessage1": "Are you sure you want to disconnect %{count} session? This action cannot be undone. | Are you sure you want to disconnect %{count} sessions? This action cannot be undone.",
+      "disconnectMessage2": "Are you sure you want to disconnect %{count} session? This action cannot be undone. | Are you sure you want to disconnect %{count} sessions? This action cannot be undone."
     },
     "table": {
       "clientID": "Client ID",

@@ -244,7 +244,7 @@ export default {
     onTableRowAction(action, { uri }) {
       if (action === 'disconnect') {
         this.$bvModal
-          .msgBoxConfirm(this.$tc('pageSessions.modal.disconnectMessage'), {
+          .msgBoxConfirm(this.$tc('pageSessions.modal.disconnectMessage1'), {
             title: this.$tc('pageSessions.modal.disconnectTitle'),
             okTitle: this.$t('pageSessions.action.disconnect'),
             cancelTitle: this.$t('global.action.cancel'),
@@ -260,7 +260,7 @@ export default {
         this.$bvModal
           .msgBoxConfirm(
             this.$tc(
-              'pageSessions.modal.disconnectMessage',
+              'pageSessions.modal.disconnectMessage2',
               this.selectedRows.length
             ),
             {

@@ -87,12 +87,8 @@ export default {
           text: 'English',
         },
         {
-          value: 'es',
-          text: 'Español',
-        },
-        {
-          value: 'ru-RU',
-          text: 'Русский',
+          value: 'ch-CH',
+          text: '简体中文',
         },
       ],
     };
@@ -111,6 +107,9 @@ export default {
         required,
       },
     },
+  },
+  created() {
+    this.$i18n.locale = localStorage.getItem('storedLanguage') || 'ch-CH';
   },
   methods: {
     login: function () {
@@ -135,7 +134,13 @@ export default {
           if (passwordChangeRequired) {
             this.$router.push('/change-password');
           } else {
-            this.$router.push('/');
+            if (localStorage.getItem('LastPathname')) {
+              let lastPathName = localStorage.getItem('LastPathname');
+              localStorage.removeItem('LastPathname');
+              this.$router.push(lastPathName);
+            } else {
+              this.$router.push('/');
+            }
           }
         })
         .catch((error) => console.log(error))
@@ -144,3 +149,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+button {
+  background-color: #a92bc9;
+}
+</style>
