@@ -1,4 +1,5 @@
 const CompressionPlugin = require('compression-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   chainWebpack: (config) => {
@@ -108,6 +109,13 @@ module.exports = {
         })
       );
     }
+    config.plugins.push(
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'windows.jQuery': 'jquery',
+      })
+    );
   },
   pluginOptions: {
     i18n: {
