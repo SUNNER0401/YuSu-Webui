@@ -62,7 +62,7 @@ export default {
     onClick() {
       this.$bvModal
         .msgBoxConfirm(this.$t('pageRebootBmc.modal.confirmMessage'), {
-          title: this.$t('pageRebootBmc.modal.confirmTitle'),
+          title: this.$t('pagePower..modal.confirmTitle'),
           okTitle: this.$t('global.action.confirm'),
           cancelTitle: this.$t('global.action.cancel'),
         })

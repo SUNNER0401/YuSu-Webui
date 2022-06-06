@@ -827,9 +827,45 @@
     "powerCapSettingLabel": "Power cap setting",
     "powerConsumption": "Current power consumption",
     "serverPowCapSetting": "Server power cap setting",
+    "buttons": {
+      "button1": "Current",
+      "button2": "History"
+    },
     "table": {
-      "title": "Power Chart"
-    }
+      "title1": "Power Chart",
+      "title2": "History Chart",
+      "power": "Power(W)",
+      "time": "time",
+      "averagePower": "Average power",
+      "maxPower": "Max power",
+      "modal": {
+        "confirmTitle": "Recalculate",
+        "confirmMessage": "Do you want to reculate power consumption?"
+      }
+    },
+    "tabs": {
+      "tab1": {
+        "name": "Power supply info",
+        "status": "Load balancing",
+        "power": "PSU",
+        "powerInfo": {
+          "name": "name",
+          "manufacturer": "manfacturer",
+          "statusState": "statusState",
+          "empty": "No power supply information is detected."
+        }
+      },
+      "tab2": {
+        "name": "Power Capping",
+        "powerStatus": "Power Status",
+        "statisticStart": "Statistics Collected",
+        "reset": "Reset statistics",
+        "currentPower": "Current power",
+        "peakPower": "Peak power",
+        "averagePower": "Average power",
+        "totalConsumedPower": "Total consumed power"
+      }
+    }    
   },
   "pageSensors": {
     "exportFilePrefix": "sensors_",

@@ -10,10 +10,15 @@
 const WebSocketPlugin = (store) => {
   let ws;
   const data = {
-    paths: ['/xyz/openbmc_project/state/host0', '/xyz/openbmc_project/logging'],
+    paths: [
+      '/xyz/openbmc_project/state/host0',
+      '/xyz/openbmc_project/logging',
+      '/xyz/openbmc_project/sensors/power/total_power',
+    ],
     interfaces: [
       'xyz.openbmc_project.State.Host',
       'xyz.openbmc_project.Logging.Entry',
+      'xyz.openbmc_project.Sensor.Value',
     ],
   };
 
@@ -23,11 +28,18 @@ const WebSocketPlugin = (store) => {
     if (socketDisabled) return;
     const token = store.getters['authentication/token'];
     ws = new WebSocket(`wss://${window.location.host}/subscribe`, [token]);
-    ws.onopen = () => {
+    ws.onopen = async () => {
       ws.send(JSON.stringify(data));
+      // Get time when it start to calculate power.
+      await store.dispatch('powerControl/getPowerChassisId');
+      store.dispatch('powerControl/startCalculate');
+      store.dispatch('powerControl/getPowerControl').then(() => {
+        store.commit('powerControl/setpowerChartData1');
+      });
     };
     ws.onerror = (event) => {
       console.error(event);
+      clearInterval(store.state.powerControl.powerChartDataInterval);
     };
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
@@ -42,6 +54,16 @@ const WebSocketPlugin = (store) => {
       } else if (path === '/xyz/openbmc_project/logging') {
         store.dispatch('eventLog/getEventLogData');
       }
+      if (
+        eventInterface === 'xyz.openbmc_project.Sensor.Value' &&
+        path === '/xyz/openbmc_project/sensors/power/total_power'
+      ) {
+        let powerConsumption = data.properties.Value;
+        store.commit('powerControl/setPowerConsumptionValue', powerConsumption);
+      }
+    };
+    ws.close = () => {
+      clearInterval(store.state.powerControl.powerChartDataInterval);
     };
   };
 

@@ -827,9 +827,45 @@
     "powerCapSettingLabel": "功率上限设置",
     "powerConsumption": "当前功耗",
     "serverPowCapSetting": "服务器功率上限设置",
+    "buttons": {
+      "button1": "当前功耗",
+      "button2": "历史功耗"
+    },
     "table": {
-      "title": "功率图"
-    }
+      "title1": "功耗图",
+      "title2": "历史功耗图",
+      "power": "功率(W)",
+      "time": "时间",
+      "averagePower": "平均功率",
+      "maxPower": "最大功率",
+      "modal": {
+        "confirmTitle": "重新计算",
+        "confirmMessage": "是否需要重新计算？"
+      }
+    },
+    "tabs": {
+      "tab1": {
+        "name": "电源信息",
+        "status": "负载均衡",
+        "power": "电源",
+        "powerInfo": {
+          "name": "电源",
+          "manufacturer": "厂商",
+          "statusState": "电源状态",
+          "empty": "未检测到电源信息"
+        }
+      },
+      "tab2": {
+        "name": "功率",
+        "powerStatus": "功耗状态",
+        "statisticStart": "开始统计时间",
+        "reset": "重新计算",
+        "currentPower": "当前功耗",
+        "peakPower": "峰值功率",
+        "averagePower": "平均功率",
+        "totalConsumedPower": "总功耗"
+      }
+    }  
   },
   "pageSensors": {
     "exportFilePrefix": "传感器_",
