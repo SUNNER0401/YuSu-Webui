@@ -10,35 +10,31 @@
 import * as echarts from 'echarts';
 
 export default {
-  name: 'SpeedChart',
+  name: 'FanSpeedChart',
   props: {
     fanSpeeds: {
       required: true,
       type: Object,
     },
   },
+  data() {
+    return {
+      interval: '',
+    };
+  },
   computed: {
     fanNameList() {
-      let fannameList = [];
-      for (let fanname in this.fanSpeeds) {
-        fannameList.push(fanname);
-      }
+      let fannameList = Object.keys(this.fanSpeeds);
       return fannameList;
     },
     fanSpeedList() {
-      let fanspeedList = [];
-      for (let fanname in this.fanSpeeds) {
-        let fanSpeed = Number(
-          this.fanSpeeds[fanname].replace('%', '')
-        ).toFixed();
-        fanspeedList.push(fanSpeed);
-      }
-      return fanspeedList;
+      let fanSpeedList = Object.values(this.fanSpeeds);
+      return fanSpeedList;
     },
   },
   mounted() {
     var SpeedChart = echarts.init(this.$refs.fanSpeedChart);
-    setInterval(() => {
+    this.interval = setInterval(() => {
       SpeedChart.setOption({
         title: {
           text: this.$t('pageFanSpeed.chart.title.text'),
@@ -71,15 +67,15 @@ export default {
           axisLabel: {
             show: true,
             interval: 'auto',
-            formatter: '{value}%',
+            formatter: '{value} RPM',
           },
           min: () => 0,
-          max: () => 100,
+          max: () => 20000,
           show: true,
         },
         series: [
           {
-            name: 'fanSpeed',
+            name: this.$t('pageFanSpeed.chart.fanSpeed'),
             type: 'bar',
             data: this.fanSpeedList,
             itemStyle: {
@@ -87,14 +83,17 @@ export default {
             },
             label: {
               show: this.fanSpeedList[0] != 0 ? true : false,
-              position: 'outside',
-              formatter: '{c}%',
+              position: 'top',
+              formatter: '{c} RPM',
             },
             barWidth: '0%',
           },
         ],
       });
     }, 2000);
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
   },
 };
 </script>

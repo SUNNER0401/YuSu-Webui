@@ -322,36 +322,32 @@
   },
   "pageFanSpeed": {
     "description": "该功能可以监测并控制风扇速度",
-    "autoControl": "自动控制模式",
     "manualControl": "手动控制模式",
     "currentStatus": "当前风扇状态",
-    "normalBalanceMode": "标准平衡模式",
-    "chooseMode": "选择模式",
+    "zoneControl":"散热分区管理",
     "status": {
       "currentmode": "当前模式"
     },
     "fanModes": {
-      "default": "标准平衡模式",
-      "mute": "静音模式",
-      "low": "低速模式",
-      "medium": "中速模式",
-      "high": "高速模式",
-      "full": "全速模式"
+      "normal_mode": "普通模式",
+      "high_performance_mode": "高性能模式",
+      "manual_mode": "手动模式"
     },
     "modal": {
-      "confirmMessage": "您确定将风扇模式转换为",
-      "confirmTitle": "设置风扇模式",
+      "confirmMessage": "是否保存散热分区{zoneName}的设置?",
+      "confirmTitle": "设置分区",
       "errorSaveMessage": "请选择一个需要转换的模式"
     },
     "toast": {
-      "successSwitch": "模式转换成功",
-      "errorSwitch": "模式转换失败"
+      "successSaving": "设置保存成功",
+      "errorSetting": "保存设置失败"
     },
     "chart": {
       "title": {
-        "text": "风扇PWM状态",
-        "subtext": "显示每个风扇PWM输出的占空比"
-      }
+        "text": "风扇转速",
+        "subtext": "显示每个风扇的转速"
+      },
+      "fanSpeed": "风扇转速"
     }
   },
   "pageFirmware": {

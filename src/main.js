@@ -24,6 +24,7 @@ import {
   FormInputPlugin,
   FormRadioPlugin,
   FormSelectPlugin,
+  FormSpinbuttonPlugin,
   FormTagsPlugin,
   InputGroupPlugin,
   LayoutPlugin,
@@ -116,6 +117,7 @@ Vue.use(FormGroupPlugin);
 Vue.use(FormInputPlugin);
 Vue.use(FormRadioPlugin);
 Vue.use(FormSelectPlugin);
+Vue.use(FormSpinbuttonPlugin);
 Vue.use(FormTagsPlugin);
 Vue.use(InputGroupPlugin);
 Vue.use(LayoutPlugin);

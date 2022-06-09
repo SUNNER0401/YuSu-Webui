@@ -321,37 +321,33 @@
     }
   },
   "pageFanSpeed":{
-    "description":"This function is able to control and watch speed of each fans.",
-    "autoControl":"Auto Control mode",
-    "manualControl":"Manual control mode",
-    "currentStatus":"Current status",
-    "normalBalanceMode":"Normal",
-    "chooseMode":"Choose mode",
-    "status":{
+    "description": "This function is able to control and watch speed of each fans.",
+    "manualControl": "Manual control mode",
+    "currentStatus": "Current status",
+    "zoneControl":"Heat dissipation zone management",
+    "status": {
       "currentmode":"Current mode"
     },
-    "fanModes":{
-      "default":"DEFAULT",
-      "mute":"MUTE",
-      "low":"LOW",
-      "medium":"MEDIUM",
-      "high":"HIGH",
-      "full":"FULL"
+    "fanModes": {
+      "normal_mode": "NORMAL",
+      "high_performance_mode": "HIGH_PERFORMANCE_MODE",
+      "manual_mode": "MANUAL_MODE"
     },
     "modal":{
-      "confirmMessage":"Are you sure switch fan mode to",
-      "confirmTitle":"Fan mode setting",
+      "confirmMessage":"Are you sure save settings of {zoneName}?",
+      "confirmTitle":"Zone setting",
       "errorSaveMessage":"Please choose one mode to switch!"
     },
     "toast":{
-      "successSwitch":"Switch mode Successfully",
-      "errorSwitch":"Switch mode failed"
+      "successSaving": "Save settings successfully",
+      "errorSetting": "Save setting failed."
     },
     "chart":{
       "title":{
-        "text":"PWM status",
-        "subtext":"Show PWM ratio of each fan"
-      }
+        "text":"Fan speed",
+        "subtext":"Show fan speed of each fan"
+      },
+      "fanSpeed": "Fan Speed"
     }
   },
   "pageFirmware": {
