@@ -101,10 +101,8 @@ export default {
   },
   created() {
     this.getStaticDnsItems();
-    this.$store.dispatch('network/getEthernetData').finally(() => {
-      // Emit initial data fetch complete to parent component
-      this.$root.$emit('network-table-dns-complete');
-    });
+    // Emit initial data fetch complete to parent component
+    this.$root.$emit('network-table-dns-complete');
   },
   methods: {
     getStaticDnsItems() {

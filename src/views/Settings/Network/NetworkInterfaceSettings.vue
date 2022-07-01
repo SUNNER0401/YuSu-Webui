@@ -96,10 +96,8 @@ export default {
   },
   created() {
     this.getSettings();
-    this.$store.dispatch('network/getEthernetData').finally(() => {
-      // Emit initial data fetch complete to parent component
-      this.$root.$emit('network-interface-settings-complete');
-    });
+    // Emit initial data fetch complete to parent component
+    this.$root.$emit('network-interface-settings-complete');
   },
   methods: {
     getSettings() {

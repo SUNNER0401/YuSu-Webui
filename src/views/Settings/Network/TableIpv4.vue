@@ -117,10 +117,8 @@ export default {
   },
   created() {
     this.getIpv4TableItems();
-    this.$store.dispatch('network/getEthernetData').finally(() => {
-      // Emit initial data fetch complete to parent component
-      this.$root.$emit('network-table-ipv4-complete');
-    });
+    // Emit initial data fetch complete to parent component
+    this.$root.$emit('network-table-ipv4-complete');
   },
   methods: {
     getIpv4TableItems() {

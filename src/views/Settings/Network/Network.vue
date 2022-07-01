@@ -93,6 +93,7 @@ export default {
   },
   created() {
     this.startLoader();
+    Promise.all([this.$store.dispatch('network/getEthernetData')]);
     const globalSettings = new Promise((resolve) => {
       this.$root.$on('network-global-settings-complete', () => resolve());
     });
@@ -108,7 +109,6 @@ export default {
     // Combine all child component Promises to indicate
     // when page data load complete
     Promise.all([
-      this.$store.dispatch('network/getEthernetData'),
       globalSettings,
       interfaceSettings,
       networkTableDns,
