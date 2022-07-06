@@ -1,5 +1,11 @@
 <template>
-  <b-modal id="modal-user" ref="modal" @hidden="resetForm">
+  <b-modal
+    id="modal-user"
+    ref="modal"
+    no-close-on-backdrop
+    no-close-on-esc
+    @hidden="resetForm"
+  >
     <template #modal-title>
       <template v-if="newUser">
         {{ $t('pageUserManagement.addUser') }}
@@ -163,6 +169,9 @@
                       })
                     }}
                   </template>
+                  <template v-else-if="!$v.form.password.pattern">
+                    {{ $t('global.form.simplePassword') }}
+                  </template>
                 </b-form-invalid-feedback>
               </input-password-toggle>
             </b-form-group>
@@ -325,6 +334,16 @@ export default {
           }),
           minLength: minLength(this.passwordRequirements.minLength),
           maxLength: maxLength(this.passwordRequirements.maxLength),
+          pattern: (value) => {
+            let partern1 = /[a-zA-Z]+/;
+            let partern2 = /[0-9]+/;
+            let partern3 = /\W+/;
+            let status =
+              partern1.test(value) &&
+              partern2.test(value) &&
+              partern3.test(value);
+            return status;
+          },
         },
         passwordConfirmation: {
           required: requiredIf(function () {

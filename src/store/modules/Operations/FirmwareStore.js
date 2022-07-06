@@ -10,6 +10,9 @@ const FirmwareStore = {
     hostActiveFirmwareId: null,
     applyTime: null,
     tftpAvailable: false,
+    updateProgress: 0,
+    updateFirmware: '',
+    lastGetProgress: 0,
   },
   getters: {
     isTftpUploadAvailable: (state) => state.tftpAvailable,
@@ -184,6 +187,33 @@ const FirmwareStore = {
           console.log(error);
           throw new Error(i18n.t('pageFirmware.toast.errorSwitchImages'));
         });
+    },
+    async getUpdateinfo({ state }, id) {
+      return await api
+        .get('/xyz/openbmc_project/software/' + id)
+        .then(({ data: { data } }) => {
+          if (data.Progress) {
+            state.updateProgress = data.Progress;
+          }
+          return data;
+        })
+        .catch(() => {
+          throw 'page not found!';
+        });
+    },
+    async getFirmwareInfo(_, id) {
+      return await api
+        .get('/redfish/v1/UpdateService/FirmwareInventory/' + id)
+        .then(({ data }) => {
+          return data;
+        });
+    },
+    async deleteBrokenFirmware(context, id) {
+      const data = JSON.stringify({ data: [] });
+      await api.post(
+        '/xyz/openbmc_project/software/' + id + '/action/Delete',
+        data
+      );
     },
   },
 };

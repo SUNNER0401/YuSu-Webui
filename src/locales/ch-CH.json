@@ -44,6 +44,7 @@
       "fieldRequired": "内容不可为空",
       "invalidFormat": "格式不合法",
       "invalidValue": "数值不合法",
+      "simplePassword": "密码必须包含字母，数字及特殊字符",
       "lengthMustBeBetween": "长度需在%{min} – %{max}个字符",
       "mustBeAtLeast": "至少为%{value}",
       "optional": "可选的",
@@ -324,7 +325,7 @@
     "description": "该功能可以监测并控制风扇速度",
     "manualControl": "手动控制模式",
     "currentStatus": "当前风扇状态",
-    "zoneControl":"散热分区管理",
+    "zoneControl": "散热分区管理",
     "status": {
       "currentmode": "当前模式"
     },
@@ -400,18 +401,19 @@
       }
     },
     "toast": {
-      "errorSwitchImages": "运行与备份镜像切换失败。",
-      "errorUpdateFirmware": "开始固件更新失败。",
-      "errorBurning": "烧录镜像失败。",
-      "rebootStarted": "开始重启。",
-      "rebootStartedMessage": "成功启动备份镜像。",
-      "updateStarted": "开始更新",
-      "updateStartedMessage": "执行操作前需要等待固件更新通知。",
-      "verifySwitch": "校验状态",
-      "verifySwitchMessage": "刷新应用确认运行和备份镜像的切换情况。",
-      "verifyUpdate": "校验状态",
-      "verifyUpdateMessage": "刷新应用确认固件更新状况。",
-      "updateSuccessfully": "更新成功!"
+      "errorSwitchImages": "切换运行和备份映像时出错。",
+      "errorUpdateFirmware": "开始固件更新时出错。",
+      "errorBurning": "刻录映像时出错。",
+      "rebootStarted": "重启开始",
+      "pageMiss": "更新页面丢失，固件更新失败",
+      "rebootStartedMessage": "已成功从备份映像重新启动。",
+      "updateStarted": "更新开始",
+      "updateStartedMessage": "在进行任何更改之前，请等待固件更新通知。",
+      "verifySwitch": "验证开关",
+      "verifySwitchMessage": "刷新应用程序以验证运行和备份映像已切换。",
+      "verifyUpdate": "验证更新",
+      "verifyUpdateMessage": "刷新应用程序以验证固件更新成功",
+      "updateSuccessfully": "更新成功！"
     }
   },
   "pageInventory": {

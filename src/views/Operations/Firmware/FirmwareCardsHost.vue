@@ -38,9 +38,10 @@
 
 <script>
 import PageSection from '@/components/Global/PageSection';
+import StatusIcon from '@/components/Global/StatusIcon';
 
 export default {
-  components: { PageSection },
+  components: { PageSection, StatusIcon },
   computed: {
     running() {
       return this.$store.getters['firmware/activeHostFirmware'];

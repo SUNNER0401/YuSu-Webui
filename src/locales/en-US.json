@@ -43,6 +43,7 @@
       "dateMustBeBefore": "Date must be before %{date}",
       "fieldRequired": "Field required",
       "invalidFormat": "Invalid format",
+      "simplePassword": "Password must contain letters, numbers and special characters",
       "invalidValue": "Invalid value",
       "lengthMustBeBetween": "Length must be between %{min} – %{max} characters",
       "mustBeAtLeast": "Must be at least %{value}",
@@ -402,7 +403,8 @@
     "toast": {
       "errorSwitchImages": "Error switching running and backup images.",
       "errorUpdateFirmware": "Error starting firmware update.",
-      "errorBurning":"Error Burning image.",
+      "errorBurning": "Error Burning image.",
+      "pageMiss" : "Updating page missed.Updating progress did not work successfully",
       "rebootStarted": "Reboot started",
       "rebootStartedMessage": "Successfully started reboot from backup image.",
       "updateStarted": "Update started",

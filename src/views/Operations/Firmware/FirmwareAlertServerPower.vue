@@ -8,7 +8,11 @@
         </p>
       </alert>
       <!-- Power off server warning alert -->
-      <alert v-else-if="!isServerOff" variant="warning" class="mb-5">
+      <alert
+        v-else-if="isServerPowerOffRequired && !isServerOff"
+        variant="warning"
+        class="mb-5"
+      >
         <p class="mb-0">
           {{ $t('pageFirmware.alert.serverMustBePoweredOffTo') }}
         </p>
@@ -40,6 +44,13 @@ export default {
       required: true,
       type: Boolean,
     },
+  },
+  data() {
+    return {
+      isServerPowerOffRequired:
+        process.env.VUE_APP_SERVER_OFF_REQUIRED === 'true',
+      env: process.env,
+    };
   },
   computed: {
     isOperationInProgress() {
