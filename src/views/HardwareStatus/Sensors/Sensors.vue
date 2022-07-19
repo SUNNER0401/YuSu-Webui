@@ -207,7 +207,15 @@ export default {
   },
   computed: {
     allSensors() {
-      return this.$store.getters['sensors/sensors'];
+      /*
+      the order of sensors array will be disrupted, thus the array will be
+      sort before transmit value to allsensors.
+      */
+      let allSensors = this.$store.getters['sensors/sensors'].slice(0);
+      allSensors = allSensors.sort((sensor1, sensor2) => {
+        return sensor2.name < sensor1.name ? 1 : -1;
+      });
+      return allSensors;
     },
     filteredRows() {
       return this.searchFilter
@@ -219,10 +227,21 @@ export default {
     },
   },
   created() {
+    let _this = this;
+    let currentPage = this.$route.name;
+    function watchAllSensors() {
+      if (_this.$route.name != currentPage) return;
+      setTimeout(() => {
+        _this.$store.dispatch('sensors/getAllSensors').finally(() => {
+          watchAllSensors();
+        });
+      }, 1000);
+    }
     this.startLoader();
-    this.$store
-      .dispatch('sensors/getAllSensors')
-      .finally(() => this.endLoader());
+    this.$store.dispatch('sensors/getAllSensors').finally(() => {
+      this.endLoader();
+      watchAllSensors();
+    });
   },
   methods: {
     sortCompare(a, b, key) {

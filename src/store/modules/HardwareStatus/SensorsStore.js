@@ -1,5 +1,4 @@
 import api from '@/store/api';
-import { uniqBy } from 'lodash';
 
 const SensorsStore = {
   namespaced: true,
@@ -11,7 +10,16 @@ const SensorsStore = {
   },
   mutations: {
     setSensors: (state, sensors) => {
-      state.sensors = uniqBy([...state.sensors, ...sensors], 'name');
+      // state.sensors = uniqBy([...state.sensors, ...sensors], 'name');
+      sensors.forEach((item) => {
+        for (let i = 0; i < state.sensors.length; i++) {
+          if (state.sensors[i].name === item.name) {
+            state.sensors.splice(i, 1);
+            break;
+          }
+        }
+      });
+      state.sensors = [...state.sensors, ...sensors];
     },
   },
   actions: {
