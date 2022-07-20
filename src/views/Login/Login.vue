@@ -69,6 +69,8 @@ import VuelidateMixin from '@/components/Mixins/VuelidateMixin.js';
 import i18n from '@/i18n';
 import Alert from '@/components/Global/Alert';
 import InputPasswordToggle from '@/components/Global/InputPasswordToggle';
+import { setRoutes } from '@/env/router/phytium';
+import VueRouter from 'vue-router';
 
 export default {
   name: 'Login',
@@ -112,6 +114,26 @@ export default {
     this.$i18n.locale = localStorage.getItem('storedLanguage') || 'ch-CH';
   },
   methods: {
+    reCalculateRoutes() {
+      const router = new VueRouter({
+        base: process.env.BASE_URL,
+        routes: setRoutes(),
+        linkExactActiveClass: 'nav-link--current',
+      });
+      router.beforeEach((to, from, next) => {
+        if (to.matched.some((record) => record.meta.requiresAuth)) {
+          if (this.$store.getters['authentication/isLoggedIn']) {
+            next();
+            return;
+          }
+          next('/login');
+        } else {
+          next();
+        }
+      });
+      this.$router.matcher = router.matcher;
+      this.$router.options = router.options;
+    },
     login: function () {
       this.$v.$touch();
       if (this.$v.$invalid) return;
@@ -125,6 +147,7 @@ export default {
           localStorage.setItem('storedUsername', username);
           this.$store.commit('global/setUsername', username);
           this.$store.commit('global/setLanguagePreference', i18n.locale);
+          this.reCalculateRoutes();
           return this.$store.dispatch(
             'authentication/checkPasswordChangeRequired',
             username

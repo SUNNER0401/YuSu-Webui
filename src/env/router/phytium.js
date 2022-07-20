@@ -1,296 +1,285 @@
-import AppLayout from '@/layouts/AppLayout.vue';
-import ChangePassword from '@/views/ChangePassword';
-import ConsoleLayout from '@/layouts/ConsoleLayout.vue';
-import DateTime from '@/views/Settings/DateTime';
-import EventLogs from '@/views/Logs/EventLogs';
-import FactoryReset from '@/views/Operations/FactoryReset';
-import Firmware from '@/views/Operations/Firmware';
-import Inventory from '@/views/HardwareStatus/Inventory';
-import Kvm from '@/views/Operations/Kvm';
-import KvmConsole from '@/views/Operations/Kvm/KvmConsole';
-import Sessions from '@/views/SecurityAndAccess/Sessions';
-import Ldap from '@/views/SecurityAndAccess/Ldap';
-import UserManagement from '@/views/SecurityAndAccess/UserManagement';
-import Login from '@/views/Login';
-import LoginLayout from '@/layouts/LoginLayout';
-import Network from '@/views/Settings/Network';
-import Overview from '@/views/Overview';
-import PageNotFound from '@/views/PageNotFound';
-import PostCodeLogs from '@/views/Logs/PostCodeLogs';
-import PowerRestorePolicy from '@/views/Settings/PowerRestorePolicy';
-import ProfileSettings from '@/views/ProfileSettings';
-import RebootBmc from '@/views/Operations/RebootBmc';
-import Policies from '@/views/SecurityAndAccess/Policies';
-import Sensors from '@/views/HardwareStatus/Sensors';
-import SerialOverLan from '@/views/Operations/SerialOverLan';
-import SerialOverLanConsole from '@/views/Operations/SerialOverLan/SerialOverLanConsole';
-import ServerPowerOperations from '@/views/Operations/ServerPowerOperations';
-import Certificates from '@/views/SecurityAndAccess/Certificates';
-import VirtualMedia from '@/views/Operations/VirtualMedia';
-import Power from '@/views/ResourceManagement/Power';
-
-import FanSpeed from '@/views/Operations/FanSpeed';
-import AlarmSetting from '@/views/Settings/AlarmSetting';
 import i18n from '@/i18n';
 
-const routes = [
-  {
-    path: '/login',
-    component: LoginLayout,
-    children: [
-      {
-        path: '',
-        name: 'login',
-        component: Login,
-        meta: {
-          title: i18n.t('appPageTitle.login'),
+// Import layouts quickly.
+const layouts = {};
+const context1 = require.context('@/layouts', true, /\.vue$/);
+context1.keys().forEach((key) => {
+  let filename = key.split('/')[key.split('/').length - 1];
+  let viewName = filename.replace('.vue', '');
+  layouts[viewName] = context1(key).default;
+});
+// Import views quickly.
+const views = {};
+const context2 = require.context('@/views', true, /\.vue$/);
+context2.keys().forEach((key) => {
+  let filename = key.split('/')[key.split('/').length - 1];
+  let viewName = filename.replace('.vue', '');
+  views[viewName] = context2(key).default;
+});
+
+export var setRoutes = () => {
+  return [
+    {
+      path: '/login',
+      component: layouts.LoginLayout,
+      children: [
+        {
+          path: '',
+          name: 'login',
+          component: views.Login,
+          meta: {
+            title: i18n.t('appPageTitle.login'),
+          },
         },
-      },
-      {
-        path: '/change-password',
-        name: 'change-password',
-        component: ChangePassword,
-        meta: {
-          title: i18n.t('appPageTitle.changePassword'),
-          requiresAuth: true,
+        {
+          path: '/change-password',
+          name: 'change-password',
+          component: views.ChangePassword,
+          meta: {
+            title: i18n.t('appPageTitle.changePassword'),
+            requiresAuth: true,
+          },
         },
-      },
-    ],
-  },
-  {
-    path: '/console',
-    component: ConsoleLayout,
-    meta: {
-      requiresAuth: true,
+      ],
     },
-    children: [
-      {
-        path: 'serial-over-lan-console',
-        name: 'serial-over-lan-console',
-        component: SerialOverLanConsole,
-        meta: {
-          title: i18n.t('appPageTitle.serialOverLan'),
-        },
+    {
+      path: '/console',
+      component: layouts.ConsoleLayout,
+      meta: {
+        requiresAuth: true,
       },
-      {
-        path: 'kvm',
-        name: 'kvm-console',
-        component: KvmConsole,
-        meta: {
-          title: i18n.t('appPageTitle.kvm'),
+      children: [
+        {
+          path: 'serial-over-lan-console',
+          name: 'serial-over-lan-console',
+          component: views.SerialOverLanConsole,
+          meta: {
+            title: i18n.t('appPageTitle.serialOverLan'),
+          },
         },
-      },
-    ],
-  },
-  {
-    path: '/',
-    meta: {
-      requiresAuth: true,
+        {
+          path: 'kvm',
+          name: 'kvm-console',
+          component: views.KvmConsole,
+          meta: {
+            title: i18n.t('appPageTitle.kvm'),
+          },
+        },
+      ],
     },
-    component: AppLayout,
-    children: [
-      {
-        path: '',
-        name: 'overview',
-        component: Overview,
-        meta: {
-          title: i18n.t('appPageTitle.overview'),
-        },
+    {
+      path: '/',
+      meta: {
+        requiresAuth: true,
       },
-      {
-        path: '/profile-settings',
-        name: 'profile-settings',
-        component: ProfileSettings,
-        meta: {
-          title: i18n.t('appPageTitle.profileSettings'),
+      component: layouts.AppLayout,
+      children: [
+        {
+          path: '',
+          name: 'overview',
+          component: views.Overview,
+          meta: {
+            // title: i18n.t('appPageTitle.overview'),
+            title: i18n.t('appPageTitle.overview'),
+          },
         },
-      },
-      {
-        path: '/logs/event-logs',
-        name: 'event-logs',
-        component: EventLogs,
-        meta: {
-          title: i18n.t('appPageTitle.eventLogs'),
+        {
+          path: '/profile-settings',
+          name: 'profile-settings',
+          component: views.ProfileSettings,
+          meta: {
+            title: i18n.t('appPageTitle.profileSettings'),
+          },
         },
-      },
-      {
-        path: '/logs/post-code-logs',
-        name: 'post-code-logs',
-        component: PostCodeLogs,
-        meta: {
-          title: i18n.t('appPageTitle.postCodeLogs'),
+        {
+          path: '/logs/event-logs',
+          name: 'event-logs',
+          component: views.EventLogs,
+          meta: {
+            title: i18n.t('appPageTitle.eventLogs'),
+          },
         },
-      },
-      {
-        path: '/hardware-status/inventory',
-        name: 'inventory',
-        component: Inventory,
-        meta: {
-          title: i18n.t('appPageTitle.inventory'),
+        {
+          path: '/logs/post-code-logs',
+          name: 'post-code-logs',
+          component: views.PostCodeLogs,
+          meta: {
+            title: i18n.t('appPageTitle.postCodeLogs'),
+          },
         },
-      },
-      {
-        path: '/hardware-status/sensors',
-        name: 'sensors',
-        component: Sensors,
-        meta: {
-          title: i18n.t('appPageTitle.sensors'),
+        {
+          path: '/hardware-status/inventory',
+          name: 'inventory',
+          component: views.Inventory,
+          meta: {
+            title: i18n.t('appPageTitle.inventory'),
+          },
         },
-      },
-      {
-        path: '/security-and-access/sessions',
-        name: 'sessions',
-        component: Sessions,
-        meta: {
-          title: i18n.t('appPageTitle.sessions'),
+        {
+          path: '/hardware-status/sensors',
+          name: 'sensors',
+          component: views.Sensors,
+          meta: {
+            title: i18n.t('appPageTitle.sensors'),
+          },
         },
-      },
-      {
-        path: '/security-and-access/ldap',
-        name: 'ldap',
-        component: Ldap,
-        meta: {
-          title: i18n.t('appPageTitle.ldap'),
+        {
+          path: '/security-and-access/sessions',
+          name: 'sessions',
+          component: views.Sessions,
+          meta: {
+            title: i18n.t('appPageTitle.sessions'),
+          },
         },
-      },
-      {
-        path: '/security-and-access/user-management',
-        name: 'local-users',
-        component: UserManagement,
-        meta: {
-          title: i18n.t('appPageTitle.userManagement'),
+        {
+          path: '/security-and-access/ldap',
+          name: 'ldap',
+          component: views.Ldap,
+          meta: {
+            title: i18n.t('appPageTitle.ldap'),
+          },
         },
-      },
-      {
-        path: '/security-and-access/policies',
-        name: 'policies',
-        component: Policies,
-        meta: {
-          title: i18n.t('appPageTitle.policies'),
+        {
+          path: '/security-and-access/user-management',
+          name: 'local-users',
+          component: views.UserManagement,
+          meta: {
+            title: i18n.t('appPageTitle.userManagement'),
+          },
         },
-      },
-      {
-        path: '/security-and-access/certificates',
-        name: 'certificates',
-        component: Certificates,
-        meta: {
-          title: i18n.t('appPageTitle.certificates'),
+        {
+          path: '/security-and-access/policies',
+          name: 'policies',
+          component: views.Policies,
+          meta: {
+            title: i18n.t('appPageTitle.policies'),
+          },
         },
-      },
-      {
-        path: '/settings/date-time',
-        name: 'date-time',
-        component: DateTime,
-        meta: {
-          title: i18n.t('appPageTitle.dateTime'),
+        {
+          path: '/security-and-access/certificates',
+          name: 'certificates',
+          component: views.Certificates,
+          meta: {
+            title: i18n.t('appPageTitle.certificates'),
+          },
         },
-      },
-      {
-        path: '/operations/factory-reset',
-        name: 'factory-reset',
-        component: FactoryReset,
-        meta: {
-          title: i18n.t('appPageTitle.factoryReset'),
+        {
+          path: '/settings/date-time',
+          name: 'date-time',
+          component: views.DateTime,
+          meta: {
+            title: i18n.t('appPageTitle.dateTime'),
+          },
         },
-      },
-      {
-        path: '/operations/fan-speed',
-        name: 'fan-speed',
-        component: FanSpeed,
-        meta: {
-          title: i18n.t('appPageTitle.fanSpeed'),
+        {
+          path: '/operations/factory-reset',
+          name: 'factory-reset',
+          component: views.FactoryReset,
+          meta: {
+            title: i18n.t('appPageTitle.factoryReset'),
+          },
         },
-      },
-      {
-        path: '/operations/kvm',
-        name: 'kvm',
-        component: Kvm,
-        meta: {
-          title: i18n.t('appPageTitle.kvm'),
+        {
+          path: '/operations/fan-speed',
+          name: 'fan-speed',
+          component: views.FanSpeed,
+          meta: {
+            title: i18n.t('appPageTitle.fanSpeed'),
+          },
         },
-      },
-      {
-        path: '/operations/firmware',
-        name: 'firmware',
-        component: Firmware,
-        meta: {
-          title: i18n.t('appPageTitle.firmware'),
+        {
+          path: '/operations/kvm',
+          name: 'kvm',
+          component: views.Kvm,
+          meta: {
+            title: i18n.t('appPageTitle.kvm'),
+          },
         },
-      },
-      {
-        path: '/settings/network',
-        name: 'network',
-        component: Network,
-        meta: {
-          title: i18n.t('appPageTitle.network'),
+        {
+          path: '/operations/firmware',
+          name: 'firmware',
+          component: views.Firmware,
+          meta: {
+            title: i18n.t('appPageTitle.firmware'),
+          },
         },
-      },
-      {
-        path: '/settings/power-restore-policy',
-        name: 'power-restore-policy',
-        component: PowerRestorePolicy,
-        meta: {
-          title: i18n.t('appPageTitle.powerRestorePolicy'),
+        {
+          path: '/settings/network',
+          name: 'network',
+          component: views.Network,
+          meta: {
+            title: i18n.t('appPageTitle.network'),
+          },
         },
-      },
-      {
-        path: '/settings/alarm-setting',
-        name: 'alarm-setting',
-        component: AlarmSetting,
-        meta: {
-          title: i18n.t('appPageTitle.alarmSetting'),
+        {
+          path: '/settings/power-restore-policy',
+          name: 'power-restore-policy',
+          component: views.PowerRestorePolicy,
+          meta: {
+            title: i18n.t('appPageTitle.powerRestorePolicy'),
+          },
         },
-      },
-      {
-        path: '/resource-management/power',
-        name: 'power',
-        component: Power,
-        meta: {
-          title: i18n.t('appPageTitle.power'),
+        {
+          path: '/settings/alarm-setting',
+          name: 'alarm-setting',
+          component: views.AlarmSetting,
+          meta: {
+            title: i18n.t('appPageTitle.alarmSetting'),
+          },
         },
-      },
-      {
-        path: '/operations/reboot-bmc',
-        name: 'reboot-bmc',
-        component: RebootBmc,
-        meta: {
-          title: i18n.t('appPageTitle.rebootBmc'),
+        {
+          path: '/resource-management/power',
+          name: 'power',
+          component: views.Power,
+          meta: {
+            title: i18n.t('appPageTitle.power'),
+          },
         },
-      },
-      {
-        path: '/operations/serial-over-lan',
-        name: 'serial-over-lan',
-        component: SerialOverLan,
-        meta: {
-          title: i18n.t('appPageTitle.serialOverLan'),
+        {
+          path: '/operations/reboot-bmc',
+          name: 'reboot-bmc',
+          component: views.RebootBmc,
+          meta: {
+            title: i18n.t('appPageTitle.rebootBmc'),
+          },
         },
-      },
-      {
-        path: '/operations/server-power-operations',
-        name: 'server-power-operations',
-        component: ServerPowerOperations,
-        meta: {
-          title: i18n.t('appPageTitle.serverPowerOperations'),
+        {
+          path: '/operations/serial-over-lan',
+          name: 'serial-over-lan',
+          component: views.SerialOverLan,
+          meta: {
+            title: i18n.t('appPageTitle.serialOverLan'),
+          },
         },
-      },
-      {
-        path: '/operations/virtual-media',
-        name: 'virtual-media',
-        component: VirtualMedia,
-        meta: {
-          title: i18n.t('appPageTitle.virtualMedia'),
+        {
+          path: '/operations/server-power-operations',
+          name: 'server-power-operations',
+          component: views.ServerPowerOperations,
+          meta: {
+            title: i18n.t('appPageTitle.serverPowerOperations'),
+          },
         },
-      },
-      {
-        path: '*',
-        name: 'page-not-found',
-        component: PageNotFound,
-        meta: {
-          title: i18n.t('appPageTitle.pageNotFound'),
+        {
+          path: '/operations/virtual-media',
+          name: 'virtual-media',
+          component: views.VirtualMedia,
+          meta: {
+            title: i18n.t('appPageTitle.virtualMedia'),
+          },
         },
-      },
-    ],
-  },
-];
+        {
+          path: '*',
+          name: 'page-not-found',
+          component: views.PageNotFound,
+          meta: {
+            title: i18n.t('appPageTitle.pageNotFound'),
+          },
+        },
+      ],
+    },
+  ];
+};
+
+const routes = setRoutes();
 
 export default routes;
