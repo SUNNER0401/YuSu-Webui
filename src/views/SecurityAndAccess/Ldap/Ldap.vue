@@ -231,7 +231,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { find } from 'lodash';
 import { requiredIf } from 'vuelidate/lib/validators';
 
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
@@ -286,14 +285,14 @@ export default {
       return this.$store.getters['certificates/allCertificates'];
     },
     caCertificateExpiration() {
-      const caCertificate = find(this.sslCertificates, {
+      const caCertificate = this._.find(this.sslCertificates, {
         type: 'TrustStore Certificate',
       });
       if (caCertificate === undefined) return null;
       return caCertificate.validUntil;
     },
     ldapCertificateExpiration() {
-      const ldapCertificate = find(this.sslCertificates, {
+      const ldapCertificate = this._.find(this.sslCertificates, {
         type: 'LDAP Certificate',
       });
       if (ldapCertificate === undefined) return null;

@@ -149,7 +149,6 @@
 <script>
 import IconDownload from '@carbon/icons-vue/es/download/20';
 import IconExport from '@carbon/icons-vue/es/document--export/20';
-import { omit } from 'lodash';
 import PageTitle from '@/components/Global/PageTitle';
 import Search from '@/components/Global/Search';
 import TableCellCount from '@/components/Global/TableCellCount';
@@ -279,7 +278,7 @@ export default {
       );
     },
     batchExportData() {
-      return this.selectedRows.map((row) => omit(row, 'actions'));
+      return this.selectedRows.map((row) => this._.omit(row, 'actions'));
     },
     filteredLogsByDate() {
       return this.getFilteredTableDataByDate(

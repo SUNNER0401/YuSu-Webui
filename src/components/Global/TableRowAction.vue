@@ -55,8 +55,6 @@
 </template>
 
 <script>
-import { omit } from 'lodash';
-
 export default {
   name: 'TableRowAction',
   props: {
@@ -99,7 +97,7 @@ export default {
   },
   computed: {
     dataForExport() {
-      return JSON.stringify(omit(this.rowData, 'actions'));
+      return JSON.stringify(this._.omit(this.rowData, 'actions'));
     },
     download() {
       return `${this.exportName}.json`;

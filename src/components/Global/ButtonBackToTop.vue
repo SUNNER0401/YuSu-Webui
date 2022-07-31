@@ -15,8 +15,6 @@
 <script>
 import UpToTop24 from '@carbon/icons-vue/es/up-to-top/24';
 
-import { debounce } from 'lodash';
-
 export default {
   name: 'BackToTop',
   components: { IconUpToTop: UpToTop24 },
@@ -26,7 +24,7 @@ export default {
     };
   },
   created() {
-    window.addEventListener('scroll', debounce(this.handleScroll, 200));
+    window.addEventListener('scroll', this._.debounce(this.handleScroll, 200));
   },
   methods: {
     handleScroll() {

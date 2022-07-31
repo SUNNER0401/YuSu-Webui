@@ -63,7 +63,6 @@ import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
 import PageSection from '@/components/Global/PageSection';
 import JumpLink16 from '@carbon/icons-vue/es/jump-link/16';
 import JumpLinkMixin from '@/components/Mixins/JumpLinkMixin';
-import { chunk } from 'lodash';
 
 export default {
   components: {
@@ -144,7 +143,7 @@ export default {
   computed: {
     quicklinkColumns() {
       // Chunk links array to 3 array's to display 3 items per column
-      return chunk(this.links, 3);
+      return this._.chunk(this.links, 3);
     },
   },
   created() {

@@ -1,5 +1,6 @@
 import api from '@/store/api';
 import i18n from '@/i18n';
+
 import { find } from 'lodash';
 
 const LdapStore = {

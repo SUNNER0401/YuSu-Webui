@@ -27,7 +27,6 @@
 import { AttachAddon } from 'xterm-addon-attach';
 import { FitAddon } from 'xterm-addon-fit';
 import { Terminal } from 'xterm';
-import { throttle } from 'lodash';
 import IconLaunch from '@carbon/icons-vue/es/launch/20';
 import StatusIcon from '@/components/Global/StatusIcon';
 
@@ -102,7 +101,7 @@ export default {
       term.open(this.$refs.panel);
       fitAddon.fit();
 
-      this.resizeConsoleWindow = throttle(() => {
+      this.resizeConsoleWindow = this._.throttle(() => {
         fitAddon.fit();
       }, 1000);
       window.addEventListener('resize', this.resizeConsoleWindow);

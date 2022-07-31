@@ -43,6 +43,7 @@ import {
 import Vuelidate from 'vuelidate';
 import i18n from './i18n';
 import { format } from 'date-fns-tz';
+import _ from 'lodash';
 
 // Filters
 Vue.filter('shortTimeZone', function (value) {
@@ -132,6 +133,8 @@ Vue.use(ToastPlugin);
 Vue.use(TooltipPlugin);
 Vue.use(IconsPlugin);
 Vue.use(Vuelidate);
+
+Vue.prototype._ = _;
 
 new Vue({
   router,

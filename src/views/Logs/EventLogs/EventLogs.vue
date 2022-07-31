@@ -244,7 +244,6 @@ import IconTrashcan from '@carbon/icons-vue/es/trash-can/20';
 import IconExport from '@carbon/icons-vue/es/document--export/20';
 import IconChevron from '@carbon/icons-vue/es/chevron--down/20';
 import IconDownload from '@carbon/icons-vue/es/download/20';
-import { omit } from 'lodash';
 
 import PageTitle from '@/components/Global/PageTitle';
 import StatusIcon from '@/components/Global/StatusIcon';
@@ -416,7 +415,7 @@ export default {
       });
     },
     batchExportData() {
-      return this.selectedRows.map((row) => omit(row, 'actions'));
+      return this.selectedRows.map((row) => this._.omit(row, 'actions'));
     },
     filteredLogsByDate() {
       return this.getFilteredTableDataByDate(

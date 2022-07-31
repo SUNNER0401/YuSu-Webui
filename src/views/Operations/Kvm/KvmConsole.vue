@@ -45,7 +45,6 @@ import RFB from '@novnc/novnc/core/rfb';
 import StatusIcon from '@/components/Global/StatusIcon';
 import IconLaunch from '@carbon/icons-vue/es/launch/20';
 import IconArrowDown from '@carbon/icons-vue/es/arrow--down/16';
-import { throttle } from 'lodash';
 
 const Connecting = 0;
 const Connected = 1;
@@ -116,7 +115,7 @@ export default {
       this.rfb.clipViewport = true;
       const that = this;
 
-      this.resizeKvmWindow = throttle(() => {
+      this.resizeKvmWindow = this._.throttle(() => {
         setTimeout(that.setWidthToolbar, 0);
       }, 1000);
       window.addEventListener('resize', this.resizeKvmWindow);
