@@ -82,7 +82,9 @@
     },
     "toast": {
       "unAuthTitle": "未授权",
-      "unAuthDescription": "当前帐户不可访问，请使用管理员账户查看权限。"
+      "unAuthDescription": "当前帐户不可访问，请使用管理员账户查看权限。",
+      "warning": "警告",
+      "browserNotSupport": "当前浏览器不支持。"
     }
   },
   "appHeader": {
@@ -96,7 +98,9 @@
     "titleHideNavigation": "隐藏导航",
     "titleShowNavigation": "显示导航",
     "titleProfile": "显示配置文件菜单",
-    "titleRefresh": "刷新应用数据"
+    "titleRefresh": "刷新应用数据",
+    "fullScreen": "全屏显示",
+    "exitFullscreen": "退出全屏"
   },
   "appNavigation": {
     "resourceManagement": "资源管理",

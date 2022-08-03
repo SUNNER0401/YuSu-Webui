@@ -1,7 +1,16 @@
 const CompressionPlugin = require('compression-webpack-plugin');
 const webpack = require('webpack');
 
+const path = require('path');
+
+function resolve(dir) {
+  return path.join(__dirname, dir);
+}
+
 module.exports = {
+  // Some packages without index.js probably get error in compile stage,
+  // thus you need to add this option here.
+  transpileDependencies: ['screenfull'],
   chainWebpack: (config) => {
     config.module
       .rule('vue')
@@ -22,6 +31,18 @@ module.exports = {
 
         return options;
       });
+    config.module.rule('svg').exclude.add(resolve('src/icons')).end();
+    config.module
+      .rule('icons')
+      .test(/\.svg$/)
+      .include.add(resolve('src/icons'))
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]',
+      })
+      .end();
   },
   css: {
     loaderOptions: {

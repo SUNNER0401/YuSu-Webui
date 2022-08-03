@@ -7,6 +7,8 @@ import router from './router';
 //dotenv customizations.
 import store from './store';
 
+import './icons'; // icon
+
 import {
   AlertPlugin,
   BadgePlugin,

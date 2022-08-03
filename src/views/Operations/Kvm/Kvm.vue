@@ -19,6 +19,6 @@ export default {
 
 <style scoped>
 .terminal-container {
-  width: 100%;
+  max-width: 650.66px;
 }
 </style>

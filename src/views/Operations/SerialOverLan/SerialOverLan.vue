@@ -8,7 +8,7 @@
         />
 
         <page-section class="mb-0">
-          <serial-over-lan-console :is-full-window="false" />
+          <serial-over-lan-console :is-full-window="false" :element="element" />
         </page-section>
       </b-col>
     </b-row>
@@ -27,5 +27,20 @@ export default {
     PageTitle,
     SerialOverLanConsole,
   },
+  // You only can get dom after mounting operation.
+  data() {
+    return {
+      element: null,
+    };
+  },
+  mounted() {
+    this.element = document.getElementById('terminal');
+  },
 };
 </script>
+
+<style lang="scss" scoped>
+.container-fluid {
+  height: 90vh;
+}
+</style>

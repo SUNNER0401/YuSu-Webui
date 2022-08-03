@@ -1,5 +1,8 @@
 <template>
-  <div :class="isFullWindow ? 'full-window-container' : 'terminal-container'">
+  <div
+    id="serial-over-lan-console"
+    :class="isFullWindow ? 'full-window-container' : 'terminal-container'"
+  >
     <b-row class="d-flex">
       <b-col class="d-flex flex-column justify-content-end">
         <dl class="mb-2" sm="6" md="6">
@@ -20,6 +23,9 @@
       </b-col>
     </b-row>
     <div id="terminal" ref="panel"></div>
+    <div class="SOL-toolbar">
+      <screen-full class="SOL-toolbar-item ml-2" :element="element" />
+    </div>
   </div>
 </template>
 
@@ -29,17 +35,23 @@ import { FitAddon } from 'xterm-addon-fit';
 import { Terminal } from 'xterm';
 import IconLaunch from '@carbon/icons-vue/es/launch/20';
 import StatusIcon from '@/components/Global/StatusIcon';
+import ScreenFull from '@/components/Global/ScreenFull';
 
 export default {
   name: 'SerialOverLanConsole',
   components: {
     IconLaunch,
     StatusIcon,
+    ScreenFull,
   },
   props: {
     isFullWindow: {
       type: Boolean,
       default: true,
+    },
+    element: {
+      type: HTMLDivElement,
+      default: null,
     },
   },
   data() {
@@ -61,10 +73,12 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('global/getServerStatus');
+    // this.$store.dispatch('global/getServerStatus');
   },
   mounted() {
-    this.openTerminal();
+    setTimeout(() => {
+      this.openTerminal();
+    }, 300);
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.resizeConsoleWindow);
@@ -136,13 +150,26 @@ export default {
 <style lang="scss" scoped>
 @import '~xterm/css/xterm.css';
 
-#terminal {
+#terminal:not(.fullscreen) {
   overflow: auto;
-  max-width: 95vw;
+  max-height: 400px;
 }
 
 .full-window-container {
   width: 97%;
   margin: 1.5%;
+}
+
+#serial-over-lan-console {
+  max-width: 94vw;
+  .SOL-toolbar {
+    float: right;
+    .SOL-toolbar-item {
+      display: inline-block;
+    }
+  }
+  .btn-link {
+    padding-right: 0;
+  }
 }
 </style>

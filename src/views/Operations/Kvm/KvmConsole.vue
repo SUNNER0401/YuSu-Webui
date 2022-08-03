@@ -1,6 +1,6 @@
 <template>
   <div :class="marginClass">
-    <div ref="toolbar" class="kvm-toolbar">
+    <div ref="toolbar1" class="kvm-toolbar1">
       <b-row class="d-flex">
         <b-col class="d-flex flex-column justify-content-end" cols="4">
           <dl class="mb-2" sm="2" md="2">
@@ -37,6 +37,13 @@
       </b-row>
     </div>
     <div id="terminal-kvm" ref="panel" :class="terminalClass"></div>
+    <div ref="toolbar2" class="kvm-toolbar2">
+      <b-row>
+        <b-col class="d-flex justify-content-end">
+          <screen-full class="kvm-toolbar2-item ml-2" :element="element" />
+        </b-col>
+      </b-row>
+    </div>
   </div>
 </template>
 
@@ -45,6 +52,7 @@ import RFB from '@novnc/novnc/core/rfb';
 import StatusIcon from '@/components/Global/StatusIcon';
 import IconLaunch from '@carbon/icons-vue/es/launch/20';
 import IconArrowDown from '@carbon/icons-vue/es/arrow--down/16';
+import ScreenFull from '@/components/Global/ScreenFull';
 
 const Connecting = 0;
 const Connected = 1;
@@ -52,7 +60,7 @@ const Disconnected = 2;
 
 export default {
   name: 'KvmConsole',
-  components: { StatusIcon, IconLaunch, IconArrowDown },
+  components: { StatusIcon, IconLaunch, IconArrowDown, ScreenFull },
   props: {
     isFullWindow: {
       type: Boolean,
@@ -68,6 +76,7 @@ export default {
       status: Connecting,
       convasRef: null,
       resizeKvmWindow: null,
+      element: null,
     };
   },
   computed: {
@@ -89,6 +98,7 @@ export default {
     },
   },
   mounted() {
+    this.element = document.querySelector('#terminal-kvm');
     this.openTerminal();
   },
   beforeDestroy() {
@@ -116,14 +126,14 @@ export default {
       const that = this;
 
       this.resizeKvmWindow = this._.throttle(() => {
-        setTimeout(that.setWidthToolbar, 0);
+        setTimeout(that.setWidthToolbars, 0);
       }, 1000);
       window.addEventListener('resize', this.resizeKvmWindow);
 
       this.rfb.addEventListener('connect', () => {
         that.isConnected = true;
         that.status = Connected;
-        that.setWidthToolbar();
+        that.setWidthToolbars();
       });
 
       this.rfb.addEventListener('disconnect', () => {
@@ -131,13 +141,13 @@ export default {
         that.status = Disconnected;
       });
     },
-    setWidthToolbar() {
+    setWidthToolbars() {
       if (
         this.$refs.panel.children &&
         this.$refs.panel.children.length > 0 &&
         this.$refs.panel.children[0].children.length > 0
       ) {
-        this.$refs.toolbar.style.width =
+        this.$refs.toolbar1.style.width =
           this.$refs.panel.children[0].children[0].clientWidth - 10 + 'px';
       }
     },

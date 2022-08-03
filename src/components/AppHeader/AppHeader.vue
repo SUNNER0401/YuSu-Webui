@@ -51,6 +51,15 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto helper-menu">
           <b-nav-item
+            id="global-fullscreen"
+            @click="fullscreen"
+            @mouseup="blur"
+          >
+            <screen-full ref="globalFullScreen" />
+            <span v-if="!isFullscreen">{{ $t('appHeader.fullScreen') }}</span>
+            <span v-else>{{ $t('appHeader.exitfullscreen') }}</span>
+          </b-nav-item>
+          <b-nav-item
             to="/logs/event-logs"
             data-test-id="appHeader-container-health"
           >
@@ -115,6 +124,7 @@ import IconMenu from '@carbon/icons-vue/es/menu/20';
 import IconRenew from '@carbon/icons-vue/es/renew/20';
 import StatusIcon from '@/components/Global/StatusIcon';
 import LoadingBar from '@/components/Global/LoadingBar';
+import ScreenFull from '@/components/Global/ScreenFull';
 
 export default {
   name: 'AppHeader',
@@ -125,12 +135,14 @@ export default {
     IconRenew,
     StatusIcon,
     LoadingBar,
+    ScreenFull,
   },
   mixins: [BVToastMixin],
   data() {
     return {
       isNavigationOpen: false,
       altLogo: process.env.VUE_APP_COMPANY_NAME || 'Built on OpenBMC',
+      isFullscreen: false,
     };
   },
   computed: {
@@ -201,12 +213,22 @@ export default {
     this.getEvents();
   },
   mounted() {
+    this.isFullscreen = this.$refs.globalFullScreen.isFullscreen;
     this.$root.$on(
       'change-is-navigation-open',
       (isNavigationOpen) => (this.isNavigationOpen = isNavigationOpen)
     );
   },
   methods: {
+    blur(event) {
+      if (event.which == 1) {
+        document.querySelector('#global-fullscreen>.nav-link').blur();
+        this.isFullscreen = !this.$refs.globalFullScreen.isFullscreen;
+      }
+    },
+    fullscreen() {
+      this.$refs.globalFullScreen.click();
+    },
     getSystemInfo() {
       this.$store.dispatch('global/getSystemInfo');
     },
@@ -391,5 +413,8 @@ export default {
 
 img {
   height: 0.8 * $header-height;
+}
+#global-fullscreen span {
+  margin-left: 5px;
 }
 </style>

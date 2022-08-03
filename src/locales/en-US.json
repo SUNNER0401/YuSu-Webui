@@ -82,7 +82,9 @@
     },
     "toast": {
       "unAuthTitle": "Unauthorized",
-      "unAuthDescription": "The attempted action is not accessible from the logged in account. Contact your system administrator to check your privilege role."
+      "unAuthDescription": "The attempted action is not accessible from the logged in account. Contact your system administrator to check your privilege role.",
+      "warning": "Warning",
+      "browserNotSupport": "Your browser can not work."
     }
   },
   "appHeader": {
@@ -96,7 +98,9 @@
     "titleHideNavigation": "Hide navigation",
     "titleShowNavigation": "Show navigation",
     "titleProfile": "Show profile menu",
-    "titleRefresh": "Refresh application data"
+    "titleRefresh": "Refresh application data",
+    "fullScreen": "Full",
+    "exitfullscreen": "Exit full"
   },
   "appNavigation": {
     "resourceManagement": "Resource management",

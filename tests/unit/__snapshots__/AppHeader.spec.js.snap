@@ -68,6 +68,18 @@ exports[`AppHeader.vue should render correctly 1`] = `
         class="ml-auto helper-menu"
       >
         <b-nav-item
+          id="global-fullscreen"
+        >
+          <svg-icon
+            icon-class="fullscreen"
+          />
+           
+          <span>
+            appHeader.fullScreen
+          </span>
+        </b-nav-item>
+         
+        <b-nav-item
           data-test-id="appHeader-container-health"
           to="/logs/event-logs"
         >
