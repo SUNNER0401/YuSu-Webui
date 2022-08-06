@@ -49,6 +49,9 @@ export default {
   },
   computed: {
     lastBmcRebootTime() {
+      if ('Invalid Date' == this.$store.getters['controls/lastBmcRebootTime']) {
+        return false;
+      }
       return this.$store.getters['controls/lastBmcRebootTime'];
     },
   },
