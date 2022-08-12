@@ -2,7 +2,7 @@
   <b-row>
     <b-col align="right">
       <dl>
-        <dt v-if="$i18n.locale == 'ch-CH'" id="remote-title-ch">
+        <dt v-if="$i18n.locale == 'zh-CN'" id="remote-title-ch">
           {{ $t('pageAlarmSetting.remoteServer.remoteTitleLabel') }}
         </dt>
         <dt v-else id="remote-title-en">

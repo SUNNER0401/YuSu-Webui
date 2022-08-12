@@ -89,7 +89,7 @@ export default {
           text: 'English',
         },
         {
-          value: 'ch-CH',
+          value: 'zh-CN',
           text: '简体中文',
         },
       ],
@@ -111,7 +111,7 @@ export default {
     },
   },
   created() {
-    this.$i18n.locale = localStorage.getItem('storedLanguage') || 'ch-CH';
+    this.$i18n.locale = localStorage.getItem('storedLanguage') || 'zh-CN';
   },
   methods: {
     reCalculateRoutes() {
