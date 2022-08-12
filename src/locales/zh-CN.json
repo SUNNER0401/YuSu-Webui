@@ -140,7 +140,7 @@
     "power": "电源&功率",
     "sessions": "会话管理",
     "dateTime": "时间管理",
-    "dumps": "Dumps",
+    "dumps": "转储文件",
     "eventLogs": "事件日志",
     "factoryReset": "恢复出厂设置",
     "firmware": "固件管理",
@@ -152,7 +152,7 @@
     "network": "网络设置",
     "overview": "飞腾BMC",
     "pageNotFound": "页面未找到",
-    "postCodeLogs": "POST code logs",
+    "postCodeLogs": "POST代码日志",
     "powerRestorePolicy": "电源恢复方式",
     "profileSettings": "用户配置设置",
     "rebootBmc": "重启BMC",
@@ -168,8 +168,8 @@
   "pageChangePassword": {
     "changePassword": "修改密码",
     "changePasswordAlertMessage": "密码已过期，请及时更改",
-    "changePasswordError": "更改密码时出错。",
-    "confirmNewPassword": "确认新密码。",
+    "changePasswordError": "更改密码时出错",
+    "confirmNewPassword": "确认新密码",
     "goBack": "退出登录",
     "newPassword": "新密码",
     "username": "用户名"
@@ -222,7 +222,7 @@
     "dumpsAvailableOnBmc": "BMC转储文件可用",
     "initiateDump": "初始化转储文件",
     "form": {
-      "bmcDump": "BMC 转储文件",
+      "bmcDump": "BMC转储文件",
       "initiateDump": "初始化转储文件",
       "selectDumpType": "选择转储文件类型",
       "systemDump": "系统转储文件 (会导致混乱)",
@@ -230,7 +230,7 @@
     },
     "modal": {
       "deleteDump": "删除转储文件",
-      "deleteDumpConfirmation": "您是否确定删除转储文件:%{count} ?该操作不可撤销 | 您是否确定删除转储文件组:%{count} ?该操作不可撤销。",
+      "deleteDumpConfirmation": "您是否确定删除这:%{count}个转储文件?该操作不可撤销",
       "initiateSystemDump": "初始化系统转储文件",
       "initiateSystemDumpMessage1": "您是否确定?",
       "initiateSystemDumpMessage2": "当一个转储文件正在运行时，其他转储文件不可被初始化。",
@@ -271,8 +271,8 @@
       "date": "日期",
       "description": "描述",
       "id": "ID",
-      "modifiedDate": "Modified Date",
-      "name": "Name",
+      "modifiedDate": "修改后的日期",
+      "name": "名称",
       "searchLogs": "搜索日志",
       "severity": "重要程度",
       "status": "状态",
@@ -295,7 +295,7 @@
       "resetBiosOptionLabel": "仅重置服务器设置",
       "resetBiosOptionHelperText": "重置的固件设置包括: 签名文件、独立NVRAM、区域配置.",
       "resetToDefaultsOptionLabel": "重置BMC与服务器设置",
-      "resetToDefaultsOptionHelperText": "在重置服务器设置的基础上重置BMC设置, 包括: BMC用户数据、修改过的密码、协议、LDAP配置、network地址、时间."
+      "resetToDefaultsOptionHelperText": "在重置服务器设置的基础上重置BMC设置, 包括: BMC用户数据、修改过的密码、协议、LDAP配置、网络地址、时间."
     },
     "modal": {
       "resetBiosTitle": "重置服务器设置",
@@ -544,7 +544,7 @@
       "errorSaveLdapSettings": "保存Open LDAP设置失败。",
       "errorSaveRoleGroup": "保存角色组失败。",
       "successAddRoleGroup": "添加角色组'%{groupName}'成功.",
-      "successDeleteRoleGroup": "已成功删除角色组。 \n|\n已成功删除角色组。",
+      "successDeleteRoleGroup": "已成功删除角色组。",
       "successSaveActiveDirectorySettings": "已成功保存 Active Directory 设置。",
       "successSaveLdapSettings": "已成功保存 Open LDAP 设置。",
       "successSaveRoleGroup": "已成功保存角色组“%{groupName}”。"
@@ -624,7 +624,7 @@
     "bmcTime": "BMC时间",
     "criticalEvents": "错误",
     "dhcp": "DHCPv4",
-    "dumps": "垃圾箱",
+    "dumps": "转储文件",
     "eventLogs": "事件日志",
     "firmwareInformation": "硬件信息",
     "hostName": "主机名",
@@ -707,12 +707,12 @@
     "speed": "速度(mbps)",
     "staticDns": "静态DNS",
     "modal": {
-      "editHostnameTitle": "Edit hostname",
-      "editMacAddressTitle": "Edit MAC address",
-      "gateway": "Gateway",
-      "ipAddress": "IP address",
-      "staticDns": "Static DNS",
-      "subnetMask": "Subnet mask"
+      "editHostnameTitle": "编辑主机名",
+      "editMacAddressTitle": "编辑MAC地址",
+      "gateway": "网关",
+      "ipAddress": "IP地址",
+      "staticDns": "静态DNS",
+      "subnetMask": "子网掩码"
     },
     "table": {
       "addDnsAddress": "添加IP地址",
@@ -767,9 +767,9 @@
       }
     },
     "table": {
-      "addmanager": "添加经理",
+      "addmanager": "添加管理",
       "address": "地址",
-      "port": "港口",
+      "port": "端口",
       "staticManagerRow": "静态管理器地址"
     },
     "modal": {
@@ -869,7 +869,7 @@
         "averagePower": "平均功率",
         "totalConsumedPower": "总功耗"
       }
-    }  
+    }
   },
   "pageSensors": {
     "exportFilePrefix": "传感器_",
@@ -900,7 +900,7 @@
     "lastPowerOperation": "上次电源操作",
     "oneTimeBootWarning": "等待一次启动。\n将使用指定的一次引导设置执行下一次引导。\n随后的引导将使用默认设置执行。",
     "operationInProgress": "电源操作正在进行时没有选项可显示。\n完成后，此处将显示电源操作。",
-    "operations": "运营",
+    "operations": "操作",
     "orderlyReboot": "有序 - 操作系统关闭，然后服务器重新启动",
     "orderlyShutdown": "有序 - 操作系统关闭，然后服务器关闭",
     "powerOn": "打开",
@@ -911,8 +911,8 @@
     "bootSettings": {
       "bootSettingsOverride": "引导设置覆盖",
       "enableOneTimeBoot": "启用一次启动",
-      "tpmRequiredPolicy": "TPM 所需策略",
-      "tpmRequiredPolicyHelper": "启用以确保系统仅在 TPM 正常运行时引导。"
+      "tpmRequiredPolicy": "TPM所需策略",
+      "tpmRequiredPolicyHelper": "启用以确保系统仅在TPM正常运行时引导。"
     },
     "modal": {
       "confirmRebootMessage": "您确定要重新启动吗？",
@@ -927,15 +927,15 @@
   },
   "pageCertificates": {
     "addNewCertificate": "添加新证书",
-    "caCertificate": "CA 证书",
+    "caCertificate": "CA证书",
     "deleteCertificate": "删除证书",
     "generateCsr": "产生企业社会责任",
-    "httpsCertificate": "HTTPS 证书",
-    "ldapCertificate": "LDAP 证书",
+    "httpsCertificate": "HTTPS证书",
+    "ldapCertificate": "LDAP证书",
     "replaceCertificate": "更换证书",
     "alert": {
       "certificateExpiredMessage": "%{certificate} 已过期。\n考虑用新证书替换它。",
-      "certificateExpiringMessage": "%{certificate} is expiring soon. Consider replacing it with a new certificate.",
+      "certificateExpiringMessage": "%{certificate} 即将到期。\n考虑用新证书替换它。",
       "certificatesExpiredMessage": "一些证书已过期。\n考虑用新证书替换它们。",
       "certificatesExpiringMessage": "一些证书即将到期。\n考虑用新证书替换它们。"
     },
@@ -949,7 +949,7 @@
       "city": "城市",
       "commonName": "通用名称",
       "companyName": "公司名称",
-      "companyUnit": "Company unit",
+      "companyUnit": "公司单位",
       "contactPerson": "联系人",
       "country": "国家/地区",
       "deleteConfirmMessage": "您确定要删除由 %{issuedBy} 颁发的“%{certificate}”吗？\n此操作无法撤消。",
@@ -970,9 +970,9 @@
       "validUntil": "有效期至"
     },
     "toast": {
-      "errorAddCertificate": "添加错误证书.",
-      "errorDeleteCertificate": "删除错误证书.",
-      "errorReplaceCertificate": "更换错误证书.",
+      "errorAddCertificate": "添加证书失败",
+      "errorDeleteCertificate": "删除证书失败",
+      "errorReplaceCertificate": "更换证书失败.",
       "successAddCertificate": "成功添加%{certificate}.",
       "successDeleteCertificate": "成功删除%{certificate}.",
       "successReplaceCertificate": "成功地取代了%{certificate}."
@@ -994,7 +994,7 @@
     "toast": {
       "errorMounting": "安装错误",
       "errorReadingFile": "读文件错误关闭服务器",
-      "errorUnmounting": "错误被卸载",
+      "errorUnmounting": "卸载失败",
       "serverRunning": "服务器运行",
       "serverConnectionEstablished": "服务器连接建立",
       "serverClosedSuccessfully": "服务器关闭成功",
