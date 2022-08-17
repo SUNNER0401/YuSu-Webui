@@ -20,6 +20,9 @@
         />
       </div>
     </page-container>
+    <app-footer class="app-footer">
+      <copy-right class="app-copyright" />
+    </app-footer>
   </div>
 </template>
 
@@ -27,7 +30,9 @@
 import AppHeader from '@/components/AppHeader';
 import AppNavigation from '@/components/AppNavigation';
 import PageContainer from '@/components/Global/PageContainer';
+import AppFooter from '@/components/AppFooter';
 import ButtonBackToTop from '@/components/Global/ButtonBackToTop';
+import CopyRight from '@/components/Global/CopyRight';
 import JumpLinkMixin from '@/components/Mixins/JumpLinkMixin';
 import 'animate.css';
 
@@ -37,7 +42,9 @@ export default {
     AppHeader,
     AppNavigation,
     PageContainer,
+    AppFooter,
     ButtonBackToTop,
+    CopyRight,
   },
   mixins: [JumpLinkMixin],
   data() {
@@ -79,7 +86,8 @@ export default {
     grid-template-columns: 1fr;
     grid-template-areas:
       'header'
-      'content';
+      'content'
+      'footer';
   }
 }
 
@@ -107,5 +115,9 @@ export default {
 .animate__animated {
   animation-duration: 500ms;
   -webkit-animation-duration: 500ms;
+}
+.app-footer {
+  grid-area: footer;
+  background-color: #c3e2e5;
 }
 </style>
