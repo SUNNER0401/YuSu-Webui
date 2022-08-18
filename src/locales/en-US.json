@@ -133,7 +133,9 @@
     "virtualMedia": "@:appPageTitle.virtualMedia",
     "power": "@:appPageTitle.power",
     "alarmSetting": "@:appPageTitle.alarmSetting",
-    "fanSpeed": "@:appPageTitle.fanSpeed"
+    "fanSpeed": "@:appPageTitle.fanSpeed",
+    "about": "@:appPageTitle.about",
+    "aboutUs": "@:appPageTitle.aboutUs"
   },
   "appPageTitle": {
     "changePassword": "Change password",
@@ -163,7 +165,9 @@
     "certificates": "Certificates",
     "virtualMedia": "Virtual media",
     "alarmSetting": "Alarm setting",
-    "fanSpeed":"Fan Speed"
+    "fanSpeed":"Fan Speed",
+    "about": "About",
+    "aboutUs": "About Us"
   },
   "pageChangePassword": {
     "changePassword": "Change password",
@@ -1000,6 +1004,8 @@
       "serverClosedSuccessfully": "Server closed successfully",
       "serverClosedWithErrors": "Server closed with errors"
     }
+  },
+  "pageAboutUs": {
   },
   "countries": {
     "AF": "Afghanistan",

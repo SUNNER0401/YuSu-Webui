@@ -6,6 +6,7 @@ import IconSettings from '@carbon/icons-vue/es/settings/16';
 import IconSecurity from '@carbon/icons-vue/es/security/16';
 import IconChevronUp from '@carbon/icons-vue/es/chevron--up/16';
 import IconDataBase from '@carbon/icons-vue/es/data--base--alt/16';
+import IconUserMultiple from '@carbon/icons-vue/es/user--multiple/16';
 
 const AppNavigationMixin = {
   components: {
@@ -17,6 +18,7 @@ const AppNavigationMixin = {
     iconSecurityAndAccess: IconSecurity,
     iconExpand: IconChevronUp,
     iconResourceManagement: IconDataBase,
+    iconAboutUs: IconUserMultiple,
   },
   data() {
     return {
@@ -176,6 +178,18 @@ const AppNavigationMixin = {
               id: 'power',
               label: this.$t('appNavigation.power'),
               route: '/resource-management/power',
+            },
+          ],
+        },
+        {
+          id: 'about',
+          label: this.$t('appNavigation.about'),
+          icon: 'iconAboutUs',
+          children: [
+            {
+              id: 'about-us',
+              label: this.$t('appNavigation.aboutUs'),
+              route: '/about/about-us',
             },
           ],
         },

@@ -133,7 +133,9 @@
     "virtualMedia": "@:appPageTitle.virtualMedia",
     "power": "@:appPageTitle.power",
     "alarmSetting": "@:appPageTitle.alarmSetting",
-    "fanSpeed": "@:appPageTitle.fanSpeed"
+    "fanSpeed": "@:appPageTitle.fanSpeed",
+    "about": "@:appPageTitle.about",
+    "aboutUs": "@:appPageTitle.aboutUs"
   },
   "appPageTitle": {
     "changePassword": "修改密码",
@@ -163,7 +165,9 @@
     "certificates": "安全证书",
     "virtualMedia": "虚拟媒体",
     "alarmSetting": "告警设置",
-    "fanSpeed": "风扇速度"
+    "fanSpeed": "风扇速度",
+    "about": "关于",
+    "aboutUs": "关于我们"
   },
   "pageChangePassword": {
     "changePassword": "修改密码",
@@ -1000,6 +1004,8 @@
       "serverClosedSuccessfully": "服务器关闭成功",
       "serverClosedWithErrors": "服务器关闭，出现错误"
     }
+  },
+  "pageAboutUs": {
   },
   "countries": {
     "AF": "阿富汗",

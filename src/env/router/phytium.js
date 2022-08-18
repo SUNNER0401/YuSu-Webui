@@ -268,6 +268,14 @@ export var setRoutes = () => {
           },
         },
         {
+          path: '/about/about-us',
+          name: 'about-us',
+          component: views.AboutUs,
+          meta: {
+            title: '关于我们',
+          },
+        },
+        {
           path: '*',
           name: 'page-not-found',
           component: views.PageNotFound,
