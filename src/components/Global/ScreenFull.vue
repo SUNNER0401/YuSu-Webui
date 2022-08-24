@@ -1,7 +1,7 @@
 <template>
   <b-icon
     v-if="element"
-    class="h2 mb-2 icon"
+    class="h2 icon"
     :class="{ 'full-screen': isFullscreen }"
     :icon="!isFullscreen ? 'tv' : 'tv-fill'"
     @click.stop="click"
@@ -20,6 +20,11 @@ import screenfull from 'screenfull';
 export default {
   name: 'ScreenFull',
   mixins: [BVToastMixin],
+  inject: {
+    setIsFullWindow: {
+      default: null,
+    },
+  },
   props: {
     element: {
       type: HTMLDivElement,
@@ -75,11 +80,17 @@ export default {
           this.element == screenfull.element ||
           (!this.element && screenfull.element.tagName == 'HTML')
         ) {
+          if (this.setIsFullWindow) {
+            this.setIsFullWindow(true);
+          }
           this.isFullscreen = screenfull.isFullscreen;
         } else {
           return;
         }
       } else {
+        if (this.setIsFullWindow) {
+          this.setIsFullWindow(false);
+        }
         this.isFullscreen = screenfull.isFullscreen;
       }
     },

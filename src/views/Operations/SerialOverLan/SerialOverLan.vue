@@ -8,7 +8,10 @@
         />
 
         <page-section class="mb-0">
-          <serial-over-lan-console :is-full-window="false" :element="element" />
+          <serial-over-lan-console
+            :is-full-window="isFullWindow"
+            :element="element"
+          />
         </page-section>
       </b-col>
     </b-row>
@@ -27,14 +30,25 @@ export default {
     PageTitle,
     SerialOverLanConsole,
   },
+  provide() {
+    return {
+      setIsFullWindow: this.setIsFullWindow,
+    };
+  },
   // You only can get dom after mounting operation.
   data() {
     return {
       element: null,
+      isFullWindow: false,
     };
   },
   mounted() {
-    this.element = document.getElementById('terminal');
+    this.element = document.getElementById('base-container');
+  },
+  methods: {
+    setIsFullWindow(status) {
+      this.isFullWindow = status;
+    },
   },
 };
 </script>

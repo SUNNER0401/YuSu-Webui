@@ -143,6 +143,19 @@ input.form-control, .form-background .custom-select:focus, .form-background .for
     }
   }
 }
+
+#terminal-kvm {
+  display: block;
+  height: 457px;
+
+  & > div:nth-child(2) {
+    display: block !important;
+    background: #00000000 !important;
+    overflow: hidden !important;
+    width: auto !important;
+  }
+}
+
 .app-header {
   .nav-tags {
     color: #444444;

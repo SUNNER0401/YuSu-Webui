@@ -2,7 +2,7 @@
   <b-container fluid>
     <page-title />
     <div class="terminal-container">
-      <kvm-console :is-full-window="false" />
+      <kvm-console :is-full-window="isFullWindow" />
     </div>
   </b-container>
 </template>
@@ -14,6 +14,21 @@ import KvmConsole from './KvmConsole';
 export default {
   name: 'Kvm',
   components: { PageTitle, KvmConsole },
+  provide() {
+    return {
+      setIsFullWindow: this.setIsFullWindow,
+    };
+  },
+  data() {
+    return {
+      isFullWindow: false,
+    };
+  },
+  methods: {
+    setIsFullWindow(status) {
+      this.isFullWindow = status;
+    },
+  },
 };
 </script>
 

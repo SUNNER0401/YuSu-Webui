@@ -84,7 +84,8 @@
       "unAuthTitle": "未授权",
       "unAuthDescription": "当前帐户不可访问，请使用管理员账户查看权限。",
       "warning": "警告",
-      "browserNotSupport": "当前浏览器不支持。"
+      "browserNotSupport": "当前浏览器不支持。",
+      "screenShotFailed": "截屏失败"
     }
   },
   "appHeader": {
@@ -501,7 +502,11 @@
     "status": "状态",
     "connected": "已连接",
     "connecting": "连接中",
-    "disconnected": "未连接"
+    "disconnected": "未连接",
+    "brandTitle": {
+      "screenFull": "全屏",
+      "screenShot": "截屏"
+    }
   },
   "pageLdap": {
     "pageDescription": "配置LDAP设置和管理员组",
@@ -1005,8 +1010,7 @@
       "serverClosedWithErrors": "服务器关闭，出现错误"
     }
   },
-  "pageAboutUs": {
-  },
+  "pageAboutUs": {},
   "countries": {
     "AF": "阿富汗",
     "AL": "阿尔巴尼亚",

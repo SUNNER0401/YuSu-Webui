@@ -1,21 +1,47 @@
 <template>
   <div class="icon-container">
-    <svg-icon icon-class="screenshot" @click.stop="jitT()" />
+    <b-icon class="h2 icon" :icon="'camera'" @click="jitT()" />
   </div>
 </template>
 
 <script>
-import ScreenShort from 'js-web-screen-shot';
+import html2canvas from 'html2canvas';
+import BVToastMixin from '@/components/Mixins/BVToastMixin';
+
 export default {
   name: 'ScreenShot',
+  mixins: [BVToastMixin],
+  props: {
+    element: {
+      type: HTMLElement,
+      default: null,
+    },
+  },
   methods: {
-    jitT() {
-      new ScreenShort({
-        enableWebRtc: false, //是否显示选项框
-        level: 99, //层级级别
-        completeCallback: this.callback,
-        closeCallback: this.closeFn,
+    async jitT() {
+      var _this = this;
+      let imgUrl = await new Promise((resolve) => {
+        setTimeout(() => {
+          html2canvas(_this.element, {
+            useCORS: true,
+            scale: window.devicePixelRatio < 3 ? window.devicePixelRatio : 2,
+            allowTaint: true,
+          })
+            .then((canvas) => {
+              const imgData = canvas.toDataURL('image/png');
+              resolve(imgData);
+            })
+            .catch(() => {
+              _this.errorToast(_this.$t('global.toast.screenShotFailed'));
+            });
+        }, 300);
       });
+      // Simulate the action that click a tag for downloading.
+      var link = document.createElement('a');
+      link.href = imgUrl;
+      link.download = 'kvm-screenshot';
+      link.click();
+      link.remove();
     },
   },
 };

@@ -22,9 +22,19 @@
         </b-button>
       </b-col>
     </b-row>
-    <div id="terminal" ref="panel"></div>
-    <div class="SOL-toolbar">
-      <screen-full class="SOL-toolbar-item ml-2" :element="element" />
+    <div id="base-container">
+      <div class="SOL-toolbar">
+        <div class="SOL-toolbar-menu">
+          <b-navbar-brand
+            id="SOL-screen-full"
+            class="SOL-toolbar-item ml-1 mr-1"
+            :title="$t('pageKvm.brandTitle.screenFull')"
+          >
+            <screen-full class="SOL-toolbar-item" :element="element" />
+          </b-navbar-brand>
+        </div>
+      </div>
+      <div id="terminal" ref="panel2"></div>
     </div>
   </div>
 </template>
@@ -72,8 +82,16 @@ export default {
         : this.$t('pageSerialOverLan.disconnected');
     },
   },
+  watch: {
+    isFullWindow: {
+      handler() {
+        this.resizeConsoleWindow();
+      },
+      immediate: true,
+    },
+  },
   created() {
-    // this.$store.dispatch('global/getServerStatus');
+    this.$store.dispatch('global/getServerStatus');
   },
   mounted() {
     setTimeout(() => {
@@ -104,7 +122,6 @@ export default {
 
       const fitAddon = new FitAddon();
       term.loadAddon(fitAddon);
-
       const SOL_THEME = {
         background: '#19273c',
         cursor: 'rgba(83, 146, 255, .5)',
@@ -112,7 +129,7 @@ export default {
       };
       term.setOption('theme', SOL_THEME);
 
-      term.open(this.$refs.panel);
+      term.open(this.$refs.panel2);
       fitAddon.fit();
 
       this.resizeConsoleWindow = this._.throttle(() => {
@@ -150,11 +167,6 @@ export default {
 <style lang="scss" scoped>
 @import '~xterm/css/xterm.css';
 
-#terminal:not(.fullscreen) {
-  overflow: auto;
-  max-height: 400px;
-}
-
 .full-window-container {
   width: 97%;
   margin: 1.5%;
@@ -163,13 +175,54 @@ export default {
 #serial-over-lan-console {
   max-width: 94vw;
   .SOL-toolbar {
+    position: relative;
     float: right;
+    height: 100%;
+    width: 5%;
+    background: #444444;
+    .SOL-toolbar-menu {
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
     .SOL-toolbar-item {
-      display: inline-block;
+      display: block;
+      margin: 0 auto;
+      color: white;
+      & > *:hover {
+        background: #cccccc !important;
+      }
     }
   }
   .btn-link {
     padding-right: 0;
+  }
+  &.full-window-container {
+    #terminal {
+      overflow: auto;
+      height: 100%;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      ::v-deep .xterm-screen {
+        height: 100vh !important;
+      }
+    }
+  }
+
+  &:not(.full-window-container) {
+    #terminal {
+      position: relative;
+      float: right;
+      margin: 0;
+      height: 391px;
+      width: calc(100% - 60px);
+    }
+    .SOL-toolbar {
+      height: 391px;
+      width: 60px;
+    }
   }
 }
 </style>

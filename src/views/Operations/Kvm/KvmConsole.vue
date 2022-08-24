@@ -36,13 +36,25 @@
         </b-col>
       </b-row>
     </div>
-    <div id="terminal-kvm" ref="panel" :class="terminalClass"></div>
-    <div ref="toolbar2" class="kvm-toolbar2">
-      <b-row>
-        <b-col class="d-flex justify-content-end">
-          <screen-full class="kvm-toolbar2-item ml-2" :element="element" />
-        </b-col>
-      </b-row>
+    <div id="terminal-kvm" ref="panel1" :class="terminalClass">
+      <div ref="toolbar2" class="kvm-toolbar2">
+        <div class="kvm-toolbar-menu">
+          <b-navbar-brand
+            id="kvm-screenshot"
+            class="kvm-toolbar2-item"
+            :title="$t('pageKvm.brandTitle.screenShot')"
+          >
+            <screen-shot :element="shotArea" />
+          </b-navbar-brand>
+          <b-navbar-brand
+            id="kvm-screen-full"
+            class="kvm-toolbar2-item"
+            :title="$t('pageKvm.brandTitle.screenFull')"
+          >
+            <screen-full :element="element" />
+          </b-navbar-brand>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -53,6 +65,7 @@ import StatusIcon from '@/components/Global/StatusIcon';
 import IconLaunch from '@carbon/icons-vue/es/launch/20';
 import IconArrowDown from '@carbon/icons-vue/es/arrow--down/16';
 import ScreenFull from '@/components/Global/ScreenFull';
+import ScreenShot from '@/components/Global/ScreenShot';
 
 const Connecting = 0;
 const Connected = 1;
@@ -60,7 +73,7 @@ const Disconnected = 2;
 
 export default {
   name: 'KvmConsole',
-  components: { StatusIcon, IconLaunch, IconArrowDown, ScreenFull },
+  components: { StatusIcon, IconLaunch, IconArrowDown, ScreenFull, ScreenShot },
   props: {
     isFullWindow: {
       type: Boolean,
@@ -71,15 +84,20 @@ export default {
     return {
       rfb: null,
       isConnected: false,
-      terminalClass: this.isFullWindow ? 'full-window' : '',
-      marginClass: this.isFullWindow ? 'margin-left-full-window' : '',
       status: Connecting,
       convasRef: null,
       resizeKvmWindow: null,
       element: null,
+      shotArea: null,
     };
   },
   computed: {
+    marginClass() {
+      return this.isFullWindow ? 'margin-left-full-window' : '';
+    },
+    terminalClass() {
+      return this.isFullWindow ? 'full-window' : '';
+    },
     serverStatusIcon() {
       if (this.status === Connected) {
         return 'success';
@@ -97,9 +115,23 @@ export default {
       return this.$t('pageKvm.connecting');
     },
   },
+  watch: {
+    isFullWindow: {
+      handler() {
+        this.resizeKvmWindow();
+      },
+    },
+    immediate: true,
+  },
   mounted() {
     this.element = document.querySelector('#terminal-kvm');
     this.openTerminal();
+    setTimeout(() => {
+      this.shotArea = document.querySelector('#terminal-kvm > div > canvas');
+      document.querySelector(
+        '.kvm-toolbar2'
+      ).style.height = this.shotArea.height;
+    }, 1700);
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.resizeKvmWindow);
@@ -116,7 +148,7 @@ export default {
     openTerminal() {
       const token = this.$store.getters['authentication/token'];
       this.rfb = new RFB(
-        this.$refs.panel,
+        this.$refs.panel1,
         `wss://${window.location.host}/kvm/0`,
         { wsProtocols: [token] }
       );
@@ -143,12 +175,12 @@ export default {
     },
     setWidthToolbars() {
       if (
-        this.$refs.panel.children &&
-        this.$refs.panel.children.length > 0 &&
-        this.$refs.panel.children[0].children.length > 0
+        this.$refs.panel1.children &&
+        this.$refs.panel1.children.length > 0 &&
+        this.$refs.panel1.children[0].children.length > 0
       ) {
         this.$refs.toolbar1.style.width =
-          this.$refs.panel.children[0].children[0].clientWidth - 10 + 'px';
+          this.$refs.panel1.children[1].children[0].clientWidth - 10 + 'px';
       }
     },
     openConsoleWindow() {
@@ -175,5 +207,61 @@ export default {
 
 .margin-left-full-window {
   margin-left: 5px;
+}
+
+.kvm-toolbar1 {
+  width: 660px;
+}
+
+#terminal-kvm {
+  width: 873px;
+  $canvaHeight: 100%;
+  .kvm-toolbar2 {
+    float: right;
+    background: #444444 !important;
+    height: $canvaHeight;
+    width: 7%;
+    position: relative;
+    .kvm-toolbar-menu {
+      height: auto;
+      width: auto;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translateY(-50%) translateX(-50%);
+      & > * {
+        padding: 0;
+        svg {
+          margin: 0;
+        }
+      }
+      .kvm-toolbar2-item {
+        text-align: center;
+        color: white;
+        display: block;
+        margin: 0 auto;
+        height: 36px;
+
+        &:nth-child(1) {
+          padding: 0;
+        }
+
+        & > *:hover {
+          background: #cccccc !important;
+        }
+      }
+    }
+  }
+  // &:not(.full-window) {
+  //   ::v-deep canvas {
+  //     height: 100% !important;
+  //   }
+  // }
+  &.full-window {
+    .kvm-toolbar2 {
+      height: 100%;
+      width: 3%;
+    }
+  }
 }
 </style>
