@@ -28,7 +28,6 @@ module.exports = {
           'b-carousel-slide': 'img-src',
           'b-embed': 'src',
         };
-
         return options;
       });
     config.module.rule('svg').exclude.add(resolve('src/icons')).end();
@@ -137,6 +136,7 @@ module.exports = {
         'windows.jQuery': 'jquery',
       })
     );
+    config.devtool = 'source-map';
   },
   pluginOptions: {
     i18n: {
