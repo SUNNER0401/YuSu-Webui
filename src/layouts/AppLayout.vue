@@ -13,16 +13,16 @@
       </transition>
       <!-- Scroll to top button -->
       <button-back-to-top />
-      <div class="two-dimension">
+      <!-- <div class="two-dimension">
         <img
           class="two-dimension"
           src="@/env/assets/images/phytium-two-dimension.jpg"
         />
-      </div>
+      </div> -->
     </page-container>
-    <app-footer class="app-footer">
+    <!-- <app-footer class="app-footer">
       <copy-right class="app-copyright" />
-    </app-footer>
+    </app-footer> -->
   </div>
 </template>
 
@@ -30,9 +30,9 @@
 import AppHeader from '@/components/AppHeader';
 import AppNavigation from '@/components/AppNavigation';
 import PageContainer from '@/components/Global/PageContainer';
-import AppFooter from '@/components/AppFooter';
+// import AppFooter from '@/components/AppFooter';
 import ButtonBackToTop from '@/components/Global/ButtonBackToTop';
-import CopyRight from '@/components/Global/CopyRight';
+// import CopyRight from '@/components/Global/CopyRight';
 import JumpLinkMixin from '@/components/Mixins/JumpLinkMixin';
 import 'animate.css';
 
@@ -42,9 +42,9 @@ export default {
     AppHeader,
     AppNavigation,
     PageContainer,
-    AppFooter,
+    // AppFooter,
     ButtonBackToTop,
-    CopyRight,
+    // CopyRight,
   },
   mixins: [JumpLinkMixin],
   data() {

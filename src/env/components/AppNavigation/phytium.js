@@ -186,18 +186,18 @@ const AppNavigationMixin = {
             },
           ],
         },
-        {
-          id: 'about',
-          label: this.$t('appNavigation.about'),
-          icon: 'iconAboutUs',
-          children: [
-            {
-              id: 'about-us',
-              label: this.$t('appNavigation.aboutUs'),
-              route: '/about/about-us',
-            },
-          ],
-        },
+        // {
+        //   id: 'about',
+        //   label: this.$t('appNavigation.about'),
+        //   icon: 'iconAboutUs',
+        //   children: [
+        //     {
+        //       id: 'about-us',
+        //       label: this.$t('appNavigation.aboutUs'),
+        //       route: '/about/about-us',
+        //     },
+        //   ],
+        // },
       ],
     };
   },

@@ -16,7 +16,7 @@
                 <div key="1" class="login-brand mb-5">
                   <img
                     width="353px"
-                    src="@/env/assets/images/phytium-logo.png"
+                    src="@/assets/images/login-company-logo.svg"
                     :alt="altLogo"
                   />
                 </div>
@@ -36,14 +36,6 @@
                 <router-view class="login=form form-background" />
               </transition>
             </div>
-            <div class="two-dimension">
-              <img
-                class="two-dimension"
-                src="@/env/assets/images/phytium-two-dimension.jpg"
-                :alt="altLogo"
-              />
-            </div>
-            -->
           </div>
         </div>
       </main>
@@ -131,9 +123,11 @@ export default {
     position: relative;
     left: -15vw;
     img {
-      position: relative;
-      left: 36vw;
-      top: 35vh;
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      left: 37vw;
+      top: 13vh;
     }
   }
 }

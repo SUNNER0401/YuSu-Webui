@@ -33,11 +33,11 @@
             class="mr-0"
             to="/"
             data-test-id="appHeader-container-overview"
-            title="Phytium BMC"
+            title="OpenBMC"
           >
             <img
               class="header-logo"
-              src="@/env/assets/images/phytium-logo.png"
+              src="@/assets/images/login-company-logo.svg"
               :alt="altLogo"
             />
           </b-navbar-brand>
