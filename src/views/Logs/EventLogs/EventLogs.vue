@@ -284,6 +284,7 @@ import SearchFilterMixin, {
 } from '@/components/Mixins/SearchFilterMixin';
 
 export default {
+  name: 'EventLogs',
   components: {
     IconDelete,
     IconExport,
