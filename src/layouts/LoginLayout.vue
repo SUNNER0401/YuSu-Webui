@@ -4,7 +4,7 @@
     leave-active-class="animate__fadeOut"
   >
     <main>
-      <div class="login-container">
+      <div v-show="onload" class="login-container">
         <div class="login-main">
           <div>
             <transition-group
@@ -57,7 +57,28 @@ export default {
     return {
       altLogo: process.env.VUE_APP_COMPANY_NAME || 'OpenBMC',
       customizableGuiName: process.env.VUE_APP_GUI_NAME || '',
+      onload: false,
     };
+  },
+  mounted() {
+    let divImg = document.querySelector('main');
+    let getImg = new Image();
+    getImg.src = this.getDivImage(divImg);
+
+    const interval = setInterval(() => {
+      if (getImg.complete) {
+        this.onload = true;
+        clearInterval(interval);
+      }
+    }, 100);
+  },
+  methods: {
+    getDivImage(divElement) {
+      let imgurl = window
+        .getComputedStyle(divElement, null)
+        .getPropertyValue('background-image');
+      return imgurl.substring(5, imgurl.lastIndexOf('"'));
+    },
   },
 };
 </script>
@@ -148,7 +169,7 @@ main {
   z-index: 9999;
   height: 100vh;
   width: 100vw;
-  background: url('~@/env/assets/images/login-background.jpg') no-repeat fixed
+  background: url('~@/env/assets/images/login-background.webp') no-repeat fixed
     center;
   background-size: 100% 100%;
   .customizableGuiName {
