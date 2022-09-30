@@ -14,26 +14,7 @@
           </dl>
         </b-col>
 
-        <b-col class="d-flex justify-content-end pr-1">
-          <b-button
-            v-if="isConnected"
-            variant="link"
-            type="button"
-            @click="sendCtrlAltDel"
-          >
-            <icon-arrow-down />
-            {{ $t('pageKvm.buttonCtrlAltDelete') }}
-          </b-button>
-          <b-button
-            v-if="!isFullWindow"
-            variant="link"
-            type="button"
-            @click="openConsoleWindow()"
-          >
-            <icon-launch />
-            {{ $t('pageKvm.openNewTab') }}
-          </b-button>
-        </b-col>
+        <b-col class="d-flex justify-content-end pr-1"></b-col>
       </b-row>
     </div>
     <div id="terminal-kvm" ref="panel1" :class="terminalClass">
@@ -62,8 +43,6 @@
 <script>
 import RFB from '@novnc/novnc/core/rfb';
 import StatusIcon from '@/components/Global/StatusIcon';
-import IconLaunch from '@carbon/icons-vue/es/launch/20';
-import IconArrowDown from '@carbon/icons-vue/es/arrow--down/16';
 import ScreenFull from '@/components/Global/ScreenFull';
 import ScreenShot from '@/components/Global/ScreenShot';
 
@@ -73,7 +52,7 @@ const Disconnected = 2;
 
 export default {
   name: 'KvmConsole',
-  components: { StatusIcon, IconLaunch, IconArrowDown, ScreenFull, ScreenShot },
+  components: { StatusIcon, ScreenFull, ScreenShot },
   props: {
     isFullWindow: {
       type: Boolean,
@@ -138,9 +117,9 @@ export default {
     this.closeTerminal();
   },
   methods: {
-    sendCtrlAltDel() {
-      this.rfb.sendCtrlAltDel();
-    },
+    // sendCtrlAltDel() {
+    //   this.rfb.sendCtrlAltDel();
+    // },
     closeTerminal() {
       this.rfb.disconnect();
       this.rfb = null;

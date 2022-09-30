@@ -352,10 +352,10 @@ export default {
           label: this.$t('pageEventLogs.table.description'),
           tdClass: 'text-break',
         },
-        {
-          key: 'status',
-          label: this.$t('pageEventLogs.table.status'),
-        },
+        // {
+        //   key: 'status',
+        //   label: this.$t('pageEventLogs.table.status'),
+        // },
         {
           key: 'actions',
           sortable: false,
@@ -413,10 +413,10 @@ export default {
               value: 'export',
               title: this.$t('global.action.export'),
             },
-            {
-              value: 'delete',
-              title: this.$t('global.action.delete'),
-            },
+            // {
+            //   value: 'delete',
+            //   title: this.$t('global.action.delete'),
+            // },
           ],
         };
       });

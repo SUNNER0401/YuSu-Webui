@@ -15,12 +15,7 @@
         </dl>
       </b-col>
 
-      <b-col v-if="!isFullWindow" class="d-flex justify-content-end">
-        <b-button variant="link" type="button" @click="openConsoleWindow()">
-          <icon-launch />
-          {{ $t('pageSerialOverLan.openNewTab') }}
-        </b-button>
-      </b-col>
+      <b-col v-if="!isFullWindow" class="d-flex justify-content-end"> </b-col>
     </b-row>
     <div id="base-container">
       <div class="SOL-toolbar">
@@ -43,14 +38,12 @@
 import { AttachAddon } from 'xterm-addon-attach';
 import { FitAddon } from 'xterm-addon-fit';
 import { Terminal } from 'xterm';
-import IconLaunch from '@carbon/icons-vue/es/launch/20';
 import StatusIcon from '@/components/Global/StatusIcon';
 import ScreenFull from '@/components/Global/ScreenFull';
 
 export default {
   name: 'SerialOverLanConsole',
   components: {
-    IconLaunch,
     StatusIcon,
     ScreenFull,
   },
@@ -152,13 +145,6 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    },
-    openConsoleWindow() {
-      window.open(
-        '#/console/serial-over-lan-console',
-        '_blank',
-        'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=600,height=550'
-      );
     },
   },
 };
