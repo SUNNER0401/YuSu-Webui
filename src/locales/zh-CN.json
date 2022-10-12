@@ -136,7 +136,8 @@
     "alarmSetting": "@:appPageTitle.alarmSetting",
     "fanSpeed": "@:appPageTitle.fanSpeed",
     "about": "@:appPageTitle.about",
-    "aboutUs": "@:appPageTitle.aboutUs"
+    "aboutUs": "@:appPageTitle.aboutUs",
+    "operatingLogs": "操作日志"
   },
   "appPageTitle": {
     "changePassword": "修改密码",
@@ -168,7 +169,8 @@
     "alarmSetting": "告警设置",
     "fanSpeed": "风扇速度",
     "about": "关于",
-    "aboutUs": "关于我们"
+    "aboutUs": "关于我们",
+    "operatingLogs": "操作日志"
   },
   "pageChangePassword": {
     "changePassword": "修改密码",
@@ -626,6 +628,25 @@
     "username": "用户名",
     "alert": {
       "message": "用户名与密码不匹配"
+    }
+  },
+  "pageOperatingLogs": {
+    "table": {
+      "id": "ID",
+      "interface": "接口",
+      "ip": "IP地址",
+      "user": "用户",
+      "message": "信息",
+      "time": "时间",
+      "searchLogs": "搜索日志"
+    },
+    "modal": {
+      "deleteAllMessage": "删除所有信息",
+      "deleteAllTitle": "删除所有标题"
+    },
+    "toast": {
+      "successDelete": "成功删除%{count}条日志。",
+      "errorDelete": "删除%{count}条日志时出错。" 
     }
   },
   "pageOverview": {

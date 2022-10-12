@@ -108,6 +108,14 @@ export var setRoutes = () => {
           },
         },
         {
+          path: '/logs/operating-logs',
+          name: 'operating-logs',
+          component: views.OperatingLogs,
+          meta: {
+            title: i18n.t('appPageTitle.operatingLogs'),
+          },
+        },
+        {
           path: '/hardware-status/inventory',
           name: 'inventory',
           component: views.Inventory,

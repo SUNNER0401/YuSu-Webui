@@ -44,6 +44,11 @@ const AppNavigationMixin = {
               label: this.$t('appNavigation.postCodeLogs'),
               route: '/logs/post-code-logs',
             },
+            {
+              id: 'operating-logs',
+              label: this.$t('appNavigation.operatingLogs'),
+              route: '/logs/operating-logs',
+            },
           ],
         },
         {

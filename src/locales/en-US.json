@@ -136,7 +136,8 @@
     "alarmSetting": "@:appPageTitle.alarmSetting",
     "fanSpeed": "@:appPageTitle.fanSpeed",
     "about": "@:appPageTitle.about",
-    "aboutUs": "@:appPageTitle.aboutUs"
+    "aboutUs": "@:appPageTitle.aboutUs",
+    "operatingLogs": "Operating logs"
   },
   "appPageTitle": {
     "changePassword": "Change password",
@@ -168,7 +169,8 @@
     "alarmSetting": "Alarm setting",
     "fanSpeed":"Fan Speed",
     "about": "About",
-    "aboutUs": "About Us"
+    "aboutUs": "About Us",
+    "operatingLogs": "Operating logs"
   },
   "pageChangePassword": {
     "changePassword": "Change password",
@@ -626,6 +628,25 @@
     "username": "Username",
     "alert": {
       "message": "Invalid username or password"
+    }
+  },
+  "pageOperatingLogs": {
+    "table": {
+      "id": "ID",
+      "interface": "Interface",
+      "ip": "IP address",
+      "user": "User",
+      "message": "Message",
+      "time": "Time",
+      "searchLogs": "Search logs"
+    },
+    "modal": {
+      "deleteAllMessage": "Delete all messages",
+      "deleteAllTitle": "Delete all titles"
+    },
+    "toast": {
+      "successDelete": "Successfully deleted %{count} log. | Successfully deleted %{count} logs.",
+      "errorDelete": "Error deleting %{count} log. | Error deleting %{count} logs." 
     }
   },
   "pageOverview": {
