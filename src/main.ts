@@ -1,11 +1,13 @@
 import Vue from 'vue';
 import App from './App.vue';
-import router from './router';
+// import router from './router';
+const router = require('./router').default;
 
 //Do not change store import.
 //Exact match alias set to support
 //dotenv customizations.
-import store from './store';
+// import store from './store';
+const store = require('./store').default;
 
 import './icons'; // icon
 
@@ -43,13 +45,17 @@ import {
   TooltipPlugin,
   IconsPlugin,
 } from 'bootstrap-vue';
-import Vuelidate from 'vuelidate';
-import i18n from './i18n';
-import { format } from 'date-fns-tz';
-import _ from 'lodash';
+// import Vuelidate from 'vuelidate';
+const Vuelidate = require('vuelidate').default;
+// import i18n from './i18n';
+const i18n = require('./i18n').default;
+import { format, OptionsWithTZ } from 'date-fns-tz';
+import { ThisTypedComponentOptionsWithArrayProps } from 'vue/types/options';
+// import _ from 'lodash';
+const _ = require('lodash');
 
 // Filters
-Vue.filter('shortTimeZone', function (value) {
+Vue.filter('shortTimeZone', function (value: any) {
   const longTZ = value
     .toString()
     .match(/\((.*)\)/)
@@ -58,7 +64,7 @@ Vue.filter('shortTimeZone', function (value) {
   return longTZ.replace(regexNotUpper, '');
 });
 
-Vue.filter('formatDate', function (value) {
+Vue.filter('formatDate', function (value: any) {
   const isUtcDisplay = store.getters['global/isUtcDisplay'];
 
   if (value instanceof Date) {
@@ -67,11 +73,14 @@ Vue.filter('formatDate', function (value) {
     }
     const pattern = `yyyy-MM-dd`;
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    return format(value, pattern, { timezone });
+    const options = <OptionsWithTZ>{
+      timezone,
+    };
+    return format(value, pattern, options);
   }
 });
 
-Vue.filter('formatTime', function (value) {
+Vue.filter('formatTime', function (value: any) {
   const isUtcDisplay = store.getters['global/isUtcDisplay'];
 
   if (value instanceof Date) {
@@ -80,12 +89,15 @@ Vue.filter('formatTime', function (value) {
         timeZone: 'UTC',
         hourCycle: 'h23',
       };
-      return `${value.toLocaleTimeString('default', timeOptions)} UTC`;
+      return `${value.toLocaleTimeString('default', <any>timeOptions)} UTC`;
     }
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const options = <OptionsWithTZ>{
+      timezone,
+    };
     const shortTz = Vue.filter('shortTimeZone')(value);
     const pattern = `HH:mm:ss ('${shortTz}' O)`;
-    return format(value, pattern, { timezone }).replace('GMT', 'UTC');
+    return format(value, pattern, options).replace('GMT', 'UTC');
   }
 });
 
@@ -140,9 +152,18 @@ Vue.use(Vuelidate);
 
 Vue.prototype._ = _;
 
-new Vue({
+const vueOptions = <
+  ThisTypedComponentOptionsWithArrayProps<
+    Vue,
+    Record<string, unknown>,
+    Record<string, unknown>,
+    Record<string, unknown>,
+    never
+  >
+>{
+  i18n,
   router,
   store,
-  i18n,
   render: (h) => h(App),
-}).$mount('#app');
+};
+new Vue(vueOptions).$mount('#app');
