@@ -39,6 +39,7 @@ import {
   NavPlugin,
   PaginationPlugin,
   ProgressPlugin,
+  SpinnerPlugin,
   TablePlugin,
   TabsPlugin,
   ToastPlugin,
@@ -143,6 +144,7 @@ Vue.use(NavbarPlugin);
 Vue.use(NavPlugin);
 Vue.use(PaginationPlugin);
 Vue.use(ProgressPlugin);
+Vue.use(SpinnerPlugin);
 Vue.use(TablePlugin);
 Vue.use(TabsPlugin);
 Vue.use(ToastPlugin);

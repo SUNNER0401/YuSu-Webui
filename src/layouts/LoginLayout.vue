@@ -1,51 +1,54 @@
 <template>
-  <transition
-    name="animate__animated animate__bounce"
-    leave-active-class="animate__fadeOut"
-  >
-    <main>
-      <div v-show="onload" class="login-container">
-        <div class="login-main">
-          <div>
-            <transition-group
-              appear
-              name="animate__animated animate__bounce"
-              enter-active-class="animate__slideInDown"
-            >
-              <div key="1" class="login-brand mb-5">
-                <img
-                  width="353px"
-                  src="@/env/assets/images/phytium-logo.png"
-                  :alt="altLogo"
-                />
-              </div>
-              <h1
-                v-if="customizableGuiName"
-                key="2"
-                class="customizableGuiName h3 mb-5"
+  <div>
+    <transition
+      name="animate__animated animate__bounce"
+      leave-active-class="animate__fadeOut"
+    >
+      <main>
+        <div v-show="onload" class="login-container">
+          <div class="login-main">
+            <div>
+              <transition-group
+                appear
+                name="animate__animated animate__bounce"
+                enter-active-class="animate__slideInDown"
               >
-                {{ customizableGuiName }}
-              </h1>
-            </transition-group>
-            <transition
-              appear
-              name="animate__animated animate__bounce"
-              enter-active-class="animate__fadeInUp"
-            >
-              <router-view class="login=form form-background" />
-            </transition>
-          </div>
-          <div class="two-dimension">
-            <img
-              class="two-dimension"
-              src="@/env/assets/images/phytium-two-dimension.jpg"
-              :alt="altLogo"
-            />
+                <div key="1" class="login-brand mb-5">
+                  <img
+                    width="353px"
+                    src="@/env/assets/images/phytium-logo.png"
+                    :alt="altLogo"
+                  />
+                </div>
+                <h1
+                  v-if="customizableGuiName"
+                  key="2"
+                  class="customizableGuiName h3 mb-5"
+                >
+                  {{ customizableGuiName }}
+                </h1>
+              </transition-group>
+              <transition
+                appear
+                name="animate__animated animate__bounce"
+                enter-active-class="animate__fadeInUp"
+              >
+                <router-view class="login=form form-background" />
+              </transition>
+            </div>
+            <div class="two-dimension">
+              <img
+                class="two-dimension"
+                src="@/env/assets/images/phytium-two-dimension.jpg"
+                :alt="altLogo"
+              />
+            </div>
+            -->
           </div>
         </div>
-      </div>
-    </main>
-  </transition>
+      </main>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -84,6 +87,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-12px) translateY(-12px);
+}
 .animate__bounceOutLeft {
   animation-duration: 1s;
 }
