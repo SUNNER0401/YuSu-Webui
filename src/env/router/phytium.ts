@@ -1,7 +1,7 @@
 import i18n from '@/i18n';
 
 // Import layouts quickly.
-const layouts = {};
+const layouts: { [key: string]: string } = {};
 const context1 = require.context('@/layouts', true, /\.vue$/);
 context1.keys().forEach((key) => {
   let filename = key.split('/')[key.split('/').length - 1];
@@ -9,7 +9,7 @@ context1.keys().forEach((key) => {
   layouts[viewName] = context1(key).default;
 });
 // Import views quickly.
-const views = {};
+const views: { [key: string]: string } = {};
 const context2 = require.context('@/views', true, /\.vue$/);
 context2.keys().forEach((key) => {
   let filename = key.split('/')[key.split('/').length - 1];
@@ -17,7 +17,7 @@ context2.keys().forEach((key) => {
   views[viewName] = context2(key).default;
 });
 
-export var setRoutes = () => {
+export let setRoutes = () => {
   return [
     {
       path: '/login',

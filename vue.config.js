@@ -107,12 +107,12 @@ module.exports = {
       if (hasCustomStore) {
         // If env has custom store, resolve all store modules. Currently found
         // in src/router/index.js src/store/api.js and src/main.js
-        config.resolve.alias['./store$'] = `@/env/store/${envName}.js`;
-        config.resolve.alias['../store$'] = `@/env/store/${envName}.js`;
+        config.resolve.alias['./store$'] = `@/env/store/${envName}.ts`;
+        config.resolve.alias['../store$'] = `@/env/store/${envName}.ts`;
       }
       if (hasCustomRouter) {
         // If env has custom router, resolve routes in src/router/index.js
-        config.resolve.alias['./routes$'] = `@/env/router/${envName}.js`;
+        config.resolve.alias['./routes$'] = `@/env/router/${envName}.ts`;
       }
       if (hasCustomAppNav) {
         // If env has custom AppNavigation, resolve AppNavigationMixin module in src/components/AppNavigation/AppNavigation.vue

@@ -1,8 +1,9 @@
-import Axios from 'axios';
+import Axios, { AxiosRequestConfig } from 'axios';
 //Do not change store import.
 //Exact match alias set to support
 //dotenv customizations.
-import store from '../store';
+// import store from '.';
+const store = require('.').default;
 
 const api = Axios.create({
   withCredentials: true,
@@ -16,7 +17,7 @@ api.interceptors.response.use(undefined, (error) => {
     if (response.config.url != '/login') {
       let currentPathname = window.location.hash.split('#')[1];
       localStorage.setItem('LastPathname', currentPathname);
-      window.location = '/login';
+      window.location = ('/login' as unknown) as Location;
       // Commit logout to remove XSRF-TOKEN cookie
       store.commit('authentication/logout');
     }
@@ -33,30 +34,30 @@ api.interceptors.response.use(undefined, (error) => {
 });
 
 export default {
-  get(path) {
+  get(path: string) {
     return api.get(path);
   },
-  delete(path, payload) {
+  delete(path: string, payload: AxiosRequestConfig | undefined) {
     return api.delete(path, payload);
   },
-  post(path, payload, config) {
+  post(path: string, payload: any, config: AxiosRequestConfig | undefined) {
     return api.post(path, payload, config);
   },
-  patch(path, payload) {
+  patch(path: string, payload: any) {
     return api.patch(path, payload);
   },
-  put(path, payload) {
+  put(path: string, payload: any) {
     return api.put(path, payload);
   },
-  all(promises) {
+  all(promises: unknown[]) {
     return Axios.all(promises);
   },
-  spread(callback) {
+  spread(callback: (...args: unknown[]) => unknown) {
     return Axios.spread(callback);
   },
 };
 
-export const getResponseCount = (responses) => {
+export const getResponseCount = (responses: any[]) => {
   let successCount = 0;
   let errorCount = 0;
 

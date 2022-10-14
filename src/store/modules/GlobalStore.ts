@@ -1,4 +1,5 @@
 import api from '@/store/api';
+import { AxiosResponse } from 'axios';
 
 const HOST_STATE = {
   on: 'xyz.openbmc_project.State.Host.HostState.Running',
@@ -7,7 +8,7 @@ const HOST_STATE = {
   diagnosticMode: 'xyz.openbmc_project.State.Host.HostState.DiagnosticMode',
 };
 
-const serverStateMapper = (hostState) => {
+const serverStateMapper = (hostState: any) => {
   switch (hostState) {
     case HOST_STATE.on:
     case 'On': // Redfish PowerState
@@ -36,35 +37,43 @@ const GlobalStore = {
     serverStatus: 'unreachable',
     languagePreference: localStorage.getItem('storedLanguage') || 'en-US',
     isUtcDisplay: localStorage.getItem('storedUtcDisplay')
-      ? JSON.parse(localStorage.getItem('storedUtcDisplay'))
+      ? JSON.parse(localStorage.getItem('storedUtcDisplay') as string)
       : true,
     username: localStorage.getItem('storedUsername'),
     isAuthorized: true,
   },
   getters: {
-    assetTag: (state) => state.assetTag,
-    modelType: (state) => state.modelType,
-    serialNumber: (state) => state.serialNumber,
-    serverStatus: (state) => state.serverStatus,
-    bmcTime: (state) => state.bmcTime,
-    languagePreference: (state) => state.languagePreference,
-    isUtcDisplay: (state) => state.isUtcDisplay,
-    username: (state) => state.username,
-    isAuthorized: (state) => state.isAuthorized,
+    assetTag: (state: { assetTag: any }) => state.assetTag,
+    modelType: (state: { modelType: any }) => state.modelType,
+    serialNumber: (state: { serialNumber: any }) => state.serialNumber,
+    serverStatus: (state: { serverStatus: any }) => state.serverStatus,
+    bmcTime: (state: { bmcTime: any }) => state.bmcTime,
+    languagePreference: (state: { languagePreference: any }) =>
+      state.languagePreference,
+    isUtcDisplay: (state: { isUtcDisplay: any }) => state.isUtcDisplay,
+    username: (state: { username: any }) => state.username,
+    isAuthorized: (state: { isAuthorized: any }) => state.isAuthorized,
   },
   mutations: {
-    setAssetTag: (state, assetTag) => (state.assetTag = assetTag),
-    setModelType: (state, modelType) => (state.modelType = modelType),
-    setSerialNumber: (state, serialNumber) =>
+    setAssetTag: (state: { assetTag: any }, assetTag: any) =>
+      (state.assetTag = assetTag),
+    setModelType: (state: { modelType: any }, modelType: any) =>
+      (state.modelType = modelType),
+    setSerialNumber: (state: { serialNumber: any }, serialNumber: any) =>
       (state.serialNumber = serialNumber),
-    setBmcTime: (state, bmcTime) => (state.bmcTime = bmcTime),
-    setServerStatus: (state, serverState) =>
+    setBmcTime: (state: { bmcTime: any }, bmcTime: any) =>
+      (state.bmcTime = bmcTime),
+    setServerStatus: (state: { serverStatus: string }, serverState: any) =>
       (state.serverStatus = serverStateMapper(serverState)),
-    setLanguagePreference: (state, language) =>
-      (state.languagePreference = language),
-    setUsername: (state, username) => (state.username = username),
-    setUtcTime: (state, isUtcDisplay) => (state.isUtcDisplay = isUtcDisplay),
-    setUnauthorized: (state) => {
+    setLanguagePreference: (
+      state: { languagePreference: any },
+      language: any
+    ) => (state.languagePreference = language),
+    setUsername: (state: { username: any }, username: any) =>
+      (state.username = username),
+    setUtcTime: (state: { isUtcDisplay: any }, isUtcDisplay: any) =>
+      (state.isUtcDisplay = isUtcDisplay),
+    setUnauthorized: (state: { isAuthorized: boolean }) => {
       state.isAuthorized = false;
       window.setTimeout(() => {
         state.isAuthorized = true;
@@ -72,7 +81,7 @@ const GlobalStore = {
     },
   },
   actions: {
-    async getBmcTime({ commit }) {
+    async getBmcTime({ commit }: { commit: any }) {
       return await api
         .get('/redfish/v1/Managers/bmc')
         .then((response) => {
@@ -82,19 +91,21 @@ const GlobalStore = {
         })
         .catch((error) => console.log(error));
     },
-    getSystemInfo({ commit }) {
+    getSystemInfo({ commit }: { commit: any }) {
       api
         .get('/redfish/v1/Systems/system')
         .then(
-          ({
-            data: {
-              AssetTag,
-              Model,
-              PowerState,
-              SerialNumber,
-              Status: { State } = {},
-            },
-          } = {}) => {
+          (
+            {
+              data: {
+                AssetTag,
+                Model,
+                PowerState,
+                SerialNumber,
+                Status: { State } = {} as { State: any },
+              },
+            } = {} as AxiosResponse<any>
+          ) => {
             commit('setAssetTag', AssetTag);
             commit('setSerialNumber', SerialNumber);
             commit('setModelType', Model);

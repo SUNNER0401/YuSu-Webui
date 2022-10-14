@@ -1,12 +1,10 @@
 import Vue from 'vue';
 import App from './App.vue';
-// import router from './router';
 const router = require('./router').default;
 
 //Do not change store import.
 //Exact match alias set to support
 //dotenv customizations.
-// import store from './store';
 const store = require('./store').default;
 
 import './icons'; // icon
@@ -46,13 +44,10 @@ import {
   TooltipPlugin,
   IconsPlugin,
 } from 'bootstrap-vue';
-// import Vuelidate from 'vuelidate';
 const Vuelidate = require('vuelidate').default;
-// import i18n from './i18n';
-const i18n = require('./i18n').default;
+import i18n from './i18n';
 import { format, OptionsWithTZ } from 'date-fns-tz';
 import { ThisTypedComponentOptionsWithArrayProps } from 'vue/types/options';
-// import _ from 'lodash';
 const _ = require('lodash');
 
 // Filters

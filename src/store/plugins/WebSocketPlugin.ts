@@ -7,8 +7,14 @@
  *
  * https://github.com/openbmc/docs/blob/b41aff0fabe137cdb0cfff584b5fe4a41c0c8e77/rest-api.md#event-subscription-protocol
  */
-const WebSocketPlugin = (store) => {
-  let ws;
+const WebSocketPlugin = (store: {
+  getters: { [x: string]: any };
+  dispatch: (arg0: string) => Promise<any>;
+  commit: (arg0: string, arg1?: undefined) => void;
+  state: { powerControl: { powerChartDataInterval: number | undefined } };
+  subscribe: (arg0: ({ type }: { type: any }) => void) => void;
+}) => {
+  let ws: WebSocket;
   const data = {
     paths: [
       '/xyz/openbmc_project/state/host0',
@@ -47,7 +53,9 @@ const WebSocketPlugin = (store) => {
       const path = data.path;
 
       if (eventInterface === 'xyz.openbmc_project.State.Host') {
-        const { properties: { CurrentHostState } = {} } = data;
+        const {
+          properties: { CurrentHostState } = {} as { CurrentHostState: any },
+        } = data;
         if (CurrentHostState) {
           store.commit('global/setServerStatus', CurrentHostState);
         }
