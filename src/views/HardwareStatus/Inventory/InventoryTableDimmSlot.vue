@@ -100,9 +100,9 @@
             </b-col>
             <b-col sm="6" xl="6">
               <dl>
-                <!-- Memory Size in kb -->
+                <!-- Memory Size in mb -->
                 <dt>{{ $t('pageInventory.table.memorySize') }}:</dt>
-                <dd>{{ dataFormatter(item.memorySize) }} KB</dd>
+                <dd>{{ dataFormatter(item.memorySize) }} MB</dd>
               </dl>
               <dl>
                 <!-- Status-->
