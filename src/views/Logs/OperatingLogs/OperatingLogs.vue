@@ -108,8 +108,8 @@
 </template>
 
 <script>
-const IconDelete = require('@carbon/icons-vue/es/trash-can/20').default;
-const IconDownload = require('@carbon/icons-vue/es/download/20').default;
+import IconDelete from '@carbon/icons-vue/es/trash-can/20';
+import IconDownload from '@carbon/icons-vue/es/download/20';
 
 import PageTitle from '@/components/Global/PageTitle.vue';
 import StatusIcon from '@/components/Global/StatusIcon.vue';

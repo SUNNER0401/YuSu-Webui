@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import App from './App.vue';
-const router = require('./router').default;
+import router from './router';
 
 //Do not change store import.
 //Exact match alias set to support
 //dotenv customizations.
-const store = require('./store').default;
+import store from './store';
 
 import './icons'; // icon
 
@@ -44,11 +44,11 @@ import {
   TooltipPlugin,
   IconsPlugin,
 } from 'bootstrap-vue';
-const Vuelidate = require('vuelidate').default;
+import Vuelidate from 'vuelidate';
 import i18n from './i18n';
 import { format, OptionsWithTZ } from 'date-fns-tz';
 import { ThisTypedComponentOptionsWithArrayProps } from 'vue/types/options';
-const _ = require('lodash');
+import _ from 'lodash';
 
 // Filters
 Vue.filter('shortTimeZone', function (value: any) {

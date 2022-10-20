@@ -2,8 +2,7 @@ import Axios, { AxiosRequestConfig } from 'axios';
 //Do not change store import.
 //Exact match alias set to support
 //dotenv customizations.
-// import store from '.';
-const store = require('.').default;
+import store from '.';
 
 const api = Axios.create({
   withCredentials: true,
