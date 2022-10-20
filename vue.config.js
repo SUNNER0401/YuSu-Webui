@@ -136,7 +136,6 @@ module.exports = {
         'windows.jQuery': 'jquery',
       })
     );
-    config.devtool = 'source-map';
   },
   pluginOptions: {
     i18n: {
