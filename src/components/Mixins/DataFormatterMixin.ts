@@ -1,6 +1,6 @@
 const DataFormatterMixin = {
   methods: {
-    dataFormatter(value) {
+    dataFormatter(value: string | number | null | undefined) {
       if (value === undefined || value === null || value === '') {
         return '--';
       } else if (typeof value === 'number') {
@@ -9,7 +9,7 @@ const DataFormatterMixin = {
         return value;
       }
     },
-    statusIcon(status) {
+    statusIcon(status: string) {
       switch (status) {
         case 'OK':
           return 'success';
@@ -21,7 +21,7 @@ const DataFormatterMixin = {
           return '';
       }
     },
-    dataFormatterArray(value) {
+    dataFormatterArray(value: any[]) {
       return value.join(', ');
     },
   },

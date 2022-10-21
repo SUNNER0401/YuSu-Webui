@@ -1,4 +1,4 @@
-import { format } from 'date-fns-tz';
+import { format, OptionsWithTZ } from 'date-fns-tz';
 
 const LocalTimezoneLabelMixin = {
   methods: {
@@ -6,7 +6,10 @@ const LocalTimezoneLabelMixin = {
       const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       const shortTz = this.$options.filters.shortTimeZone(new Date());
       const pattern = `'${shortTz}' O`;
-      return format(new Date(), pattern, { timezone }).replace('GMT', 'UTC');
+      return format(new Date(), pattern, { timezone } as OptionsWithTZ).replace(
+        'GMT',
+        'UTC'
+      );
     },
   },
 };

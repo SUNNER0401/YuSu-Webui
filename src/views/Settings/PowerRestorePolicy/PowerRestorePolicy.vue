@@ -27,7 +27,7 @@
 <script>
 import PageTitle from '@/components/Global/PageTitle';
 import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
-import VuelidateMixin from '@/components/Mixins/VuelidateMixin.js';
+import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
 
 export default {

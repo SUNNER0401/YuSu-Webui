@@ -261,7 +261,7 @@ import {
   requiredIf,
   numeric,
 } from 'vuelidate/lib/validators';
-import VuelidateMixin from '@/components/Mixins/VuelidateMixin.js';
+import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 import InputPasswordToggle from '@/components/Global/InputPasswordToggle';
 import Alert from '@/components/Global/Alert';
 

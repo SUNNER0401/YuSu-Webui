@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import VuelidateMixin from '@/components/Mixins/VuelidateMixin.js';
+import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 import { required, ipAddress, between } from 'vuelidate/lib/validators';
 
 export default {

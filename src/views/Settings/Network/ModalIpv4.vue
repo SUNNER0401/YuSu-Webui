@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import VuelidateMixin from '@/components/Mixins/VuelidateMixin.js';
+import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 import { ipAddress, required } from 'vuelidate/lib/validators';
 
 export default {

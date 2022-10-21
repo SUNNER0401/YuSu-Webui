@@ -39,7 +39,7 @@ import ModalConfirmation from './DumpsModalConfirmation';
 import Alert from '@/components/Global/Alert';
 
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
-import VuelidateMixin from '@/components/Mixins/VuelidateMixin.js';
+import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 
 export default {
   components: { Alert, ModalConfirmation },

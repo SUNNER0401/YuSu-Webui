@@ -101,7 +101,7 @@
 import IconCalendar from '@carbon/icons-vue/es/calendar/20';
 import { helpers } from 'vuelidate/lib/validators';
 
-import VuelidateMixin from '@/components/Mixins/VuelidateMixin.js';
+import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 
 const isoDateRegex = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/;
 

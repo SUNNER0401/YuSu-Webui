@@ -146,7 +146,7 @@ import PowerChart1 from './PowerChart1';
 import PowerChart2 from './PowerChart2';
 import PowerTabs from './PowerTabs';
 import LoadingBarMixin, { loading } from '@/components/Mixins/LoadingBarMixin';
-import VuelidateMixin from '@/components/Mixins/VuelidateMixin.js';
+import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
 import { requiredIf, between } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';

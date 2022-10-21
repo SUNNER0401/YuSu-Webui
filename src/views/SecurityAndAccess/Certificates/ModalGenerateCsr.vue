@@ -381,7 +381,7 @@ import { required, requiredIf } from 'vuelidate/lib/validators';
 import { COUNTRY_LIST } from './CsrCountryCodes';
 import { CERTIFICATE_TYPES } from '@/store/modules/SecurityAndAccess/CertificatesStore';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
-import VuelidateMixin from '@/components/Mixins/VuelidateMixin.js';
+import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 
 export default {
   name: 'ModalGenerateCsr',

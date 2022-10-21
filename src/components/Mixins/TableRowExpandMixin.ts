@@ -3,7 +3,7 @@ export const expandRowLabel = i18n.t('global.table.expandTableRow');
 
 const TableRowExpandMixin = {
   methods: {
-    toggleRowDetails(row) {
+    toggleRowDetails(row: { toggleDetails: () => void; detailsShowing: any }) {
       row.toggleDetails();
       row.detailsShowing
         ? (this.expandRowLabel = this.$t('global.table.expandTableRow'))

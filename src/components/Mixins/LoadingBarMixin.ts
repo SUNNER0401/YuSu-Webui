@@ -2,15 +2,15 @@ export const loading = true;
 
 const LoadingBarMixin = {
   methods: {
-    startLoader() {
+    startLoader(): void {
       this.$root.$emit('loader-start');
       this.loading = true;
     },
-    endLoader() {
+    endLoader(): void {
       this.$root.$emit('loader-end');
       this.loading = false;
     },
-    hideLoader() {
+    hideLoader(): void {
       this.$root.$emit('loader-hide');
     },
   },

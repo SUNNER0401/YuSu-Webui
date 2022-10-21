@@ -88,7 +88,7 @@ import { requiredIf } from 'vuelidate/lib/validators';
 
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
 import LoadingBarMixin, { loading } from '@/components/Mixins/LoadingBarMixin';
-import VuelidateMixin from '@/components/Mixins/VuelidateMixin.js';
+import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 
 import Alert from '@/components/Global/Alert';
 import FormFile from '@/components/Global/FormFile';

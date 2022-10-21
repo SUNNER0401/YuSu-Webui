@@ -65,7 +65,7 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators';
-import VuelidateMixin from '@/components/Mixins/VuelidateMixin.js';
+import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 import i18n from '@/i18n';
 import Alert from '@/components/Global/Alert';
 import InputPasswordToggle from '@/components/Global/InputPasswordToggle';

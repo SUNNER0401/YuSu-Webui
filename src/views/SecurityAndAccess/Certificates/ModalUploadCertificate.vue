@@ -70,7 +70,7 @@
 
 <script>
 import { required, requiredIf } from 'vuelidate/lib/validators';
-import VuelidateMixin from '@/components/Mixins/VuelidateMixin.js';
+import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 
 import FormFile from '@/components/Global/FormFile';
 

@@ -71,7 +71,7 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators';
-import VuelidateMixin from '@/components/Mixins/VuelidateMixin.js';
+import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 
 export default {
   mixins: [VuelidateMixin],

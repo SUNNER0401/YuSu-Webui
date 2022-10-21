@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import VuelidateMixin from '@/components/Mixins/VuelidateMixin.js';
+import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 import { required, helpers } from 'vuelidate/lib/validators';
 
 const validateHostname = helpers.regex('validateHostname', /^\S{0,64}$/);

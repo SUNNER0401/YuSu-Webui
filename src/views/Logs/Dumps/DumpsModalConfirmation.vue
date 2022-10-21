@@ -39,7 +39,7 @@
 
 <script>
 import StatusIcon from '@/components/Global/StatusIcon';
-import VuelidateMixin from '@/components/Mixins/VuelidateMixin.js';
+import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 
 export default {
   components: { StatusIcon },

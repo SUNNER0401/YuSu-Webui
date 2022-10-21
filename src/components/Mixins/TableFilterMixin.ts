@@ -2,7 +2,7 @@ import { includes } from 'lodash';
 
 const TableFilterMixin = {
   methods: {
-    getFilteredTableData(tableData = [], filters = []) {
+    getFilteredTableData(tableData: any[] = [], filters: any[] = []) {
       const filterItems = filters.reduce((arr, filter) => {
         return [...arr, ...filter.values];
       }, []);
@@ -24,9 +24,9 @@ const TableFilterMixin = {
       });
     },
     getFilteredTableDataByDate(
-      tableData = [],
-      startDate,
-      endDate,
+      tableData: any[] = [],
+      startDate: { getTime: () => number; getTimezoneOffset: () => number },
+      endDate: { getTime: () => number; getTimezoneOffset: () => number },
       propertyKey = 'date'
     ) {
       if (!startDate && !endDate) return tableData;
@@ -45,7 +45,7 @@ const TableFilterMixin = {
           : Number.POSITIVE_INFINITY;
       }
 
-      return tableData.filter((row) => {
+      return tableData.filter((row: { [x: string]: any }) => {
         const date = row[propertyKey];
         if (!(date instanceof Date)) return;
         const dateInMs = date.getTime();

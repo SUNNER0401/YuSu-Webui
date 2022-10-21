@@ -134,7 +134,7 @@ import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
 import LocalTimezoneLabelMixin from '@/components/Mixins/LocalTimezoneLabelMixin';
 import PageTitle from '@/components/Global/PageTitle';
 import PageSection from '@/components/Global/PageSection';
-import VuelidateMixin from '@/components/Mixins/VuelidateMixin.js';
+import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 
 export default {
   name: 'ProfileSettings',
