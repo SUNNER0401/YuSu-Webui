@@ -107,7 +107,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import IconDelete from '@carbon/icons-vue/es/trash-can/20';
 import IconDownload from '@carbon/icons-vue/es/download/20';
 
@@ -161,13 +161,13 @@ export default {
     TableRowExpandMixin,
     SearchFilterMixin,
   ],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: any): void {
     // Hide loader if the user navigates to another page
     // before request is fulfilled.
     this.hideLoader();
     next();
   },
-  data() {
+  data(): Record<string, unknown> {
     return {
       fields: [
         {
@@ -217,15 +217,15 @@ export default {
     };
   },
   computed: {
-    interfaces() {
-      let interfaces = this.filteredLogs.map((log) => {
+    interfaces(): ArrayConstructor {
+      let interfaces = this.filteredLogs.map((log: { interface: any }) => {
         return log.interface;
       });
       interfaces = new Set(interfaces);
       interfaces = Array.from(interfaces);
       return interfaces;
     },
-    tableFilters() {
+    tableFilters(): Record<string, unknown>[] {
       return [
         {
           key: 'severity',
@@ -234,43 +234,45 @@ export default {
         },
       ];
     },
-    href() {
+    href(): string {
       return `data:text/json;charset=utf-8,${this.exportAllLogs()}`;
     },
-    filteredRows() {
+    filteredRows(): any {
       return this.searchFilter
         ? this.searchTotalFilteredRows
         : this.filteredLogs.length;
     },
-    allLogs() {
-      return this.$store.getters['operatingLogs/allEvents'].map((event) => {
-        return {
-          ...event,
-        };
-      });
+    allLogs(): any {
+      return this.$store.getters['operatingLogs/allEvents'].map(
+        (event: any) => {
+          return {
+            ...event,
+          };
+        }
+      );
     },
-    filteredLogsByDate() {
+    filteredLogsByDate(): any {
       return this.getFilteredTableDataByDate(
         this.allLogs,
         this.filterStartDate,
         this.filterEndDate
       );
     },
-    filteredLogs() {
+    filteredLogs(): any {
       return this.getFilteredTableData(
         this.filteredLogsByDate,
         this.activeFilters
       );
     },
   },
-  mounted() {
+  mounted(): void {
     this.startLoader();
     this.$store
       .dispatch('operatingLogs/getEventLogData')
       .finally(() => this.endLoader());
   },
   methods: {
-    deleteAllLogs() {
+    deleteAllLogs(): void {
       this.$bvModal
         .msgBoxConfirm(this.$t('pageOperatingLogs.modal.deleteAllMessage'), {
           title: this.$t('pageOperatingLogs.modal.deleteAllTitle'),
@@ -278,38 +280,44 @@ export default {
           okVariant: 'danger',
           cancelTitle: this.$t('global.action.cancel'),
         })
-        .then((deleteConfirmed) => {
+        .then((deleteConfirmed: any) => {
           if (deleteConfirmed) {
             this.$store
               .dispatch('operatingLogs/deleteAllEventLogs', this.allLogs)
-              .then((message) => this.successToast(message))
-              .catch(({ message }) => this.errorToast(message));
+              .then((message: string) => this.successToast(message))
+              .catch(({ message }: any) => this.errorToast(message));
           }
         });
     },
-    onFilterChange({ activeFilters }) {
+    onFilterChange({ activeFilters }: any): void {
       this.activeFilters = activeFilters;
     },
-    onSortCompare(a, b, key) {
+    onSortCompare(a: any, b: any, key: string): any {
       if (key === 'severity') {
         return this.sortStatus(a, b, key);
       }
     },
-    onChangeDateTimeFilter({ fromDate, toDate }) {
+    onChangeDateTimeFilter({
+      fromDate,
+      toDate,
+    }: {
+      fromDate: any;
+      toDate: any;
+    }): any {
       this.filterStartDate = fromDate;
       this.filterEndDate = toDate;
     },
-    onFiltered(filteredItems) {
+    onFiltered(filteredItems: string | any[]): void {
       this.searchTotalFilteredRows = filteredItems.length;
     },
     // Create export file name based on date
-    download() {
+    download(): void {
       this.$store
         .dispatch('operatingLogs/download')
-        .then((value) => {
+        .then((value: any) => {
           this.successToast(value);
         })
-        .catch(({ message }) => {
+        .catch(({ message }: any) => {
           this.errorToast(message);
         });
     },
