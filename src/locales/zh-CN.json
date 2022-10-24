@@ -754,7 +754,8 @@
       "editIpv4": "编辑IPv4地址",
       "gateway": "网关",
       "ipAddress": "IP地址",
-      "subnet": "子网掩码"
+      "subnet": "子网掩码",
+      "switchToDHCP": "开启DHCP模式"
     },
     "toast": {
       "errorSaveNetworkSettings": "更新%{setting}设置时出错。",

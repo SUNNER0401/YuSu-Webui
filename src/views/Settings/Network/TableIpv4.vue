@@ -7,10 +7,16 @@
         </h3>
       </b-col>
       <b-col class="text-right">
-        <b-button variant="primary" @click="initAddIpv4Address()">
-          <icon-add />
-          {{ $t('pageNetwork.table.addIpv4Address') }}
-        </b-button>
+        <b-button-group>
+          <b-button variant="primary" @click="switchToDHCP()">
+            <icon-settings />
+            {{ $t('pageNetwork.table.switchToDHCP') }}
+          </b-button>
+          <b-button variant="primary" @click="initAddIpv4Address()">
+            <icon-add />
+            {{ $t('pageNetwork.table.addIpv4Address') }}
+          </b-button>
+        </b-button-group>
       </b-col>
     </b-row>
     <b-table
@@ -27,13 +33,23 @@
           v-for="(action, actionIndex) in item.actions"
           :key="actionIndex"
           :value="action.value"
+          class="tableIpv4-action"
           :title="action.title"
           :enabled="action.enabled"
           @click-table-action="onIpv4TableAction(action, $event, index)"
         >
           <template #icon>
             <icon-edit v-if="action.value === 'edit'" />
-            <icon-trashcan v-if="action.value === 'delete'" />
+            <icon-trashcan
+              v-if="
+                action.value === 'delete' && form.ipv4TableItems.length == 1
+              "
+            />
+            <icon-trashcan
+              v-if="
+                action.value === 'delete' && form.ipv4TableItems.length != 1
+              "
+            />
           </template>
         </table-row-action>
       </template>
@@ -46,6 +62,7 @@ import BVToastMixin from '@/components/Mixins/BVToastMixin';
 import IconAdd from '@carbon/icons-vue/es/add--alt/20';
 import IconEdit from '@carbon/icons-vue/es/edit/20';
 import IconTrashcan from '@carbon/icons-vue/es/trash-can/20';
+import IconSettings from '@carbon/icons-vue/es/settings/20';
 import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
 import PageSection from '@/components/Global/PageSection';
 import TableRowAction from '@/components/Global/TableRowAction';
@@ -57,6 +74,7 @@ export default {
     IconAdd,
     IconEdit,
     IconTrashcan,
+    IconSettings,
     PageSection,
     TableRowAction,
   },
@@ -114,6 +132,26 @@ export default {
     ethernetData() {
       this.getIpv4TableItems();
     },
+    form: {
+      handler() {
+        if (this.form.ipv4TableItems.length == 1) {
+          this.$nextTick(() => {
+            const dom = document.querySelector(
+              '.tab-pane.active .tableIpv4-action > button'
+            );
+            dom.disabled = true;
+          });
+        } else {
+          this.$nextTick(() => {
+            const dom = document.querySelector(
+              '.tab-pane.active .tableIpv4-action > button'
+            );
+            if (dom) dom.disabled = false;
+          });
+        }
+      },
+      deep: true,
+    },
   },
   created() {
     this.getIpv4TableItems();
@@ -161,6 +199,12 @@ export default {
     },
     initAddIpv4Address() {
       this.$bvModal.show('modal-add-ipv4');
+    },
+    switchToDHCP() {
+      this.$store
+        .dispatch('network/awakeDHCP')
+        .then((message) => this.successToast(message))
+        .catch(({ message }) => this.errorToast(message));
     },
   },
 };

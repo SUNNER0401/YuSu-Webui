@@ -57,7 +57,7 @@ const NetworkStore = {
       (state.selectedInterfaceIndex = selectedInterfaceIndex),
   },
   actions: {
-    async getEthernetData({ commit }) {
+    async getEthernetData({ commit, state }) {
       return await api
         .get('/redfish/v1/Managers/bmc/EthernetInterfaces')
         .then((response) =>
@@ -80,7 +80,9 @@ const NetworkStore = {
 
           commit('setEthernetData', ethernetData);
           commit('setFirstInterfaceId', firstInterfaceId);
-          commit('setSelectedInterfaceId', firstInterfaceId);
+          // In order to avoid reset selectedInterfaceIndex when this value != 0
+          if (state.selectedInterfaceIndex == 0)
+            commit('setSelectedInterfaceId', firstInterfaceId);
           commit('setGlobalNetworkSettings', ethernetInterfaces);
         })
         .catch((error) => {
@@ -217,6 +219,34 @@ const NetworkStore = {
         .patch(
           `/redfish/v1/Managers/bmc/EthernetInterfaces/${state.selectedInterfaceId}`,
           { IPv4StaticAddresses: ipv4TableData }
+        )
+        .then(dispatch('getEthernetData'))
+        .then(() => {
+          return i18n.t('pageNetwork.toast.successSaveNetworkSettings', {
+            setting: i18n.t('pageNetwork.ipv4'),
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+          throw new Error(
+            i18n.t('pageNetwork.toast.errorSaveNetworkSettings', {
+              setting: i18n.t('pageNetwork.ipv4'),
+            })
+          );
+        });
+    },
+    async awakeDHCP({ dispatch, state }) {
+      return api
+        .patch(
+          `/redfish/v1/Managers/bmc/EthernetInterfaces/${state.selectedInterfaceId}`,
+          {
+            DHCPv4: {
+              DHCPEnabled: true,
+              UseDNSServers: true,
+              UseDomainName: true,
+              UseNTPServers: true,
+            },
+          }
         )
         .then(dispatch('getEthernetData'))
         .then(() => {

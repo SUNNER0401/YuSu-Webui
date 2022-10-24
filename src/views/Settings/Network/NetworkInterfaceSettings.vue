@@ -64,7 +64,7 @@ import DataFormatterMixin from '@/components/Mixins/DataFormatterMixin';
 import { mapState } from 'vuex';
 
 export default {
-  name: 'Ipv4Table',
+  name: 'NetworkInterfaceSettings',
   components: {
     IconEdit,
     PageSection,
