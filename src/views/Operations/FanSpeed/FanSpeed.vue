@@ -54,18 +54,51 @@
                               v-for="(fanName, index2) in fanNameList"
                               :key="index2"
                             >
-                              <b-col xl="3">
+                              <b-col cols="3">
                                 <p>{{ fanName }}</p>
                               </b-col>
-                              <b-col>
-                                <b-form-spinbutton
+                              <b-col cols="3">
+                                <b-form-input
                                   v-model="pwmValues[pwmRelation[fanName]]"
-                                  min="1"
+                                  class="text-center"
+                                  type="number"
+                                  min="0"
                                   max="100"
-                                  placeholder="--"
-                                  wrap
-                                >
-                                </b-form-spinbutton>
+                                  :state="
+                                    getValidationState(
+                                      $v.pwmValues[pwmRelation[fanName]]
+                                    )
+                                  "
+                                  @blur="
+                                    $v.pwmValues[pwmRelation[fanName]].$touch()
+                                  "
+                                  @focus="
+                                    $v.pwmValues[pwmRelation[fanName]].$reset()
+                                  "
+                                />
+                                <b-form-invalid-feedback role="alert">
+                                  <div
+                                    v-if="
+                                      !$v.pwmValues[pwmRelation[fanName]]
+                                        .required
+                                    "
+                                  >
+                                    {{ $t('global.form.fieldRequired') }}
+                                  </div>
+                                  <div
+                                    v-else-if="
+                                      !$v.pwmValues[pwmRelation[fanName]]
+                                        .between
+                                    "
+                                  >
+                                    {{
+                                      $t('global.form.valueMustBeBetween', {
+                                        min: 0,
+                                        max: 100,
+                                      })
+                                    }}
+                                  </div>
+                                </b-form-invalid-feedback>
                               </b-col>
                             </b-row>
                           </template>
@@ -93,13 +126,15 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import FanSpeedChart from './FanSpeedChart';
 import PageTitle from '@/components/Global/PageTitle';
 import PageSection from '@/components/Global/PageSection';
 import { mapGetters } from 'vuex';
 import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
+import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
+import { required, between } from 'vuelidate/lib/validators';
 
 export default {
   name: 'FanSpeed',
@@ -108,7 +143,38 @@ export default {
     PageTitle,
     PageSection,
   },
-  mixins: [LoadingBarMixin, BVToastMixin],
+  mixins: [LoadingBarMixin, BVToastMixin, VuelidateMixin],
+  // @ts-ignore
+  validations() {
+    return {
+      pwmValues: {
+        PWM1: {
+          required,
+          between: between(0, 100),
+        },
+        PWM2: {
+          required,
+          between: between(0, 100),
+        },
+        PWM3: {
+          required,
+          between: between(0, 100),
+        },
+        PWM4: {
+          required,
+          between: between(0, 100),
+        },
+        PWM5: {
+          required,
+          between: between(0, 100),
+        },
+        PWM6: {
+          required,
+          between: between(0, 100),
+        },
+      },
+    };
+  },
   computed: {
     ...mapGetters('fanSpeed', [
       'fanSpeeds',
@@ -120,16 +186,20 @@ export default {
       'allModes',
     ]),
   },
-  created() {
+  created(): void {
     this.startLoader();
     this.$store.dispatch('fanSpeed/getFanAllData').finally(() => {
       this.endLoader();
     });
   },
   methods: {
-    submitSetting(zoneName) {
+    submitSetting(zoneName: string): void {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
       this.startLoader();
-      let mode = this.fanModes[zoneName];
+      let mode: string = this.fanModes[zoneName];
       this.$bvModal
         .msgBoxConfirm(
           this.$t('pageFanSpeed.modal.confirmMessage', { zoneName }),
@@ -139,7 +209,7 @@ export default {
             cancelTitle: this.$t('global.action.cancel'),
           }
         )
-        .then(async (confirm) => {
+        .then(async (confirm: boolean) => {
           // Set zone mode.
           if (confirm) {
             await this.$store
@@ -148,7 +218,7 @@ export default {
                 // Set PWM of each fans.
                 let iferr = false;
                 if (mode == 'MANUAL_MODE') {
-                  let promises = [];
+                  let promises: string[] = [];
                   const fanList = [...this.zones[zoneName]];
                   fanList.forEach((fanName) => {
                     let pwmName = this.pwmRelation[fanName];
@@ -199,11 +269,10 @@ export default {
 .page-section {
   margin-bottom: $spacer * 1;
 }
-.b-form-spinbutton {
-  width: 150px;
-  height: 24px;
-}
 .speed-confirm {
   height: 32px;
+}
+::v-deep .form-control {
+  height: 26px;
 }
 </style>

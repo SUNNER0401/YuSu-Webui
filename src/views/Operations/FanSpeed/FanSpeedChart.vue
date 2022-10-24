@@ -6,7 +6,7 @@
   ></div>
 </template>
 
-<script>
+<script lang="ts">
 import * as echarts from 'echarts';
 
 export default {
@@ -23,11 +23,11 @@ export default {
     };
   },
   computed: {
-    fanNameList() {
+    fanNameList(): string[] {
       let fannameList = Object.keys(this.fanSpeeds);
       return fannameList;
     },
-    fanSpeedList() {
+    fanSpeedList(): unknown[] {
       let fanSpeedList = Object.values(this.fanSpeeds);
       return fanSpeedList;
     },
