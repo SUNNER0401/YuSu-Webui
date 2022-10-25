@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'App',
   computed: {
@@ -13,17 +13,13 @@ export default {
     },
   },
   watch: {
-    assetTag: function (tag) {
+    assetTag(tag: any) {
       if (tag) {
-        // document.title = `${tag} - ${this.$route.meta.title}`;
         document.title = `${this.$route.meta.title}`;
       }
     },
-    $route: function (to) {
+    $route(to: { meta: { title: string } }) {
       document.title = to.meta.title || 'Page is missing title';
-      // if (this.assetTag) {
-      //   document.title = `${this.assetTag} - ${to.meta.title}`;
-      // }
     },
   },
   created() {
