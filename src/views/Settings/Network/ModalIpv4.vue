@@ -88,7 +88,7 @@
   </b-modal>
 </template>
 
-<script>
+<script lang="ts">
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 import { ipAddress, required } from 'vuelidate/lib/validators';
 
@@ -114,6 +114,7 @@ export default {
       this.form.gateway = this.defaultGateway;
     },
   },
+  // @ts-ignore
   validations() {
     return {
       form: {
@@ -155,7 +156,7 @@ export default {
       this.$v.$reset();
       this.$emit('hidden');
     },
-    onOk(bvModalEvt) {
+    onOk(bvModalEvt: { preventDefault: () => void }) {
       // prevent modal close
       bvModalEvt.preventDefault();
       this.handleSubmit();

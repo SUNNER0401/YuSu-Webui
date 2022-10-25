@@ -57,7 +57,7 @@
   </page-section>
 </template>
 
-<script>
+<script lang="ts">
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
 import IconAdd from '@carbon/icons-vue/es/add--alt/20';
 import IconEdit from '@carbon/icons-vue/es/edit/20';
@@ -139,7 +139,7 @@ export default {
             const dom = document.querySelector(
               '.tab-pane.active .tableIpv4-action > button'
             );
-            dom.disabled = true;
+            if (dom) dom.disabled = true;
           });
         } else {
           this.$nextTick(() => {
@@ -162,40 +162,49 @@ export default {
     getIpv4TableItems() {
       const index = this.tabIndex;
       const addresses = this.ethernetData[index].IPv4Addresses || [];
-      this.form.ipv4TableItems = addresses.map((ipv4) => {
-        return {
-          Address: ipv4.Address,
-          SubnetMask: ipv4.SubnetMask,
-          Gateway: ipv4.Gateway,
-          AddressOrigin: ipv4.AddressOrigin,
-          actions: [
-            {
-              value: 'delete',
-              title: this.$t('pageNetwork.table.deleteIpv4'),
-            },
-          ],
-        };
-      });
+      this.form.ipv4TableItems = addresses.map(
+        (ipv4: {
+          Address: any;
+          SubnetMask: any;
+          Gateway: any;
+          AddressOrigin: any;
+        }) => {
+          return {
+            Address: ipv4.Address,
+            SubnetMask: ipv4.SubnetMask,
+            Gateway: ipv4.Gateway,
+            AddressOrigin: ipv4.AddressOrigin,
+            actions: [
+              {
+                value: 'delete',
+                title: this.$t('pageNetwork.table.deleteIpv4'),
+              },
+            ],
+          };
+        }
+      );
     },
-    onIpv4TableAction(action, $event, index) {
+    onIpv4TableAction(action: any, $event: string, index: any) {
       if ($event === 'delete') {
         this.deleteIpv4TableRow(index);
       }
     },
-    deleteIpv4TableRow(index) {
+    deleteIpv4TableRow(index: any) {
       this.form.ipv4TableItems.splice(index, 1);
-      const newIpv4Array = this.form.ipv4TableItems.map((ipv4) => {
-        const { Address, SubnetMask, Gateway } = ipv4;
-        return {
-          Address,
-          SubnetMask,
-          Gateway,
-        };
-      });
+      const newIpv4Array = this.form.ipv4TableItems.map(
+        (ipv4: { Address: any; SubnetMask: any; Gateway: any }) => {
+          const { Address, SubnetMask, Gateway } = ipv4;
+          return {
+            Address,
+            SubnetMask,
+            Gateway,
+          };
+        }
+      );
       this.$store
         .dispatch('network/editIpv4Address', newIpv4Array)
-        .then((message) => this.successToast(message))
-        .catch(({ message }) => this.errorToast(message));
+        .then((message: any) => this.successToast(message))
+        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
     initAddIpv4Address() {
       this.$bvModal.show('modal-add-ipv4');
@@ -203,8 +212,8 @@ export default {
     switchToDHCP() {
       this.$store
         .dispatch('network/awakeDHCP')
-        .then((message) => this.successToast(message))
-        .catch(({ message }) => this.errorToast(message));
+        .then((message: any) => this.successToast(message))
+        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
   },
 };

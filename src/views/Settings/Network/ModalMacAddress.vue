@@ -48,7 +48,7 @@
   </b-modal>
 </template>
 
-<script>
+<script lang="ts">
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 import { macAddress, required } from 'vuelidate/lib/validators';
 
@@ -72,6 +72,7 @@ export default {
       this.form.macAddress = this.macAddress;
     },
   },
+  // @ts-ignore
   validations() {
     return {
       form: {
@@ -99,7 +100,7 @@ export default {
       this.$v.$reset();
       this.$emit('hidden');
     },
-    onOk(bvModalEvt) {
+    onOk(bvModalEvt: { preventDefault: () => void }) {
       // prevent modal close
       bvModalEvt.preventDefault();
       this.handleSubmit();

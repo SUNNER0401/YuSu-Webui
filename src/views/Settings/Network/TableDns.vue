@@ -38,7 +38,7 @@
   </page-section>
 </template>
 
-<script>
+<script lang="ts">
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
 import IconAdd from '@carbon/icons-vue/es/add--alt/20';
 import IconEdit from '@carbon/icons-vue/es/edit/20';
@@ -108,7 +108,7 @@ export default {
     getStaticDnsItems() {
       const index = this.tabIndex;
       const dns = this.ethernetData[index].StaticNameServers || [];
-      this.form.dnsStaticTableItems = dns.map((server) => {
+      this.form.dnsStaticTableItems = dns.map((server: any) => {
         return {
           address: server,
           actions: [
@@ -120,20 +120,22 @@ export default {
         };
       });
     },
-    onDnsTableAction(action, $event, index) {
+    onDnsTableAction(action: any, $event: string, index: any) {
       if ($event === 'delete') {
         this.deleteDnsTableRow(index);
       }
     },
-    deleteDnsTableRow(index) {
+    deleteDnsTableRow(index: number) {
       this.form.dnsStaticTableItems.splice(index, 1);
-      const newDnsArray = this.form.dnsStaticTableItems.map((dns) => {
-        return dns.address;
-      });
+      const newDnsArray = this.form.dnsStaticTableItems.map(
+        (dns: { address: any }) => {
+          return dns.address;
+        }
+      );
       this.$store
         .dispatch('network/editDnsAddress', newDnsArray)
-        .then((message) => this.successToast(message))
-        .catch(({ message }) => this.errorToast(message));
+        .then((message: string) => this.successToast(message))
+        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
     initDnsModal() {
       this.$bvModal.show('modal-dns');

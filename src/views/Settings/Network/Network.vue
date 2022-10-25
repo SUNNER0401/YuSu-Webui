@@ -39,7 +39,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
 import DataFormatterMixin from '@/components/Mixins/DataFormatterMixin';
 import LoadingBarMixin, { loading } from '@/components/Mixins/LoadingBarMixin';
@@ -54,6 +54,7 @@ import PageTitle from '@/components/Global/PageTitle';
 import TableIpv4 from './TableIpv4.vue';
 import TableDns from './TableDns.vue';
 import { mapState } from 'vuex';
+import { Route } from 'vue-router';
 
 export default {
   name: 'Network',
@@ -70,7 +71,7 @@ export default {
     TableIpv4,
   },
   mixins: [BVToastMixin, DataFormatterMixin, LoadingBarMixin],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: Route, _from: any, next: () => void) {
     this.hideLoader();
     next();
   },
@@ -94,16 +95,16 @@ export default {
   created() {
     this.startLoader();
     Promise.all([this.$store.dispatch('network/getEthernetData')]);
-    const globalSettings = new Promise((resolve) => {
+    const globalSettings = new Promise<void>((resolve) => {
       this.$root.$on('network-global-settings-complete', () => resolve());
     });
-    const interfaceSettings = new Promise((resolve) => {
+    const interfaceSettings = new Promise<void>((resolve) => {
       this.$root.$on('network-interface-settings-complete', () => resolve());
     });
-    const networkTableDns = new Promise((resolve) => {
+    const networkTableDns = new Promise<void>((resolve) => {
       this.$root.$on('network-table-dns-complete', () => resolve());
     });
-    const networkTableIpv4 = new Promise((resolve) => {
+    const networkTableIpv4 = new Promise<void>((resolve) => {
       this.$root.$on('network-table-ipv4-complete', () => resolve());
     });
     // Combine all child component Promises to indicate
@@ -116,7 +117,7 @@ export default {
     ]).finally(() => this.endLoader());
   },
   methods: {
-    getModalInfo() {
+    getModalInfo(): void {
       this.defaultGateway = this.$store.getters[
         'network/globalNetworkSettings'
       ][this.tabIndex].defaultGateway;
@@ -129,7 +130,7 @@ export default {
         'network/globalNetworkSettings'
       ][this.tabIndex].macAddress;
     },
-    getTabIndex(selectedIndex) {
+    getTabIndex(selectedIndex: number): void {
       this.tabIndex = selectedIndex;
       this.$store.dispatch('network/setSelectedTabIndex', this.tabIndex);
       this.$store.dispatch(
@@ -138,28 +139,32 @@ export default {
       );
       this.getModalInfo();
     },
-    saveIpv4Address(modalFormData) {
+    saveIpv4Address(modalFormData: {
+      Address: string;
+      Gateway: string;
+      SubnetMask: string;
+    }): void {
       this.startLoader();
       this.$store
         .dispatch('network/saveIpv4Address', modalFormData)
-        .then((message) => this.successToast(message))
-        .catch(({ message }) => this.errorToast(message))
+        .then((message: string) => this.successToast(message))
+        .catch(({ message }: { message: string }) => this.errorToast(message))
         .finally(() => this.endLoader());
     },
-    saveDnsAddress(modalFormData) {
+    saveDnsAddress(modalFormData: string[]): void {
       this.startLoader();
       this.$store
         .dispatch('network/saveDnsAddress', modalFormData)
-        .then((message) => this.successToast(message))
-        .catch(({ message }) => this.errorToast(message))
+        .then((message: string) => this.successToast(message))
+        .catch(({ message }: { message: string }) => this.errorToast(message))
         .finally(() => this.endLoader());
     },
-    saveSettings(modalFormData) {
+    saveSettings(modalFormData: { MACAddress: string }): void {
       this.startLoader();
       this.$store
         .dispatch('network/saveSettings', modalFormData)
-        .then((message) => this.successToast(message))
-        .catch(({ message }) => this.errorToast(message))
+        .then((message: string) => this.successToast(message))
+        .catch(({ message }: { message: string }) => this.errorToast(message))
         .finally(() => this.endLoader());
     },
   },

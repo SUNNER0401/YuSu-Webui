@@ -76,7 +76,7 @@
   </page-section>
 </template>
 
-<script>
+<script lang="ts">
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
 import IconEdit from '@carbon/icons-vue/es/edit/16';
 import DataFormatterMixin from '@/components/Mixins/DataFormatterMixin';
@@ -103,7 +103,7 @@ export default {
         return this.$store.getters['network/globalNetworkSettings'][0]
           .useDomainNameEnabled;
       },
-      set(newValue) {
+      set(newValue: any) {
         return newValue;
       },
     },
@@ -112,7 +112,7 @@ export default {
         return this.$store.getters['network/globalNetworkSettings'][0]
           .useDnsEnabled;
       },
-      set(newValue) {
+      set(newValue: any) {
         return newValue;
       },
     },
@@ -121,7 +121,7 @@ export default {
         return this.$store.getters['network/globalNetworkSettings'][0]
           .useNtpEnabled;
       },
-      set(newValue) {
+      set(newValue: any) {
         return newValue;
       },
     },
@@ -131,25 +131,25 @@ export default {
     this.$root.$emit('network-global-settings-complete');
   },
   methods: {
-    changeDomainNameState(state) {
+    changeDomainNameState(state: any) {
       this.$store
         .dispatch('network/saveDomainNameState', state)
-        .then((success) => {
+        .then((success: any) => {
           this.successToast(success);
         })
-        .catch(({ message }) => this.errorToast(message));
+        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
-    changeDnsState(state) {
+    changeDnsState(state: any) {
       this.$store
         .dispatch('network/saveDnsState', state)
-        .then((message) => this.successToast(message))
-        .catch(({ message }) => this.errorToast(message));
+        .then((message: string) => this.successToast(message))
+        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
-    changeNtpState(state) {
+    changeNtpState(state: any) {
       this.$store
         .dispatch('network/saveNtpState', state)
-        .then((message) => this.successToast(message))
-        .catch(({ message }) => this.errorToast(message));
+        .then((message: string) => this.successToast(message))
+        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
     initSettingsModal() {
       this.$bvModal.show('modal-hostname');
