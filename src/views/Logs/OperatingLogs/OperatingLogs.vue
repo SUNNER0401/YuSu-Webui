@@ -228,7 +228,7 @@ export default {
     tableFilters(): Record<string, unknown>[] {
       return [
         {
-          key: 'severity',
+          key: 'interface',
           label: this.$t('pageOperatingLogs.table.interface'),
           values: this.interfaces,
         },
