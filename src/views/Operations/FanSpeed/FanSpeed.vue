@@ -146,33 +146,17 @@ export default {
   mixins: [LoadingBarMixin, BVToastMixin, VuelidateMixin],
   // @ts-ignore
   validations() {
+    let pwmValues = Object.assign({}, this.pwmValues);
+    Object.keys(pwmValues).map((pwm: any) => {
+      let pwmValidation = {
+        required,
+        between: between(0, 100),
+      };
+      pwmValues[pwm] = pwmValidation;
+      return pwm;
+    });
     return {
-      pwmValues: {
-        PWM1: {
-          required,
-          between: between(0, 100),
-        },
-        PWM2: {
-          required,
-          between: between(0, 100),
-        },
-        PWM3: {
-          required,
-          between: between(0, 100),
-        },
-        PWM4: {
-          required,
-          between: between(0, 100),
-        },
-        PWM5: {
-          required,
-          between: between(0, 100),
-        },
-        PWM6: {
-          required,
-          between: between(0, 100),
-        },
-      },
+      pwmValues,
     };
   },
   computed: {
@@ -222,7 +206,7 @@ export default {
                   const fanList = [...this.zones[zoneName]];
                   fanList.forEach((fanName) => {
                     let pwmName = this.pwmRelation[fanName];
-                    let value = this.pwmValues[pwmName];
+                    let value = +this.pwmValues[pwmName];
                     let promise = this.$store
                       .dispatch('fanSpeed/setPwmValue', { pwmName, value })
                       .catch(() => {
