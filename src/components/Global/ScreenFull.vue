@@ -115,4 +115,8 @@ export default {
     cursor: pointer;
   }
 }
+.svg-icon {
+  height: 18px !important;
+  width: 18px !important;
+}
 </style>
