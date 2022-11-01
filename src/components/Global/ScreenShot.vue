@@ -39,7 +39,7 @@ export default {
       // Simulate the action that click a tag for downloading.
       var link = document.createElement('a');
       link.href = imgUrl;
-      link.download = 'kvm-screenshot';
+      link.download = await this.$store.dispatch('global/getNowDateTime');
       link.click();
       link.remove();
     },

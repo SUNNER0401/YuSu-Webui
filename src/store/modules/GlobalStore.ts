@@ -121,6 +121,34 @@ const GlobalStore = {
         )
         .catch((error) => console.log(error));
     },
+    // 格式化日对象
+    getNowDateTime() {
+      let date = new Date();
+      let year: string | number = date.getFullYear(); // 年
+      let month: string | number = date.getMonth() + 1; // 月
+      let day: string | number = date.getDate(); // 日
+      let hour: string | number = date.getHours(); // 时
+      let minutes: string | number = date.getMinutes(); // 分
+      let seconds: string | number = date.getSeconds(); //秒
+      // 给一位数的数据前面加 “0”
+      year = '' + year;
+      if (month >= 1 && month <= 9) {
+        month = '0' + month;
+      }
+      if (day >= 0 && day <= 9) {
+        day = '0' + day;
+      }
+      if (hour >= 0 && hour <= 9) {
+        hour = '0' + hour;
+      }
+      if (minutes >= 0 && minutes <= 9) {
+        minutes = '0' + minutes;
+      }
+      if (seconds >= 0 && seconds <= 9) {
+        seconds = '0' + seconds;
+      }
+      return year + month + day + hour + minutes + seconds;
+    },
   },
 };
 
