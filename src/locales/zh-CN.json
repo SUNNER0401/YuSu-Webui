@@ -505,6 +505,7 @@
     "connected": "已连接",
     "connecting": "连接中",
     "disconnected": "未连接",
+    "browserNotSupport": "您的浏览器不支持!!!",
     "brandTitle": {
       "screenFull": "全屏",
       "screenShot": "截屏"

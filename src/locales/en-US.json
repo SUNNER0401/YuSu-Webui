@@ -505,6 +505,7 @@
     "connected": "Connected",
     "connecting": "Connecting",
     "disconnected": "Disconnected",
+    "browserNotSupport": "Your browser Not support!!!",
     "brandTitle": {
       "screenFull": "Screen Full",
       "screenShot": "Screen Shot"

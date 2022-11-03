@@ -64,7 +64,6 @@ export default {
       rfb: null,
       isConnected: false,
       status: Connecting,
-      convasRef: null,
       resizeKvmWindow: null,
       element: null,
       shotArea: null,
@@ -96,16 +95,32 @@ export default {
   },
   watch: {
     isFullWindow: {
-      handler() {
+      handler(newvalue) {
+        if (newvalue) {
+          if (navigator.keyboard && navigator.keyboard.lock) {
+            navigator.keyboard.lock();
+          } else {
+            console.log('Your browser Not support!!!');
+          }
+        }
         this.resizeKvmWindow();
+        setTimeout(() => {
+          this.amendToolbar2Position();
+        }, 500);
       },
     },
-    immediate: true,
   },
   mounted() {
     this.element = document.querySelector('#terminal-kvm');
     this.openTerminal();
     setTimeout(() => {
+      this.amendToolbar2Position();
+      window.addEventListener(
+        'resize',
+        this._.throttle(() => {
+          this.amendToolbar2Position();
+        }, 1000)
+      );
       this.shotArea = document.querySelector('#terminal-kvm > div > canvas');
       document.querySelector(
         '.kvm-toolbar2'
@@ -120,6 +135,20 @@ export default {
     // sendCtrlAltDel() {
     //   this.rfb.sendCtrlAltDel();
     // },
+    amendToolbar2Position() {
+      let toolbar2 = document.querySelector('.kvm-toolbar2');
+      let div = document.querySelector('#terminal-kvm > div:nth-child(2)');
+      let canvas = document.querySelector(
+        '#terminal-kvm > div:nth-child(2) > canvas'
+      );
+      if (!this.isFullWindow) {
+        toolbar2.style.right = `calc(${div.clientWidth}px - ${canvas.style.width})`;
+        toolbar2.style.height = canvas.style.height;
+      } else {
+        toolbar2.style.right = '0px';
+        toolbar2.style.height = '100%';
+      }
+    },
     closeTerminal() {
       this.rfb.disconnect();
       this.rfb = null;
@@ -162,13 +191,13 @@ export default {
           this.$refs.panel1.children[1].children[0].clientWidth - 10 + 'px';
       }
     },
-    openConsoleWindow() {
-      window.open(
-        '#/console/kvm',
-        '_blank',
-        'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=700,height=550'
-      );
-    },
+    // openConsoleWindow() {
+    //   window.open(
+    //     '#/console/kvm',
+    //     '_blank',
+    //     'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=700,height=550'
+    //   );
+    // },
   },
 };
 </script>
@@ -231,15 +260,15 @@ export default {
       }
     }
   }
-  // &:not(.full-window) {
-  //   ::v-deep canvas {
-  //     height: 100% !important;
-  //   }
-  // }
   &.full-window {
     .kvm-toolbar2 {
       height: 100%;
       width: 3%;
+    }
+    ::v-deep canvas {
+      position: relative;
+      display: block;
+      margin: 0 auto;
     }
   }
 }
