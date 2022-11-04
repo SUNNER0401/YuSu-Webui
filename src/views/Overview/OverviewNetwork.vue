@@ -23,23 +23,9 @@
     <b-row>
       <b-col>
         <dl>
-          <dt>{{ $t('pageOverview.ipv4') }}</dt>
+          <dt>IP</dt>
           <dd>
-            {{ dataFormatter(network.staticAddress) }}
-          </dd>
-        </dl>
-      </b-col>
-      <b-col>
-        <dl>
-          <dt>{{ $t('pageOverview.dhcp') }}</dt>
-          <dd>
-            {{
-              dataFormatter(
-                network.dhcpAddress.length !== 0
-                  ? network.dhcpAddress[0].Address
-                  : null
-              )
-            }}
+            {{ URL }}
           </dd>
         </dl>
       </b-col>
@@ -59,7 +45,10 @@ export default {
   mixins: [DataFormatterMixin],
   computed: {
     network() {
-      return this.$store.getters['network/globalNetworkSettings'][0];
+      return this.$store.getters['network/globalNetworkSettings'][1];
+    },
+    URL() {
+      return window.location.hostname;
     },
   },
   created() {
