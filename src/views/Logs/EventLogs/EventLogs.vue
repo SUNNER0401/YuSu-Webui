@@ -50,12 +50,12 @@
           @batch-action="onBatchAction"
         >
           <template #toolbar-buttons>
-            <b-button variant="primary" @click="resolveLogs">
+            <!-- <b-button variant="primary" @click="resolveLogs">
               {{ $t('pageEventLogs.resolve') }}
             </b-button>
             <b-button variant="primary" @click="unresolveLogs">
               {{ $t('pageEventLogs.unresolve') }}
-            </b-button>
+            </b-button> -->
             <table-toolbar-export
               :data="batchExportData"
               :file-name="exportFileNameByDate()"
@@ -378,10 +378,10 @@ export default {
       expandRowLabel,
       activeFilters: [],
       batchActions: [
-        {
-          value: 'delete',
-          label: this.$t('global.action.delete'),
-        },
+        // {
+        //   value: 'delete',
+        //   label: this.$t('global.action.delete'),
+        // },
       ],
       currentPage: currentPage,
       filterStartDate: null,
