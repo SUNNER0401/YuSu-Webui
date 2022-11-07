@@ -5,6 +5,13 @@
       leave-active-class="animate__fadeOut"
     >
       <main>
+        <div key="1" class="login-brand mb-5">
+          <img
+            width="353px"
+            src="@/assets/images/login-company-logo.svg"
+            :alt="altLogo"
+          />
+        </div>
         <div v-show="onload" class="login-container">
           <div class="login-main">
             <div>
@@ -13,13 +20,6 @@
                 name="animate__animated animate__bounce"
                 enter-active-class="animate__slideInDown"
               >
-                <div key="1" class="login-brand mb-5">
-                  <img
-                    width="353px"
-                    src="@/assets/images/login-company-logo.svg"
-                    :alt="altLogo"
-                  />
-                </div>
                 <h1
                   v-if="customizableGuiName"
                   key="2"
@@ -122,13 +122,6 @@ export default {
   & > div {
     position: relative;
     left: -15vw;
-    img {
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      left: 37vw;
-      top: 13vh;
-    }
   }
 }
 
@@ -181,6 +174,15 @@ main {
     font-weight: bold;
   }
   overflow: hidden;
+  .login-brand {
+    position: absolute;
+    left: 63vw;
+    top: 34vh;
+    img {
+      width: 15vw;
+      height: 33vh;
+    }
+  }
 }
 .two-dimension {
   position: fixed;
