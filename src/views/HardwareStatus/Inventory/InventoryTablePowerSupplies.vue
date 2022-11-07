@@ -56,36 +56,66 @@
             <b-col sm="6" xl="4">
               <dl>
                 <!-- Name -->
-                <dt>{{ $t('pageInventory.table.name') }}:</dt>
-                <dd>{{ dataFormatter(item.name) }}</dd>
+                <dt v-if="item.name">{{ $t('pageInventory.table.name') }}:</dt>
+                <dd v-if="item.name">{{ dataFormatter(item.name) }}</dd>
                 <!-- Part number -->
-                <dt>{{ $t('pageInventory.table.partNumber') }}:</dt>
-                <dd>{{ dataFormatter(item.partNumber) }}</dd>
+                <dt v-if="item.partNumber">
+                  {{ $t('pageInventory.table.partNumber') }}:
+                </dt>
+                <dd v-if="item.partNumber">
+                  {{ dataFormatter(item.partNumber) }}
+                </dd>
                 <!-- Serial number -->
-                <dt>{{ $t('pageInventory.table.serialNumber') }}:</dt>
-                <dd>{{ dataFormatter(item.serialNumber) }}</dd>
+                <dt v-if="item.serialNumber">
+                  {{ $t('pageInventory.table.serialNumber') }}:
+                </dt>
+                <dd v-if="item.serialNumber">
+                  {{ dataFormatter(item.serialNumber) }}
+                </dd>
                 <!-- Spare part number -->
-                <dt>{{ $t('pageInventory.table.sparePartNumber') }}:</dt>
-                <dd>{{ dataFormatter(item.sparePartNumber) }}</dd>
+                <dt v-if="item.sparePartNumber">
+                  {{ $t('pageInventory.table.sparePartNumber') }}:
+                </dt>
+                <dd v-if="item.sparePartNumber">
+                  {{ dataFormatter(item.sparePartNumber) }}
+                </dd>
                 <!-- Model -->
-                <dt>{{ $t('pageInventory.table.model') }}:</dt>
-                <dd>{{ dataFormatter(item.model) }}</dd>
+                <dt v-if="item.model">
+                  {{ $t('pageInventory.table.model') }}:
+                </dt>
+                <dd v-if="item.model">{{ dataFormatter(item.model) }}</dd>
               </dl>
             </b-col>
             <b-col sm="6" xl="4">
               <dl>
                 <!-- Status state -->
-                <dt>{{ $t('pageInventory.table.statusState') }}:</dt>
-                <dd>{{ dataFormatter(item.statusState) }}</dd>
+                <dt v-if="item.statusState">
+                  {{ $t('pageInventory.table.statusState') }}:
+                </dt>
+                <dd v-if="item.statusState">
+                  {{ dataFormatter(item.statusState) }}
+                </dd>
                 <!-- Status Health rollup state -->
-                <dt>{{ $t('pageInventory.table.statusHealthRollup') }}:</dt>
-                <dd>{{ dataFormatter(item.statusHealth) }}</dd>
+                <dt v-if="item.statusHealth">
+                  {{ $t('pageInventory.table.statusHealthRollup') }}:
+                </dt>
+                <dd v-if="item.statusHealth">
+                  {{ dataFormatter(item.statusHealth) }}
+                </dd>
                 <!-- Efficiency percent -->
-                <dt>{{ $t('pageInventory.table.efficiencyPercent') }}:</dt>
-                <dd>{{ dataFormatter(item.efficiencyPercent) }}</dd>
+                <dt v-if="item.efficiencyPercent">
+                  {{ $t('pageInventory.table.efficiencyPercent') }}:
+                </dt>
+                <dd v-if="item.efficiencyPercent">
+                  {{ dataFormatter(item.efficiencyPercent) }}
+                </dd>
                 <!-- Power input watts -->
-                <dt>{{ $t('pageInventory.table.powerInputWatts') }}:</dt>
-                <dd>{{ dataFormatter(item.powerInputWatts) }}</dd>
+                <dt v-if="item.powerInputWatts">
+                  {{ $t('pageInventory.table.powerInputWatts') }}:
+                </dt>
+                <dd v-if="item.powerInputWatts">
+                  {{ dataFormatter(item.powerInputWatts) }}
+                </dd>
               </dl>
             </b-col>
           </b-row>
@@ -94,15 +124,23 @@
             <b-col sm="6" xl="4">
               <dl>
                 <!-- Manufacturer -->
-                <dt>{{ $t('pageInventory.table.manufacturer') }}:</dt>
-                <dd>{{ dataFormatter(item.manufacturer) }}</dd>
+                <dt v-if="item.manufacturer">
+                  {{ $t('pageInventory.table.manufacturer') }}:
+                </dt>
+                <dd v-if="item.manufacturer">
+                  {{ dataFormatter(item.manufacturer) }}
+                </dd>
               </dl>
             </b-col>
             <b-col sm="6" xl="4">
               <dl>
                 <!-- Firmware version -->
-                <dt>{{ $t('pageInventory.table.firmwareVersion') }}:</dt>
-                <dd>{{ dataFormatter(item.firmwareVersion) }}</dd>
+                <dt v-if="item.firmwareVersion">
+                  {{ $t('pageInventory.table.firmwareVersion') }}:
+                </dt>
+                <dd v-if="item.firmwareVersion">
+                  {{ dataFormatter(item.firmwareVersion) }}
+                </dd>
               </dl>
             </b-col>
           </b-row>

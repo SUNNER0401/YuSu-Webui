@@ -46,19 +46,25 @@
           <b-row>
             <b-col class="mt-2" sm="6" xl="6">
               <!-- Nmae -->
-              <dt>{{ $t('pageInventory.table.name') }}:</dt>
-              <dd>{{ dataFormatter(item.name) }}</dd>
+              <dt v-if="item.name">{{ $t('pageInventory.table.name') }}:</dt>
+              <dd v-if="item.name">{{ dataFormatter(item.name) }}</dd>
               <!-- Serial number -->
-              <dt>{{ $t('pageInventory.table.serialNumber') }}:</dt>
-              <dd>{{ dataFormatter(item.serialNumber) }}</dd>
+              <dt v-if="item.serialNumber">
+                {{ $t('pageInventory.table.serialNumber') }}:
+              </dt>
+              <dd v-if="item.serialNumber">
+                {{ dataFormatter(item.serialNumber) }}
+              </dd>
             </b-col>
             <b-col class="mt-2" sm="6" xl="6">
               <!-- Model-->
-              <dt>Model</dt>
-              <dd>{{ dataFormatter(item.model) }}</dd>
+              <dt v-if="item.model">Model</dt>
+              <dd v-if="item.model">{{ dataFormatter(item.model) }}</dd>
               <!-- Spare Part Number -->
-              <dt>Spare Part Number</dt>
-              <dd>{{ dataFormatter(item.sparePartNumber) }}</dd>
+              <dt v-if="item.sparePartNumber">Spare Part Number</dt>
+              <dd v-if="item.sparePartNumber">
+                {{ dataFormatter(item.sparePartNumber) }}
+              </dd>
             </b-col>
           </b-row>
         </b-container>

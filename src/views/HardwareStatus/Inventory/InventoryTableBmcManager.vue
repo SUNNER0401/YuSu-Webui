@@ -60,14 +60,18 @@
                 <dt>{{ $t('pageInventory.table.serialNumber') }}:</dt>
                 <dd>{{ dataFormatter(item.serialNumber) }}</dd>
                 <!-- Spare part number -->
-                <dt>{{ $t('pageInventory.table.sparePartNumber') }}:</dt>
-                <dd>{{ dataFormatter(item.sparePartNumber) }}</dd>
+                <dt v-if="item.sparePartNumber">
+                  {{ $t('pageInventory.table.sparePartNumber') }}:
+                </dt>
+                <dd v-if="item.sparePartNumber">
+                  {{ dataFormatter(item.sparePartNumber) }}
+                </dd>
                 <!-- Model -->
                 <dt>{{ $t('pageInventory.table.model') }}:</dt>
                 <dd>{{ dataFormatter(item.model) }}</dd>
                 <!-- UUID -->
-                <dt>{{ $t('pageInventory.table.uuid') }}:</dt>
-                <dd>{{ dataFormatter(item.uuid) }}</dd>
+                <dt v-if="item.uuid">{{ $t('pageInventory.table.uuid') }}:</dt>
+                <dd v-if="item.uuid">{{ dataFormatter(item.uuid) }}</dd>
                 <!-- Service entry point UUID -->
                 <dt>{{ $t('pageInventory.table.serviceEntryPointUuid') }}:</dt>
                 <dd>{{ dataFormatter(item.serviceEntryPointUuid) }}</dd>
@@ -104,37 +108,57 @@
             <b-col class="mt-2" sm="6" xl="6">
               <dl>
                 <!-- Manufacturer -->
-                <dt>{{ $t('pageInventory.table.manufacturer') }}:</dt>
-                <dd>{{ dataFormatter(item.manufacturer) }}</dd>
+                <dt v-if="item.manufacturer">
+                  {{ $t('pageInventory.table.manufacturer') }}:
+                </dt>
+                <dd v-if="item.manufacturer">
+                  {{ dataFormatter(item.manufacturer) }}
+                </dd>
                 <!-- Description -->
-                <dt>{{ $t('pageInventory.table.description') }}:</dt>
-                <dd>{{ dataFormatter(item.description) }}</dd>
+                <dt v-if="item.description">
+                  {{ $t('pageInventory.table.description') }}:
+                </dt>
+                <dd v-if="item.description">
+                  {{ dataFormatter(item.description) }}
+                </dd>
                 <!-- Manager type -->
-                <dt>{{ $t('pageInventory.table.managerType') }}:</dt>
-                <dd>{{ dataFormatter(item.managerType) }}</dd>
+                <dt v-if="item.managerType">
+                  {{ $t('pageInventory.table.managerType') }}:
+                </dt>
+                <dd v-if="item.managerType">
+                  {{ dataFormatter(item.managerType) }}
+                </dd>
               </dl>
             </b-col>
             <b-col class="mt-2" sm="6" xl="6">
               <!-- Firmware Version  -->
               <dl>
-                <dt>{{ $t('pageInventory.table.firmwareVersion') }}:</dt>
-                <dd>{{ item.firmwareVersion }}</dd>
+                <dt v-if="item.firmwareVersion">
+                  {{ $t('pageInventory.table.firmwareVersion') }}:
+                </dt>
+                <dd v-if="item.firmwareVersion">{{ item.firmwareVersion }}</dd>
               </dl>
               <!-- Graphical console -->
               <p class="mt-1 mb-2 h6 float-none m-0">
                 {{ $t('pageInventory.table.graphicalConsole') }}
               </p>
               <dl class="ml-4">
-                <dt>{{ $t('pageInventory.table.connectTypesSupported') }}:</dt>
-                <dd>
+                <dt v-if="item.graphicalConsoleConnectTypes">
+                  {{ $t('pageInventory.table.connectTypesSupported') }}:
+                </dt>
+                <dd v-if="item.graphicalConsoleConnectTypes">
                   {{ dataFormatterArray(item.graphicalConsoleConnectTypes) }}
                 </dd>
-                <dt>{{ $t('pageInventory.table.maxConcurrentSessions') }}:</dt>
-                <dd>
+                <dt v-if="item.graphicalConsoleMaxSessions">
+                  {{ $t('pageInventory.table.maxConcurrentSessions') }}:
+                </dt>
+                <dd v-if="item.graphicalConsoleMaxSessions">
                   {{ dataFormatter(item.graphicalConsoleMaxSessions) }}
                 </dd>
-                <dt>{{ $t('pageInventory.table.serviceEnabled') }}:</dt>
-                <dd>
+                <dt v-if="item.graphicalConsoleEnabled">
+                  {{ $t('pageInventory.table.serviceEnabled') }}:
+                </dt>
+                <dd v-if="item.graphicalConsoleEnabled">
                   {{ dataFormatter(item.graphicalConsoleEnabled) }}
                 </dd>
               </dl>
@@ -143,14 +167,24 @@
                 {{ $t('pageInventory.table.serialConsole') }}
               </p>
               <dl class="ml-4">
-                <dt>{{ $t('pageInventory.table.connectTypesSupported') }}:</dt>
-                <dd>
+                <dt v-if="item.serialConsoleConnectTypes">
+                  {{ $t('pageInventory.table.connectTypesSupported') }}:
+                </dt>
+                <dd v-if="item.serialConsoleConnectTypes">
                   {{ dataFormatterArray(item.serialConsoleConnectTypes) }}
                 </dd>
-                <dt>{{ $t('pageInventory.table.maxConcurrentSessions') }}:</dt>
-                <dd>{{ dataFormatter(item.serialConsoleMaxSessions) }}</dd>
-                <dt>{{ $t('pageInventory.table.serviceEnabled') }}:</dt>
-                <dd>{{ dataFormatter(item.serialConsoleEnabled) }}</dd>
+                <dt v-if="item.serialConsoleMaxSessions">
+                  {{ $t('pageInventory.table.maxConcurrentSessions') }}:
+                </dt>
+                <dd v-if="item.serialConsoleMaxSessions">
+                  {{ dataFormatter(item.serialConsoleMaxSessions) }}
+                </dd>
+                <dt v-if="item.serialConsoleEnabled">
+                  {{ $t('pageInventory.table.serviceEnabled') }}:
+                </dt>
+                <dd v-if="item.serialConsoleEnabled">
+                  {{ dataFormatter(item.serialConsoleEnabled) }}
+                </dd>
               </dl>
             </b-col>
           </b-row>

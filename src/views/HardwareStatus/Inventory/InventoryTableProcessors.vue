@@ -106,36 +106,70 @@
             <b-col class="mt-1" sm="6" xl="6">
               <dl>
                 <!-- Manufacturer -->
-                <dt>{{ $t('pageInventory.table.manufacturer') }}:</dt>
-                <dd>{{ dataFormatter(item.manufacturer) }}</dd>
+                <dt v-if="item.manufacturer">
+                  {{ $t('pageInventory.table.manufacturer') }}:
+                </dt>
+                <dd v-if="item.manufacturer">
+                  {{ dataFormatter(item.manufacturer) }}
+                </dd>
                 <!-- Processor Type -->
-                <dt>{{ $t('pageInventory.table.processorType') }}:</dt>
-                <dd>{{ dataFormatter(item.processorType) }}</dd>
+                <dt v-if="item.processorType">
+                  {{ $t('pageInventory.table.processorType') }}:
+                </dt>
+                <dd v-if="item.processorType">
+                  {{ dataFormatter(item.processorType) }}
+                </dd>
                 <!-- Processor Architecture -->
-                <dt>{{ $t('pageInventory.table.processorArchitecture') }}:</dt>
-                <dd>{{ dataFormatter(item.processorArchitecture) }}</dd>
+                <dt v-if="item.processorArchitecture">
+                  {{ $t('pageInventory.table.processorArchitecture') }}:
+                </dt>
+                <dd v-if="item.processorArchitecture">
+                  {{ dataFormatter(item.processorArchitecture) }}
+                </dd>
                 <!-- Instruction Set -->
-                <dt>{{ $t('pageInventory.table.instructionSet') }}:</dt>
-                <dd>{{ dataFormatter(item.instructionSet) }}</dd>
+                <dt v-if="item.instructionSet">
+                  {{ $t('pageInventory.table.instructionSet') }}:
+                </dt>
+                <dd v-if="item.instructionSet">
+                  {{ dataFormatter(item.instructionSet) }}
+                </dd>
                 <!-- Version -->
-                <dt>{{ $t('pageInventory.table.version') }}:</dt>
-                <dd>{{ dataFormatter(item.version) }}</dd>
+                <dt v-if="item.version">
+                  {{ $t('pageInventory.table.version') }}:
+                </dt>
+                <dd v-if="item.version">{{ dataFormatter(item.version) }}</dd>
               </dl>
             </b-col>
             <b-col class="mt-1" sm="6" xl="6">
               <dl>
                 <!-- Min Speed MHz -->
-                <dt>{{ $t('pageInventory.table.minSpeedMHz') }}:</dt>
-                <dd>{{ dataFormatter(item.minSpeedMHz) }}</dd>
+                <dt v-if="item.minSpeedMHz">
+                  {{ $t('pageInventory.table.minSpeedMHz') }}:
+                </dt>
+                <dd v-if="item.minSpeedMHz">
+                  {{ dataFormatter(item.minSpeedMHz) }}
+                </dd>
                 <!-- Max Speed MHz -->
-                <dt>{{ $t('pageInventory.table.maxSpeedMHz') }}:</dt>
-                <dd>{{ dataFormatter(item.maxSpeedMHz) }}</dd>
+                <dt v-if="item.maxSpeedMHz">
+                  {{ $t('pageInventory.table.maxSpeedMHz') }}:
+                </dt>
+                <dd v-if="item.maxSpeedMHz">
+                  {{ dataFormatter(item.maxSpeedMHz) }}
+                </dd>
                 <!-- Total Cores -->
-                <dt>{{ $t('pageInventory.table.totalCores') }}:</dt>
-                <dd>{{ dataFormatter(item.totalCores) }}</dd>
+                <dt v-if="item.totalCores">
+                  {{ $t('pageInventory.table.totalCores') }}:
+                </dt>
+                <dd v-if="item.totalCores">
+                  {{ dataFormatter(item.totalCores) }}
+                </dd>
                 <!-- Total Threads -->
-                <dt>{{ $t('pageInventory.table.totalThreads') }}:</dt>
-                <dd>{{ dataFormatter(item.totalThreads) }}</dd>
+                <dt v-if="item.totalThreads">
+                  {{ $t('pageInventory.table.totalThreads') }}:
+                </dt>
+                <dd v-if="item.totalThreads">
+                  {{ dataFormatter(item.totalThreads) }}
+                </dd>
               </dl>
             </b-col>
           </b-row>
