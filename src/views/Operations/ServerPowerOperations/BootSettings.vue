@@ -68,11 +68,15 @@ export default {
   },
   computed: {
     ...mapState('serverBootSettings', [
-      'bootSourceOptions',
       'bootSource',
       'overrideEnabled',
       'tpmEnabled',
     ]),
+    bootSourceOptions() {
+      let options = this.$store.state.serverBootSettings.bootSourceOptions;
+      this._.pullAll(options, ['Cd', 'Diags', 'BiosSetup']);
+      return options;
+    },
   },
   watch: {
     bootSource: function (value) {
