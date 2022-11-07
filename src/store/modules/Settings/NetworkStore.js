@@ -242,9 +242,6 @@ const NetworkStore = {
           {
             DHCPv4: {
               DHCPEnabled: true,
-              UseDNSServers: true,
-              UseDomainName: true,
-              UseNTPServers: true,
             },
           }
         )
