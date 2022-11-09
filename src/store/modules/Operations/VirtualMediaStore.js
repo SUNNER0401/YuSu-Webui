@@ -36,15 +36,16 @@ const VirtualMediaStore = {
         process.env.VUE_APP_VIRTUAL_MEDIA_LIST_ENABLED === 'true'
           ? true
           : false;
+      let webDevice = false;
+      webDevice = {
+        id: i18n.t('pageVirtualMedia.defaultDeviceName'),
+        websocket: '/vm/0/0',
+        file: null,
+        transferProtocolType: transferProtocolType.OEM,
+        isActive: false,
+      };
       if (!virtualMediaListEnabled) {
-        const device = {
-          id: i18n.t('pageVirtualMedia.defaultDeviceName'),
-          websocket: '/vm/0/0',
-          file: null,
-          transferProtocolType: transferProtocolType.OEM,
-          isActive: false,
-        };
-        commit('setProxyDevicesData', [device]);
+        commit('setProxyDevicesData', [webDevice]);
         return;
       }
 
@@ -83,10 +84,11 @@ const VirtualMediaStore = {
                 isRW: false,
               };
             });
-          commit('setProxyDevicesData', proxyDevices);
+          commit('setProxyDevicesData', [...proxyDevices, webDevice]);
           commit('setLegacyDevicesData', legacyDevices);
         })
         .catch((error) => {
+          commit('setProxyDevicesData', [webDevice]);
           console.log('Virtual Media:', error);
         });
     },
