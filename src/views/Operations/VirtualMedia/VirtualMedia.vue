@@ -96,7 +96,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import PageTitle from '@/components/Global/PageTitle';
 import PageSection from '@/components/Global/PageSection';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
@@ -134,11 +134,17 @@ export default {
       .finally(() => this.endLoader());
   },
   methods: {
-    startVM(device) {
+    startVM(device: {
+      nbd: NbdServer;
+      websocket: any;
+      file: typeof device.nbd.file | null;
+      id: any;
+      isActive: boolean;
+    }) {
       const token = this.$store.getters['authentication/token'];
       device.nbd = new NbdServer(
         `wss://${window.location.host}${device.websocket}`,
-        device.file,
+        device.file as { size: number },
         device.id,
         token
       );
@@ -146,7 +152,7 @@ export default {
         this.successToast(this.$t('pageVirtualMedia.toast.serverRunning'));
       device.nbd.errorReadingFile = () =>
         this.errorToast(this.$t('pageVirtualMedia.toast.errorReadingFile'));
-      device.nbd.socketClosed = (code) => {
+      device.nbd.socketClosed = (code: number) => {
         if (code === 1000)
           this.successToast(
             this.$t('pageVirtualMedia.toast.serverClosedSuccessfully')
@@ -162,15 +168,28 @@ export default {
       device.nbd.start();
       device.isActive = true;
     },
-    stopVM(device) {
+    stopVM(device: { nbd: { stop: () => void } }) {
       device.nbd.stop();
     },
-    startLegacy(connectionData) {
-      var data = {};
-      data.Image = connectionData.serverUri;
-      data.UserName = connectionData.username;
-      data.Password = connectionData.password;
-      data.WriteProtected = !connectionData.isRW;
+    startLegacy(connectionData: {
+      serverUri: any;
+      username: any;
+      password: any;
+      isRW: boolean;
+      id: any;
+      isActive: boolean;
+    }) {
+      var data: {
+        Image: typeof connectionData;
+        UserName: typeof connectionData;
+        Password: typeof connectionData;
+        WriteProtected: typeof connectionData.isRW;
+      } = {
+        Image: connectionData.serverUri,
+        UserName: connectionData.username,
+        Password: connectionData.password,
+        WriteProtected: !connectionData.isRW,
+      };
       this.startLoader();
       this.$store
         .dispatch('virtualMedia/mountImage', {
@@ -189,7 +208,7 @@ export default {
         })
         .finally(() => this.endLoader());
     },
-    stopLegacy(connectionData) {
+    stopLegacy(connectionData: { id: any; isActive: boolean }) {
       this.$store
         .dispatch('virtualMedia/unmountImage', connectionData.id)
         .then(() => {
@@ -203,17 +222,22 @@ export default {
         )
         .finally(() => this.endLoader());
     },
-    saveConnection(connectionData) {
+    saveConnection(connectionData: {
+      serverUri: any;
+      username: any;
+      password: any;
+      isRW: any;
+    }) {
       this.modalConfigureConnection.serverUri = connectionData.serverUri;
       this.modalConfigureConnection.username = connectionData.username;
       this.modalConfigureConnection.password = connectionData.password;
       this.modalConfigureConnection.isRW = connectionData.isRW;
     },
-    configureConnection(connectionData) {
+    configureConnection(connectionData: any) {
       this.modalConfigureConnection = connectionData;
       this.$bvModal.show('configure-connection');
     },
-    concatId(val) {
+    concatId(val: string) {
       return val.split(' ').join('_').toLowerCase();
     },
   },

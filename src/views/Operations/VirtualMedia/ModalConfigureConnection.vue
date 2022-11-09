@@ -69,7 +69,7 @@
   </b-modal>
 </template>
 
-<script>
+<script lang="ts">
 import { required } from 'vuelidate/lib/validators';
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 
@@ -79,7 +79,7 @@ export default {
     connection: {
       type: Object,
       default: null,
-      validator: (prop) => {
+      validator: (prop: any) => {
         console.log(prop);
         return true;
       },
@@ -96,11 +96,12 @@ export default {
     };
   },
   watch: {
-    connection: function (value) {
+    connection: function (value: any) {
       if (value === null) return;
       Object.assign(this.form, value);
     },
   },
+  // @ts-ignore
   validations() {
     return {
       form: {
@@ -136,7 +137,7 @@ export default {
       this.form.isRW = false;
       this.$v.$reset();
     },
-    onOk(bvModalEvt) {
+    onOk(bvModalEvt: { preventDefault: () => void }) {
       bvModalEvt.preventDefault();
       this.handleSubmit();
     },
