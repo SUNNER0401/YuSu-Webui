@@ -7,7 +7,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import PageTitle from '@/components/Global/PageTitle';
 import KvmConsole from './KvmConsole';
 
@@ -25,7 +25,7 @@ export default {
     };
   },
   methods: {
-    setIsFullWindow(status) {
+    setIsFullWindow(status: string) {
       this.isFullWindow = status;
     },
   },

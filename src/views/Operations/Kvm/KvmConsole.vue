@@ -35,12 +35,20 @@
             <screen-full :element="element" />
           </b-navbar-brand>
         </div>
+        <b-navbar-brand class="power-button">
+          <b-icon
+            class="h2 icon"
+            :class="{ opened: powerStatus }"
+            icon="power"
+            @click.stop="togglePower()"
+          />
+        </b-navbar-brand>
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import RFB from '@novnc/novnc/core/rfb';
 import StatusIcon from '@/components/Global/StatusIcon';
 import ScreenFull from '@/components/Global/ScreenFull';
@@ -92,10 +100,21 @@ export default {
       }
       return this.$t('pageKvm.connecting');
     },
+    powerStatus() {
+      let op = this.$store.getters['global/serverStatus'];
+      switch (op) {
+        case 'off':
+          return false;
+        case 'unreachable':
+          return false;
+        default:
+          return true;
+      }
+    },
   },
   watch: {
     isFullWindow: {
-      handler(newvalue) {
+      handler(newvalue: boolean) {
         if (newvalue) {
           if (navigator.keyboard && navigator.keyboard.lock) {
             navigator.keyboard.lock();
@@ -124,7 +143,7 @@ export default {
       this.shotArea = document.querySelector('#terminal-kvm > div > canvas');
       document.querySelector(
         '.kvm-toolbar2'
-      ).style.height = this.shotArea.height;
+      )!.style.height = this.shotArea.height;
     }, 1700);
   },
   beforeDestroy() {
@@ -142,11 +161,13 @@ export default {
         '#terminal-kvm > div:nth-child(2) > canvas'
       );
       if (!this.isFullWindow) {
-        toolbar2.style.right = `calc(${div.clientWidth}px - ${canvas.style.width})`;
-        toolbar2.style.height = canvas.style.height;
+        toolbar2!.style.right = `calc(${div!.clientWidth}px - ${
+          canvas!.style.width
+        })`;
+        toolbar2!.style.height = canvas!.style.height;
       } else {
-        toolbar2.style.right = '0px';
-        toolbar2.style.height = '100%';
+        toolbar2!.style.right = '0px';
+        toolbar2!.style.height = '100%';
       }
     },
     closeTerminal() {
@@ -189,6 +210,43 @@ export default {
       ) {
         this.$refs.toolbar1.style.width =
           this.$refs.panel1.children[1].children[0].clientWidth - 10 + 'px';
+      }
+    },
+    powerOn() {
+      const modalMessage = this.$t(
+        'pageServerPowerOperations.modal.confirmPowerOnMessage'
+      );
+      const modalOptions = {
+        title: this.$t('pageServerPowerOperations.modal.confirmPowerOnTitle'),
+        okTitle: this.$t('global.action.confirm'),
+        cancelTitle: this.$t('global.action.cancel'),
+      };
+      this.$bvModal
+        .msgBoxConfirm(modalMessage, modalOptions)
+        .then((confirmed: any) => {
+          if (confirmed) this.$store.dispatch('controls/serverPowerOn');
+        });
+    },
+    shutdownServer() {
+      const modalMessage = this.$t(
+        'pageServerPowerOperations.modal.confirmShutdownMessage'
+      );
+      const modalOptions = {
+        title: this.$t('pageServerPowerOperations.modal.confirmShutdownTitle'),
+        okTitle: this.$t('global.action.confirm'),
+        cancelTitle: this.$t('global.action.cancel'),
+      };
+      this.$bvModal
+        .msgBoxConfirm(modalMessage, modalOptions)
+        .then((confirmed: any) => {
+          if (confirmed) this.$store.dispatch('controls/serverHardPowerOff');
+        });
+    },
+    togglePower() {
+      if (this.powerStatus) {
+        this.shutdownServer();
+      } else {
+        this.powerOn();
       }
     },
     // openConsoleWindow() {
@@ -256,6 +314,22 @@ export default {
 
         & > *:hover {
           background: #cccccc !important;
+        }
+      }
+    }
+    .power-button {
+      position: absolute;
+      bottom: 0px;
+      left: calc(50%);
+      transform: translateX(-50%);
+      .icon {
+        color: white;
+        &:hover {
+          background-color: #cccccc;
+          cursor: pointer;
+        }
+        &.opened {
+          color: #00ff15;
         }
       }
     }

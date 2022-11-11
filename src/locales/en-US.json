@@ -950,7 +950,9 @@
       "confirmRebootMessage": "Are you sure you want to reboot?",
       "confirmRebootTitle": "Server reboot will cause outage",
       "confirmShutdownMessage": "Are you sure you want to shut down?",
-      "confirmShutdownTitle": "Server shutdown will cause outage"
+      "confirmShutdownTitle": "Server shutdown will cause outage",
+      "confirmPowerOnMessage": "Are you sure you want power on?",
+      "confirmPowerOnTitle": "The server is about to start"
     },
     "toast": {
       "errorSaveSettings": "Error saving settings.",

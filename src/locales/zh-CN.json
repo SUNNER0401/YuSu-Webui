@@ -950,7 +950,9 @@
       "confirmRebootMessage": "您确定要重新启动吗？",
       "confirmRebootTitle": "服务器重启会导致中断",
       "confirmShutdownMessage": "您确定要关闭吗？",
-      "confirmShutdownTitle": "服务器关闭将导致中断"
+      "confirmShutdownTitle": "服务器关闭将导致中断",
+      "confirmPowerOnMessage": "您确定要开机吗",
+      "confirmPowerOnTitle": "服务器即将开启"
     },
     "toast": {
       "errorSaveSettings": "保存设置时出错。",

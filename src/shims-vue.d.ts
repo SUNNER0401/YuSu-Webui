@@ -5,4 +5,11 @@ declare module '*.vue' {
 declare module '*';
 interface Element extends VNode {
   disabled?: boolean;
+  style?: any;
+}
+
+interface Navigator {
+  keyboard?: {
+    lock?: () => void;
+  };
 }
