@@ -40,7 +40,7 @@
   </b-row>
 </template>
 
-<script>
+<script lang="ts">
 import IconEdit from '@carbon/icons-vue/es/edit/20';
 import IconAdd from '@carbon/icons-vue/es/add--alt/20';
 import IconTrashcan from '@carbon/icons-vue/es/trash-can/20';
@@ -64,10 +64,10 @@ export default {
   },
   created() {
     this.$store.dispatch('alarmSetting/getRemoteServer');
-    this.$root.$on('update-remote-server', (updateServer) => {
+    this.$root.$on('update-remote-server', (updateServer: any) => {
       this.updateServer = updateServer;
     });
-    this.$root.$on('$v-reset', ($v_reset) => {
+    this.$root.$on('$v-reset', ($v_reset: any) => {
       this.$v_reset = $v_reset;
     });
   },
@@ -102,7 +102,7 @@ export default {
             cancelTitle: this.$t('global.action.cancel'),
           }
         )
-        .then(async (confirmed) => {
+        .then(async (confirmed: boolean) => {
           if (confirmed) {
             await this.$store.dispatch('alarmSetting/deleteServer');
             await this.$store.dispatch('alarmSetting/getRemoteServer');

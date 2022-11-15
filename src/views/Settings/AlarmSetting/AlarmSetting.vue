@@ -101,9 +101,7 @@
                         :key="actionIndex"
                         :value="action.value"
                         :title="action.title"
-                        @click-table-action="
-                          onDeleteManagerTableRow($event, index)
-                        "
+                        @click-table-action="onDeleteManagerTableRow(index)"
                       >
                         <template #icon>
                           <icon-trashcan v-if="action.value === 'delete'" />
@@ -142,7 +140,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import IconTrashcan from '@carbon/icons-vue/es/trash-can/20';
 import PageTitle from '@/components/Global/PageTitle';
 import PageSection from '@/components/Global/PageSection';
@@ -181,6 +179,7 @@ export default {
       ],
     };
   },
+  // @ts-ignore
   validations() {
     return {
       snmpManagers: {
@@ -304,7 +303,7 @@ export default {
           okTitle: this.$t('global.action.confirm'),
           cancelTitle: this.$t('global.action.cancel'),
         })
-        .then((confirmed) => {
+        .then((confirmed: boolean) => {
           if (confirmed) this.updateManagersSettings();
         });
     },
@@ -314,7 +313,7 @@ export default {
     refresh() {
       this.$router.go(0);
     },
-    onDeleteManagerTableRow(action, row) {
+    onDeleteManagerTableRow(row: any) {
       this.$store.dispatch('alarmSetting/onDeleteManagerTableRow', row);
     },
   },

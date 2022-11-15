@@ -71,7 +71,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 import { required, ipAddress, between } from 'vuelidate/lib/validators';
 
@@ -96,6 +96,7 @@ export default {
       },
     };
   },
+  // @ts-ignore
   validations() {
     return {
       form: {
@@ -116,7 +117,7 @@ export default {
     this.$root.$emit('$v-reset', this.$v.$reset);
   },
   methods: {
-    submitForm(bvModalEvt) {
+    submitForm(bvModalEvt: { preventDefault: () => void }) {
       this.$v.$touch();
       if (this.$v.$invalid) {
         bvModalEvt.preventDefault();
@@ -125,7 +126,7 @@ export default {
       this.$store.dispatch('alarmSetting/setRemoteAddress', this.form);
       this.$store.dispatch('alarmSetting/setRemotePort', this.form);
     },
-    onok(bvModalEvt) {
+    onok(bvModalEvt: any) {
       this.submitForm(bvModalEvt);
     },
     oncancel() {

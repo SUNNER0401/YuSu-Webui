@@ -24,7 +24,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import PageTitle from '@/components/Global/PageTitle';
 import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
@@ -34,7 +34,7 @@ export default {
   name: 'PowerRestorePolicy',
   components: { PageTitle },
   mixins: [VuelidateMixin, BVToastMixin, LoadingBarMixin],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: () => void) {
     this.hideLoader();
     next();
   },
@@ -51,7 +51,7 @@ export default {
       get() {
         return this.$store.getters['powerPolicy/powerRestoreCurrentPolicy'];
       },
-      set(policy) {
+      set(policy: any) {
         this.policyValue = policy;
       },
     },
@@ -71,8 +71,8 @@ export default {
           'powerPolicy/setPowerRestorePolicy',
           this.policyValue || this.currentPowerRestorePolicy
         )
-        .then((message) => this.successToast(message))
-        .catch(({ message }) => this.errorToast(message))
+        .then((message: string) => this.successToast(message))
+        .catch(({ message }: { message: string }) => this.errorToast(message))
         .finally(() => this.endLoader());
     },
   },

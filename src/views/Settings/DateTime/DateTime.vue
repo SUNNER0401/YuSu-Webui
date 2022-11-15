@@ -196,7 +196,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import Alert from '@/components/Global/Alert';
 import IconCalendar from '@carbon/icons-vue/es/calendar/20';
 import PageTitle from '@/components/Global/PageTitle';
@@ -222,7 +222,7 @@ export default {
     LocalTimezoneLabelMixin,
     VuelidateMixin,
   ],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: () => void) {
     this.hideLoader();
     next();
   },
@@ -240,6 +240,7 @@ export default {
       loading,
     };
   },
+  // @ts-ignore
   validations() {
     return {
       form: {
@@ -335,7 +336,11 @@ export default {
       if (this.$v.$invalid) return;
       this.startLoader();
 
-      let dateTimeForm = {};
+      let dateTimeForm: {
+        ntpProtocolEnabled?: boolean;
+        updatedDateTime?: string;
+        ntpServersArray?: string[];
+      } = {};
       let isNTPEnabled = this.form.configurationSelected === 'ntp';
 
       if (!isNTPEnabled) {
@@ -365,7 +370,7 @@ export default {
 
       this.$store
         .dispatch('dateTime/updateDateTime', dateTimeForm)
-        .then((success) => {
+        .then((success: string) => {
           this.successToast(success);
           if (!isNTPEnabled) return;
           // Shift address up if second address is empty
@@ -378,25 +383,25 @@ export default {
         .then(() => {
           this.$store.dispatch('global/getBmcTime');
         })
-        .catch(({ message }) => this.errorToast(message))
+        .catch(({ message }: { message: string }) => this.errorToast(message))
         .finally(() => {
           this.$v.form.$reset();
           this.endLoader();
         });
     },
-    getUtcDate(date, time) {
+    getUtcDate(date: string, time: string) {
       // Split user input string values to create
       // a UTC Date object
       const datesArray = date.split('-');
       const timeArray = time.split(':');
       let utcDate = Date.UTC(
-        datesArray[0], // User input year
+        (datesArray[0] as unknown) as number, // User input year
         //UTC expects zero-index month value 0-11 (January-December)
         //for reference https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC#Parameters
         parseInt(datesArray[1]) - 1, // User input month
-        datesArray[2], // User input day
-        timeArray[0], // User input hour
-        timeArray[1] // User input minute
+        (datesArray[2] as unknown) as number, // User input day
+        (timeArray[0] as unknown) as number, // User input hour
+        (timeArray[1] as unknown) as number // User input minute
       );
       return new Date(utcDate);
     },
