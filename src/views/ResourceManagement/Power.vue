@@ -115,7 +115,7 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col class="pl-0 chart-container-col" col="12">
+          <b-col class="pl-0 chart-container-col" cols="12">
             <div class="chart-container-background">
               <div class="chart-container" :class="{ history: historyChart }">
                 <div class="front-container">
@@ -140,7 +140,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import PageTitle from '@/components/Global/PageTitle';
 import PowerChart1 from './PowerChart1';
 import PowerChart2 from './PowerChart2';
@@ -155,7 +155,7 @@ export default {
   name: 'Power',
   components: { PageTitle, PowerChart1, PowerChart2, PowerTabs },
   mixins: [VuelidateMixin, BVToastMixin, LoadingBarMixin],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: () => void) {
     this.hideLoader();
     next();
   },
@@ -179,7 +179,7 @@ export default {
       get() {
         return this.powerCapValue !== null;
       },
-      set(value) {
+      set(value: number) {
         let newValue = value ? '' : null;
         this.$v.$reset();
         this.$store.dispatch('powerControl/setPowerCapUpdatedValue', newValue);
@@ -189,7 +189,7 @@ export default {
       get() {
         return this.$store.getters['powerControl/powerCapValue'];
       },
-      set(value) {
+      set(value: number) {
         this.$v.$touch();
         this.$store.dispatch('powerControl/setPowerCapUpdatedValue', value);
       },
@@ -212,6 +212,7 @@ export default {
       this.endLoader();
     });
   },
+  // @ts-ignore
   validations: {
     powerCapValue: {
       between: between(1, 10000),
@@ -230,8 +231,8 @@ export default {
       this.startLoader();
       this.$store
         .dispatch('powerControl/setPowerControl', this.powerCapValue)
-        .then((message) => this.successToast(message))
-        .catch(({ message }) => this.errorToast(message))
+        .then((message: string) => this.successToast(message))
+        .catch(({ message }: { message: string }) => this.errorToast(message))
         .finally(() => this.endLoader());
     },
   },

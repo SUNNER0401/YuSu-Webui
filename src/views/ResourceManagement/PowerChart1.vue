@@ -6,7 +6,7 @@
   ></div>
 </template>
 
-<script>
+<script lang="ts">
 import * as echarts from 'echarts';
 
 export default {
@@ -36,7 +36,7 @@ export default {
     },
   },
   async mounted() {
-    const getRealTimeData = new Promise((resolve) => {
+    const getRealTimeData = new Promise<void>((resolve) => {
       this.$root.$on('getRealTimeData-complete', () => resolve());
     });
     await Promise.all([getRealTimeData]);
@@ -46,17 +46,17 @@ export default {
     var setPowerChart = function () {
       // This setTimeout is set to filter initial powerConsumptionValue value 0.
       setTimeout(() => {
-        if (powerChart._model) {
+        if (powerChart.getOption()) {
           [_this.dataZoom.start, _this.dataZoom.end] = [
-            powerChart._model.option.dataZoom[0].start,
-            powerChart._model.option.dataZoom[0].end,
+            (powerChart.getOption().option as any).dataZoom[0].start,
+            (powerChart.getOption().option as any).dataZoom[0].end,
           ];
         }
         let option = {
           backgroundColor: '',
           tooltip: {
             trigger: 'axis',
-            position: function (pt) {
+            position: function (pt: any[]) {
               return [pt[0], '10%'];
             },
           },

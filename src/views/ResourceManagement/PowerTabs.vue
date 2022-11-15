@@ -175,7 +175,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'PowerTabs',
   props: {
@@ -202,7 +202,7 @@ export default {
       get() {
         return this.tab2Unit;
       },
-      set(value) {
+      set(value: number) {
         this.tab2Unit = value;
         this.toggle1 = !this.toggle1;
         this.toggle2 = !this.toggle2;
@@ -212,21 +212,28 @@ export default {
       return this.$store.getters['powerSupply/powerSupplies'];
     },
     powerInformations() {
-      const powerInformations = {};
-      this.powerSupplies.forEach((item, index) => {
-        powerInformations[`power${index}`] = {
-          fieldName: {
-            name: this.$t('pagePower.tabs.tab1.powerInfo.name'),
-            manufacturer: this.$t('pagePower.tabs.tab1.powerInfo.manufacturer'),
-            statusState: this.$t('pagePower.tabs.tab1.powerInfo.statusState'),
-          },
-          value: {
-            name: item.name,
-            manufacturer: item.manufacturer,
-            statusState: item.statusState,
-          },
-        };
-      });
+      const powerInformations: any = {};
+      this.powerSupplies.forEach(
+        (
+          item: { name: any; manufacturer: any; statusState: any },
+          index: any
+        ) => {
+          powerInformations[`power${index}`] = {
+            fieldName: {
+              name: this.$t('pagePower.tabs.tab1.powerInfo.name'),
+              manufacturer: this.$t(
+                'pagePower.tabs.tab1.powerInfo.manufacturer'
+              ),
+              statusState: this.$t('pagePower.tabs.tab1.powerInfo.statusState'),
+            },
+            value: {
+              name: item.name,
+              manufacturer: item.manufacturer,
+              statusState: item.statusState,
+            },
+          };
+        }
+      );
       return powerInformations;
     },
     tab1() {
@@ -260,7 +267,7 @@ export default {
     },
   },
   watch: {
-    powerConsumptionValue(value) {
+    powerConsumptionValue(value: number) {
       if (this.currentPeakPower < value) {
         this.currentPeakPower = value;
         this.$store.commit(
@@ -277,16 +284,19 @@ export default {
   },
   methods: {
     swap() {
-      this.isTab2Unitw = !this.isTab2Unitw;
+      (this as any).isTab2Unitw = !(this as any).isTab2Unitw;
     },
     resetCalculate() {
       this.$bvModal
-        .msgBoxConfirm(this.$t('pagePower.table.modal.confirmMessage'), {
-          title: this.$t('pagePower.table.modal.confirmTitle'),
-          okTitle: this.$t('global.action.confirm'),
-          cancelTitle: this.$t('global.action.cancel'),
-        })
-        .then((confirmed) => {
+        .msgBoxConfirm(
+          this.$t('pagePower.table.modal.confirmMessage') as string,
+          {
+            title: this.$t('pagePower.table.modal.confirmTitle') as string,
+            okTitle: this.$t('global.action.confirm') as string,
+            cancelTitle: this.$t('global.action.cancel') as string,
+          }
+        )
+        .then((confirmed: boolean) => {
           if (confirmed) this.$store.dispatch('powerControl/startCalculate');
         });
     },

@@ -6,11 +6,13 @@
   ></div>
 </template>
 
-<script>
+<script lang="ts">
 import * as echarts from 'echarts';
 
 class DataSet {
-  constructor(historyInfo) {
+  xData: any;
+  yData: { averagePower: any[]; maxPower: any[] };
+  constructor(historyInfo: any[]) {
     this.xData = [];
     this.yData = {
       averagePower: [],
@@ -49,7 +51,7 @@ export default {
     },
   },
   async mounted() {
-    const getHistoryInfo = new Promise((resolve) => {
+    const getHistoryInfo = new Promise<void>((resolve) => {
       this.$root.$on('getHistoryInfo-complete', () => resolve());
     });
     await Promise.all([getHistoryInfo]);
