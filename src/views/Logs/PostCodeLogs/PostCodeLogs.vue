@@ -146,7 +146,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import IconDownload from '@carbon/icons-vue/es/download/20';
 import IconExport from '@carbon/icons-vue/es/document--export/20';
 import PageTitle from '@/components/Global/PageTitle';
@@ -199,7 +199,7 @@ export default {
     TableRowExpandMixin,
     SearchFilterMixin,
   ],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: () => void) {
     // Hide loader if the user navigates to another page
     // before request is fulfilled.
     this.hideLoader();
@@ -260,7 +260,7 @@ export default {
     },
     allLogs() {
       return this.$store.getters['postCodeLogs/allPostCodes'].map(
-        (postCodes) => {
+        (postCodes: any[]) => {
           return {
             ...postCodes,
             actions: [
@@ -278,7 +278,9 @@ export default {
       );
     },
     batchExportData() {
-      return this.selectedRows.map((row) => this._.omit(row, 'actions'));
+      return this.selectedRows.map((row: Record<string, unknown>) =>
+        this._.omit(row, 'actions')
+      );
     },
     filteredLogsByDate() {
       return this.getFilteredTableDataByDate(
@@ -304,26 +306,32 @@ export default {
     exportAllLogsString() {
       {
         return this.$store.getters['postCodeLogs/allPostCodes'].map(
-          (postCodes) => {
+          (postCodes: string[]) => {
             const allLogsString = JSON.stringify(postCodes);
             return allLogsString;
           }
         );
       }
     },
-    onFilterChange({ activeFilters }) {
+    onFilterChange({ activeFilters }: { activeFilters: any }) {
       this.activeFilters = activeFilters;
     },
-    onChangeDateTimeFilter({ fromDate, toDate }) {
+    onChangeDateTimeFilter({
+      fromDate,
+      toDate,
+    }: {
+      fromDate: string;
+      toDate: string;
+    }) {
       this.filterStartDate = fromDate;
       this.filterEndDate = toDate;
     },
-    onFiltered(filteredItems) {
+    onFiltered(filteredItems: string | any[]) {
       this.searchTotalFilteredRows = filteredItems.length;
     },
     // Create export file name based on date and action
-    exportFileNameByDate(value) {
-      let date = new Date();
+    exportFileNameByDate(value: string) {
+      let date: Date | string = new Date();
       date =
         date.toISOString().slice(0, 10) +
         '_' +

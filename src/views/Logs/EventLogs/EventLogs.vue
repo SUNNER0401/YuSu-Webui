@@ -244,7 +244,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import IconDelete from '@carbon/icons-vue/es/trash-can/20';
 import IconTrashcan from '@carbon/icons-vue/es/trash-can/20';
 import IconExport from '@carbon/icons-vue/es/document--export/20';
@@ -312,7 +312,7 @@ export default {
     TableRowExpandMixin,
     SearchFilterMixin,
   ],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: () => void) {
     // Hide loader if the user navigates to another page
     // before request is fulfilled.
     this.hideLoader();
@@ -405,7 +405,7 @@ export default {
         : this.filteredLogs.length;
     },
     allLogs() {
-      return this.$store.getters['eventLog/allEvents'].map((event) => {
+      return this.$store.getters['eventLog/allEvents'].map((event: any[]) => {
         return {
           ...event,
           actions: [
@@ -422,7 +422,9 @@ export default {
       });
     },
     batchExportData() {
-      return this.selectedRows.map((row) => this._.omit(row, 'actions'));
+      return this.selectedRows.map((row: Record<string, unknown>) =>
+        this._.omit(row, 'actions')
+      );
     },
     filteredLogsByDate() {
       return this.getFilteredTableDataByDate(
@@ -445,16 +447,16 @@ export default {
       .finally(() => this.endLoader());
   },
   methods: {
-    changelogStatus(row) {
+    changelogStatus(row: { uri: any; status: any }) {
       this.$store
         .dispatch('eventLog/updateEventLogStatus', {
           uri: row.uri,
           status: row.status,
         })
-        .then((success) => {
+        .then((success: string) => {
           this.successToast(success);
         })
-        .catch(({ message }) => this.errorToast(message));
+        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
     deleteAllLogs() {
       this.$bvModal
@@ -464,19 +466,21 @@ export default {
           okVariant: 'danger',
           cancelTitle: this.$t('global.action.cancel'),
         })
-        .then((deleteConfirmed) => {
+        .then((deleteConfirmed: boolean) => {
           if (deleteConfirmed) {
             this.$store
               .dispatch('eventLog/deleteAllEventLogs', this.allLogs)
-              .then((message) => this.successToast(message))
-              .catch(({ message }) => this.errorToast(message));
+              .then((message: string) => this.successToast(message))
+              .catch(({ message }: { message: string }) =>
+                this.errorToast(message)
+              );
           }
         });
     },
-    deleteLogs(uris) {
+    deleteLogs(uris: string[]) {
       this.$store
         .dispatch('eventLog/deleteEventLogs', uris)
-        .then((messages) => {
+        .then((messages: { type: string; message: string }[]) => {
           messages.forEach(({ type, message }) => {
             if (type === 'success') {
               this.successToast(message);
@@ -488,21 +492,23 @@ export default {
     },
     exportAllLogs() {
       {
-        return this.$store.getters['eventLog/allEvents'].map((eventLogs) => {
-          const allEventLogsString = JSON.stringify(eventLogs);
-          return allEventLogsString;
-        });
+        return this.$store.getters['eventLog/allEvents'].map(
+          (eventLogs: any) => {
+            const allEventLogsString = JSON.stringify(eventLogs);
+            return allEventLogsString;
+          }
+        );
       }
     },
-    onFilterChange({ activeFilters }) {
+    onFilterChange({ activeFilters }: { activeFilters: any }) {
       this.activeFilters = activeFilters;
     },
-    onSortCompare(a, b, key) {
+    onSortCompare(a: any, b: any, key: string) {
       if (key === 'severity') {
         return this.sortStatus(a, b, key);
       }
     },
-    onTableRowAction(action, { uri }) {
+    onTableRowAction(action: string, { uri }: any) {
       if (action === 'delete') {
         this.$bvModal
           .msgBoxConfirm(this.$tc('pageEventLogs.modal.deleteMessage'), {
@@ -510,14 +516,14 @@ export default {
             okTitle: this.$t('global.action.delete'),
             cancelTitle: this.$t('global.action.cancel'),
           })
-          .then((deleteConfirmed) => {
+          .then((deleteConfirmed: boolean) => {
             if (deleteConfirmed) this.deleteLogs([uri]);
           });
       }
     },
-    onBatchAction(action) {
+    onBatchAction(action: string) {
       if (action === 'delete') {
-        const uris = this.selectedRows.map((row) => row.uri);
+        const uris = this.selectedRows.map((row: { uri: string }) => row.uri);
         this.$bvModal
           .msgBoxConfirm(
             this.$tc(
@@ -533,7 +539,7 @@ export default {
               cancelTitle: this.$t('global.action.cancel'),
             }
           )
-          .then((deleteConfirmed) => {
+          .then((deleteConfirmed: any) => {
             if (deleteConfirmed) {
               if (this.selectedRows.length === this.allLogs.length) {
                 this.$store
@@ -541,8 +547,10 @@ export default {
                     'eventLog/deleteAllEventLogs',
                     this.selectedRows.length
                   )
-                  .then((message) => this.successToast(message))
-                  .catch(({ message }) => this.errorToast(message));
+                  .then((message: any) => this.successToast(message))
+                  .catch(({ message }: { message: string }) =>
+                    this.errorToast(message)
+                  );
               } else {
                 this.deleteLogs(uris);
               }
@@ -550,16 +558,22 @@ export default {
           });
       }
     },
-    onChangeDateTimeFilter({ fromDate, toDate }) {
+    onChangeDateTimeFilter({
+      fromDate,
+      toDate,
+    }: {
+      fromDate: string;
+      toDate: string;
+    }) {
       this.filterStartDate = fromDate;
       this.filterEndDate = toDate;
     },
-    onFiltered(filteredItems) {
+    onFiltered(filteredItems: string | any[]) {
       this.searchTotalFilteredRows = filteredItems.length;
     },
     // Create export file name based on date
-    exportFileNameByDate(value) {
-      let date = new Date();
+    exportFileNameByDate(value: string) {
+      let date: Date | string = new Date();
       date =
         date.toISOString().slice(0, 10) +
         '_' +
@@ -575,7 +589,7 @@ export default {
     resolveLogs() {
       this.$store
         .dispatch('eventLog/resolveEventLogs', this.selectedRows)
-        .then((messages) => {
+        .then((messages: { type: any; message: any }[]) => {
           messages.forEach(({ type, message }) => {
             if (type === 'success') {
               this.successToast(message);
@@ -588,7 +602,7 @@ export default {
     unresolveLogs() {
       this.$store
         .dispatch('eventLog/unresolveEventLogs', this.selectedRows)
-        .then((messages) => {
+        .then((messages: { type: string; message: string }[]) => {
           messages.forEach(({ type, message }) => {
             if (type === 'success') {
               this.successToast(message);

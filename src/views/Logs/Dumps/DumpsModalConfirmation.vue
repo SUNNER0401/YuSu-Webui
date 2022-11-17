@@ -37,7 +37,7 @@
   </b-modal>
 </template>
 
-<script>
+<script lang="ts">
 import StatusIcon from '@/components/Global/StatusIcon';
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 
@@ -49,9 +49,10 @@ export default {
       confirmed: false,
     };
   },
+  // @ts-ignore
   validations: {
     confirmed: {
-      mustBeTrue: (value) => value === true,
+      mustBeTrue: (value: boolean) => value === true,
     },
   },
   methods: {

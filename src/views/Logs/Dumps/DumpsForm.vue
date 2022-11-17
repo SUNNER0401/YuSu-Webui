@@ -32,7 +32,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { required } from 'vuelidate/lib/validators';
 
 import ModalConfirmation from './DumpsModalConfirmation';
@@ -53,6 +53,7 @@ export default {
       ],
     };
   },
+  // @ts-ignore
   validations() {
     return {
       selectedDumpType: { required },
@@ -73,7 +74,9 @@ export default {
               timestamp: true,
             })
           )
-          .catch(({ message }) => this.errorToast(message));
+          .catch(({ message }: { message: string }) =>
+            this.errorToast(message)
+          );
       }
     },
     showConfirmationModal() {
@@ -88,7 +91,7 @@ export default {
             timestamp: true,
           })
         )
-        .catch(({ message }) => this.errorToast(message));
+        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
   },
 };

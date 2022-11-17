@@ -134,7 +134,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import IconDelete from '@carbon/icons-vue/es/trash-can/20';
 import IconDownload from '@carbon/icons-vue/es/download/20';
 
@@ -185,7 +185,7 @@ export default {
     SearchFilterMixin,
     TableFilterMixin,
   ],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: () => void) {
     // Hide loader if the user navigates to another page
     // before request is fulfilled.
     this.hideLoader();
@@ -248,7 +248,7 @@ export default {
       return this.$store.getters['dumps/bmcDumps'];
     },
     tableItems() {
-      return this.dumps.map((item) => {
+      return this.dumps.map((item: any) => {
         return {
           ...item,
           actions: [
@@ -283,17 +283,23 @@ export default {
     this.$store.dispatch('dumps/getBmcDumps').finally(() => this.endLoader());
   },
   methods: {
-    convertBytesToMegabytes(bytes) {
+    convertBytesToMegabytes(bytes: number) {
       return parseFloat((bytes / 1000000).toFixed(3));
     },
-    onChangeSearchFilter(items) {
+    onChangeSearchFilter(items: string | any[]) {
       this.searchFilteredItemsCount = items.length;
     },
-    onChangeDateTimeFilter({ fromDate, toDate }) {
+    onChangeDateTimeFilter({
+      fromDate,
+      toDate,
+    }: {
+      fromDate: string;
+      toDate: string;
+    }) {
       this.filterStartDate = fromDate;
       this.filterEndDate = toDate;
     },
-    onTableRowAction(action, dump) {
+    onTableRowAction(action: string, dump: any) {
       if (action === 'delete') {
         this.$bvModal
           .msgBoxConfirm(this.$tc('pageDumps.modal.deleteDumpConfirmation'), {
@@ -301,11 +307,11 @@ export default {
             okTitle: this.$tc('pageDumps.modal.deleteDump'),
             cancelTitle: this.$t('global.action.cancel'),
           })
-          .then((deleteConfrimed) => {
+          .then((deleteConfrimed: boolean) => {
             if (deleteConfrimed) {
               this.$store
                 .dispatch('dumps/deleteDumps', [dump])
-                .then((messages) => {
+                .then((messages: { type: any; message: any }[]) => {
                   messages.forEach(({ type, message }) => {
                     if (type === 'success') {
                       this.successToast(message);
@@ -318,7 +324,7 @@ export default {
           });
       }
     },
-    onTableBatchAction(action) {
+    onTableBatchAction(action: string) {
       if (action === 'delete') {
         this.$bvModal
           .msgBoxConfirm(
@@ -338,17 +344,19 @@ export default {
               cancelTitle: this.$t('global.action.cancel'),
             }
           )
-          .then((deleteConfrimed) => {
+          .then((deleteConfrimed: boolean) => {
             if (deleteConfrimed) {
               if (this.selectedRows.length === this.dumps.length) {
                 this.$store
                   .dispatch('dumps/deleteAllDumps')
-                  .then((success) => this.successToast(success))
-                  .catch(({ message }) => this.errorToast(message));
+                  .then((success: string) => this.successToast(success))
+                  .catch(({ message }: { message: string }) =>
+                    this.errorToast(message)
+                  );
               } else {
                 this.$store
                   .dispatch('dumps/deleteDumps', this.selectedRows)
-                  .then((messages) => {
+                  .then((messages: { type: any; message: any }[]) => {
                     messages.forEach(({ type, message }) => {
                       if (type === 'success') {
                         this.successToast(message);
@@ -362,7 +370,7 @@ export default {
           });
       }
     },
-    exportFileName(row) {
+    exportFileName(row: { item: { dumpType: string; id: string } }) {
       let filename = row.item.dumpType + '_' + row.item.id + '.tar.xz';
       filename = filename.replace(RegExp(' ', 'g'), '_');
       return filename;
