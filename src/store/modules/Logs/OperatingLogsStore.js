@@ -21,15 +21,15 @@ const EventLogStore = {
         .get('/redfish/v1/Managers/bmc/LogServices/AuditLog/Entries')
         .then(({ data: { Members = [] } = {} }) => {
           const eventLogs = Members.map((log) => {
-            const { ClintIp, Created, Id, Interface, Message, Username } = log;
+            const { Created, Id, Message, Oem } = log;
             return {
               id: Id,
               date: new Date(Created),
               message: Message,
               uri: log['@odata.id'],
-              ip: ClintIp,
-              interface: Interface,
-              username: Username,
+              interface: Oem[0],
+              ip: Oem[1],
+              username: Oem[2],
             };
           });
           commit('setAllEvents', eventLogs);
