@@ -90,7 +90,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import IconEdit from '@carbon/icons-vue/es/edit/20';
 import IconTrashcan from '@carbon/icons-vue/es/trash-can/20';
 import IconAdd from '@carbon/icons-vue/es/add--alt/20';
@@ -158,24 +158,32 @@ export default {
   computed: {
     ...mapGetters('ldap', ['isServiceEnabled', 'enabledRoleGroups']),
     tableItems() {
-      return this.enabledRoleGroups.map(({ LocalRole, RemoteGroup }) => {
-        return {
-          groupName: RemoteGroup,
-          groupPrivilege: LocalRole,
-          actions: [
-            {
-              value: 'edit',
-              title: this.$t('global.action.edit'),
-              enabled: this.isServiceEnabled,
-            },
-            {
-              value: 'delete',
-              title: this.$t('global.action.delete'),
-              enabled: this.isServiceEnabled,
-            },
-          ],
-        };
-      });
+      return this.enabledRoleGroups.map(
+        ({
+          LocalRole,
+          RemoteGroup,
+        }: {
+          LocalRole: string;
+          RemoteGroup: string;
+        }) => {
+          return {
+            groupName: RemoteGroup,
+            groupPrivilege: LocalRole,
+            actions: [
+              {
+                value: 'edit',
+                title: this.$t('global.action.edit'),
+                enabled: this.isServiceEnabled,
+              },
+              {
+                value: 'delete',
+                title: this.$t('global.action.delete'),
+                enabled: this.isServiceEnabled,
+              },
+            ],
+          };
+        }
+      );
     },
   },
   created() {
@@ -195,20 +203,22 @@ export default {
             cancelTitle: this.$t('global.action.cancel'),
           }
         )
-        .then((deleteConfirmed) => {
+        .then((deleteConfirmed: boolean) => {
           if (deleteConfirmed) {
             this.startLoader();
             this.$store
               .dispatch('ldap/deleteRoleGroup', {
                 roleGroups: this.selectedRows,
               })
-              .then((success) => this.successToast(success))
-              .catch(({ message }) => this.errorToast(message))
+              .then((success: string) => this.successToast(success))
+              .catch(({ message }: { message: string }) =>
+                this.errorToast(message)
+              )
               .finally(() => this.endLoader());
           }
         });
     },
-    onTableRowAction(action, row) {
+    onTableRowAction(action: string, row: { groupName: string }) {
       switch (action) {
         case 'edit':
           this.initRoleGroupModal(row);
@@ -225,38 +235,48 @@ export default {
                 cancelTitle: this.$t('global.action.cancel'),
               }
             )
-            .then((deleteConfirmed) => {
+            .then((deleteConfirmed: boolean) => {
               if (deleteConfirmed) {
                 this.startLoader();
                 this.$store
                   .dispatch('ldap/deleteRoleGroup', { roleGroups: [row] })
-                  .then((success) => this.successToast(success))
-                  .catch(({ message }) => this.errorToast(message))
+                  .then((success: string) => this.successToast(success))
+                  .catch(({ message }: { message: string }) =>
+                    this.errorToast(message)
+                  )
                   .finally(() => this.endLoader());
               }
             });
           break;
       }
     },
-    initRoleGroupModal(roleGroup) {
+    initRoleGroupModal(roleGroup: string) {
       this.activeRoleGroup = roleGroup;
       this.$bvModal.show('modal-role-group');
     },
-    saveRoleGroup({ addNew, groupName, groupPrivilege }) {
+    saveRoleGroup({
+      addNew,
+      groupName,
+      groupPrivilege,
+    }: {
+      addNew: any;
+      groupName: string;
+      groupPrivilege: string;
+    }) {
       this.activeRoleGroup = null;
       const data = { groupName, groupPrivilege };
       this.startLoader();
       if (addNew) {
         this.$store
           .dispatch('ldap/addNewRoleGroup', data)
-          .then((success) => this.successToast(success))
-          .catch(({ message }) => this.errorToast(message))
+          .then((success: string) => this.successToast(success))
+          .catch(({ message }: { message: string }) => this.errorToast(message))
           .finally(() => this.endLoader());
       } else {
         this.$store
           .dispatch('ldap/saveRoleGroup', data)
-          .then((success) => this.successToast(success))
-          .catch(({ message }) => this.errorToast(message))
+          .then((success: string) => this.successToast(success))
+          .catch(({ message }: { message: string }) => this.errorToast(message))
           .finally(() => this.endLoader());
       }
     },

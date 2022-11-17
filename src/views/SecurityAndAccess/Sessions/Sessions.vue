@@ -112,7 +112,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import PageTitle from '@/components/Global/PageTitle';
 import Search from '@/components/Global/Search';
 import TableCellCount from '@/components/Global/TableCellCount';
@@ -150,7 +150,7 @@ export default {
     LoadingBarMixin,
     SearchFilterMixin,
   ],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: () => void) {
     // Hide loader if the user navigates to another page
     // before request is fulfilled.
     this.hideLoader();
@@ -202,17 +202,19 @@ export default {
         : this.allConnections.length;
     },
     allConnections() {
-      return this.$store.getters['sessions/allConnections'].map((session) => {
-        return {
-          ...session,
-          actions: [
-            {
-              value: 'disconnect',
-              title: this.$t('pageSessions.action.disconnect'),
-            },
-          ],
-        };
-      });
+      return this.$store.getters['sessions/allConnections'].map(
+        (session: any[]) => {
+          return {
+            ...session,
+            actions: [
+              {
+                value: 'disconnect',
+                title: this.$t('pageSessions.action.disconnect'),
+              },
+            ],
+          };
+        }
+      );
     },
   },
   created() {
@@ -222,16 +224,16 @@ export default {
       .finally(() => this.endLoader());
   },
   methods: {
-    onFiltered(filteredItems) {
+    onFiltered(filteredItems: string | any[]) {
       this.searchTotalFilteredRows = filteredItems.length;
     },
-    onChangeSearchInput(event) {
+    onChangeSearchInput(event: any) {
       this.searchFilter = event;
     },
-    disconnectSessions(uris) {
+    disconnectSessions(uris: any) {
       this.$store
         .dispatch('sessions/disconnectSessions', uris)
-        .then((messages) => {
+        .then((messages: { type: any; message: any }[]) => {
           messages.forEach(({ type, message }) => {
             if (type === 'success') {
               this.successToast(message);
@@ -241,7 +243,7 @@ export default {
           });
         });
     },
-    onTableRowAction(action, { uri }) {
+    onTableRowAction(action: string, { uri }: { uri: string }) {
       if (action === 'disconnect') {
         this.$bvModal
           .msgBoxConfirm(this.$tc('pageSessions.modal.disconnectMessage1'), {
@@ -249,14 +251,14 @@ export default {
             okTitle: this.$t('pageSessions.action.disconnect'),
             cancelTitle: this.$t('global.action.cancel'),
           })
-          .then((deleteConfirmed) => {
+          .then((deleteConfirmed: boolean) => {
             if (deleteConfirmed) this.disconnectSessions([uri]);
           });
       }
     },
-    onBatchAction(action) {
+    onBatchAction(action: string) {
       if (action === 'disconnect') {
-        const uris = this.selectedRows.map((row) => row.uri);
+        const uris = this.selectedRows.map((row: { uri: any }) => row.uri);
         this.$bvModal
           .msgBoxConfirm(
             this.$tc(
@@ -272,7 +274,7 @@ export default {
               cancelTitle: this.$t('global.action.cancel'),
             }
           )
-          .then((deleteConfirmed) => {
+          .then((deleteConfirmed: boolean) => {
             if (deleteConfirmed) {
               this.disconnectSessions(uris);
             }

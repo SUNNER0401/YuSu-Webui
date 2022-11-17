@@ -23,7 +23,7 @@
   </b-table>
 </template>
 
-<script>
+<script lang="ts">
 import Checkmark20 from '@carbon/icons-vue/es/checkmark/20';
 
 export default {

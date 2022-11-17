@@ -79,7 +79,7 @@
   </b-modal>
 </template>
 
-<script>
+<script lang="ts">
 import { required, requiredIf } from 'vuelidate/lib/validators';
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 
@@ -89,7 +89,7 @@ export default {
     roleGroup: {
       type: Object,
       default: null,
-      validator: (prop) => {
+      validator: (prop: any) => {
         if (prop === null) return true;
         return (
           Object.prototype.hasOwnProperty.call(prop, 'groupName') &&
@@ -112,12 +112,18 @@ export default {
     },
   },
   watch: {
-    roleGroup: function (value) {
+    roleGroup: function (
+      value: null | {
+        groupName: string;
+        groupPrivilege: string;
+      }
+    ) {
       if (value === null) return;
       this.form.groupName = value.groupName;
       this.form.groupPrivilege = value.groupPrivilege;
     },
   },
+  // @ts-ignore
   validations() {
     return {
       form: {
@@ -154,7 +160,7 @@ export default {
       this.$v.$reset();
       this.$emit('hidden');
     },
-    onOk(bvModalEvt) {
+    onOk(bvModalEvt: { preventDefault: () => void }) {
       // prevent modal close
       bvModalEvt.preventDefault();
       this.handleSubmit();

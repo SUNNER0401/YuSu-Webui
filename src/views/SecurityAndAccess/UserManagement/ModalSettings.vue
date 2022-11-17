@@ -121,7 +121,7 @@
   </b-modal>
 </template>
 
-<script>
+<script lang="ts">
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 import {
   required,
@@ -148,12 +148,19 @@ export default {
     };
   },
   watch: {
-    settings: function ({ lockoutThreshold, lockoutDuration }) {
+    settings: function ({
+      lockoutThreshold,
+      lockoutDuration,
+    }: {
+      lockoutThreshold: any;
+      lockoutDuration: any;
+    }) {
       this.form.lockoutThreshold = lockoutThreshold;
       this.form.unlockMethod = lockoutDuration ? 1 : 0;
       this.form.lockoutDuration = lockoutDuration ? lockoutDuration : null;
     },
   },
+  // @ts-ignore
   validations: {
     form: {
       lockoutThreshold: {
@@ -163,7 +170,7 @@ export default {
       },
       unlockMethod: { required },
       lockoutDuration: {
-        minValue: function (value) {
+        minValue: function (value: number) {
           return this.form.unlockMethod === 0 || value > 0;
         },
         required: requiredIf(function () {
@@ -191,7 +198,7 @@ export default {
       this.$emit('ok', { lockoutThreshold, lockoutDuration });
       this.closeModal();
     },
-    onOk(bvModalEvt) {
+    onOk(bvModalEvt: { preventDefault: () => void }) {
       // prevent modal close
       bvModalEvt.preventDefault();
       this.handleSubmit();

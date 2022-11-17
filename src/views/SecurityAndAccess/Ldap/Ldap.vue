@@ -229,7 +229,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import { mapGetters } from 'vuex';
 import { requiredIf } from 'vuelidate/lib/validators';
 
@@ -252,7 +252,7 @@ export default {
     TableRoleGroups,
   },
   mixins: [BVToastMixin, VuelidateMixin, LoadingBarMixin],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: () => void) {
     this.hideLoader();
     next();
   },
@@ -303,14 +303,15 @@ export default {
     },
   },
   watch: {
-    isServiceEnabled: function (value) {
+    isServiceEnabled: function (value: number) {
       this.form.ldapAuthenticationEnabled = value;
     },
-    isActiveDirectoryEnabled: function (value) {
+    isActiveDirectoryEnabled: function (value: number) {
       this.form.activeDirectoryEnabled = value;
       this.setFormValues();
     },
   },
+  // @ts-ignore
   validations: {
     form: {
       ldapAuthenticationEnabled: {},
@@ -355,7 +356,13 @@ export default {
     this.setFormValues();
   },
   methods: {
-    setFormValues(serviceType) {
+    setFormValues(serviceType: {
+      serviceAddress?: string | undefined;
+      bindDn?: string | undefined;
+      baseDn?: string | undefined;
+      userAttribute?: string | undefined;
+      groupsAttribute?: string | undefined;
+    }) {
       if (!serviceType) {
         serviceType = this.isActiveDirectoryEnabled
           ? this.activeDirectory
@@ -397,10 +404,10 @@ export default {
       this.startLoader();
       this.$store
         .dispatch('ldap/saveAccountSettings', data)
-        .then((success) => {
+        .then((success: string) => {
           this.successToast(success);
         })
-        .catch(({ message }) => {
+        .catch(({ message }: { message: string }) => {
           this.errorToast(message);
         })
         .finally(() => {
@@ -409,7 +416,7 @@ export default {
           this.endLoader();
         });
     },
-    onChangeServiceType(isActiveDirectoryEnabled) {
+    onChangeServiceType(isActiveDirectoryEnabled: boolean) {
       this.$v.form.activeDirectoryEnabled.$touch();
       const serviceType = isActiveDirectoryEnabled
         ? this.activeDirectory
@@ -418,7 +425,7 @@ export default {
       // service type
       this.setFormValues(serviceType);
     },
-    onChangeldapAuthenticationEnabled(isServiceEnabled) {
+    onChangeldapAuthenticationEnabled(isServiceEnabled: boolean) {
       this.$v.form.ldapAuthenticationEnabled.$touch();
       if (!isServiceEnabled) {
         // Request will fail if sent with empty values.

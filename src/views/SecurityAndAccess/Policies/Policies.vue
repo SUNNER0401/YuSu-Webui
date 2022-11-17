@@ -60,7 +60,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import PageSection from '@/components/Global/PageSection';
 import PageTitle from '@/components/Global/PageTitle';
 
@@ -71,7 +71,7 @@ export default {
   name: 'Policies',
   components: { PageTitle, PageSection },
   mixins: [LoadingBarMixin, BVToastMixin],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: () => void) {
     this.hideLoader();
     next();
   },
@@ -86,7 +86,7 @@ export default {
       get() {
         return this.$store.getters['policies/sshProtocolEnabled'];
       },
-      set(newValue) {
+      set(newValue: number) {
         return newValue;
       },
     },
@@ -94,7 +94,7 @@ export default {
       get() {
         return this.$store.getters['policies/ipmiProtocolEnabled'];
       },
-      set(newValue) {
+      set(newValue: number) {
         return newValue;
       },
     },
@@ -106,17 +106,17 @@ export default {
       .finally(() => this.endLoader());
   },
   methods: {
-    changeIpmiProtocolState(state) {
+    changeIpmiProtocolState(state: any) {
       this.$store
         .dispatch('policies/saveIpmiProtocolState', state)
-        .then((message) => this.successToast(message))
-        .catch(({ message }) => this.errorToast(message));
+        .then((message: string) => this.successToast(message))
+        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
-    changeSshProtocolState(state) {
+    changeSshProtocolState(state: any) {
       this.$store
         .dispatch('policies/saveSshProtocolState', state)
-        .then((message) => this.successToast(message))
-        .catch(({ message }) => this.errorToast(message));
+        .then((message: string) => this.successToast(message))
+        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
   },
 };

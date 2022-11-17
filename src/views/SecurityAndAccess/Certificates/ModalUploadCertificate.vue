@@ -68,7 +68,7 @@
   </b-modal>
 </template>
 
-<script>
+<script lang="ts">
 import { required, requiredIf } from 'vuelidate/lib/validators';
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 
@@ -81,7 +81,7 @@ export default {
     certificate: {
       type: Object,
       default: null,
-      validator: (prop) => {
+      validator: (prop: any) => {
         if (prop === null) return true;
         return (
           Object.prototype.hasOwnProperty.call(prop, 'type') &&
@@ -103,21 +103,24 @@ export default {
       return this.$store.getters['certificates/availableUploadTypes'];
     },
     certificateOptions() {
-      return this.certificateTypes.map(({ type, label }) => {
-        return {
-          text: label,
-          value: type,
-        };
-      });
+      return this.certificateTypes.map(
+        ({ type, label }: { type: string; label: string }) => {
+          return {
+            text: label,
+            value: type,
+          };
+        }
+      );
     },
   },
   watch: {
-    certificateOptions: function (options) {
+    certificateOptions: function (options: { value: number }[]) {
       if (options.length) {
         this.form.certificateType = options[0].value;
       }
     },
   },
+  // @ts-ignore
   validations() {
     return {
       form: {
@@ -158,7 +161,7 @@ export default {
       this.form.file = null;
       this.$v.$reset();
     },
-    onOk(bvModalEvt) {
+    onOk(bvModalEvt: { preventDefault: () => void }) {
       // prevent modal close
       bvModalEvt.preventDefault();
       this.handleSubmit();

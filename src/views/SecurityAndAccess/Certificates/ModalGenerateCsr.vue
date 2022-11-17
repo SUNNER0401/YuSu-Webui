@@ -372,7 +372,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import IconAdd from '@carbon/icons-vue/es/add--alt/20';
 import IconCheckmark from '@carbon/icons-vue/es/checkmark/20';
 
@@ -405,7 +405,7 @@ export default {
         keyCurveId: null,
         keyBitLength: null,
       },
-      certificateOptions: CERTIFICATE_TYPES.reduce((arr, cert) => {
+      certificateOptions: CERTIFICATE_TYPES.reduce((arr: any[], cert: any) => {
         if (cert.type === 'TrustStore Certificate') return arr;
         arr.push({
           text: cert.label,
@@ -424,6 +424,7 @@ export default {
       csrStringCopied: false,
     };
   },
+  // @ts-ignore
   validations: {
     form: {
       certificateType: { required },
@@ -439,12 +440,12 @@ export default {
       alternateName: {},
       keyPairAlgorithm: { required },
       keyCurveId: {
-        reuired: requiredIf(function (form) {
+        reuired: requiredIf(function (form: { keyPairAlgorithm: string }) {
           return form.keyPairAlgorithm === 'EC';
         }),
       },
       keyBitLength: {
-        reuired: requiredIf(function (form) {
+        reuired: requiredIf(function (form: { keyPairAlgorithm: string }) {
           return form.keyPairAlgorithm === 'RSA';
         }),
       },
@@ -456,7 +457,7 @@ export default {
       if (this.$v.$invalid) return;
       this.$store
         .dispatch('certificates/generateCsr', this.form)
-        .then(({ data: { CSRString } }) => {
+        .then(({ data: { CSRString } }: { data: { CSRString: string } }) => {
           this.csrString = CSRString;
           this.$bvModal.show('csr-string');
           this.$v.$reset();
@@ -471,7 +472,7 @@ export default {
         }
       }
     },
-    onOkGenerateCsrModal(bvModalEvt) {
+    onOkGenerateCsrModal(bvModalEvt: { preventDefault: () => void }) {
       // prevent modal close
       bvModalEvt.preventDefault();
       this.handleSubmit();
@@ -480,7 +481,7 @@ export default {
       this.csrString = '';
       this.resetForm();
     },
-    copyCsrString(bvModalEvt) {
+    copyCsrString(bvModalEvt: { preventDefault: () => void }) {
       // prevent modal close
       bvModalEvt.preventDefault();
       navigator.clipboard.writeText(this.csrString).then(() => {

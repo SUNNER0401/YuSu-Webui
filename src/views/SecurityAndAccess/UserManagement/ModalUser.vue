@@ -251,7 +251,7 @@
   </b-modal>
 </template>
 
-<script>
+<script lang="ts">
 import {
   required,
   maxLength,
@@ -307,7 +307,11 @@ export default {
     },
   },
   watch: {
-    user: function (value) {
+    user: function (
+      value: {
+        [index: string]: string;
+      } | null
+    ) {
       if (value === null) return;
       this.originalUsername = value.username;
       this.form.username = value.username;
@@ -316,6 +320,7 @@ export default {
       this.form.maxDaysExpired = value.PasswordExpirationDays;
     },
   },
+  //@ts-ignore
   validations() {
     return {
       form: {
@@ -336,7 +341,7 @@ export default {
           }),
           minLength: minLength(this.passwordRequirements.minLength),
           maxLength: maxLength(this.passwordRequirements.maxLength),
-          pattern: (value) => {
+          pattern: (value: string) => {
             let partern1 = /[a-zA-Z]+/;
             let partern2 = /[0-9]+/;
             let partern3 = /\W+/;
@@ -362,7 +367,9 @@ export default {
   },
   methods: {
     handleSubmit() {
-      let userData = {};
+      let userData: {
+        [index: string]: string | boolean;
+      } = {};
 
       if (this.newUser) {
         this.$v.$touch();
@@ -425,7 +432,7 @@ export default {
       if (this.$v.form.passwordConfirmation.$dirty) return true;
       return false;
     },
-    onOk(bvModalEvt) {
+    onOk(bvModalEvt: { preventDefault: () => void }) {
       // prevent modal close
       bvModalEvt.preventDefault();
       this.handleSubmit();

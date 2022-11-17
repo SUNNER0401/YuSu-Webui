@@ -98,7 +98,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import IconAdd from '@carbon/icons-vue/es/add--alt/20';
 import IconReplace from '@carbon/icons-vue/es/renew/20';
 import IconTrashcan from '@carbon/icons-vue/es/trash-can/20';
@@ -127,7 +127,7 @@ export default {
     TableRowAction,
   },
   mixins: [BVToastMixin, LoadingBarMixin],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: () => void) {
     this.hideLoader();
     next();
   },
@@ -168,7 +168,7 @@ export default {
       return this.$store.getters['certificates/allCertificates'];
     },
     tableItems() {
-      return this.certificates.map((certificate) => {
+      return this.certificates.map((certificate: { type: string }) => {
         return {
           ...certificate,
           actions: [
@@ -193,22 +193,28 @@ export default {
       return this.$store.getters['global/bmcTime'];
     },
     expiredCertificateTypes() {
-      return this.certificates.reduce((acc, val) => {
-        const daysUntilExpired = this.getDaysUntilExpired(val.validUntil);
-        if (daysUntilExpired < 1) {
-          acc.push(val.certificate);
-        }
-        return acc;
-      }, []);
+      return this.certificates.reduce(
+        (acc: any[], val: { validUntil: any; certificate: any }) => {
+          const daysUntilExpired = this.getDaysUntilExpired(val.validUntil);
+          if (daysUntilExpired < 1) {
+            acc.push(val.certificate);
+          }
+          return acc;
+        },
+        []
+      );
     },
     expiringCertificateTypes() {
-      return this.certificates.reduce((acc, val) => {
-        const daysUntilExpired = this.getDaysUntilExpired(val.validUntil);
-        if (daysUntilExpired < 31 && daysUntilExpired > 0) {
-          acc.push(val.certificate);
-        }
-        return acc;
-      }, []);
+      return this.certificates.reduce(
+        (acc: any[], val: { validUntil: any; certificate: any }) => {
+          const daysUntilExpired = this.getDaysUntilExpired(val.validUntil);
+          if (daysUntilExpired < 31 && daysUntilExpired > 0) {
+            acc.push(val.certificate);
+          }
+          return acc;
+        },
+        []
+      );
     },
   },
   async created() {
@@ -219,7 +225,7 @@ export default {
       .finally(() => this.endLoader());
   },
   methods: {
-    onTableRowAction(event, rowItem) {
+    onTableRowAction(event: string, rowItem: any) {
       switch (event) {
         case 'replace':
           this.initModalUploadCertificate(rowItem);
@@ -235,7 +241,10 @@ export default {
       this.modalCertificate = certificate;
       this.$bvModal.show('upload-certificate');
     },
-    initModalDeleteCertificate(certificate) {
+    initModalDeleteCertificate(certificate: {
+      issuedBy: any;
+      certificate: any;
+    }) {
       this.$bvModal
         .msgBoxConfirm(
           this.$t('pageCertificates.modal.deleteConfirmMessage', {
@@ -248,11 +257,21 @@ export default {
             cancelTitle: this.$t('global.action.cancel'),
           }
         )
-        .then((deleteConfirmed) => {
+        .then((deleteConfirmed: boolean) => {
           if (deleteConfirmed) this.deleteCertificate(certificate);
         });
     },
-    onModalOk({ addNew, file, type, location }) {
+    onModalOk({
+      addNew,
+      file,
+      type,
+      location,
+    }: {
+      addNew: any;
+      file: any;
+      type: any;
+      location: any;
+    }) {
       if (addNew) {
         // Upload a new certificate
         this.addNewCertificate(file, type);
@@ -261,43 +280,43 @@ export default {
         this.replaceCertificate(file, type, location);
       }
     },
-    addNewCertificate(file, type) {
+    addNewCertificate(file: any, type: any) {
       this.startLoader();
       this.$store
         .dispatch('certificates/addNewCertificate', { file, type })
-        .then((success) => this.successToast(success))
-        .catch(({ message }) => this.errorToast(message))
+        .then((success: string) => this.successToast(success))
+        .catch(({ message }: { message: string }) => this.errorToast(message))
         .finally(() => this.endLoader());
     },
-    replaceCertificate(file, type, location) {
+    replaceCertificate(file: Blob, type: any, location: any) {
       this.startLoader();
       const reader = new FileReader();
       reader.readAsBinaryString(file);
       reader.onloadend = (event) => {
-        const certificateString = event.target.result;
+        const certificateString = event.target!.result;
         this.$store
           .dispatch('certificates/replaceCertificate', {
             certificateString,
             type,
             location,
           })
-          .then((success) => this.successToast(success))
-          .catch(({ message }) => this.errorToast(message))
+          .then((success: string) => this.successToast(success))
+          .catch(({ message }: { message: string }) => this.errorToast(message))
           .finally(() => this.endLoader());
       };
     },
-    deleteCertificate({ type, location }) {
+    deleteCertificate({ type, location }: { type: any; location: any }) {
       this.startLoader();
       this.$store
         .dispatch('certificates/deleteCertificate', {
           type,
           location,
         })
-        .then((success) => this.successToast(success))
-        .catch(({ message }) => this.errorToast(message))
+        .then((success: string) => this.successToast(success))
+        .catch(({ message }: { message: string }) => this.errorToast(message))
         .finally(() => this.endLoader());
     },
-    getDaysUntilExpired(date) {
+    getDaysUntilExpired(date: { getTime: () => any }) {
       if (this.bmcTime) {
         const validUntilMs = date.getTime();
         const currentBmcTimeMs = this.bmcTime.getTime();
@@ -306,7 +325,7 @@ export default {
       }
       return new Date();
     },
-    getIconStatus(date) {
+    getIconStatus(date: string) {
       const daysUntilExpired = this.getDaysUntilExpired(date);
       if (daysUntilExpired < 1) {
         return 'danger';

@@ -111,7 +111,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import IconTrashcan from '@carbon/icons-vue/es/trash-can/20';
 import IconEdit from '@carbon/icons-vue/es/edit/20';
 import IconAdd from '@carbon/icons-vue/es/add--alt/20';
@@ -149,7 +149,7 @@ export default {
     TableToolbar,
   },
   mixins: [BVTableSelectableMixin, BVToastMixin, LoadingBarMixin],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: () => void) {
     this.hideLoader();
     next();
   },
@@ -207,31 +207,38 @@ export default {
     },
     tableItems() {
       // transform user data to table data
-      return this.allUsers.map((user) => {
-        return {
-          username: user.UserName,
-          privilege: user.RoleId,
-          status: user.Locked
-            ? 'Locked'
-            : user.Enabled
-            ? 'Enabled'
-            : 'Disabled',
-          // maxDaysExpired:user.MaxDaysExpired,
-          actions: [
-            {
-              value: 'edit',
-              enabled: true,
-              title: this.$t('pageUserManagement.editUser'),
-            },
-            {
-              value: 'delete',
-              enabled: user.UserName === 'root' ? false : true,
-              title: this.$tc('pageUserManagement.deleteUser'),
-            },
-          ],
-          ...user,
-        };
-      });
+      return this.allUsers.map(
+        (user: {
+          UserName: string;
+          RoleId: any;
+          Locked: any;
+          Enabled: any;
+        }) => {
+          return {
+            username: user.UserName,
+            privilege: user.RoleId,
+            status: user.Locked
+              ? 'Locked'
+              : user.Enabled
+              ? 'Enabled'
+              : 'Disabled',
+            // maxDaysExpired:user.MaxDaysExpired,
+            actions: [
+              {
+                value: 'edit',
+                enabled: true,
+                title: this.$t('pageUserManagement.editUser'),
+              },
+              {
+                value: 'delete',
+                enabled: user.UserName === 'root' ? false : true,
+                title: this.$tc('pageUserManagement.deleteUser'),
+              },
+            ],
+            ...user,
+          };
+        }
+      );
     },
     settings() {
       return this.$store.getters['userManagement/accountSettings'];
@@ -249,11 +256,11 @@ export default {
     this.$store.dispatch('userManagement/getAccountRoles');
   },
   methods: {
-    initModalUser(user) {
+    initModalUser(user: any) {
       this.activeUser = user;
       this.$bvModal.show('modal-user');
     },
-    initModalDelete(user) {
+    initModalDelete(user: { username: any }) {
       this.$bvModal
         .msgBoxConfirm(
           this.$t('pageUserManagement.modal.deleteConfirmMessage', {
@@ -265,7 +272,7 @@ export default {
             cancelTitle: this.$t('global.action.cancel'),
           }
         )
-        .then((deleteConfirmed) => {
+        .then((deleteConfirmed: boolean) => {
           if (deleteConfirmed) {
             this.deleteUser(user);
           }
@@ -274,31 +281,31 @@ export default {
     initModalSettings() {
       this.$bvModal.show('modal-settings');
     },
-    saveUser({ isNewUser, userData }) {
+    saveUser({ isNewUser, userData }: { isNewUser: boolean; userData: any }) {
       this.startLoader();
       if (isNewUser) {
         this.$store
           .dispatch('userManagement/createUser', userData)
-          .then((success) => this.successToast(success))
-          .catch(({ message }) => this.errorToast(message))
+          .then((success: string) => this.successToast(success))
+          .catch(({ message }: { message: string }) => this.errorToast(message))
           .finally(() => this.endLoader());
       } else {
         this.$store
           .dispatch('userManagement/updateUser', userData)
-          .then((success) => this.successToast(success))
-          .catch(({ message }) => this.errorToast(message))
+          .then((success: string) => this.successToast(success))
+          .catch(({ message }: { message: string }) => this.errorToast(message))
           .finally(() => this.endLoader());
       }
     },
-    deleteUser({ username }) {
+    deleteUser({ username }: { username: string }) {
       this.startLoader();
       this.$store
         .dispatch('userManagement/deleteUser', username)
-        .then((success) => this.successToast(success))
-        .catch(({ message }) => this.errorToast(message))
+        .then((success: string) => this.successToast(success))
+        .catch(({ message }: { message: string }) => this.errorToast(message))
         .finally(() => this.endLoader());
     },
-    onBatchAction(action) {
+    onBatchAction(action: string) {
       switch (action) {
         case 'delete':
           this.$bvModal
@@ -319,12 +326,12 @@ export default {
                 cancelTitle: this.$t('global.action.cancel'),
               }
             )
-            .then((deleteConfirmed) => {
+            .then((deleteConfirmed: any) => {
               if (deleteConfirmed) {
                 this.startLoader();
                 this.$store
                   .dispatch('userManagement/deleteUsers', this.selectedRows)
-                  .then((messages) => {
+                  .then((messages: { type: any; message: any }[]) => {
                     messages.forEach(({ type, message }) => {
                       if (type === 'success') this.successToast(message);
                       if (type === 'error') this.errorToast(message);
@@ -338,7 +345,7 @@ export default {
           this.startLoader();
           this.$store
             .dispatch('userManagement/enableUsers', this.selectedRows)
-            .then((messages) => {
+            .then((messages: { type: any; message: any }[]) => {
               messages.forEach(({ type, message }) => {
                 if (type === 'success') this.successToast(message);
                 if (type === 'error') this.errorToast(message);
@@ -350,7 +357,7 @@ export default {
           this.startLoader();
           this.$store
             .dispatch('userManagement/disableUsers', this.selectedRows)
-            .then((messages) => {
+            .then((messages: { type: any; message: any }[]) => {
               messages.forEach(({ type, message }) => {
                 if (type === 'success') this.successToast(message);
                 if (type === 'error') this.errorToast(message);
@@ -360,7 +367,7 @@ export default {
           break;
       }
     },
-    onTableRowAction(action, row) {
+    onTableRowAction(action: string, row: any) {
       switch (action) {
         case 'edit':
           this.initModalUser(row);
@@ -372,12 +379,12 @@ export default {
           break;
       }
     },
-    saveAccountSettings(settings) {
+    saveAccountSettings(settings: any) {
       this.startLoader();
       this.$store
         .dispatch('userManagement/saveAccountSettings', settings)
-        .then((message) => this.successToast(message))
-        .catch(({ message }) => this.errorToast(message))
+        .then((message: string) => this.successToast(message))
+        .catch(({ message }: { message: string }) => this.errorToast(message))
         .finally(() => this.endLoader());
     },
   },
