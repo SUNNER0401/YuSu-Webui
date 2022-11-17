@@ -126,7 +126,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
 import InputPasswordToggle from '@/components/Global/InputPasswordToggle';
 import { maxLength, minLength, sameAs } from 'vuelidate/lib/validators';
@@ -171,6 +171,7 @@ export default {
       .dispatch('userManagement/getAccountSettings')
       .finally(() => this.endLoader());
   },
+  // @ts-ignore
   validations() {
     return {
       form: {
@@ -196,12 +197,12 @@ export default {
 
       this.$store
         .dispatch('userManagement/updateUser', userData)
-        .then((message) => {
+        .then((message: string) => {
           (this.form.newPassword = ''), (this.form.confirmPassword = '');
           this.$v.$reset();
           this.successToast(message);
         })
-        .catch(({ message }) => this.errorToast(message));
+        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
     saveTimeZonePrefrenceData() {
       localStorage.setItem('storedUtcDisplay', this.form.isUtcDisplay);
