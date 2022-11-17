@@ -63,7 +63,7 @@
   </b-form>
 </template>
 
-<script>
+<script lang="ts">
 import { required } from 'vuelidate/lib/validators';
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 import i18n from '@/i18n';
@@ -100,6 +100,7 @@ export default {
       return this.$store.getters['authentication/authError'];
     },
   },
+  // @ts-ignore
   validations: {
     userInfo: {
       username: {
@@ -115,13 +116,21 @@ export default {
   },
   methods: {
     reCalculateRoutes() {
-      const router = new VueRouter({
+      class MyVueRouter extends VueRouter {
+        matcher: any;
+      }
+      const router = new MyVueRouter({
         base: process.env.BASE_URL,
         routes: setRoutes(),
         linkExactActiveClass: 'nav-link--current',
       });
-      router.beforeEach((to, from, next) => {
-        if (to.matched.some((record) => record.meta.requiresAuth)) {
+      router.beforeEach((to: any, from: any, next: (arg?: string) => void) => {
+        if (
+          to.matched.some(
+            (record: { meta: { requiresAuth: any } }) =>
+              record.meta.requiresAuth
+          )
+        ) {
           if (this.$store.getters['authentication/isLoggedIn']) {
             next();
             return;
@@ -153,7 +162,7 @@ export default {
             username
           );
         })
-        .then((passwordChangeRequired) => {
+        .then((passwordChangeRequired: boolean) => {
           if (passwordChangeRequired) {
             this.$router.push('/change-password');
           } else {
@@ -166,7 +175,7 @@ export default {
             }
           }
         })
-        .catch((error) => console.log(error))
+        .catch((error: string) => console.log(error))
         .finally(() => (this.disableSubmitButton = false));
     },
   },
