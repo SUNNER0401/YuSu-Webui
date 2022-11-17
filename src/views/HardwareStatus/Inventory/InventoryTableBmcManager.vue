@@ -194,7 +194,7 @@
   </page-section>
 </template>
 
-<script>
+<script lang="ts">
 import PageSection from '@/components/Global/PageSection';
 import IconChevron from '@carbon/icons-vue/es/chevron--down/20';
 import StatusIcon from '@/components/Global/StatusIcon';
@@ -218,22 +218,22 @@ export default {
         {
           key: 'id',
           label: this.$t('pageInventory.table.id'),
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
         },
         {
           key: 'health',
           label: this.$t('pageInventory.table.health'),
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
         },
         {
           key: 'locationNumber',
           label: this.$t('pageInventory.table.locationNumber'),
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
         },
         {
           key: 'identifyLed',
           label: this.$t('pageInventory.table.identifyLed'),
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
         },
       ],
       expandRowLabel: expandRowLabel,
@@ -258,17 +258,17 @@ export default {
     });
   },
   methods: {
-    toggleIdentifyLedValue(row) {
+    toggleIdentifyLedValue(row: { uri: any; identifyLed: any }) {
       this.$store
         .dispatch('bmc/updateIdentifyLedValue', {
           uri: row.uri,
           identifyLed: row.identifyLed,
         })
-        .catch(({ message }) => this.errorToast(message));
+        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
     // TO DO: remove hasIdentifyLed method once the following story is merged:
     // https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/43179
-    hasIdentifyLed(identifyLed) {
+    hasIdentifyLed(identifyLed: any) {
       return typeof identifyLed === 'boolean';
     },
   },

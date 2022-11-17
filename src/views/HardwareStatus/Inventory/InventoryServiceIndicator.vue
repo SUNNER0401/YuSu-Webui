@@ -37,7 +37,7 @@
     </b-card>
   </page-section>
 </template>
-<script>
+<script lang="ts">
 import PageSection from '@/components/Global/PageSection';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
 
@@ -66,10 +66,10 @@ export default {
     });
   },
   methods: {
-    toggleIdentifyLedSwitch(state) {
+    toggleIdentifyLedSwitch(state: any) {
       this.$store
         .dispatch('system/changeIdentifyLedState', state)
-        .catch(({ message }) => this.errorToast(message));
+        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
   },
 };

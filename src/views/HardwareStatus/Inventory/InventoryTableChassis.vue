@@ -142,7 +142,7 @@
   </page-section>
 </template>
 
-<script>
+<script lang="ts">
 import PageSection from '@/components/Global/PageSection';
 import IconChevron from '@carbon/icons-vue/es/chevron--down/20';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
@@ -167,23 +167,23 @@ export default {
         {
           key: 'id',
           label: this.$t('pageInventory.table.id'),
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
         },
         {
           key: 'health',
           label: this.$t('pageInventory.table.health'),
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
           tdClass: 'text-nowrap',
         },
         {
           key: 'locationNumber',
           label: this.$t('pageInventory.table.locationNumber'),
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
         },
         {
           key: 'identifyLed',
           label: this.$t('pageInventory.table.identifyLed'),
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
         },
       ],
       expandRowLabel: expandRowLabel,
@@ -201,16 +201,16 @@ export default {
     });
   },
   methods: {
-    toggleIdentifyLedValue(row) {
+    toggleIdentifyLedValue(row: { uri: any; identifyLed: any }) {
       this.$store
         .dispatch('chassis/updateIdentifyLedValue', {
           uri: row.uri,
           identifyLed: row.identifyLed,
         })
-        .catch(({ message }) => this.errorToast(message));
+        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
     // TO DO: Remove this method when the LocationIndicatorActive is added from backend.
-    hasIdentifyLed(identifyLed) {
+    hasIdentifyLed(identifyLed: any) {
       return typeof identifyLed === 'boolean';
     },
   },

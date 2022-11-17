@@ -99,7 +99,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import PageTitle from '@/components/Global/PageTitle';
 import Search from '@/components/Global/Search';
 import StatusIcon from '@/components/Global/StatusIcon';
@@ -140,7 +140,7 @@ export default {
     TableSortMixin,
     SearchFilterMixin,
   ],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: () => void) {
     this.hideLoader();
     next();
   },
@@ -165,28 +165,28 @@ export default {
         },
         {
           key: 'lowerCritical',
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
           label: this.$t('pageSensors.table.lowerCritical'),
         },
         {
           key: 'lowerCaution',
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
           label: this.$t('pageSensors.table.lowerWarning'),
         },
 
         {
           key: 'currentValue',
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
           label: this.$t('pageSensors.table.currentValue'),
         },
         {
           key: 'upperCaution',
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
           label: this.$t('pageSensors.table.upperWarning'),
         },
         {
           key: 'upperCritical',
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
           label: this.$t('pageSensors.table.upperCritical'),
         },
       ],
@@ -212,9 +212,11 @@ export default {
       sort before transmit value to allsensors.
       */
       let allSensors = this.$store.getters['sensors/sensors'].slice(0);
-      allSensors = allSensors.sort((sensor1, sensor2) => {
-        return sensor2.name < sensor1.name ? 1 : -1;
-      });
+      allSensors = allSensors.sort(
+        (sensor1: { name: number }, sensor2: { name: number }) => {
+          return sensor2.name < sensor1.name ? 1 : -1;
+        }
+      );
       return allSensors;
     },
     filteredRows() {
@@ -244,23 +246,23 @@ export default {
     });
   },
   methods: {
-    sortCompare(a, b, key) {
+    sortCompare(a: any, b: any, key: string) {
       if (key === 'status') {
         return this.sortStatus(a, b, key);
       }
     },
-    onFilterChange({ activeFilters }) {
+    onFilterChange({ activeFilters }: { activeFilters: any }) {
       this.activeFilters = activeFilters;
     },
-    onFiltered(filteredItems) {
+    onFiltered(filteredItems: string | any[]) {
       this.searchTotalFilteredRows = filteredItems.length;
     },
-    onChangeSearchInput(event) {
+    onChangeSearchInput(event: any) {
       this.searchFilter = event;
     },
     exportFileNameByDate() {
       // Create export file name based on date
-      let date = new Date();
+      let date: Date | string = new Date();
       date =
         date.toISOString().slice(0, 10) +
         '_' +

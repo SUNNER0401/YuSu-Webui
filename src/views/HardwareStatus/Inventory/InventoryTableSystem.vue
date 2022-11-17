@@ -199,7 +199,7 @@
   </page-section>
 </template>
 
-<script>
+<script lang="ts">
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
 import PageSection from '@/components/Global/PageSection';
 import IconChevron from '@carbon/icons-vue/es/chevron--down/20';
@@ -225,29 +225,29 @@ export default {
         {
           key: 'id',
           label: this.$t('pageInventory.table.id'),
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
         },
         {
           key: 'hardwareType',
           label: this.$t('pageInventory.table.hardwareType'),
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
           tdClass: 'text-nowrap',
         },
         {
           key: 'health',
           label: this.$t('pageInventory.table.health'),
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
           tdClass: 'text-nowrap',
         },
         {
           key: 'locationNumber',
           label: this.$t('pageInventory.table.locationNumber'),
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
         },
         {
           key: 'locationIndicatorActive',
           label: this.$t('pageInventory.table.identifyLed'),
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
         },
       ],
       expandRowLabel: expandRowLabel,
@@ -265,10 +265,10 @@ export default {
     });
   },
   methods: {
-    toggleIdentifyLedSwitch(state) {
+    toggleIdentifyLedSwitch(state: any) {
       this.$store
         .dispatch('system/changeIdentifyLedState', state)
-        .catch(({ message }) => this.errorToast(message));
+        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
   },
 };

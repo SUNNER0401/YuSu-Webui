@@ -179,7 +179,7 @@
   </page-section>
 </template>
 
-<script>
+<script lang="ts">
 import PageSection from '@/components/Global/PageSection';
 import IconChevron from '@carbon/icons-vue/es/chevron--down/20';
 import StatusIcon from '@/components/Global/StatusIcon';
@@ -216,26 +216,26 @@ export default {
         {
           key: 'id',
           label: this.$t('pageInventory.table.id'),
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
           sortable: true,
         },
         {
           key: 'health',
           label: this.$t('pageInventory.table.health'),
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
           sortable: true,
           tdClass: 'text-nowrap',
         },
         {
           key: 'locationNumber',
           label: this.$t('pageInventory.table.locationNumber'),
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
           sortable: true,
         },
         {
           key: 'identifyLed',
           label: this.$t('pageInventory.table.identifyLed'),
-          formatter: this.dataFormatter,
+          formatter: (this as any).dataFormatter,
           sortable: false,
         },
       ],
@@ -261,20 +261,20 @@ export default {
     });
   },
   methods: {
-    onFiltered(filteredItems) {
+    onFiltered(filteredItems: string | any[]) {
       this.searchTotalFilteredRows = filteredItems.length;
     },
-    toggleIdentifyLedValue(row) {
+    toggleIdentifyLedValue(row: { uri: any; identifyLed: any }) {
       this.$store
         .dispatch('processors/updateIdentifyLedValue', {
           uri: row.uri,
           identifyLed: row.identifyLed,
         })
-        .catch(({ message }) => this.errorToast(message));
+        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
     // TO DO: remove hasIdentifyLed when the following is merged:
     // https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/37045
-    hasIdentifyLed(identifyLed) {
+    hasIdentifyLed(identifyLed: any) {
       return typeof identifyLed === 'boolean';
     },
   },

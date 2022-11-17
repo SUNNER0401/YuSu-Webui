@@ -48,7 +48,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import PageTitle from '@/components/Global/PageTitle';
 import ServiceIndicator from './InventoryServiceIndicator';
 import TableSystem from './InventoryTableSystem';
@@ -80,7 +80,7 @@ export default {
     JumpLink: JumpLink16,
   },
   mixins: [LoadingBarMixin, JumpLinkMixin],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: () => void) {
     // Hide loader if user navigates away from page
     // before requests complete
     this.hideLoader();
@@ -148,33 +148,33 @@ export default {
   },
   created() {
     this.startLoader();
-    const bmcManagerTablePromise = new Promise((resolve) => {
+    const bmcManagerTablePromise = new Promise<void>((resolve) => {
       this.$root.$on('hardware-status-bmc-manager-complete', () => resolve());
     });
-    const chassisTablePromise = new Promise((resolve) => {
+    const chassisTablePromise = new Promise<void>((resolve) => {
       this.$root.$on('hardware-status-chassis-complete', () => resolve());
     });
-    const dimmSlotTablePromise = new Promise((resolve) => {
+    const dimmSlotTablePromise = new Promise<void>((resolve) => {
       this.$root.$on('hardware-status-dimm-slot-complete', () => resolve());
     });
-    const fansTablePromise = new Promise((resolve) => {
+    const fansTablePromise = new Promise<void>((resolve) => {
       this.$root.$on('hardware-status-fans-complete', () => resolve());
     });
-    const powerSuppliesTablePromise = new Promise((resolve) => {
+    const powerSuppliesTablePromise = new Promise<void>((resolve) => {
       this.$root.$on('hardware-status-power-supplies-complete', () =>
         resolve()
       );
     });
-    const processorsTablePromise = new Promise((resolve) => {
+    const processorsTablePromise = new Promise<void>((resolve) => {
       this.$root.$on('hardware-status-processors-complete', () => resolve());
     });
-    const serviceIndicatorPromise = new Promise((resolve) => {
+    const serviceIndicatorPromise = new Promise<void>((resolve) => {
       this.$root.$on('hardware-status-service-complete', () => resolve());
     });
-    const systemTablePromise = new Promise((resolve) => {
+    const systemTablePromise = new Promise<void>((resolve) => {
       this.$root.$on('hardware-status-system-complete', () => resolve());
     });
-    const assemblyTablePromise = new Promise((resolve) => {
+    const assemblyTablePromise = new Promise<void>((resolve) => {
       this.$root.$on('hardware-status-assembly-complete', () => resolve());
     });
     // Combine all child component Promises to indicate
