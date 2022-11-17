@@ -25,7 +25,7 @@
       >
         {{ $t('pageServerPowerOperations.bootSettings.enableOneTimeBoot') }}
       </b-form-checkbox>
-      <b-form-group
+      <!-- <b-form-group
         :label="$t('pageServerPowerOperations.bootSettings.tpmRequiredPolicy')"
       >
         <b-form-text id="tpm-required-policy-help-block">
@@ -41,7 +41,7 @@
         >
           {{ $t('global.status.enabled') }}
         </b-form-checkbox>
-      </b-form-group>
+      </b-form-group> -->
       <b-button variant="primary" type="submit" class="mb-3">
         {{ $t('global.action.save') }}
       </b-button>
