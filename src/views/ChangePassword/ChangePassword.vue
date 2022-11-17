@@ -77,7 +77,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { required, sameAs } from 'vuelidate/lib/validators';
 import Alert from '@/components/Global/Alert';
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
@@ -98,6 +98,7 @@ export default {
       changePasswordError: false,
     };
   },
+  // @ts-ignore
   validations() {
     return {
       form: {
