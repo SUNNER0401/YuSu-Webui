@@ -63,7 +63,7 @@
     </template>
   </b-modal>
 </template>
-<script>
+<script lang="ts">
 import StatusIcon from '@/components/Global/StatusIcon';
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 
@@ -89,9 +89,10 @@ export default {
       return this.serverStatus === 'off' ? true : false;
     },
   },
+  // @ts-ignore
   validations: {
     confirm: {
-      mustBeTrue: function (value) {
+      mustBeTrue: function (value: boolean) {
         return this.isServerOff || value === true;
       },
     },

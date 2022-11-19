@@ -36,7 +36,7 @@
   </page-section>
 </template>
 
-<script>
+<script lang="ts">
 import PageSection from '@/components/Global/PageSection';
 import StatusIcon from '@/components/Global/StatusIcon';
 

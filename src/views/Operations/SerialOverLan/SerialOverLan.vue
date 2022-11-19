@@ -18,7 +18,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import PageTitle from '@/components/Global/PageTitle';
 import PageSection from '@/components/Global/PageSection';
 import SerialOverLanConsole from './SerialOverLanConsole';
@@ -46,7 +46,7 @@ export default {
     this.element = document.getElementById('base-container');
   },
   methods: {
-    setIsFullWindow(status) {
+    setIsFullWindow(status: any) {
       this.isFullWindow = status;
     },
   },

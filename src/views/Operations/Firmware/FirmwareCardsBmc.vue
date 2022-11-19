@@ -51,7 +51,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import IconSwitch from '@carbon/icons-vue/es/arrows--horizontal/20';
 import PageSection from '@/components/Global/PageSection';
 import LoadingBarMixin, { loading } from '@/components/Mixins/LoadingBarMixin';
@@ -125,7 +125,7 @@ export default {
             title: this.$t('pageFirmware.toast.rebootStarted'),
           })
         )
-        .catch(({ message }) => {
+        .catch(({ message }: { message: string }) => {
           this.errorToast(message);
           clearTimeout(timerId);
           this.endLoader();

@@ -55,7 +55,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import PageTitle from '@/components/Global/PageTitle';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
 import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
@@ -87,12 +87,12 @@ export default {
     onResetBiosConfirm() {
       this.$store
         .dispatch('factoryReset/resetBios')
-        .then((title) => {
+        .then((title: string) => {
           this.successToast('', {
             title,
           });
         })
-        .catch(({ message }) => {
+        .catch(({ message }: { message: string }) => {
           this.errorToast('', {
             title: message,
           });
@@ -101,12 +101,12 @@ export default {
     onResetToDefaultsConfirm() {
       this.$store
         .dispatch('factoryReset/resetToDefaults')
-        .then((title) => {
+        .then((title: string) => {
           this.successToast('', {
             title,
           });
         })
-        .catch(({ message }) => {
+        .catch(({ message }: { message: string }) => {
           this.errorToast('', {
             title: message,
           });

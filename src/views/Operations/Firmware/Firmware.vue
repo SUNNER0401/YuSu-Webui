@@ -34,7 +34,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import AlertsServerPower from './FirmwareAlertServerPower';
 import BmcCards from './FirmwareCardsBmc';
 import FormUpdate from './FirmwareFormUpdate';
@@ -55,7 +55,7 @@ export default {
     PageTitle,
   },
   mixins: [LoadingBarMixin],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: () => void) {
     this.hideLoader();
     next();
   },

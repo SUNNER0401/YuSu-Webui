@@ -83,7 +83,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { requiredIf } from 'vuelidate/lib/validators';
 
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
@@ -146,6 +146,7 @@ export default {
       this.tftpFileAddress = null;
     },
   },
+  // @ts-ignore
   validations() {
     return {
       file: {
@@ -183,10 +184,12 @@ export default {
       /* Clear redundant Hostfirmware. this can be used in special cases such as
       getting power off in updating. */
       if (allHostFirmware.length > 1) {
-        let redundantHostFirmware = allHostFirmware.filter((item) => {
-          return item.id != this.$store.state.firmware.hostActiveFirmwareId;
-        });
-        allHostFirmware = allHostFirmware.filter((item) => {
+        let redundantHostFirmware = allHostFirmware.filter(
+          (item: { id: any }) => {
+            return item.id != this.$store.state.firmware.hostActiveFirmwareId;
+          }
+        );
+        allHostFirmware = allHostFirmware.filter((item: { id: any }) => {
           return item.id == this.$store.state.firmware.hostActiveFirmwareId;
         });
         for (let item of redundantHostFirmware) {
@@ -235,7 +238,10 @@ export default {
         updatingBmcFirmware
       );
       // Validate type of updating firmware via length of final array.
-      let updatingFirmware;
+      let updatingFirmware: { [x: string]: string; version: any; id: any } = {
+        version: '',
+        id: '',
+      };
       if (updatingHostFirmware.length) {
         updatingFirmware = updatingHostFirmware[0];
         updatingFirmware['type'] = 'Bios';
@@ -316,10 +322,10 @@ export default {
         this.$bvModal.show('modal-update-firmware-bmc-progress');
       }
     },
-    async dispatchWorkstationUpload(timerId) {
+    async dispatchWorkstationUpload(timerId: number | undefined) {
       await this.$store
         .dispatch('firmware/uploadFirmware', this.file)
-        .catch(({ message }) => {
+        .catch(({ message }: { message: string }) => {
           // this.endLoader();
           this.$bvModal.hide('modal-update-firmware-bios-progress');
           this.errorToast(message);
@@ -327,10 +333,10 @@ export default {
           throw 'error';
         });
     },
-    async dispatchTftpUpload(timerId) {
+    async dispatchTftpUpload(timerId: number | undefined) {
       await this.$store
         .dispatch('firmware/uploadFirmwareTFTP', this.tftpFileAddress)
-        .catch(({ message }) => {
+        .catch(({ message }: { message: string }) => {
           // this.endLoader();
           this.$bvModal.hide('modal-update-firmware-bios-progress');
           this.errorToast(message);
@@ -338,7 +344,7 @@ export default {
           throw 'error';
         });
     },
-    getupdatingFirmware(basicFirmware, updatingFirmware) {
+    getupdatingFirmware(basicFirmware: any, updatingFirmware: any[]) {
       for (let image of basicFirmware) {
         updatingFirmware = updatingFirmware.filter((item) => {
           return item.id !== image.id;
@@ -351,7 +357,7 @@ export default {
       if (this.$v.$invalid) return;
       this.$bvModal.show('modal-update-firmware');
     },
-    onFileUpload(file) {
+    onFileUpload(file: Blob) {
       this.file = file;
       this.$v.file.$touch();
     },

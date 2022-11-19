@@ -148,7 +148,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import PageTitle from '@/components/Global/PageTitle';
 import PageSection from '@/components/Global/PageSection';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
@@ -160,7 +160,7 @@ export default {
   name: 'ServerPowerOperations',
   components: { PageTitle, PageSection, BootSettings, Alert },
   mixins: [BVToastMixin, LoadingBarMixin],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: () => void) {
     this.hideLoader();
     next();
   },
@@ -194,7 +194,7 @@ export default {
   },
   created() {
     this.startLoader();
-    const bootSettingsPromise = new Promise((resolve) => {
+    const bootSettingsPromise = new Promise<void>((resolve) => {
       this.$root.$on('server-power-operations-boot-settings-complete', () =>
         resolve()
       );
@@ -222,13 +222,13 @@ export default {
       if (this.form.rebootOption === 'orderly') {
         this.$bvModal
           .msgBoxConfirm(modalMessage, modalOptions)
-          .then((confirmed) => {
+          .then((confirmed: boolean) => {
             if (confirmed) this.$store.dispatch('controls/serverSoftReboot');
           });
       } else if (this.form.rebootOption === 'immediate') {
         this.$bvModal
           .msgBoxConfirm(modalMessage, modalOptions)
-          .then((confirmed) => {
+          .then((confirmed: boolean) => {
             if (confirmed) this.$store.dispatch('controls/serverHardReboot');
           });
       }
@@ -246,14 +246,14 @@ export default {
       if (this.form.shutdownOption === 'orderly') {
         this.$bvModal
           .msgBoxConfirm(modalMessage, modalOptions)
-          .then((confirmed) => {
+          .then((confirmed: boolean) => {
             if (confirmed) this.$store.dispatch('controls/serverSoftPowerOff');
           });
       }
       if (this.form.shutdownOption === 'immediate') {
         this.$bvModal
           .msgBoxConfirm(modalMessage, modalOptions)
-          .then((confirmed) => {
+          .then((confirmed: boolean) => {
             if (confirmed) this.$store.dispatch('controls/serverHardPowerOff');
           });
       }

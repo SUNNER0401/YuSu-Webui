@@ -33,7 +33,7 @@
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
 import PageTitle from '@/components/Global/PageTitle';
 import PageSection from '@/components/Global/PageSection';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
@@ -43,7 +43,7 @@ export default {
   name: 'RebootBmc',
   components: { PageTitle, PageSection },
   mixins: [BVToastMixin, LoadingBarMixin],
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: () => void) {
     this.hideLoader();
     next();
   },
@@ -69,15 +69,15 @@ export default {
           okTitle: this.$t('global.action.confirm'),
           cancelTitle: this.$t('global.action.cancel'),
         })
-        .then((confirmed) => {
+        .then((confirmed: boolean) => {
           if (confirmed) this.rebootBmc();
         });
     },
     rebootBmc() {
       this.$store
         .dispatch('controls/rebootBmc')
-        .then((message) => this.successToast(message))
-        .catch(({ message }) => this.errorToast(message));
+        .then((message: string) => this.successToast(message))
+        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
   },
 };

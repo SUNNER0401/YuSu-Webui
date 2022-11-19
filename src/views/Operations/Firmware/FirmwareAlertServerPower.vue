@@ -34,7 +34,7 @@
   </b-row>
 </template>
 
-<script>
+<script lang="ts">
 import Alert from '@/components/Global/Alert';
 
 export default {

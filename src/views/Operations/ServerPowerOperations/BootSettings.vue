@@ -49,7 +49,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { mapState } from 'vuex';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
 import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
@@ -79,16 +79,17 @@ export default {
     },
   },
   watch: {
-    bootSource: function (value) {
+    bootSource: function (value: number) {
       this.form.bootOption = value;
     },
-    overrideEnabled: function (value) {
+    overrideEnabled: function (value: number) {
       this.form.oneTimeBoot = value;
     },
-    tpmEnabled: function (value) {
+    tpmEnabled: function (value: number) {
       this.form.tpmPolicyOn = value;
     },
   },
+  // @ts-ignore
   validations: {
     // Empty validations to leverage vuelidate form states
     // to check for changed values
@@ -119,14 +120,14 @@ export default {
 
       this.$store
         .dispatch('serverBootSettings/saveSettings', settings)
-        .then((message) => this.successToast(message))
-        .catch(({ message }) => this.errorToast(message))
+        .then((message: string) => this.successToast(message))
+        .catch(({ message }: { message: string }) => this.errorToast(message))
         .finally(() => {
           this.$v.form.$reset();
           this.endLoader();
         });
     },
-    onChangeSelect(selectedOption) {
+    onChangeSelect(selectedOption: string) {
       this.$v.form.bootOption.$touch();
       // Disable one time boot if selected boot option is 'None'
       if (selectedOption === 'None') this.form.oneTimeBoot = false;
