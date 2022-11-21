@@ -26,7 +26,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import AppHeader from '@/components/AppHeader';
 import AppNavigation from '@/components/AppNavigation';
 import PageContainer from '@/components/Global/PageContainer';

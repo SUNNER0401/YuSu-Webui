@@ -43,7 +43,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import 'animate.css';
 
 export default {
@@ -68,7 +68,7 @@ export default {
     }, 100);
   },
   methods: {
-    getDivImage(divElement) {
+    getDivImage(divElement: Element) {
       let imgurl = window
         .getComputedStyle(divElement, null)
         .getPropertyValue('background-image');
