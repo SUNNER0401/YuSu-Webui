@@ -9,8 +9,8 @@ import i18n from '@/i18n';
  * @param {string} serverStatus
  * @returns {Promise}
  */
-const checkForServerStatus = function (serverStatus) {
-  return new Promise((resolve) => {
+const checkForServerStatus = function (serverStatus: any) {
+  return new Promise<void>((resolve) => {
     const timer = setTimeout(() => {
       resolve();
       unwatch();
@@ -19,8 +19,8 @@ const checkForServerStatus = function (serverStatus) {
       this.dispatch('global/getSystemInfo');
     }, 1000);
     const unwatch = this.watch(
-      (state) => state.global.serverStatus,
-      (value) => {
+      (state: { global: { serverStatus: any } }) => state.global.serverStatus,
+      (value: any) => {
         if (value === serverStatus) {
           resolve();
           unwatch();
@@ -40,20 +40,29 @@ const ControlStore = {
     lastBmcRebootTime: null,
   },
   getters: {
-    isOperationInProgress: (state) => state.isOperationInProgress,
-    lastPowerOperationTime: (state) => state.lastPowerOperationTime,
-    lastBmcRebootTime: (state) => state.lastBmcRebootTime,
+    isOperationInProgress: (state: { isOperationInProgress: any }) =>
+      state.isOperationInProgress,
+    lastPowerOperationTime: (state: { lastPowerOperationTime: any }) =>
+      state.lastPowerOperationTime,
+    lastBmcRebootTime: (state: { lastBmcRebootTime: any }) =>
+      state.lastBmcRebootTime,
   },
   mutations: {
-    setOperationInProgress: (state, inProgress) =>
-      (state.isOperationInProgress = inProgress),
-    setLastPowerOperationTime: (state, lastPowerOperationTime) =>
-      (state.lastPowerOperationTime = lastPowerOperationTime),
-    setLastBmcRebootTime: (state, lastBmcRebootTime) =>
-      (state.lastBmcRebootTime = lastBmcRebootTime),
+    setOperationInProgress: (
+      state: { isOperationInProgress: any },
+      inProgress: any
+    ) => (state.isOperationInProgress = inProgress),
+    setLastPowerOperationTime: (
+      state: { lastPowerOperationTime: any },
+      lastPowerOperationTime: any
+    ) => (state.lastPowerOperationTime = lastPowerOperationTime),
+    setLastBmcRebootTime: (
+      state: { lastBmcRebootTime: any },
+      lastBmcRebootTime: any
+    ) => (state.lastBmcRebootTime = lastBmcRebootTime),
   },
   actions: {
-    async getLastPowerOperationTime({ commit }) {
+    async getLastPowerOperationTime({ commit }: any) {
       return await api
         .get('/redfish/v1/Systems/system')
         .then((response) => {
@@ -65,7 +74,7 @@ const ControlStore = {
         })
         .catch((error) => console.log(error));
     },
-    getLastBmcRebootTime({ commit }) {
+    getLastBmcRebootTime({ commit }: any) {
       return api
         .get('/redfish/v1/Managers/bmc')
         .then((response) => {
@@ -75,56 +84,62 @@ const ControlStore = {
         })
         .catch((error) => console.log(error));
     },
-    async rebootBmc({ dispatch }) {
+    async rebootBmc({ dispatch }: any) {
       const data = { ResetType: 'GracefulRestart' };
       return await api
-        .post('/redfish/v1/Managers/bmc/Actions/Manager.Reset', data)
+        .post('/redfish/v1/Managers/bmc/Actions/Manager.Reset', data, undefined)
         .then(() => dispatch('getLastBmcRebootTime'))
         .then(() => i18n.t('pageRebootBmc.toast.successRebootStart'))
         .catch((error) => {
           console.log(error);
-          throw new Error(i18n.t('pageRebootBmc.toast.errorRebootStart'));
+          throw new Error(
+            i18n.t('pageRebootBmc.toast.errorRebootStart') as string
+          );
         });
     },
-    async serverPowerOn({ dispatch, commit }) {
+    async serverPowerOn({ dispatch, commit }: any) {
       const data = { ResetType: 'On' };
       dispatch('serverPowerChange', data);
       await checkForServerStatus.bind(this, 'on')();
       commit('setOperationInProgress', false);
       dispatch('getLastPowerOperationTime');
     },
-    async serverSoftReboot({ dispatch, commit }) {
+    async serverSoftReboot({ dispatch, commit }: any) {
       const data = { ResetType: 'GracefulRestart' };
       dispatch('serverPowerChange', data);
       await checkForServerStatus.bind(this, 'on')();
       commit('setOperationInProgress', false);
       dispatch('getLastPowerOperationTime');
     },
-    async serverHardReboot({ dispatch, commit }) {
+    async serverHardReboot({ dispatch, commit }: any) {
       const data = { ResetType: 'ForceRestart' };
       dispatch('serverPowerChange', data);
       await checkForServerStatus.bind(this, 'on')();
       commit('setOperationInProgress', false);
       dispatch('getLastPowerOperationTime');
     },
-    async serverSoftPowerOff({ dispatch, commit }) {
+    async serverSoftPowerOff({ dispatch, commit }: any) {
       const data = { ResetType: 'GracefulShutdown' };
       dispatch('serverPowerChange', data);
       await checkForServerStatus.bind(this, 'off')();
       commit('setOperationInProgress', false);
       dispatch('getLastPowerOperationTime');
     },
-    async serverHardPowerOff({ dispatch, commit }) {
+    async serverHardPowerOff({ dispatch, commit }: any) {
       const data = { ResetType: 'ForceOff' };
       dispatch('serverPowerChange', data);
       await checkForServerStatus.bind(this, 'off')();
       commit('setOperationInProgress', false);
       dispatch('getLastPowerOperationTime');
     },
-    serverPowerChange({ commit }, data) {
+    serverPowerChange({ commit }: any, data: any) {
       commit('setOperationInProgress', true);
       api
-        .post('/redfish/v1/Systems/system/Actions/ComputerSystem.Reset', data)
+        .post(
+          '/redfish/v1/Systems/system/Actions/ComputerSystem.Reset',
+          data,
+          undefined
+        )
         .catch((error) => {
           console.log(error);
           commit('setOperationInProgress', false);

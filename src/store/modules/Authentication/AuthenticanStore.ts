@@ -10,23 +10,26 @@ const AuthenticationStore = {
     isAuthenticatedCookie: Cookies.get('IsAuthenticated'),
   },
   getters: {
-    authError: (state) => state.authError,
-    isLoggedIn: (state) => {
+    authError: (state: { authError: any }) => state.authError,
+    isLoggedIn: (state: {
+      xsrfCookie: undefined;
+      isAuthenticatedCookie: string;
+    }) => {
       return (
         state.xsrfCookie !== undefined || state.isAuthenticatedCookie == 'true'
       );
     },
-    token: (state) => state.xsrfCookie,
+    token: (state: { xsrfCookie: any }) => state.xsrfCookie,
   },
   mutations: {
-    authSuccess(state) {
+    authSuccess(state: { authError: boolean; xsrfCookie: any }) {
       state.authError = false;
       state.xsrfCookie = Cookies.get('XSRF-TOKEN');
     },
-    authError(state, authError = true) {
+    authError(state: { authError: boolean }, authError = true) {
       state.authError = authError;
     },
-    logout(state) {
+    logout(state: { xsrfCookie: undefined; isAuthenticatedCookie: undefined }) {
       Cookies.remove('XSRF-TOKEN');
       Cookies.remove('IsAuthenticated');
       localStorage.removeItem('storedUsername');
@@ -35,30 +38,33 @@ const AuthenticationStore = {
     },
   },
   actions: {
-    login({ commit }, { username, password }) {
+    login(
+      { commit }: any,
+      { username, password }: { username: string; password: string }
+    ) {
       commit('authError', false);
       return api
-        .post('/login', { data: [username, password] })
+        .post('/login', { data: [username, password] }, undefined)
         .then(() => commit('authSuccess'))
         .catch((error) => {
           commit('authError');
           throw new Error(error);
         });
     },
-    logout({ commit }) {
+    logout({ commit }: any) {
       api
-        .post('/logout', { data: [] })
+        .post('/logout', { data: [] }, undefined)
         .then(() => commit('logout'))
-        .then(() => router.go('/login'))
+        .then(() => router.go('/login' as any))
         .catch((error) => console.log(error));
     },
-    async checkPasswordChangeRequired(_, username) {
+    async checkPasswordChangeRequired(_: any, username: any) {
       return await api
         .get(`/redfish/v1/AccountService/Accounts/${username}`)
         .then(({ data: { PasswordChangeRequired } }) => PasswordChangeRequired)
         .catch((error) => console.log(error));
     },
-    resetStoreState({ state }) {
+    resetStoreState({ state }: any) {
       state.authError = false;
       state.xsrfCookie = Cookies.get('XSRF-TOKEN');
       state.isAuthenticatedCookie = Cookies.get('IsAuthenticated');

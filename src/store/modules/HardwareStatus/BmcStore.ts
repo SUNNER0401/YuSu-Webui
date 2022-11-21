@@ -7,11 +7,44 @@ const BmcStore = {
     bmc: null,
   },
   getters: {
-    bmc: (state) => state.bmc,
+    bmc: (state: { bmc: any }) => state.bmc,
   },
   mutations: {
-    setBmcInfo: (state, data) => {
-      const bmc = {};
+    setBmcInfo: (
+      state: { bmc: { [index: string]: unknown } },
+      data: {
+        [x: string]: any;
+        DateTime: string | number | Date;
+        Description: any;
+        FirmwareVersion: any;
+        GraphicalConsole: {
+          ConnectTypesSupported: any;
+          ServiceEnabled: any;
+          MaxConcurrentSessions: any;
+        };
+        Status: { Health: any; HealthRollup: any; State: any };
+        Id: any;
+        LastResetTime: string | number | Date;
+        LocationIndicatorActive: any;
+        Location: { PartLocation: { ServiceLabel: any } };
+        Manufacturer: any;
+        ManagerType: any;
+        Model: any;
+        Name: any;
+        PartNumber: any;
+        PowerState: any;
+        SerialConsole: {
+          ConnectTypesSupported: any;
+          ServiceEnabled: any;
+          MaxConcurrentSessions: any;
+        };
+        SerialNumber: any;
+        ServiceEntryPointUUID: any;
+        SparePartNumber: any;
+        UUID: any;
+      }
+    ) => {
+      const bmc: { [index: string]: unknown } = {};
       bmc.dateTime = new Date(data.DateTime);
       bmc.description = data.Description;
       bmc.firmwareVersion = data.FirmwareVersion;
@@ -45,13 +78,16 @@ const BmcStore = {
     },
   },
   actions: {
-    async getBmcInfo({ commit }) {
+    async getBmcInfo({ commit }: any) {
       return await api
         .get('/redfish/v1/Managers/bmc')
         .then(({ data }) => commit('setBmcInfo', data))
         .catch((error) => console.log(error));
     },
-    async updateIdentifyLedValue({ dispatch }, led) {
+    async updateIdentifyLedValue(
+      { dispatch }: any,
+      led: { uri: any; identifyLed: any }
+    ) {
       const uri = led.uri;
       const updatedIdentifyLedValue = {
         LocationIndicatorActive: led.identifyLed,
@@ -64,11 +100,11 @@ const BmcStore = {
           console.log('error', error);
           if (led.identifyLed) {
             throw new Error(
-              i18n.t('pageInventory.toast.errorEnableIdentifyLed')
+              i18n.t('pageInventory.toast.errorEnableIdentifyLed') as string
             );
           } else {
             throw new Error(
-              i18n.t('pageInventory.toast.errorDisableIdentifyLed')
+              i18n.t('pageInventory.toast.errorDisableIdentifyLed') as string
             );
           }
         });

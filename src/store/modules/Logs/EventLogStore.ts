@@ -1,7 +1,7 @@
 import api, { getResponseCount } from '@/store/api';
 import i18n from '@/i18n';
 
-const getHealthStatus = (events, loadedEvents) => {
+const getHealthStatus = (events: any, loadedEvents: any) => {
   let status = loadedEvents ? 'OK' : '';
   for (const event of events) {
     if (event.severity === 'Warning') {
@@ -17,7 +17,7 @@ const getHealthStatus = (events, loadedEvents) => {
 
 // TODO: High priority events should also check if Log
 // is resolved when the property is available in Redfish
-const getHighPriorityEvents = (events) =>
+const getHighPriorityEvents = (events: any[]) =>
   events.filter(({ severity }) => severity === 'Critical');
 
 const EventLogStore = {
@@ -27,57 +27,74 @@ const EventLogStore = {
     loadedEvents: false,
   },
   getters: {
-    allEvents: (state) => state.allEvents,
-    highPriorityEvents: (state) => getHighPriorityEvents(state.allEvents),
-    healthStatus: (state) =>
+    allEvents: (state: { allEvents: any }) => state.allEvents,
+    highPriorityEvents: (state: { allEvents: any }) =>
+      getHighPriorityEvents(state.allEvents),
+    healthStatus: (state: { allEvents: any; loadedEvents: any }) =>
       getHealthStatus(state.allEvents, state.loadedEvents),
   },
   mutations: {
-    setAllEvents: (state, allEvents) => (
-      (state.allEvents = allEvents), (state.loadedEvents = true)
-    ),
+    setAllEvents: (
+      state: { allEvents: any; loadedEvents: boolean },
+      allEvents: any
+    ) => ((state.allEvents = allEvents), (state.loadedEvents = true)),
   },
   actions: {
-    async getEventLogData({ commit }) {
+    async getEventLogData({ commit }: any) {
       return await api
         .get('/redfish/v1/Systems/system/LogServices/EventLog/Entries')
         .then(({ data: { Members = [] } = {} }) => {
-          const eventLogs = Members.map((log) => {
-            const {
-              Id,
-              Severity,
-              Created,
-              EntryType,
-              Message,
-              Name,
-              Modified,
-              Resolved,
-              AdditionalDataURI,
-            } = log;
-            return {
-              id: Id,
-              severity: Severity,
-              date: new Date(Created),
-              type: EntryType,
-              description: Message,
-              name: Name,
-              modifiedDate: new Date(Modified),
-              uri: log['@odata.id'],
-              filterByStatus: Resolved ? 'Resolved' : 'Unresolved',
-              status: Resolved, //true or false
-              additionalDataUri: AdditionalDataURI,
-            };
-          });
+          const eventLogs = Members.map(
+            (log: {
+              [x: string]: any;
+              Id?: any;
+              Severity?: any;
+              Created?: any;
+              EntryType?: any;
+              Message?: any;
+              Name?: any;
+              Modified?: any;
+              Resolved?: any;
+              AdditionalDataURI?: any;
+            }) => {
+              const {
+                Id,
+                Severity,
+                Created,
+                EntryType,
+                Message,
+                Name,
+                Modified,
+                Resolved,
+                AdditionalDataURI,
+              } = log;
+              return {
+                id: Id,
+                severity: Severity,
+                date: new Date(Created),
+                type: EntryType,
+                description: Message,
+                name: Name,
+                modifiedDate: new Date(Modified),
+                uri: log['@odata.id'],
+                filterByStatus: Resolved ? 'Resolved' : 'Unresolved',
+                status: Resolved, //true or false
+                additionalDataUri: AdditionalDataURI,
+              };
+            }
+          );
           commit('setAllEvents', eventLogs);
         })
         .catch((error) => {
           console.log('Event Log Data:', error);
         });
     },
-    async deleteAllEventLogs({ dispatch }, data) {
+    async deleteAllEventLogs({ dispatch }: any, data: string | any[]) {
       return await api
         .post(
-          '/redfish/v1/Systems/system/LogServices/EventLog/Actions/LogService.ClearLog'
+          '/redfish/v1/Systems/system/LogServices/EventLog/Actions/LogService.ClearLog',
+          '',
+          undefined
         )
         .then(() => dispatch('getEventLogData'))
         .then(() => i18n.tc('pageEventLogs.toast.successDelete', data.length))
@@ -88,9 +105,9 @@ const EventLogStore = {
           );
         });
     },
-    async deleteEventLogs({ dispatch }, uris = []) {
+    async deleteEventLogs({ dispatch }: any, uris = []) {
       const promises = uris.map((uri) =>
-        api.delete(uri).catch((error) => {
+        api.delete(uri, undefined).catch((error) => {
           console.log(error);
           return error;
         })
@@ -126,8 +143,8 @@ const EventLogStore = {
           })
         );
     },
-    async resolveEventLogs({ dispatch }, logs) {
-      const promises = logs.map((log) =>
+    async resolveEventLogs({ dispatch }: any, logs: any[]) {
+      const promises = logs.map((log: { uri: string }) =>
         api.patch(log.uri, { Resolved: true }).catch((error) => {
           console.log(error);
           return error;
@@ -161,8 +178,8 @@ const EventLogStore = {
           })
         );
     },
-    async unresolveEventLogs({ dispatch }, logs) {
-      const promises = logs.map((log) =>
+    async unresolveEventLogs({ dispatch }: any, logs: any[]) {
+      const promises = logs.map((log: { uri: string }) =>
         api.patch(log.uri, { Resolved: false }).catch((error) => {
           console.log(error);
           return error;
@@ -197,7 +214,10 @@ const EventLogStore = {
         );
     },
     // Single log entry
-    async updateEventLogStatus({ dispatch }, log) {
+    async updateEventLogStatus(
+      { dispatch }: any,
+      log: { status: any; uri: string }
+    ) {
       const updatedEventLogStatus = log.status;
       return await api
         .patch(log.uri, { Resolved: updatedEventLogStatus })
@@ -213,7 +233,9 @@ const EventLogStore = {
         })
         .catch((error) => {
           console.log(error);
-          throw new Error(i18n.t('pageEventLogs.toast.errorLogStatusUpdate'));
+          throw new Error(
+            i18n.t('pageEventLogs.toast.errorLogStatusUpdate') as string
+          );
         });
     },
   },

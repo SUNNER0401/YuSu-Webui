@@ -6,24 +6,34 @@ const FactoryResetStore = {
   actions: {
     async resetToDefaults() {
       return await api
-        .post('/redfish/v1/Managers/bmc/Actions/Manager.ResetToDefaults', {
-          ResetToDefaultsType: 'ResetAll',
-        })
+        .post(
+          '/redfish/v1/Managers/bmc/Actions/Manager.ResetToDefaults',
+          {
+            ResetToDefaultsType: 'ResetAll',
+          },
+          undefined
+        )
         .then(() => i18n.t('pageFactoryReset.toast.resetToDefaultsSuccess'))
         .catch((error) => {
           console.log('Factory Reset: ', error);
           throw new Error(
-            i18n.t('pageFactoryReset.toast.resetToDefaultsError')
+            i18n.t('pageFactoryReset.toast.resetToDefaultsError') as string
           );
         });
     },
     async resetBios() {
       return await api
-        .post('/redfish/v1/Systems/system/Bios/Actions/Bios.ResetBios')
+        .post(
+          '/redfish/v1/Systems/system/Bios/Actions/Bios.ResetBios',
+          undefined,
+          undefined
+        )
         .then(() => i18n.t('pageFactoryReset.toast.resetBiosSuccess'))
         .catch((error) => {
           console.log('Factory Reset: ', error);
-          throw new Error(i18n.t('pageFactoryReset.toast.resetBiosError'));
+          throw new Error(
+            i18n.t('pageFactoryReset.toast.resetBiosError') as string
+          );
         });
     },
   },

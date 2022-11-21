@@ -10,16 +10,23 @@ const BootSettingsStore = {
     tpmEnabled: null,
   },
   getters: {
-    bootSourceOptions: (state) => state.bootSourceOptions,
-    bootSource: (state) => state.bootSource,
-    overrideEnabled: (state) => state.overrideEnabled,
-    tpmEnabled: (state) => state.tpmEnabled,
+    bootSourceOptions: (state: { bootSourceOptions: any }) =>
+      state.bootSourceOptions,
+    bootSource: (state: { bootSource: any }) => state.bootSource,
+    overrideEnabled: (state: { overrideEnabled: any }) => state.overrideEnabled,
+    tpmEnabled: (state: { tpmEnabled: any }) => state.tpmEnabled,
   },
   mutations: {
-    setBootSourceOptions: (state, bootSourceOptions) =>
-      (state.bootSourceOptions = bootSourceOptions),
-    setBootSource: (state, bootSource) => (state.bootSource = bootSource),
-    setOverrideEnabled: (state, overrideEnabled) => {
+    setBootSourceOptions: (
+      state: { bootSourceOptions: any },
+      bootSourceOptions: any
+    ) => (state.bootSourceOptions = bootSourceOptions),
+    setBootSource: (state: { bootSource: any }, bootSource: any) =>
+      (state.bootSource = bootSource),
+    setOverrideEnabled: (
+      state: { overrideEnabled: boolean },
+      overrideEnabled: string
+    ) => {
       if (overrideEnabled === 'Once') {
         state.overrideEnabled = true;
       } else {
@@ -27,10 +34,11 @@ const BootSettingsStore = {
         state.overrideEnabled = false;
       }
     },
-    setTpmPolicy: (state, tpmEnabled) => (state.tpmEnabled = tpmEnabled),
+    setTpmPolicy: (state: { tpmEnabled: any }, tpmEnabled: any) =>
+      (state.tpmEnabled = tpmEnabled),
   },
   actions: {
-    async getBootSettings({ commit }) {
+    async getBootSettings({ commit }: any) {
       return await api
         .get('/redfish/v1/Systems/system')
         .then(({ data: { Boot } }) => {
@@ -43,8 +51,14 @@ const BootSettingsStore = {
         })
         .catch((error) => console.log(error));
     },
-    saveBootSettings({ commit, dispatch }, { bootSource, overrideEnabled }) {
-      const data = { Boot: {} };
+    saveBootSettings(
+      { commit, dispatch }: any,
+      {
+        bootSource,
+        overrideEnabled,
+      }: { bootSource: string; overrideEnabled: boolean }
+    ) {
+      const data: { Boot: { [index: string]: string } } = { Boot: {} };
       data.Boot.BootSourceOverrideTarget = bootSource;
 
       if (overrideEnabled) {
@@ -70,7 +84,7 @@ const BootSettingsStore = {
           return error;
         });
     },
-    async getTpmPolicy({ commit }) {
+    async getTpmPolicy({ commit }: any) {
       // TODO: switch to Redfish when available
       return await api
         .get('/xyz/openbmc_project/control/host0/TPMEnable')
@@ -79,7 +93,7 @@ const BootSettingsStore = {
         )
         .catch((error) => console.log(error));
     },
-    saveTpmPolicy({ commit, dispatch }, tpmEnabled) {
+    saveTpmPolicy({ commit, dispatch }: any, tpmEnabled: any) {
       // TODO: switch to Redfish when available
       const data = { data: tpmEnabled };
       return api
@@ -100,8 +114,16 @@ const BootSettingsStore = {
         });
     },
     async saveSettings(
-      { dispatch },
-      { bootSource, overrideEnabled, tpmEnabled }
+      { dispatch }: any,
+      {
+        bootSource,
+        overrideEnabled,
+        tpmEnabled,
+      }: {
+        bootSource: string | boolean;
+        overrideEnabled: boolean;
+        tpmEnabled: boolean;
+      }
     ) {
       const promises = [];
 
@@ -122,7 +144,9 @@ const BootSettingsStore = {
           responses.forEach((response) => {
             if (response instanceof Error) {
               throw new Error(
-                i18n.t('pageServerPowerOperations.toast.errorSaveSettings')
+                i18n.t(
+                  'pageServerPowerOperations.toast.errorSaveSettings'
+                ) as string
               );
             }
           });

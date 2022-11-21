@@ -7,40 +7,44 @@ const SessionsStore = {
     allConnections: [],
   },
   getters: {
-    allConnections: (state) => state.allConnections,
+    allConnections: (state: { allConnections: any }) => state.allConnections,
   },
   mutations: {
-    setAllConnections: (state, allConnections) =>
+    setAllConnections: (state: { allConnections: any }, allConnections: any) =>
       (state.allConnections = allConnections),
   },
   actions: {
-    async getSessionsData({ commit }) {
+    async getSessionsData({ commit }: any) {
       return await api
         .get('/redfish/v1/SessionService/Sessions')
         .then((response) =>
-          response.data.Members.map((sessionLogs) => sessionLogs['@odata.id'])
+          response.data.Members.map(
+            (sessionLogs: { [x: string]: any }) => sessionLogs['@odata.id']
+          )
         )
         .then((sessionUris) =>
-          api.all(sessionUris.map((sessionUri) => api.get(sessionUri)))
+          api.all(sessionUris.map((sessionUri: string) => api.get(sessionUri)))
         )
-        .then((sessionUris) => {
-          const allConnectionsData = sessionUris.map((sessionUri) => {
-            return {
-              clientID: sessionUri.data?.Oem?.OpenBMC.ClientID,
-              username: sessionUri.data?.UserName,
-              ipAddress: sessionUri.data?.ClientOriginIPAddress,
-              uri: sessionUri.data['@odata.id'],
-            };
-          });
+        .then((sessionUris: { [index: string]: any }) => {
+          const allConnectionsData = sessionUris.map(
+            (sessionUri: { data?: any }) => {
+              return {
+                clientID: sessionUri.data?.Oem?.OpenBMC.ClientID,
+                username: sessionUri.data?.UserName,
+                ipAddress: sessionUri.data?.ClientOriginIPAddress,
+                uri: sessionUri.data['@odata.id'],
+              };
+            }
+          );
           commit('setAllConnections', allConnectionsData);
         })
         .catch((error) => {
           console.log('Client Session Data:', error);
         });
     },
-    async disconnectSessions({ dispatch }, uris = []) {
+    async disconnectSessions({ dispatch }: any, uris = []) {
       const promises = uris.map((uri) =>
-        api.delete(uri).catch((error) => {
+        api.delete(uri, undefined).catch((error) => {
           console.log(error);
           return error;
         })

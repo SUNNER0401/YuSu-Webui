@@ -8,17 +8,23 @@ const PoliciesStore = {
     ipmiProtocolEnabled: false,
   },
   getters: {
-    sshProtocolEnabled: (state) => state.sshProtocolEnabled,
-    ipmiProtocolEnabled: (state) => state.ipmiProtocolEnabled,
+    sshProtocolEnabled: (state: { sshProtocolEnabled: any }) =>
+      state.sshProtocolEnabled,
+    ipmiProtocolEnabled: (state: { ipmiProtocolEnabled: any }) =>
+      state.ipmiProtocolEnabled,
   },
   mutations: {
-    setSshProtocolEnabled: (state, sshProtocolEnabled) =>
-      (state.sshProtocolEnabled = sshProtocolEnabled),
-    setIpmiProtocolEnabled: (state, ipmiProtocolEnabled) =>
-      (state.ipmiProtocolEnabled = ipmiProtocolEnabled),
+    setSshProtocolEnabled: (
+      state: { sshProtocolEnabled: any },
+      sshProtocolEnabled: any
+    ) => (state.sshProtocolEnabled = sshProtocolEnabled),
+    setIpmiProtocolEnabled: (
+      state: { ipmiProtocolEnabled: any },
+      ipmiProtocolEnabled: any
+    ) => (state.ipmiProtocolEnabled = ipmiProtocolEnabled),
   },
   actions: {
-    async getNetworkProtocolStatus({ commit }) {
+    async getNetworkProtocolStatus({ commit }: any) {
       return await api
         .get('/redfish/v1/Managers/bmc/NetworkProtocol')
         .then((response) => {
@@ -29,7 +35,7 @@ const PoliciesStore = {
         })
         .catch((error) => console.log(error));
     },
-    async saveIpmiProtocolState({ commit }, protocolEnabled) {
+    async saveIpmiProtocolState({ commit }: any, protocolEnabled: any) {
       commit('setIpmiProtocolEnabled', protocolEnabled);
       const ipmi = {
         IPMI: {
@@ -49,13 +55,17 @@ const PoliciesStore = {
           console.log(error);
           commit('setIpmiProtocolEnabled', !protocolEnabled);
           if (protocolEnabled) {
-            throw new Error(i18n.t('pagePolicies.toast.errorIpmiEnabled'));
+            throw new Error(
+              i18n.t('pagePolicies.toast.errorIpmiEnabled') as string
+            );
           } else {
-            throw new Error(i18n.t('pagePolicies.toast.errorIpmiDisabled'));
+            throw new Error(
+              i18n.t('pagePolicies.toast.errorIpmiDisabled') as string
+            );
           }
         });
     },
-    async saveSshProtocolState({ commit }, protocolEnabled) {
+    async saveSshProtocolState({ commit }: any, protocolEnabled: any) {
       commit('setSshProtocolEnabled', protocolEnabled);
       const ssh = {
         SSH: {
@@ -75,9 +85,13 @@ const PoliciesStore = {
           console.log(error);
           commit('setSshProtocolEnabled', !protocolEnabled);
           if (protocolEnabled) {
-            throw new Error(i18n.t('pagePolicies.toast.errorSshEnabled'));
+            throw new Error(
+              i18n.t('pagePolicies.toast.errorSshEnabled') as string
+            );
           } else {
-            throw new Error(i18n.t('pagePolicies.toast.errorSshDisabled'));
+            throw new Error(
+              i18n.t('pagePolicies.toast.errorSshDisabled') as string
+            );
           }
         });
     },

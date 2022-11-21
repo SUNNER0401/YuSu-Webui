@@ -7,11 +7,36 @@ const SystemStore = {
     systems: [],
   },
   getters: {
-    systems: (state) => state.systems,
+    systems: (state: { systems: any }) => state.systems,
   },
   mutations: {
-    setSystemInfo: (state, data) => {
-      const system = {};
+    setSystemInfo: (
+      state: { systems: any[] },
+      data: {
+        AssetTag: any;
+        Description: any;
+        BiosVersion: any;
+        Name: any;
+        Status: { Health: any; HealthRollup: any; State: any };
+        Id: any;
+        LocationIndicatorActive: any;
+        Location: { PartLocation: { ServiceLabel: any } };
+        Manufacturer: any;
+        MemorySummary: {
+          Status: { Health: any; HealthRollup: any; State: any };
+        };
+        Model: any;
+        ProcessorSummary: {
+          Count: any;
+          Status: { Health: any; HealthRollup: any; State: any };
+        };
+        PowerState: any;
+        SerialNumber: any;
+        SubModel: any;
+        SystemType: any;
+      }
+    ) => {
+      const system: { [index: string]: any } = {};
       system.assetTag = data.AssetTag;
       system.description = data.Description;
       system.firmwareVersion = data.BiosVersion;
@@ -41,7 +66,7 @@ const SystemStore = {
     },
   },
   actions: {
-    async getSystem({ commit }) {
+    async getSystem({ commit }: any) {
       return await api
         .get('/redfish/v1')
         .then((response) =>
@@ -50,7 +75,7 @@ const SystemStore = {
         .then(({ data }) => commit('setSystemInfo', data))
         .catch((error) => console.log(error));
     },
-    async changeIdentifyLedState({ commit }, ledState) {
+    async changeIdentifyLedState({ commit }: any, ledState: any) {
       return await api
         .patch('/redfish/v1/Systems/system', {
           LocationIndicatorActive: ledState,
@@ -60,11 +85,11 @@ const SystemStore = {
           console.log('error', error);
           if (ledState) {
             throw new Error(
-              i18n.t('pageInventory.toast.errorEnableIdentifyLed')
+              i18n.t('pageInventory.toast.errorEnableIdentifyLed') as string
             );
           } else {
             throw new Error(
-              i18n.t('pageInventory.toast.errorDisableIdentifyLed')
+              i18n.t('pageInventory.toast.errorDisableIdentifyLed') as string
             );
           }
         });

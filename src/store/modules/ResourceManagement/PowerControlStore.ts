@@ -19,26 +19,41 @@ const PowerControlStore = {
     powerChassisId: [],
   },
   getters: {
-    powerCapValue: (state) => state.powerCapValue,
-    powerConsumptionValue: (state) => state.powerConsumptionValue.toFixed(1),
-    powerChartData1: (state) => state.powerChartData1,
-    ReadingRangeMax: (state) => state.ReadingRangeMax,
-    startCalculateTime: (state) => state.startCalculateTime,
-    calculateTime: (state) => state.duringCalculateTime,
-    totalConsumedPower: (state) => parseInt(state.totalConsumedPower),
-    averagePower: (state) => parseInt(state.averagePower),
-    currentPeakPower: (state) => parseInt(state.currentPeakPower),
-    historyInfo: (state) => state.historyInfo,
-    chassisId: (state) => state.chassisId,
-    powerChassisId: (state) => state.powerChassisId,
+    powerCapValue: (state: { powerCapValue: any }) => state.powerCapValue,
+    powerConsumptionValue: (state: { powerConsumptionValue: number }) =>
+      state.powerConsumptionValue.toFixed(1),
+    powerChartData1: (state: { powerChartData1: any }) => state.powerChartData1,
+    ReadingRangeMax: (state: { ReadingRangeMax: any }) => state.ReadingRangeMax,
+    startCalculateTime: (state: { startCalculateTime: any }) =>
+      state.startCalculateTime,
+    calculateTime: (state: { duringCalculateTime: any }) =>
+      state.duringCalculateTime,
+    totalConsumedPower: (state: { totalConsumedPower: string }) =>
+      parseInt(state.totalConsumedPower),
+    averagePower: (state: { averagePower: string }) =>
+      parseInt(state.averagePower),
+    currentPeakPower: (state: { currentPeakPower: string }) =>
+      parseInt(state.currentPeakPower),
+    historyInfo: (state: { historyInfo: any }) => state.historyInfo,
+    chassisId: (state: { chassisId: any }) => state.chassisId,
+    powerChassisId: (state: { powerChassisId: any }) => state.powerChassisId,
   },
   mutations: {
-    setPowerCapValue: (state, powerCapValue) =>
+    setPowerCapValue: (state: { powerCapValue: any }, powerCapValue: any) =>
       (state.powerCapValue = powerCapValue),
-    setPowerConsumptionValue: (state, powerConsumptionValue) =>
-      (state.powerConsumptionValue = powerConsumptionValue),
+    setPowerConsumptionValue: (
+      state: { powerConsumptionValue: any },
+      powerConsumptionValue: any
+    ) => (state.powerConsumptionValue = powerConsumptionValue),
     // Set power chart data currently.
-    setpowerChartData1: (state) => {
+    setpowerChartData1: (state: {
+      powerChartData1Interval: number;
+      powerChartData1: any[][];
+      powerConsumptionValue: number;
+      calculateTime: number;
+      totalConsumedPower: number;
+      averagePower: number;
+    }) => {
       const step = 2;
       state.powerChartData1Interval = setInterval(() => {
         let now = new Date();
@@ -53,30 +68,39 @@ const PowerControlStore = {
         state.averagePower = state.totalConsumedPower / state.calculateTime;
       }, step * 1000);
     },
-    setReadingRangeMax: (state, ReadingRangeMax) => {
+    setReadingRangeMax: (
+      state: { ReadingRangeMax: any },
+      ReadingRangeMax: any
+    ) => {
       state.ReadingRangeMax = ReadingRangeMax;
     },
-    setStartCalculateTime: (state, time) => {
+    setStartCalculateTime: (state: { startCalculateTime: any }, time: any) => {
       state.startCalculateTime = time;
     },
-    setHistoryInfo: (state, historyInfo) => {
+    setHistoryInfo: (state: { historyInfo: any }, historyInfo: any) => {
       state.historyInfo = historyInfo;
     },
-    setChassisId: (state, chassisId) => {
+    setChassisId: (state: { chassisId: any }, chassisId: any) => {
       state.chassisId = chassisId;
     },
-    setPowerChassisId: (state, powerChassisId) => {
+    setPowerChassisId: (
+      state: { powerChassisId: any },
+      powerChassisId: any
+    ) => {
       state.powerChassisId = powerChassisId;
     },
-    setCurrentPeakPower: (state, currentPeakPower) => {
+    setCurrentPeakPower: (
+      state: { currentPeakPower: any },
+      currentPeakPower: any
+    ) => {
       state.currentPeakPower = currentPeakPower;
     },
   },
   actions: {
-    setPowerCapUpdatedValue({ commit }, value) {
+    setPowerCapUpdatedValue({ commit }: any, value: any) {
       commit('setPowerCapValue', value);
     },
-    async getPowerControl({ commit, state }) {
+    async getPowerControl({ commit, state }: any) {
       let PowerChassisId = state.powerChassisId;
       return await api
         .get(`/redfish/v1/Chassis/${PowerChassisId}/Power`)
@@ -93,7 +117,7 @@ const PowerControlStore = {
           console.log('Power control', error);
         });
     },
-    async setPowerControl({ state }, powerCapValue) {
+    async setPowerControl({ state }: any, powerCapValue: any) {
       let PowerChassisId = state.powerChassisId;
       const data = {
         PowerControl: [{ PowerLimit: { LimitInWatts: powerCapValue } }],
@@ -107,18 +131,20 @@ const PowerControlStore = {
         .catch((error) => {
           console.log(error);
           throw new Error(
-            i18n.t('pageServerPowerOperations.toast.errorSaveSettings')
+            i18n.t(
+              'pageServerPowerOperations.toast.errorSaveSettings'
+            ) as string
           );
         });
     },
-    async getReadingRangeMax({ commit, state }) {
+    async getReadingRangeMax({ commit, state }: any) {
       let currentPeakPower = state.currentPeakPower;
       if (currentPeakPower > 100) {
         let ReadingRangeMax = currentPeakPower + 10;
         commit('setReadingRangeMax', ReadingRangeMax);
       }
     },
-    startCalculate({ commit, state }) {
+    startCalculate({ commit, state }: any) {
       // Clear calculating time.
       state.calculateTime = 0;
       state.totalConsumedPower = 0;
@@ -127,11 +153,11 @@ const PowerControlStore = {
       const startCalculateTime = new Date();
       commit('setStartCalculateTime', startCalculateTime);
     },
-    async getChassisId({ commit }) {
-      let chassisId = [];
+    async getChassisId({ commit }: any) {
+      let chassisId: any[] = [];
       await api.get('/redfish/v1/Chassis/').then(({ data: { Members } }) => {
         for (let member of Members) {
-          let chassisUrl = Object.values(member)[0];
+          let chassisUrl = Object.values(member)[0] as string;
           chassisId.push(
             chassisUrl.split('/')[chassisUrl.split('/').length - 1]
           );
@@ -141,10 +167,10 @@ const PowerControlStore = {
       return chassisId;
     },
     // Get the Chassis ID whose Power page contains OEM and PowerConsumedWatts.
-    async getPowerChassisId({ dispatch, commit }) {
+    async getPowerChassisId({ dispatch, commit }: any) {
       let chassisId = await dispatch('getChassisId');
-      let promises = [];
-      chassisId.forEach((id) => {
+      let promises: any[] = [];
+      chassisId.forEach((id: any) => {
         let p = api
           .get(`/redfish/v1/Chassis/${id}/Power`)
           .then(({ data }) => {
@@ -161,7 +187,7 @@ const PowerControlStore = {
       commit('setPowerChassisId', chassisId);
       return chassisId;
     },
-    async getHistoryInfo({ commit, state }) {
+    async getHistoryInfo({ commit, state }: any) {
       let PowerChassisId = state.powerChassisId;
       let promise1 = api
         .get(`/redfish/v1/Chassis/${PowerChassisId}/Power`)

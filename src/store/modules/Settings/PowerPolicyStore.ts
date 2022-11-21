@@ -8,17 +8,23 @@ const PowerControlStore = {
     powerRestorePolicies: [],
   },
   getters: {
-    powerRestoreCurrentPolicy: (state) => state.powerRestoreCurrentPolicy,
-    powerRestorePolicies: (state) => state.powerRestorePolicies,
+    powerRestoreCurrentPolicy: (state: { powerRestoreCurrentPolicy: any }) =>
+      state.powerRestoreCurrentPolicy,
+    powerRestorePolicies: (state: { powerRestorePolicies: any }) =>
+      state.powerRestorePolicies,
   },
   mutations: {
-    setPowerRestoreCurrentPolicy: (state, powerRestoreCurrentPolicy) =>
-      (state.powerRestoreCurrentPolicy = powerRestoreCurrentPolicy),
-    setPowerRestorePolicies: (state, powerRestorePolicies) =>
-      (state.powerRestorePolicies = powerRestorePolicies),
+    setPowerRestoreCurrentPolicy: (
+      state: { powerRestoreCurrentPolicy: any },
+      powerRestoreCurrentPolicy: any
+    ) => (state.powerRestoreCurrentPolicy = powerRestoreCurrentPolicy),
+    setPowerRestorePolicies: (
+      state: { powerRestorePolicies: any },
+      powerRestorePolicies: any
+    ) => (state.powerRestorePolicies = powerRestorePolicies),
   },
   actions: {
-    async getPowerRestorePolicies({ commit }) {
+    async getPowerRestorePolicies({ commit }: any) {
       return await api
         .get('/redfish/v1/JsonSchemas/ComputerSystem/ComputerSystem.json')
         .then(
@@ -29,7 +35,7 @@ const PowerControlStore = {
           }) => {
             console.log(PowerRestorePolicyTypes);
             let powerPoliciesData = PowerRestorePolicyTypes.enum.map(
-              (powerState) => {
+              (powerState: string | number) => {
                 let desc = `${i18n.t(
                   `pagePowerRestorePolicy.policies.${powerState}`
                 )} - ${PowerRestorePolicyTypes.enumDescriptions[powerState]}`;
@@ -43,7 +49,7 @@ const PowerControlStore = {
           }
         );
     },
-    async getPowerRestoreCurrentPolicy({ commit }) {
+    async getPowerRestoreCurrentPolicy({ commit }: any) {
       api
         .get('/redfish/v1/Systems/system')
         .then(({ data: { PowerRestorePolicy } }) => {
@@ -51,7 +57,7 @@ const PowerControlStore = {
         })
         .catch((error) => console.log(error));
     },
-    async setPowerRestorePolicy({ commit }, powerPolicy) {
+    async setPowerRestorePolicy({ commit }: any, powerPolicy: any) {
       const data = { PowerRestorePolicy: powerPolicy };
 
       return await api
@@ -63,7 +69,7 @@ const PowerControlStore = {
         .catch((error) => {
           console.log(error);
           throw new Error(
-            i18n.t('pagePowerRestorePolicy.toast.errorSaveSettings')
+            i18n.t('pagePowerRestorePolicy.toast.errorSaveSettings') as string
           );
         });
     },

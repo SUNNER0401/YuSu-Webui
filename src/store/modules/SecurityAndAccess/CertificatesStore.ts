@@ -22,8 +22,8 @@ export const CERTIFICATE_TYPES = [
   },
 ];
 
-const getCertificateProp = (type, prop) => {
-  const certificate = CERTIFICATE_TYPES.find(
+const getCertificateProp = (type: string, prop: string) => {
+  const certificate: any = CERTIFICATE_TYPES.find(
     (certificate) => certificate.type === type
   );
   return certificate ? certificate[prop] : null;
@@ -36,31 +36,37 @@ const CertificatesStore = {
     availableUploadTypes: [],
   },
   getters: {
-    allCertificates: (state) => state.allCertificates,
-    availableUploadTypes: (state) => state.availableUploadTypes,
+    allCertificates: (state: { allCertificates: any }) => state.allCertificates,
+    availableUploadTypes: (state: { availableUploadTypes: any }) =>
+      state.availableUploadTypes,
   },
   mutations: {
-    setCertificates(state, certificates) {
+    setCertificates(state: { allCertificates: any }, certificates: any) {
       state.allCertificates = certificates;
     },
-    setAvailableUploadTypes(state, availableUploadTypes) {
+    setAvailableUploadTypes(
+      state: { availableUploadTypes: any },
+      availableUploadTypes: any
+    ) {
       state.availableUploadTypes = availableUploadTypes;
     },
   },
   actions: {
-    async getCertificates({ commit }) {
+    async getCertificates({ commit }: any) {
       return await api
         .get('/redfish/v1/CertificateService/CertificateLocations')
         .then(({ data: { Links: { Certificates } } }) =>
-          Certificates.map((certificate) => certificate['@odata.id'])
+          Certificates.map(
+            (certificate: { [x: string]: any }) => certificate['@odata.id']
+          )
         )
         .then((certificateLocations) => {
-          const promises = certificateLocations.map((location) =>
+          const promises = certificateLocations.map((location: string) =>
             api.get(location)
           );
           api.all(promises).then(
-            api.spread((...responses) => {
-              const certificates = responses.map(({ data }) => {
+            api.spread((...responses: any) => {
+              const certificates = responses.map(({ data }: any) => {
                 const {
                   Name,
                   ValidNotAfter,
@@ -81,7 +87,7 @@ const CertificatesStore = {
               const availableUploadTypes = CERTIFICATE_TYPES.filter(
                 ({ type }) =>
                   !certificates
-                    .map((certificate) => certificate.type)
+                    .map((certificate: { type: string }) => certificate.type)
                     .includes(type)
               );
 
@@ -91,7 +97,10 @@ const CertificatesStore = {
           );
         });
     },
-    async addNewCertificate({ dispatch }, { file, type }) {
+    async addNewCertificate(
+      { dispatch }: any,
+      { file, type }: { file: Blob; type: string }
+    ) {
       return await api
         .post(getCertificateProp(type, 'location'), file, {
           headers: { 'Content-Type': 'application/x-pem-file' },
@@ -104,14 +113,20 @@ const CertificatesStore = {
         )
         .catch((error) => {
           console.log(error);
-          throw new Error(i18n.t('pageCertificates.toast.errorAddCertificate'));
+          throw new Error(
+            i18n.t('pageCertificates.toast.errorAddCertificate') as string
+          );
         });
     },
     async replaceCertificate(
-      { dispatch },
-      { certificateString, location, type }
+      { dispatch }: any,
+      {
+        certificateString,
+        location,
+        type,
+      }: { certificateString: string; location: string; type: string }
     ) {
-      const data = {};
+      const data: { [index: string]: any } = {};
       data.CertificateString = certificateString;
       data.CertificateType = 'PEM';
       data.CertificateUri = { '@odata.id': location };
@@ -119,7 +134,8 @@ const CertificatesStore = {
       return await api
         .post(
           '/redfish/v1/CertificateService/Actions/CertificateService.ReplaceCertificate',
-          data
+          data,
+          undefined
         )
         .then(() => dispatch('getCertificates'))
         .then(() =>
@@ -130,13 +146,16 @@ const CertificatesStore = {
         .catch((error) => {
           console.log(error);
           throw new Error(
-            i18n.t('pageCertificates.toast.errorReplaceCertificate')
+            i18n.t('pageCertificates.toast.errorReplaceCertificate') as string
           );
         });
     },
-    async deleteCertificate({ dispatch }, { type, location }) {
+    async deleteCertificate(
+      { dispatch }: any,
+      { type, location }: { type: string; location: string }
+    ) {
       return await api
-        .delete(location)
+        .delete(location, undefined)
         .then(() => dispatch('getCertificates'))
         .then(() =>
           i18n.t('pageCertificates.toast.successDeleteCertificate', {
@@ -146,11 +165,29 @@ const CertificatesStore = {
         .catch((error) => {
           console.log(error);
           throw new Error(
-            i18n.t('pageCertificates.toast.errorDeleteCertificate')
+            i18n.t('pageCertificates.toast.errorDeleteCertificate') as string
           );
         });
     },
-    async generateCsr(_, userData) {
+    async generateCsr(
+      _: any,
+      userData: {
+        certificateType: any;
+        country: any;
+        state: any;
+        city: any;
+        companyName: any;
+        companyUnit: any;
+        commonName: any;
+        keyPairAlgorithm: any;
+        keyBitLength: any;
+        keyCurveId: any;
+        challengePassword: any;
+        contactPerson: any;
+        emailAddress: any;
+        alternateName: any;
+      }
+    ) {
       const {
         certificateType,
         country,
@@ -167,7 +204,7 @@ const CertificatesStore = {
         emailAddress,
         alternateName,
       } = userData;
-      const data = {};
+      const data: { [index: string]: any } = {};
 
       data.CertificateCollection = {
         '@odata.id': getCertificateProp(certificateType, 'location'),
@@ -190,7 +227,8 @@ const CertificatesStore = {
       return await api
         .post(
           '/redfish/v1/CertificateService/Actions/CertificateService.GenerateCSR',
-          data
+          data,
+          undefined
         )
         //TODO: Success response also throws error so
         // can't accurately show legitimate error in UI

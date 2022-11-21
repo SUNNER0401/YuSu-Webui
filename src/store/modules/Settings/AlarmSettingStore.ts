@@ -1,6 +1,7 @@
 import api from '@/store/api';
 import i18n from '@/i18n';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
+import VueI18n from 'vue-i18n';
 
 const AlarmSettingStore = {
   namespaced: true,
@@ -10,13 +11,26 @@ const AlarmSettingStore = {
     remoteServer: { Address: '', Port: 0 },
   },
   getters: {
-    snmpManagers: (state) => state.snmpManagers,
-    managersToDelete: (state) => state.managersToDelete,
-    remoteServer: (state) => state.remoteServer,
+    snmpManagers: (state: { snmpManagers: any }) => state.snmpManagers,
+    managersToDelete: (state: { managersToDelete: any }) =>
+      state.managersToDelete,
+    remoteServer: (state: { remoteServer: any }) => state.remoteServer,
   },
   mutations: {
-    setSnmpMangers: (state, snmpManagers) => {
-      for (var key in snmpManagers) {
+    setSnmpMangers: (
+      state: {
+        snmpManagers: {
+          path: string;
+          port: any;
+          updatePort: boolean;
+          address: any;
+          updateAddress: boolean;
+          actions: { value: string; title: VueI18n.TranslateResult }[];
+        }[];
+      },
+      snmpManagers: { [x: string]: { Address: any; Port: number } }
+    ) => {
+      for (let key in snmpManagers) {
         state.snmpManagers.push({
           path: key,
           port: snmpManagers[key].Port,
@@ -32,7 +46,13 @@ const AlarmSettingStore = {
         });
       }
     },
-    addNewSNMPManager: (state) => {
+    addNewSNMPManager: (state: {
+      snmpManagers: {
+        address: string;
+        port: string;
+        actions: { value: string; title: VueI18n.TranslateResult }[];
+      }[];
+    }) => {
       state.snmpManagers.push({
         address: '',
         port: '',
@@ -44,13 +64,19 @@ const AlarmSettingStore = {
         ],
       });
     },
-    deleteManagerTableRow: (state, index) => {
+    deleteManagerTableRow: (
+      state: { snmpManagers: any[]; managersToDelete: any[] },
+      index: number
+    ) => {
       if (state.snmpManagers[index].path) {
         state.managersToDelete.push(state.snmpManagers[index].path);
       }
       state.snmpManagers.splice(index, 1);
     },
-    updateManagersSettings: async (state, snmpManagers) => {
+    updateManagersSettings: async (
+      state: any,
+      snmpManagers: { [x: string]: { address: string; port: number } }
+    ) => {
       // Validate that no field are empty and port is valid. Port value is
       // undefined if it is an invalid number.
       for (let i in snmpManagers) {
@@ -65,7 +91,7 @@ const AlarmSettingStore = {
     },
   },
   actions: {
-    async getManagerData({ commit }) {
+    async getManagerData({ commit }: any) {
       return await api
         .get('/xyz/openbmc_project/network/snmp/manager/enumerate')
         .then((response) => {
@@ -77,38 +103,48 @@ const AlarmSettingStore = {
           console.log(error);
         });
     },
-    addNewSNMPManager({ commit }) {
+    addNewSNMPManager({ commit }: any) {
       commit('addNewSNMPManager');
     },
-    deleteManagerTableRow({ commit }, index) {
+    deleteManagerTableRow({ commit }: any, index: any) {
       commit('deleteManagerTableRow', index);
     },
-    onDeleteManagerTableRow({ dispatch }, row) {
+    onDeleteManagerTableRow({ dispatch }: any, row: any) {
       dispatch('deleteManagerTableRow', row);
     },
-    updateManagersSettings({ commit }, snmpManagers) {
+    updateManagersSettings({ commit }: any, snmpManagers: any) {
       commit('updateManagersSettings', snmpManagers);
     },
-    async addManager(context, payload) {
+    async addManager(
+      context: any,
+      payload: { address: any; port: string | number }
+    ) {
       const data = JSON.stringify({ data: [payload.address, +payload.port] });
       return await api.post(
         '/xyz/openbmc_project/network/snmp/manager/action/Client',
-        data
+        data,
+        undefined
       );
     },
-    async deleteManager(context, path) {
+    async deleteManager(context: any, path: string) {
       const data = JSON.stringify({ data: [] });
-      return await api.post(path + '/action/Delete', data);
+      return await api.post(path + '/action/Delete', data, undefined);
     },
-    async setManagerAddress(context, payload) {
+    async setManagerAddress(
+      context: any,
+      payload: { address: any; path: string }
+    ) {
       const data = JSON.stringify({ data: payload.address });
       return await api.put(payload.path + '/attr/Address', data);
     },
-    async setManagerPort(context, payload) {
+    async setManagerPort(
+      context: any,
+      payload: { port: string | number; path: string }
+    ) {
       const data = JSON.stringify({ data: +payload.port });
       return await api.put(payload.path + '/attr/Port', data);
     },
-    async getRemoteServer({ state }) {
+    async getRemoteServer({ state }: any) {
       await api
         .get('/xyz/openbmc_project/logging/config/remote')
         .then(({ data: { data } }) => {
@@ -116,7 +152,7 @@ const AlarmSettingStore = {
           state.remoteServer.Port = data.Port;
         });
     },
-    async setRemoteAddress({ state }, payload) {
+    async setRemoteAddress({ state }: any, payload: { Address: any }) {
       const data = JSON.stringify({ data: payload.Address });
       return await api
         .put('/xyz/openbmc_project/logging/config/remote/attr/Address', data)
@@ -124,7 +160,7 @@ const AlarmSettingStore = {
           state.remoteServer.Address = payload.Address;
         });
     },
-    async setRemotePort({ state }, payload) {
+    async setRemotePort({ state }: any, payload: { Port: any }) {
       const data = JSON.stringify({ data: payload.Port });
       return await api
         .put('/xyz/openbmc_project/logging/config/remote/attr/Port', data)
@@ -132,7 +168,7 @@ const AlarmSettingStore = {
           state.remoteServer.Port = payload.Port;
         });
     },
-    async deleteServer({ dispatch }) {
+    async deleteServer({ dispatch }: any) {
       const payload = { Address: '', Port: 0 };
       dispatch('setRemoteAddress', payload);
       dispatch('setRemotePort', payload);

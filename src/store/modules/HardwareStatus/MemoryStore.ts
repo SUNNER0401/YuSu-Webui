@@ -7,10 +7,10 @@ const MemoryStore = {
     dimms: [],
   },
   getters: {
-    dimms: (state) => state.dimms,
+    dimms: (state: { dimms: any }) => state.dimms,
   },
   mutations: {
-    setMemoryInfo: (state, data) => {
+    setMemoryInfo: (state: { dimms: any }, data: { data: any }[]) => {
       state.dimms = data.map(({ data }) => {
         const {
           Id,
@@ -42,17 +42,22 @@ const MemoryStore = {
     },
   },
   actions: {
-    async getDimms({ commit }) {
+    async getDimms({ commit }: any) {
       return await api
         .get('/redfish/v1/Systems/system/Memory')
         .then(({ data: { Members } }) => {
-          const promises = Members.map((item) => api.get(item['@odata.id']));
+          const promises = Members.map((item: { [x: string]: string }) =>
+            api.get(item['@odata.id'])
+          );
           return api.all(promises);
         })
         .then((response) => commit('setMemoryInfo', response))
         .catch((error) => console.log(error));
     },
-    async updateIdentifyLedValue({ dispatch }, led) {
+    async updateIdentifyLedValue(
+      { dispatch }: any,
+      led: { uri: any; identifyLed: any }
+    ) {
       const uri = led.uri;
       const updatedIdentifyLedValue = {
         LocationIndicatorActive: led.identifyLed,
@@ -61,10 +66,12 @@ const MemoryStore = {
         dispatch('getDimms');
         console.log('error', error);
         if (led.identifyLed) {
-          throw new Error(i18n.t('pageInventory.toast.errorEnableIdentifyLed'));
+          throw new Error(
+            i18n.t('pageInventory.toast.errorEnableIdentifyLed') as string
+          );
         } else {
           throw new Error(
-            i18n.t('pageInventory.toast.errorDisableIdentifyLed')
+            i18n.t('pageInventory.toast.errorDisableIdentifyLed') as string
           );
         }
       });

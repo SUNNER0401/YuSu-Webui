@@ -7,15 +7,19 @@ const ServerLedStore = {
     indicatorLedActiveState: false,
   },
   getters: {
-    getIndicatorLedActiveState: (state) => state.indicatorLedActiveState,
+    getIndicatorLedActiveState: (state: { indicatorLedActiveState: any }) =>
+      state.indicatorLedActiveState,
   },
   mutations: {
-    setIndicatorLedActiveState(state, indicatorLedActiveState) {
+    setIndicatorLedActiveState(
+      state: { indicatorLedActiveState: any },
+      indicatorLedActiveState: any
+    ) {
       state.indicatorLedActiveState = indicatorLedActiveState;
     },
   },
   actions: {
-    async getIndicatorLedActiveState({ commit }) {
+    async getIndicatorLedActiveState({ commit }: any) {
       return await api
         .get('/redfish/v1/Systems/system')
         .then((response) => {
@@ -26,7 +30,7 @@ const ServerLedStore = {
         })
         .catch((error) => console.log(error));
     },
-    async saveIndicatorLedActiveState({ commit }, payload) {
+    async saveIndicatorLedActiveState({ commit }: any, payload: any) {
       commit('setIndicatorLedActiveState', payload);
       return await api
         .patch('/redfish/v1/Systems/system', {
@@ -37,11 +41,11 @@ const ServerLedStore = {
           commit('setIndicatorLedActiveState', !payload);
           if (payload) {
             throw new Error(
-              i18n.t('pageInventory.toast.errorEnableIdentifyLed')
+              i18n.t('pageInventory.toast.errorEnableIdentifyLed') as string
             );
           } else {
             throw new Error(
-              i18n.t('pageInventory.toast.errorDisableIdentifyLed')
+              i18n.t('pageInventory.toast.errorDisableIdentifyLed') as string
             );
           }
         });

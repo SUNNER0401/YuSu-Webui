@@ -8,16 +8,20 @@ const DateTimeStore = {
     isNtpProtocolEnabled: null,
   },
   getters: {
-    ntpServers: (state) => state.ntpServers,
-    isNtpProtocolEnabled: (state) => state.isNtpProtocolEnabled,
+    ntpServers: (state: { ntpServers: any }) => state.ntpServers,
+    isNtpProtocolEnabled: (state: { isNtpProtocolEnabled: any }) =>
+      state.isNtpProtocolEnabled,
   },
   mutations: {
-    setNtpServers: (state, ntpServers) => (state.ntpServers = ntpServers),
-    setIsNtpProtocolEnabled: (state, isNtpProtocolEnabled) =>
-      (state.isNtpProtocolEnabled = isNtpProtocolEnabled),
+    setNtpServers: (state: { ntpServers: any }, ntpServers: any) =>
+      (state.ntpServers = ntpServers),
+    setIsNtpProtocolEnabled: (
+      state: { isNtpProtocolEnabled: any },
+      isNtpProtocolEnabled: any
+    ) => (state.isNtpProtocolEnabled = isNtpProtocolEnabled),
   },
   actions: {
-    async getNtpData({ commit }) {
+    async getNtpData({ commit }: any) {
       return await api
         .get('/redfish/v1/Managers/bmc/NetworkProtocol')
         .then((response) => {
@@ -30,8 +34,20 @@ const DateTimeStore = {
           console.log(error);
         });
     },
-    async updateDateTime({ state }, dateTimeForm) {
-      const ntpData = {
+    async updateDateTime(
+      { state }: any,
+      dateTimeForm: {
+        ntpProtocolEnabled: any;
+        ntpServersArray: any;
+        updatedDateTime: any;
+      }
+    ) {
+      const ntpData: {
+        NTP: {
+          ProtocolEnabled: boolean;
+          NTPServers?: typeof dateTimeForm.ntpServersArray[];
+        };
+      } = {
         NTP: {
           ProtocolEnabled: dateTimeForm.ntpProtocolEnabled,
         },
@@ -57,7 +73,7 @@ const DateTimeStore = {
              * https://github.com/openbmc/openbmc/issues/3459
              */
             const timeoutVal = state.isNtpProtocolEnabled ? 20000 : 0;
-            return await new Promise((resolve, reject) => {
+            return await new Promise<void>((resolve, reject) => {
               setTimeout(() => {
                 return api
                   .patch(`/redfish/v1/Managers/bmc`, dateTimeData)
@@ -72,7 +88,9 @@ const DateTimeStore = {
         })
         .catch((error) => {
           console.log(error);
-          throw new Error(i18n.t('pageDateTime.toast.errorSaveDateTime'));
+          throw new Error(
+            i18n.t('pageDateTime.toast.errorSaveDateTime') as string
+          );
         });
     },
   },
