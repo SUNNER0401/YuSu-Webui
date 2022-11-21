@@ -10,7 +10,7 @@
   </b-button>
 </template>
 
-<script>
+<script lang="ts">
 import IconTooltip from '@carbon/icons-vue/es/information/16';
 
 export default {

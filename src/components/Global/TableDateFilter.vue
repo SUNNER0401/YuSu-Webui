@@ -97,7 +97,7 @@
   </b-row>
 </template>
 
-<script>
+<script lang="ts">
 import IconCalendar from '@carbon/icons-vue/es/calendar/20';
 import { helpers } from 'vuelidate/lib/validators';
 
@@ -116,11 +116,12 @@ export default {
       locale: this.$store.getters['global/languagePreference'],
     };
   },
+  // @ts-ignore
   validations() {
     return {
       fromDate: {
         pattern: helpers.regex('pattern', isoDateRegex),
-        maxDate: (value) => {
+        maxDate: (value: number) => {
           if (!this.toDate) return true;
           const date = new Date(value);
           const maxDate = new Date(this.toDate);
@@ -130,7 +131,7 @@ export default {
       },
       toDate: {
         pattern: helpers.regex('pattern', isoDateRegex),
-        minDate: (value) => {
+        minDate: (value: number) => {
           if (!this.fromDate) return true;
           const date = new Date(value);
           const minDate = new Date(this.fromDate);
@@ -144,7 +145,7 @@ export default {
     fromDate() {
       this.emitChange();
     },
-    toDate(newVal) {
+    toDate(newVal: number) {
       // Offset the end date to end of day to make sure all
       // entries from selected end date are included in filter
       this.offsetToDate = new Date(newVal).setUTCHours(23, 59, 59, 999);

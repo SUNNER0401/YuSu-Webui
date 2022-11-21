@@ -16,7 +16,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import IconView from '@carbon/icons-vue/es/view/20';
 import IconViewOff from '@carbon/icons-vue/es/view--off/20';
 

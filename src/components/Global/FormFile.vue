@@ -39,7 +39,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { BFormFile } from 'bootstrap-vue';
 import IconClose from '@carbon/icons-vue/es/close/20';
 

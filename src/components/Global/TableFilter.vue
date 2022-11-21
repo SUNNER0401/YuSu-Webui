@@ -53,7 +53,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import IconFilter from '@carbon/icons-vue/es/settings--adjust/20';
 
 export default {
@@ -63,9 +63,10 @@ export default {
     filters: {
       type: Array,
       default: () => [],
-      validator: (prop) => {
+      validator: (prop: any) => {
         return prop.every(
-          (filter) => 'label' in filter && 'values' in filter && 'key' in filter
+          (filter: any) =>
+            'label' in filter && 'values' in filter && 'key' in filter
         );
       },
     },
@@ -85,16 +86,16 @@ export default {
     },
   },
   methods: {
-    removeTag(removedTag) {
-      this.tags = this.tags.filter((tag) => tag !== removedTag);
+    removeTag(removedTag: any) {
+      this.tags = this.tags.filter((tag: any) => tag !== removedTag);
     },
     clearAllTags() {
       this.tags = [];
     },
     emitChange() {
-      const activeFilters = this.filters.map(({ key, values }) => {
+      const activeFilters = this.filters.map(({ key, values }: any) => {
         const activeValues = values.filter(
-          (value) => this.tags.indexOf(value) !== -1
+          (value: any) => this.tags.indexOf(value) !== -1
         );
         return {
           key,

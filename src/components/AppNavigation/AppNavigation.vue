@@ -61,7 +61,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 //Do not change Mixin import.
 //Exact match alias set to support
 //dotenv customizations.
@@ -85,7 +85,7 @@ export default {
     $route: function () {
       this.isNavigationOpen = false;
     },
-    isNavigationOpen: function (isNavigationOpen) {
+    isNavigationOpen: function (isNavigationOpen: any) {
       this.$root.$emit('change-is-navigation-open', isNavigationOpen);
     },
   },

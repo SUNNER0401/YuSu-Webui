@@ -30,7 +30,7 @@
   </transition>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'TableToolbar',
   props: {
@@ -41,8 +41,8 @@ export default {
     actions: {
       type: Array,
       default: () => [],
-      validator: (prop) => {
-        return prop.every((action) => {
+      validator: (prop: any) => {
+        return prop.every((action: any) => {
           return (
             Object.prototype.hasOwnProperty.call(action, 'value') &&
             Object.prototype.hasOwnProperty.call(action, 'label')
@@ -57,7 +57,7 @@ export default {
     };
   },
   watch: {
-    selectedItemsCount: function (selectedItemsCount) {
+    selectedItemsCount: function (selectedItemsCount: number) {
       if (selectedItemsCount > 0) {
         this.isToolbarActive = true;
       } else {

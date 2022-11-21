@@ -4,7 +4,7 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import JumpLinkMixin from '@/components/Mixins/JumpLinkMixin';
 export default {
   name: 'PageContainer',

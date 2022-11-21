@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import html2canvas from 'html2canvas';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
 
@@ -20,7 +20,7 @@ export default {
   methods: {
     async jitT() {
       var _this = this;
-      let imgUrl = await new Promise((resolve) => {
+      let imgUrl: string = await new Promise((resolve) => {
         setTimeout(() => {
           html2canvas(_this.element, {
             useCORS: true,

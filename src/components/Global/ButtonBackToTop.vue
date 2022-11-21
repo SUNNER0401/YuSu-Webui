@@ -12,7 +12,7 @@
   </b-button>
 </template>
 
-<script>
+<script lang="ts">
 import UpToTop24 from '@carbon/icons-vue/es/up-to-top/24';
 
 export default {

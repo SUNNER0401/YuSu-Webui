@@ -13,9 +13,9 @@
   />
 </template>
 
-<script>
+<script lang="ts">
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
-import screenfull from 'screenfull';
+import screenfull, { Screenfull } from 'screenfull';
 
 export default {
   name: 'ScreenFull',
@@ -44,46 +44,47 @@ export default {
   },
   methods: {
     click() {
-      if (!screenfull.enabled) {
+      if (!(screenfull as Screenfull).enabled) {
         this.warningToast(this.$t('global.toast.browserNotSupport'), {
           title: this.$t('global.toast.warning'),
         });
         return false;
       }
-      screenfull.on('error', (event) => {
+      (screenfull as Screenfull).on('error', (event) => {
         console.error('Failed to enable fullscreen', event);
       });
-      if (!screenfull.isFullscreen) {
+      if (!(screenfull as Screenfull).isFullscreen) {
         if (this.element) {
-          screenfull.request(this.element);
+          (screenfull as Screenfull).request(this.element);
         } else {
-          screenfull.request();
+          (screenfull as Screenfull).request();
         }
       } else {
-        screenfull.exit();
+        (screenfull as Screenfull).exit();
         if (!this.isFullscreen) {
           if (this.element) {
             setTimeout(() => {
-              screenfull.request(this.element);
+              (screenfull as Screenfull).request(this.element);
             }, 50);
           } else {
             setTimeout(() => {
-              screenfull.request();
+              (screenfull as Screenfull).request();
             }, 50);
           }
         }
       }
     },
     change() {
-      if (screenfull.isFullscreen) {
+      if ((screenfull as Screenfull).isFullscreen) {
         if (
-          this.element == screenfull.element ||
-          (!this.element && screenfull.element.tagName == 'HTML')
+          this.element == (screenfull as Screenfull).element ||
+          (!this.element &&
+            (screenfull as Screenfull).element!.tagName == 'HTML')
         ) {
           if (this.setIsFullWindow) {
             this.setIsFullWindow(true);
           }
-          this.isFullscreen = screenfull.isFullscreen;
+          this.isFullscreen = (screenfull as Screenfull).isFullscreen;
         } else {
           return;
         }
@@ -91,17 +92,17 @@ export default {
         if (this.setIsFullWindow) {
           this.setIsFullWindow(false);
         }
-        this.isFullscreen = screenfull.isFullscreen;
+        this.isFullscreen = (screenfull as Screenfull).isFullscreen;
       }
     },
     init() {
-      if (screenfull.enabled) {
-        screenfull.on('change', this.change);
+      if ((screenfull as Screenfull).enabled) {
+        (screenfull as Screenfull).on('change', this.change);
       }
     },
     destroy() {
-      if (screenfull.enabled) {
-        screenfull.off('change', this.change);
+      if ((screenfull as Screenfull).enabled) {
+        (screenfull as Screenfull).off('change', this.change);
       }
     },
   },

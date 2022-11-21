@@ -116,7 +116,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
 import IconAvatar from '@carbon/icons-vue/es/user--avatar/20';
 import IconClose from '@carbon/icons-vue/es/close/20';
@@ -197,7 +197,7 @@ export default {
     },
   },
   watch: {
-    isAuthorized(value) {
+    isAuthorized(value: boolean) {
       if (value === false) {
         this.errorToast(this.$t('global.toast.unAuthDescription'), {
           title: this.$t('global.toast.unAuthTitle'),
@@ -216,13 +216,13 @@ export default {
     this.isFullscreen = this.$refs.globalFullScreen.isFullscreen;
     this.$root.$on(
       'change-is-navigation-open',
-      (isNavigationOpen) => (this.isNavigationOpen = isNavigationOpen)
+      (isNavigationOpen: any) => (this.isNavigationOpen = isNavigationOpen)
     );
   },
   methods: {
-    blur(event) {
+    blur(event: { which: number }) {
       if (event.which == 1) {
-        document.querySelector('#global-fullscreen>.nav-link').blur();
+        document.querySelector('#global-fullscreen>.nav-link')!.blur();
         this.isFullscreen = !this.$refs.globalFullScreen.isFullscreen;
       }
     },
@@ -244,7 +244,7 @@ export default {
     toggleNavigation() {
       this.$root.$emit('toggle-navigation');
     },
-    setFocus(event) {
+    setFocus(event: { preventDefault: () => void }) {
       event.preventDefault();
       this.$root.$emit('skip-navigation');
     },

@@ -22,7 +22,7 @@
   </b-alert>
 </template>
 
-<script>
+<script lang="ts">
 import StatusIcon from '@/components/Global/StatusIcon';
 import { BAlert } from 'bootstrap-vue';
 

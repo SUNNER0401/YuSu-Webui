@@ -36,7 +36,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import IconSearch from '@carbon/icons-vue/es/search/16';
 import IconClose from '@carbon/icons-vue/es/close/20';
 

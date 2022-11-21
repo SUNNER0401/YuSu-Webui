@@ -6,6 +6,7 @@ declare module '*';
 interface Element extends VNode {
   disabled?: boolean;
   style?: any;
+  blur?: any;
 }
 
 interface Navigator {
