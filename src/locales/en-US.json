@@ -167,7 +167,7 @@
     "certificates": "Certificates",
     "virtualMedia": "Virtual media",
     "alarmSetting": "Alarm setting",
-    "fanSpeed":"Fan Speed",
+    "fanSpeed": "Fan Speed",
     "about": "About",
     "aboutUs": "About Us",
     "operatingLogs": "Operating logs"
@@ -332,32 +332,32 @@
       "resetToDefaultsError": "Factory reset of BMC and server settings failed."
     }
   },
-  "pageFanSpeed":{
+  "pageFanSpeed": {
     "description": "This function is able to control and watch speed of each fans.",
     "manualControl": "Manual control mode",
     "currentStatus": "Current status",
-    "zoneControl":"Heat dissipation zone management",
+    "zoneControl": "Heat dissipation zone management",
     "status": {
-      "currentmode":"Current mode"
+      "currentmode": "Current mode"
     },
     "fanModes": {
       "normal_mode": "NORMAL",
       "high_performance_mode": "HIGH_PERFORMANCE_MODE",
       "manual_mode": "MANUAL_MODE"
     },
-    "modal":{
-      "confirmMessage":"Are you sure save settings of {zoneName}?",
-      "confirmTitle":"Zone setting",
-      "errorSaveMessage":"Please choose one mode to switch!"
+    "modal": {
+      "confirmMessage": "Are you sure save settings of {zoneName}?",
+      "confirmTitle": "Zone setting",
+      "errorSaveMessage": "Please choose one mode to switch!"
     },
-    "toast":{
+    "toast": {
       "successSaving": "Save settings successfully",
       "errorSetting": "Save setting failed."
     },
-    "chart":{
-      "title":{
-        "text":"Fan speed",
-        "subtext":"Show fan speed of each fan"
+    "chart": {
+      "title": {
+        "text": "Fan speed",
+        "subtext": "Show fan speed of each fan"
       },
       "fanSpeed": "Fan Speed"
     }
@@ -406,8 +406,8 @@
       "state": {
         "uploading": "Uploading",
         "startBurning": "Start burning",
-        "loadBios":"loading BIOS and driving MTD",
-        "burningBios":"Burning BIOS firmware",
+        "loadBios": "loading BIOS and driving MTD",
+        "burningBios": "Burning BIOS firmware",
         "success": "Update successfully!"
       }
     },
@@ -415,7 +415,7 @@
       "errorSwitchImages": "Error switching running and backup images.",
       "errorUpdateFirmware": "Error starting firmware update.",
       "errorBurning": "Error Burning image.",
-      "pageMiss" : "Updating page missed.Updating progress did not work successfully",
+      "pageMiss": "Updating page missed.Updating progress did not work successfully",
       "rebootStarted": "Reboot started",
       "rebootStartedMessage": "Successfully started reboot from backup image.",
       "updateStarted": "Update started",
@@ -437,6 +437,7 @@
     "quicklinkTitle": "Quick links to hardware components",
     "system": "System",
     "assemblies": "Assemblies",
+    "pcie": "PCIE",
     "systemIndicator": {
       "powerStatus": "Power status",
       "identifyLed": "System identify LED",
@@ -491,7 +492,17 @@
       "totalCores": "Total cores",
       "totalThreads": "Total threads",
       "uuid": "UUID",
-      "version": "Version"
+      "version": "Version",
+      "deviceType": "Device type",
+      "functionId": "Function ID",
+      "functionType": "Function type",
+      "deviceId": "Device ID",
+      "classCode": "Class code",
+      "revisionId": "Revision ID",
+      "subsystemId": "subsystem ID",
+      "vendorID": "Vendor ID",
+      "subsystemVendorID": "Subsystem vendor ID",
+      "deviceClass": "device class"
     },
     "toast": {
       "errorDisableIdentifyLed": "Error disabling Identify LED.",
@@ -576,7 +587,7 @@
       "cannotStartWithANumber": "Cannot start with a number",
       "clickSaveToUnlockAccount": "Click \"Save\" to unlock account",
       "confirmUserPassword": "Confirm user password",
-      "maxDaysExpired":"Max days expired",
+      "maxDaysExpired": "Max days expired",
       "deleteConfirmMessage": "Are you sure you want to delete user '%{user}'? This action cannot be undone.",
       "manual": "Manual",
       "maxFailedLoginAttempts": "Max failed login attempts",
@@ -594,7 +605,7 @@
       "privilege": "Privilege",
       "status": "Status",
       "username": "Username",
-      "maxDaysExpired":"Max days expired"
+      "maxDaysExpired": "Max days expired"
     },
     "tableRoles": {
       "configureComponentsManagedByThisService": "Configure components managed by this service",
@@ -647,7 +658,7 @@
     },
     "toast": {
       "successDelete": "Successfully deleted %{count} log. | Successfully deleted %{count} logs.",
-      "errorDelete": "Error deleting %{count} log. | Error deleting %{count} logs." 
+      "errorDelete": "Error deleting %{count} log. | Error deleting %{count} logs."
     }
   },
   "pageOverview": {
@@ -779,7 +790,7 @@
       "successSaveSettings": "Power restore policy updated successfully."
     }
   },
-  "pageAlarmSetting":{
+  "pageAlarmSetting": {
     "description": "Set the Simple Network Management Protocol (SNMP) and remote logging server with a host name or IP address and a port.",
     "Managers": "SNMP Managers",
     "remoteServer": {
@@ -808,7 +819,7 @@
       "confirmMessage": "Are you sure you want to save setting?",
       "confirmTitle": "Confirm SNMP save setting",
       "errorSave": "Save Error",
-      "errorSaveMessage":"Cannot save. Please resolve errors on page."
+      "errorSaveMessage": "Cannot save. Please resolve errors on page."
     },
     "toast": {
       "errorSave": "Cannot save. Please resolve errors on page.",
@@ -901,7 +912,7 @@
         "averagePower": "Average power",
         "totalConsumedPower": "Total consumed power"
       }
-    }    
+    }
   },
   "pageSensors": {
     "exportFilePrefix": "sensors_",
@@ -1035,8 +1046,7 @@
       "serverClosedWithErrors": "Server closed with errors"
     }
   },
-  "pageAboutUs": {
-  },
+  "pageAboutUs": {},
   "countries": {
     "AF": "Afghanistan",
     "AL": "Albania",

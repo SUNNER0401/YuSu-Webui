@@ -437,6 +437,7 @@
     "quicklinkTitle": "目录",
     "system": "系统",
     "assemblies": "集合",
+    "pcie": "PCIE",
     "systemIndicator": {
       "powerStatus": "电源状态",
       "identifyLed": "指示灯LED",
@@ -491,7 +492,17 @@
       "totalCores": "总核数",
       "totalThreads": "总线程数",
       "uuid": "UUID",
-      "version": "版本"
+      "version": "版本",
+      "deviceType": "设备类型",
+      "functionId": "功能ID",
+      "functionType": "功能类型",
+      "deviceId": "设备ID",
+      "classCode": "类型编号",
+      "revisionId": "修订ID",
+      "subsystemId": "子系统ID",
+      "vendorID": "供应商ID",
+      "subsystemVendorID": "子系统供应商ID",
+      "deviceClass": "设备类型"
     },
     "toast": {
       "errorDisableIdentifyLed": "关闭指示灯失败",
@@ -647,7 +658,7 @@
     },
     "toast": {
       "successDelete": "成功删除%{count}条日志。",
-      "errorDelete": "删除%{count}条日志时出错。" 
+      "errorDelete": "删除%{count}条日志时出错。"
     }
   },
   "pageOverview": {
@@ -908,12 +919,12 @@
     "searchForSensors": "搜索传感器",
     "table": {
       "currentValue": "当前值",
-      "lowerWarning": "降低警告",
-      "lowerCritical": "下临界",
+      "lowerWarning": "下限危险值",
+      "lowerCritical": "最小值",
       "name": "传感器",
       "status": "状态",
-      "upperWarning": "上限警告",
-      "upperCritical": "上临界"
+      "upperWarning": "上限危险值",
+      "upperCritical": "最大值"
     }
   },
   "pageSerialOverLan": {
