@@ -180,9 +180,9 @@ export default {
       isActive: boolean;
     }) {
       var data: {
-        Image: typeof connectionData;
-        UserName: typeof connectionData;
-        Password: typeof connectionData;
+        Image: typeof connectionData.serverUri;
+        UserName: typeof connectionData.username;
+        Password: typeof connectionData.password;
         WriteProtected: typeof connectionData.isRW;
       } = {
         Image: connectionData.serverUri,
