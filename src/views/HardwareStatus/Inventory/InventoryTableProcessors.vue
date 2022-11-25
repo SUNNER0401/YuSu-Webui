@@ -71,33 +71,57 @@
             <b-col class="mt-2" sm="6" xl="6">
               <dl>
                 <!-- Name -->
-                <dt>{{ $t('pageInventory.table.name') }}:</dt>
-                <dd>{{ dataFormatter(item.name) }}</dd>
+                <dt v-if="item.name">{{ $t('pageInventory.table.name') }}:</dt>
+                <dd v-if="item.name">{{ dataFormatter(item.name) }}</dd>
                 <!-- Part Number -->
-                <dt>{{ $t('pageInventory.table.partNumber') }}:</dt>
-                <dd>{{ dataFormatter(item.partNumber) }}</dd>
+                <dt v-if="item.partNumber">
+                  {{ $t('pageInventory.table.partNumber') }}:
+                </dt>
+                <dd v-if="item.partNumber">
+                  {{ dataFormatter(item.partNumber) }}
+                </dd>
                 <!-- Serial Number -->
-                <dt>{{ $t('pageInventory.table.serialNumber') }}:</dt>
-                <dd>{{ dataFormatter(item.serialNumber) }}</dd>
+                <dt v-if="item.serialNumber">
+                  {{ $t('pageInventory.table.serialNumber') }}:
+                </dt>
+                <dd v-if="item.serialNumber">
+                  {{ dataFormatter(item.serialNumber) }}
+                </dd>
                 <!-- Spare Part Number -->
-                <dt>{{ $t('pageInventory.table.sparePartNumber') }}:</dt>
-                <dd>{{ dataFormatter(item.sparePartNumber) }}</dd>
+                <dt v-if="item.sparePartNumber">
+                  {{ $t('pageInventory.table.sparePartNumber') }}:
+                </dt>
+                <dd v-if="item.sparePartNumber">
+                  {{ dataFormatter(item.sparePartNumber) }}
+                </dd>
                 <!-- Model -->
-                <dt>{{ $t('pageInventory.table.model') }}:</dt>
-                <dd>{{ dataFormatter(item.model) }}</dd>
+                <dt v-if="item.model">
+                  {{ $t('pageInventory.table.model') }}:
+                </dt>
+                <dd v-if="item.model">{{ dataFormatter(item.model) }}</dd>
                 <!-- Asset Tag -->
-                <dt>{{ $t('pageInventory.table.assetTag') }}:</dt>
-                <dd>{{ dataFormatter(item.assetTag) }}</dd>
+                <dt v-if="item.assetTag">
+                  {{ $t('pageInventory.table.assetTag') }}:
+                </dt>
+                <dd v-if="item.assetTag">{{ dataFormatter(item.assetTag) }}</dd>
               </dl>
             </b-col>
             <b-col class="mt-2" sm="6" xl="6">
               <dl>
                 <!-- Status state -->
-                <dt>{{ $t('pageInventory.table.statusState') }}:</dt>
-                <dd>{{ dataFormatter(item.statusState) }}</dd>
+                <dt v-if="item.statusState">
+                  {{ $t('pageInventory.table.statusState') }}:
+                </dt>
+                <dd v-if="item.statusState">
+                  {{ dataFormatter(item.statusState) }}
+                </dd>
                 <!-- Health Rollup -->
-                <dt>{{ $t('pageInventory.table.healthRollup') }}:</dt>
-                <dd>{{ dataFormatter(item.healthRollup) }}</dd>
+                <dt v-if="item.healthRollup">
+                  {{ $t('pageInventory.table.healthRollup') }}:
+                </dt>
+                <dd v-if="item.healthRollup">
+                  {{ dataFormatter(item.healthRollup) }}
+                </dd>
               </dl>
             </b-col>
           </b-row>
