@@ -45,6 +45,9 @@
 
     <!-- Assembly table -->
     <table-assembly ref="assembly" />
+
+    <!-- Pcie table -->
+    <table-pcie ref="pcie" />
   </b-container>
 </template>
 
@@ -59,6 +62,7 @@ import TableBmcManager from './InventoryTableBmcManager';
 import TableChassis from './InventoryTableChassis';
 import TableProcessors from './InventoryTableProcessors';
 import TableAssembly from './InventoryTableAssembly';
+import TablePcie from './InventoryTablePcie';
 import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
 import PageSection from '@/components/Global/PageSection';
 import JumpLink16 from '@carbon/icons-vue/es/jump-link/16';
@@ -76,6 +80,7 @@ export default {
     TableChassis,
     TableProcessors,
     TableAssembly,
+    TablePcie,
     PageSection,
     JumpLink: JumpLink16,
   },
@@ -177,6 +182,9 @@ export default {
     const assemblyTablePromise = new Promise<void>((resolve) => {
       this.$root.$on('hardware-status-assembly-complete', () => resolve());
     });
+    const pcieTablePromise = new Promise<void>((resolve) => {
+      this.$root.$on('hardware-status-pcie-complete', () => resolve());
+    });
     // Combine all child component Promises to indicate
     // when page data load complete
     Promise.all([
@@ -189,6 +197,7 @@ export default {
       serviceIndicatorPromise,
       systemTablePromise,
       assemblyTablePromise,
+      pcieTablePromise,
     ]).finally(() => this.endLoader());
   },
 };
