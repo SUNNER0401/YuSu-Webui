@@ -10,14 +10,14 @@
             </dd>
           </dl>
         </b-col>
-        <b-col md="3">
+        <!-- <b-col md="3">
           <dl>
             <dt>{{ $t('pageNetwork.speed') }}</dt>
             <dd>
               {{ dataFormatter(linkSpeed) }}
             </dd>
           </dl>
-        </b-col>
+        </b-col> -->
       </b-row>
     </page-section>
     <page-section :section-title="$t('pageNetwork.interfaceSection')">
