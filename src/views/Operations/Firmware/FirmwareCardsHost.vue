@@ -15,7 +15,7 @@
       </b-card>
 
       <!-- Backup image -->
-      <b-card>
+      <!-- <b-card>
         <template #header>
           <p class="font-weight-bold m-0">
             {{ $t('pageFirmware.cardTitleBackup') }}
@@ -31,17 +31,18 @@
             {{ backupVersion }}
           </dd>
         </dl>
-      </b-card>
+      </b-card> -->
     </b-card-group>
   </page-section>
 </template>
 
 <script lang="ts">
 import PageSection from '@/components/Global/PageSection';
-import StatusIcon from '@/components/Global/StatusIcon';
+// import StatusIcon from '@/components/Global/StatusIcon';
 
 export default {
-  components: { PageSection, StatusIcon },
+  // components: { PageSection, StatusIcon },
+  components: { PageSection },
   computed: {
     running() {
       return this.$store.getters['firmware/activeHostFirmware'];

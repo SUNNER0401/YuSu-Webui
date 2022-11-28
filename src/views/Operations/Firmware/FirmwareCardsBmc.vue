@@ -16,7 +16,7 @@
         </b-card>
 
         <!-- Backup image -->
-        <b-card>
+        <!-- <b-card>
           <template #header>
             <p class="font-weight-bold m-0">
               {{ $t('pageFirmware.cardTitleBackup') }}
@@ -44,7 +44,7 @@
             <icon-switch class="d-none d-sm-inline-block" />
             {{ $t('pageFirmware.cardActionSwitchToRunning') }}
           </b-btn>
-        </b-card>
+        </b-card> -->
       </b-card-group>
     </page-section>
     <modal-switch-to-running :backup="backupVersion" @ok="switchToRunning" />
@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts">
-import IconSwitch from '@carbon/icons-vue/es/arrows--horizontal/20';
+// import IconSwitch from '@carbon/icons-vue/es/arrows--horizontal/20';
 import PageSection from '@/components/Global/PageSection';
 import LoadingBarMixin, { loading } from '@/components/Mixins/LoadingBarMixin';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
@@ -60,7 +60,8 @@ import BVToastMixin from '@/components/Mixins/BVToastMixin';
 import ModalSwitchToRunning from './FirmwareModalSwitchToRunning';
 
 export default {
-  components: { IconSwitch, ModalSwitchToRunning, PageSection },
+  // components: { IconSwitch, ModalSwitchToRunning, PageSection },
+  components: { ModalSwitchToRunning, PageSection },
   mixins: [BVToastMixin, LoadingBarMixin],
   props: {
     isPageDisabled: {
