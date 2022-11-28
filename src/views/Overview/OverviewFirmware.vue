@@ -8,8 +8,8 @@
         <dl>
           <dt>{{ $t('pageOverview.runningVersion') }}</dt>
           <dd>{{ dataFormatter(runningVersion) }}</dd>
-          <dt>{{ $t('pageOverview.backupVersion') }}</dt>
-          <dd>{{ dataFormatter(backupVersion) }}</dd>
+          <dt v-if="backupVersion">{{ $t('pageOverview.backupVersion') }}</dt>
+          <dd v-if="backupVersion">{{ dataFormatter(backupVersion) }}</dd>
         </dl>
       </b-col>
     </b-row>
