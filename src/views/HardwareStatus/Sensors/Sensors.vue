@@ -57,7 +57,7 @@
           @row-selected="onRowSelected($event, filteredSensors.length)"
         >
           <!-- Checkbox column -->
-          <template #head(checkbox)>
+          <!-- <template #head(checkbox)>
             <b-form-checkbox
               v-model="tableHeaderCheckboxModel"
               :indeterminate="tableHeaderCheckboxIndeterminate"
@@ -73,7 +73,7 @@
             >
               <span class="sr-only">{{ $t('global.table.selectItem') }}</span>
             </b-form-checkbox>
-          </template>
+          </template> -->
 
           <template #cell(status)="{ value }">
             <status-icon :status="statusIcon(value)" /> {{ value }}
