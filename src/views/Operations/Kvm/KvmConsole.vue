@@ -144,10 +144,16 @@ export default {
       document.querySelector(
         '.kvm-toolbar2'
       )!.style.height = this.shotArea.height;
+      this.a = setInterval(() => {
+        if (!document.querySelector('.kvm-toolbar2')) return;
+        this.amendToolbar2Position();
+        this.shotArea.style.top = `calc( (100vh - ${this.shotArea.style.height}) / 2 )`;
+      }, 500);
     }, 1700);
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.resizeKvmWindow);
+    clearInterval(this.a);
     this.closeTerminal();
   },
   methods: {
