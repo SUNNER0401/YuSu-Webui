@@ -83,7 +83,7 @@
           <template v-else>
             <!-- Reboot server options -->
             <b-form novalidate class="mb-5" @submit.prevent="rebootServer">
-              <b-form-group
+              <!-- <b-form-group
                 :label="$t('pageServerPowerOperations.rebootServer')"
               >
                 <b-form-radio
@@ -102,7 +102,8 @@
                 >
                   {{ $t('pageServerPowerOperations.immediateReboot') }}
                 </b-form-radio>
-              </b-form-group>
+              </b-form-group> -->
+              <p>{{ $t('pageServerPowerOperations.immediateReboot') }}</p>
               <b-button
                 variant="primary"
                 type="submit"
@@ -113,7 +114,7 @@
             </b-form>
             <!-- Shutdown server options -->
             <b-form novalidate @submit.prevent="shutdownServer">
-              <b-form-group
+              <!-- <b-form-group
                 :label="$t('pageServerPowerOperations.shutdownServer')"
               >
                 <b-form-radio
@@ -132,7 +133,8 @@
                 >
                   {{ $t('pageServerPowerOperations.immediateShutdown') }}
                 </b-form-radio>
-              </b-form-group>
+              </b-form-group> -->
+              <p>{{ $t('pageServerPowerOperations.immediateShutdown') }}</p>
               <b-button
                 variant="primary"
                 type="submit"
@@ -167,8 +169,8 @@ export default {
   data() {
     return {
       form: {
-        rebootOption: 'orderly',
-        shutdownOption: 'orderly',
+        rebootOption: 'immediate',
+        shutdownOption: 'immediate',
       },
     };
   },
