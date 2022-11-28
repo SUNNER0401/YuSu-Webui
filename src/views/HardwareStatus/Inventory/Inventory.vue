@@ -44,7 +44,7 @@
     <table-processors ref="processors" />
 
     <!-- Assembly table -->
-    <table-assembly ref="assembly" />
+    <!-- <table-assembly ref="assembly" /> -->
 
     <!-- Pcie table -->
     <table-pcie ref="pcie" />
@@ -61,7 +61,7 @@ import TableFans from './InventoryTableFans';
 import TableBmcManager from './InventoryTableBmcManager';
 import TableChassis from './InventoryTableChassis';
 import TableProcessors from './InventoryTableProcessors';
-import TableAssembly from './InventoryTableAssembly';
+// import TableAssembly from './InventoryTableAssembly';
 import TablePcie from './InventoryTablePcie';
 import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
 import PageSection from '@/components/Global/PageSection';
@@ -79,7 +79,7 @@ export default {
     TableBmcManager,
     TableChassis,
     TableProcessors,
-    TableAssembly,
+    // TableAssembly,
     TablePcie,
     PageSection,
     JumpLink: JumpLink16,
@@ -179,9 +179,9 @@ export default {
     const systemTablePromise = new Promise<void>((resolve) => {
       this.$root.$on('hardware-status-system-complete', () => resolve());
     });
-    const assemblyTablePromise = new Promise<void>((resolve) => {
-      this.$root.$on('hardware-status-assembly-complete', () => resolve());
-    });
+    // const assemblyTablePromise = new Promise<void>((resolve) => {
+    //   this.$root.$on('hardware-status-assembly-complete', () => resolve());
+    // });
     const pcieTablePromise = new Promise<void>((resolve) => {
       this.$root.$on('hardware-status-pcie-complete', () => resolve());
     });
@@ -196,7 +196,7 @@ export default {
       processorsTablePromise,
       serviceIndicatorPromise,
       systemTablePromise,
-      assemblyTablePromise,
+      // assemblyTablePromise,
       pcieTablePromise,
     ]).finally(() => this.endLoader());
   },
