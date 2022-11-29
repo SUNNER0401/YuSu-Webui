@@ -85,7 +85,8 @@
       "unAuthDescription": "The attempted action is not accessible from the logged in account. Contact your system administrator to check your privilege role.",
       "warning": "Warning",
       "browserNotSupport": "Your browser can not work.",
-      "screenShotFailed": "Shot screen failed!"
+      "screenShotFailed": "Shot screen failed!",
+      "noArea": "Can not catch this Area."
     }
   },
   "appHeader": {

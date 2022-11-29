@@ -28,6 +28,13 @@
             <screen-shot :element="shotArea" />
           </b-navbar-brand>
           <b-navbar-brand
+            id="kvm-immersion-mode"
+            class="kvm-toolbar2-item"
+            :title="$t('pageKvm.brandTitle.immersionMode')"
+          >
+            <immersion-mode :area="shotArea" />
+          </b-navbar-brand>
+          <b-navbar-brand
             id="kvm-screen-full"
             class="kvm-toolbar2-item"
             :title="$t('pageKvm.brandTitle.screenFull')"
@@ -53,6 +60,7 @@ import RFB from '@novnc/novnc/core/rfb';
 import StatusIcon from '@/components/Global/StatusIcon';
 import ScreenFull from '@/components/Global/ScreenFull';
 import ScreenShot from '@/components/Global/ScreenShot';
+import ImmersionMode from '@/components/Global/ImmersionMode';
 
 const Connecting = 0;
 const Connected = 1;
@@ -60,7 +68,7 @@ const Disconnected = 2;
 
 export default {
   name: 'KvmConsole',
-  components: { StatusIcon, ScreenFull, ScreenShot },
+  components: { StatusIcon, ScreenFull, ScreenShot, ImmersionMode },
   props: {
     isFullWindow: {
       type: Boolean,
@@ -338,6 +346,11 @@ export default {
           color: #00ff15;
         }
       }
+    }
+  }
+  ::v-deep canvas {
+    &.immersionMode {
+      cursor: none !important;
     }
   }
   &.full-window {

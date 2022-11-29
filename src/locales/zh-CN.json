@@ -519,7 +519,8 @@
     "browserNotSupport": "您的浏览器不支持!!!",
     "brandTitle": {
       "screenFull": "全屏",
-      "screenShot": "截屏"
+      "screenShot": "截屏",
+      "immersionMode": "沉浸模式"
     }
   },
   "pageLdap": {
