@@ -159,7 +159,7 @@ const UserManagementStore = {
         });
     },
     async updateUser(
-      { dispatch }: any,
+      { dispatch, state }: any,
       {
         originalUsername,
         username,
@@ -181,7 +181,30 @@ const UserManagementStore = {
       const data: { [index: string]: any } = {};
       if (username) data.UserName = username;
       if (password) data.Password = password;
-      if (privilege) data.RoleId = privilege;
+      if (privilege) {
+        if (privilege != 'Administrator') {
+          // Count administrators.
+          let adminCount = 0;
+          state.allUsers.forEach(
+            (item: { RoleId: string; UserName: string }) => {
+              if (item.RoleId == 'Administrator') {
+                adminCount++;
+              }
+              if (item.UserName == originalUsername) {
+                return item;
+              }
+            }
+          );
+          // Prevent make adminCount < 1
+          if (adminCount <= 1) {
+            let message = i18n.t('pageUserManagement.toast.errorUpdateUser', {
+              username: originalUsername,
+            });
+            throw new Error(message as string);
+          }
+        }
+        data.RoleId = privilege;
+      }
       if (status !== undefined) data.Enabled = status;
       if (locked !== undefined) data.Locked = locked;
       if (maxdaysexpired) data.PasswordExpirationDays = +maxdaysexpired;

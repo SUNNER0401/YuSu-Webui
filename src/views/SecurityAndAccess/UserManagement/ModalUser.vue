@@ -58,6 +58,7 @@
                 {{ $t('global.status.enabled') }}
               </b-form-radio>
               <b-form-radio
+                v-if="form.username != 'root'"
                 v-model="form.status"
                 name="user-status"
                 data-test-id="userManagement-radioButton-statusDisabled"
@@ -106,6 +107,7 @@
               </b-form-invalid-feedback>
             </b-form-group>
             <b-form-group
+              v-if="form.username != 'root'"
               :label="$t('pageUserManagement.modal.privilege')"
               label-for="privilege"
             >
