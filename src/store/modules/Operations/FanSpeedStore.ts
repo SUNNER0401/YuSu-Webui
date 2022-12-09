@@ -150,6 +150,15 @@ const FanSpeedStore = {
         promises.push(promise);
       }
       await Promise.all(promises);
+      let temp: { [index: string]: number } = {};
+      let fanNameList = Object.keys(fanSpeeds);
+      fanNameList.sort((a, b) => {
+        return a > b ? 1 : -1;
+      });
+      fanNameList.forEach((name) => {
+        temp[name] = fanSpeeds[name];
+      });
+      fanSpeeds = Object.assign({}, temp);
       commit('getFanSpeeds', fanSpeeds);
       // sort items of zones by key
       let sorttedZones: { [index: string]: any } = {};
@@ -167,12 +176,9 @@ const FanSpeedStore = {
       let fanSpeeds: { [index: string]: any } = {};
       for (let url of fanUrls) {
         let fanName = url.split('/fan_tach/')[1];
+        fanSpeeds[fanName] = 0;
         let promise = api.get(url).then(async ({ data: { data } }) => {
-          if (!data.Value) {
-            fanSpeeds[fanName] = 0;
-          } else {
-            fanSpeeds[fanName] = parseInt(data.Value);
-          }
+          if (data.Value) fanSpeeds[fanName] = parseInt(data.Value);
         });
         promises.push(promise);
       }
@@ -195,6 +201,7 @@ const FanSpeedStore = {
       let promises: Promise<void>[] = [];
       pwmUrls.forEach((url: string) => {
         let pwmName = url.split('/')[url.split('/').length - 1];
+        pwmValues[pwmName] = 0;
         let promise = api.get(url).then(
           ({
             data: {

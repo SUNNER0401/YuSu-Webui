@@ -182,7 +182,6 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-      this.startLoader();
       let mode: string = this.fanModes[zoneName];
       this.$bvModal
         .msgBoxConfirm(
@@ -196,6 +195,7 @@ export default {
         .then(async (confirm: boolean) => {
           // Set zone mode.
           if (confirm) {
+            this.startLoader();
             await this.$store
               .dispatch('fanSpeed/setFanMode', { zoneName, mode })
               .then(async () => {
@@ -231,11 +231,11 @@ export default {
                   this.$t('pageFanSpeed.toast.errorSetting')
                 );
                 await this.$store.dispatch('fanSpeed/getFanAllData');
+              })
+              .finally(() => {
+                this.endLoader();
               });
           }
-        })
-        .finally(() => {
-          this.endLoader();
         });
     },
   },
