@@ -503,7 +503,8 @@
       "subsystemId": "subsystem ID",
       "vendorID": "Vendor ID",
       "subsystemVendorID": "Subsystem vendor ID",
-      "deviceClass": "device class"
+      "deviceClass": "device class",
+      "operatingSpeedMhz": "Operating speed"
     },
     "toast": {
       "errorDisableIdentifyLed": "Error disabling Identify LED.",

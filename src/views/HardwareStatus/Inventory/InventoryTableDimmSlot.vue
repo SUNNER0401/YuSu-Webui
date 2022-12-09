@@ -139,6 +139,15 @@
                   {{ dataFormatter(item.statusState) }}
                 </dd>
               </dl>
+              <dl>
+                <!-- Operating speed Mhz -->
+                <dt v-if="item.operatingSpeedMhz">
+                  {{ $t('pageInventory.table.operatingSpeedMhz') }}:
+                </dt>
+                <dd v-if="item.operatingSpeedMhz">
+                  {{ dataFormatter(item.operatingSpeedMhz) }}
+                </dd>
+              </dl>
             </b-col>
           </b-row>
         </b-container>

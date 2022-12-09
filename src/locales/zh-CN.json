@@ -502,7 +502,8 @@
       "subsystemId": "子系统ID",
       "vendorID": "供应商ID",
       "subsystemVendorID": "子系统供应商ID",
-      "deviceClass": "设备类型"
+      "deviceClass": "设备类型",
+      "operatingSpeedMhz": "内存速率"
     },
     "toast": {
       "errorDisableIdentifyLed": "关闭指示灯失败",
