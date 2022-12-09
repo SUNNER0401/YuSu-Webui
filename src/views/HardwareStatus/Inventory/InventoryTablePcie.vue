@@ -51,10 +51,10 @@
               <b-col sm="6" xl="4">
                 <dl>
                   <!-- Function ID -->
-                  <dt v-if="details[key].functionId">
+                  <dt v-if="details[key].functionId != null">
                     {{ $t('pageInventory.table.functionId') }}:
                   </dt>
-                  <dd v-if="details[key].functionId">
+                  <dd v-if="details[key].functionId != null">
                     {{ dataFormatter(details[key].functionId) }}
                   </dd>
                 </dl>
