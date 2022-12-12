@@ -82,7 +82,7 @@
     },
     "toast": {
       "unAuthTitle": "未授权",
-      "unAuthDescription": "当前帐户不可访问，请使用管理员账户查看权限。",
+      "unAuthDescription": "当前帐户不可访问，请使用管理员用户查看权限。",
       "warning": "警告",
       "browserNotSupport": "当前浏览器不支持。",
       "screenShotFailed": "截屏失败"
@@ -582,8 +582,8 @@
     "editUser": "编辑用户",
     "viewPrivilegeRoleDescriptions": "查看权限角色描述",
     "modal": {
-      "accountLocked": "账户被锁",
-      "accountStatus": "账户状态",
+      "accountLocked": "用户被锁",
+      "accountStatus": "用户状态",
       "automaticAfterTimeout": "超时后自动",
       "batchDeleteConfirmMessage": "您是否确定删除%{count}个用户? 该操作不能被撤销。",
       "cannotStartWithANumber": "不能以数字开头",
@@ -938,12 +938,12 @@
   },
   "pageServerPowerOperations": {
     "currentStatus": "当前状态",
-    "serverBootSettings": "引导设置",
+    "serverBootSettings": "服务器启动设置",
     "serverStatus": "服务器状态",
     "immediateReboot": "立即 - 服务器重新启动而不关闭操作系统；\n可能导致数据损坏",
     "immediateShutdown": "立即 - 服务器关闭而不关闭操作系统；\n可能导致数据损坏",
     "lastPowerOperation": "上次电源操作",
-    "oneTimeBootWarning": "等待一次启动。\n将使用指定的一次引导设置执行下一次引导。\n随后的引导将使用默认设置执行。",
+    "oneTimeBootWarning": "等待一次启动。\n将使用指定的一次启动设置执行下一次启动。\n随后的启动将使用默认设置执行。",
     "operationInProgress": "电源操作正在进行时没有选项可显示。\n完成后，此处将显示电源操作。",
     "operations": "操作",
     "orderlyReboot": "有序 - 操作系统关闭，然后服务器重新启动",
@@ -954,7 +954,7 @@
     "shutDown": "关闭",
     "shutdownServer": "关闭服务器",
     "bootSettings": {
-      "bootSettingsOverride": "引导设置覆盖",
+      "bootSettingsOverride": "启动设置",
       "enableOneTimeBoot": "启用一次启动",
       "tpmRequiredPolicy": "TPM所需策略",
       "tpmRequiredPolicyHelper": "启用以确保系统仅在TPM正常运行时引导。"
@@ -976,7 +976,7 @@
     "addNewCertificate": "添加新证书",
     "caCertificate": "CA证书",
     "deleteCertificate": "删除证书",
-    "generateCsr": "产生企业社会责任",
+    "generateCsr": "生成企业证书",
     "httpsCertificate": "HTTPS证书",
     "ldapCertificate": "LDAP证书",
     "replaceCertificate": "更换证书",
@@ -1011,8 +1011,8 @@
     },
     "table": {
       "certificate": "证书",
-      "issuedBy": "颁发",
-      "issuedTo": "发给",
+      "issuedBy": "颁发者",
+      "issuedTo": "被颁发者",
       "validFrom": "有效起始日期",
       "validUntil": "有效期至"
     },
