@@ -72,10 +72,10 @@
             <b-col class="mt-2" sm="6">
               <dl>
                 <!-- Status state -->
-                <dt v-if="item.statusState">
+                <dt v-if="item.statusState && item.statusState != 'Disabled'">
                   {{ $t('pageInventory.table.statusState') }}:
                 </dt>
-                <dd v-if="item.statusState">
+                <dd v-if="item.statusState && item.statusState != 'Disabled'">
                   {{ dataFormatter(item.statusState) }}
                 </dd>
                 <!-- Power state -->
@@ -136,10 +136,20 @@
               </p>
               <dl class="ml-4">
                 <!-- Status state -->
-                <dt v-if="item.memorySummaryState">
+                <dt
+                  v-if="
+                    item.memorySummaryState &&
+                    item.memorySummaryState != 'Disabled'
+                  "
+                >
                   {{ $t('pageInventory.table.statusState') }}:
                 </dt>
-                <dd v-if="item.memorySummaryState">
+                <dd
+                  v-if="
+                    item.memorySummaryState &&
+                    item.memorySummaryState != 'Disabled'
+                  "
+                >
                   {{ dataFormatter(item.memorySummaryState) }}
                 </dd>
                 <!-- Health -->
@@ -163,10 +173,20 @@
               </p>
               <dl class="ml-4">
                 <!-- Status state -->
-                <dt v-if="item.processorSummaryState">
+                <dt
+                  v-if="
+                    item.processorSummaryState &&
+                    item.processorSummaryState != 'Disabled'
+                  "
+                >
                   {{ $t('pageInventory.table.statusState') }}:
                 </dt>
-                <dd v-if="item.processorSummaryState">
+                <dd
+                  v-if="
+                    item.processorSummaryState &&
+                    item.processorSummaryState != 'Disabled'
+                  "
+                >
                   {{ dataFormatter(item.processorSummaryState) }}
                 </dd>
                 <!-- Health -->

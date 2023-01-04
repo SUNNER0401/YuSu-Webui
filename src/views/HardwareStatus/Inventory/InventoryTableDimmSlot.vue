@@ -69,6 +69,15 @@
             <b-col sm="6" xl="6">
               <dl>
                 <!-- Part Number -->
+                <dt v-if="item.manufacturer">
+                  {{ $t('pageInventory.table.manufacturer') }}:
+                </dt>
+                <dd v-if="item.manufacturer">
+                  {{ dataFormatter(item.manufacturer) }}
+                </dd>
+              </dl>
+              <dl>
+                <!-- Part Number -->
                 <dt v-if="item.partNumber">
                   {{ $t('pageInventory.table.partNumber') }}:
                 </dt>
@@ -132,10 +141,10 @@
               </dl>
               <dl>
                 <!-- Status-->
-                <dt v-if="item.statusState">
+                <dt v-if="item.statusState && item.statusState != 'Disabled'">
                   {{ $t('pageInventory.table.statusState') }}:
                 </dt>
-                <dd v-if="item.statusState">
+                <dd v-if="item.statusState && item.statusState != 'Disabled'">
                   {{ dataFormatter(item.statusState) }}
                 </dd>
               </dl>

@@ -24,6 +24,7 @@ const MemoryStore = {
           LocationIndicatorActive,
           Location,
           OperatingSpeedMhz,
+          Manufacturer,
         } = data;
         return {
           id: Id,
@@ -39,6 +40,7 @@ const MemoryStore = {
           uri: data['@odata.id'],
           locationNumber: Location?.PartLocation?.ServiceLabel,
           operatingSpeedMhz: OperatingSpeedMhz,
+          manufacturer: Manufacturer,
         };
       });
     },
