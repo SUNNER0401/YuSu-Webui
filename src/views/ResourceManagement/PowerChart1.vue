@@ -48,8 +48,8 @@ export default {
       setTimeout(() => {
         if (powerChart.getOption()) {
           [_this.dataZoom.start, _this.dataZoom.end] = [
-            (powerChart.getOption().option as any).dataZoom[0].start,
-            (powerChart.getOption().option as any).dataZoom[0].end,
+            (powerChart.getOption() as any).dataZoom[0].start,
+            (powerChart.getOption() as any).dataZoom[0].end,
           ];
         }
         let option = {
