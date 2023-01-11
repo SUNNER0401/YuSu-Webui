@@ -214,111 +214,112 @@ export default {
         });
       }
       if (!updateFlag) return;
-
-      // Get new firmware informations.
-      await this.$store.dispatch('firmware/getFirmwareInventory');
-      let [newBmcFirmware, newHostFirmware] = [
-        this.bmcFirmware,
-        this.hostFirmware,
-      ];
-      let [updatingBmcFirmware, updatingHostFirmware] = [
-        newBmcFirmware,
-        newHostFirmware,
-      ];
-      // To find the firmware which is updating.
-      updatingHostFirmware = this.getupdatingFirmware(
-        allHostFirmware,
-        updatingHostFirmware
-      );
-      updatingBmcFirmware = this.getupdatingFirmware(
-        allBmcFirmware,
-        updatingBmcFirmware
-      );
-      // Validate type of updating firmware via length of final array.
-      let updatingFirmware: { [x: string]: string; version: any; id: any } = {
-        version: '',
-        id: '',
-      };
-      if (updatingHostFirmware.length) {
-        updatingFirmware = updatingHostFirmware[0];
-        updatingFirmware['type'] = 'Bios';
-      }
-      if (updatingBmcFirmware.length) {
-        updatingFirmware = updatingBmcFirmware[0];
-        updatingFirmware['type'] = 'Bmc';
-      }
-      this.$store.state.firmware.updateFirmware = updatingFirmware;
-      // Used for compare the version of the active firmware.
-      let updatingVersion = updatingFirmware.version;
-      // Watch progress in real-time and stop watching when lose progress value.
-      if (updatingFirmware['type'] == 'Bios') {
-        const timerId2 = setInterval(async () => {
-          let Updateinfo = await this.$store
-            .dispatch('firmware/getUpdateinfo', updatingFirmware.id)
-            .catch(async () => {
-              clearTimeout(timerId2);
-              // Get the version of the active bios firmware.
-              let bios_active = await this.$store.dispatch(
-                'firmware/getFirmwareInfo',
-                'bios_active'
-              );
-              if (bios_active.Version === updatingVersion) {
-                this.$store.state.firmware.updateProgress = 100;
-                setTimeout(async () => {
-                  clearTimeout(timerId);
-                  this.$bvModal.hide('modal-update-firmware-bios-progress');
-                  this.successToast(
-                    this.$t('pageFirmware.toast.updateSuccessfully')
-                  );
-                  this.infoToast(
-                    this.$t('pageFirmware.toast.verifyUpdateMessage'),
-                    {
-                      title: this.$t('pageFirmware.toast.updateSuccessfully'),
-                      timestamp: true,
-                    }
-                  );
-                  // Reset basic states.
-                  this.$store.state.firmware.updateProgress = 0;
-                  this.$store.dispatch('firmware/getFirmwareInventory');
-                }, 5000);
-              } else {
-                /* Only when missed updating page likewise versions are not same,
-              this code block will excute. */
-                this.$bvModal.hide('modal-update-firmware-bios-progress');
-                this.errorToast(this.$t('pageFirmware.toast.pageMiss'));
-                this.$store.state.firmware.updateProgress = 0;
-                this.$store.dispatch('firmware/getFirmwareInventory');
-                throw 'Page not found';
-              }
-            });
-          //Judge whether progress still exists.
-          if (Updateinfo) {
-            if (!Updateinfo.Progress) {
-              let Activation = Updateinfo.Activation.split('.').slice(-1)[0];
-              if (Activation == 'Failed') {
+      setTimeout(async () => {
+        // Get new firmware informations.
+        await this.$store.dispatch('firmware/getFirmwareInventory');
+        let [newBmcFirmware, newHostFirmware] = [
+          this.bmcFirmware,
+          this.hostFirmware,
+        ];
+        let [updatingBmcFirmware, updatingHostFirmware] = [
+          newBmcFirmware,
+          newHostFirmware,
+        ];
+        // To find the firmware which is updating.
+        updatingHostFirmware = this.getupdatingFirmware(
+          allHostFirmware,
+          updatingHostFirmware
+        );
+        updatingBmcFirmware = this.getupdatingFirmware(
+          allBmcFirmware,
+          updatingBmcFirmware
+        );
+        // Validate type of updating firmware via length of final array.
+        let updatingFirmware: { [x: string]: string; version: any; id: any } = {
+          version: '',
+          id: '',
+        };
+        if (updatingHostFirmware.length) {
+          updatingFirmware = updatingHostFirmware[0];
+          updatingFirmware['type'] = 'Bios';
+        }
+        if (updatingBmcFirmware.length) {
+          updatingFirmware = updatingBmcFirmware[0];
+          updatingFirmware['type'] = 'Bmc';
+        }
+        this.$store.state.firmware.updateFirmware = updatingFirmware;
+        // Used for compare the version of the active firmware.
+        let updatingVersion = updatingFirmware.version;
+        // Watch progress in real-time and stop watching when lose progress value.
+        if (updatingFirmware['type'] == 'Bios') {
+          const timerId2 = setInterval(async () => {
+            let Updateinfo = await this.$store
+              .dispatch('firmware/getUpdateinfo', updatingFirmware.id)
+              .catch(async () => {
                 clearTimeout(timerId2);
-                setTimeout(() => {
-                  clearTimeout(timerId);
+                // Get the version of the active bios firmware.
+                let bios_active = await this.$store.dispatch(
+                  'firmware/getFirmwareInfo',
+                  'bios_active'
+                );
+                if (bios_active.Version === updatingVersion) {
+                  this.$store.state.firmware.updateProgress = 100;
+                  setTimeout(async () => {
+                    clearTimeout(timerId);
+                    this.$bvModal.hide('modal-update-firmware-bios-progress');
+                    this.successToast(
+                      this.$t('pageFirmware.toast.updateSuccessfully')
+                    );
+                    this.infoToast(
+                      this.$t('pageFirmware.toast.verifyUpdateMessage'),
+                      {
+                        title: this.$t('pageFirmware.toast.updateSuccessfully'),
+                        timestamp: true,
+                      }
+                    );
+                    // Reset basic states.
+                    this.$store.state.firmware.updateProgress = 0;
+                    this.$store.dispatch('firmware/getFirmwareInventory');
+                  }, 5000);
+                } else {
+                  /* Only when missed updating page likewise versions are not same,
+              this code block will excute. */
                   this.$bvModal.hide('modal-update-firmware-bios-progress');
-                  this.errorToast(this.$t('pageFirmware.toast.errorBurning'));
-                  // Reset basic states.
+                  this.errorToast(this.$t('pageFirmware.toast.pageMiss'));
                   this.$store.state.firmware.updateProgress = 0;
-                  this.$store.dispatch(
-                    'firmware/deleteBrokenFirmware',
-                    updatingFirmware.id
-                  );
                   this.$store.dispatch('firmware/getFirmwareInventory');
-                }, 5000);
+                  throw 'Page not found';
+                }
+              });
+            //Judge whether progress still exists.
+            if (Updateinfo) {
+              if (!Updateinfo.Progress) {
+                let Activation = Updateinfo.Activation.split('.').slice(-1)[0];
+                if (Activation == 'Failed') {
+                  clearTimeout(timerId2);
+                  setTimeout(() => {
+                    clearTimeout(timerId);
+                    this.$bvModal.hide('modal-update-firmware-bios-progress');
+                    this.errorToast(this.$t('pageFirmware.toast.errorBurning'));
+                    // Reset basic states.
+                    this.$store.state.firmware.updateProgress = 0;
+                    this.$store.dispatch(
+                      'firmware/deleteBrokenFirmware',
+                      updatingFirmware.id
+                    );
+                    this.$store.dispatch('firmware/getFirmwareInventory');
+                  }, 5000);
+                }
               }
             }
-          }
-        }, 2000);
-      }
-      if (updatingFirmware['type'] == 'Bmc') {
-        this.$bvModal.hide('modal-update-firmware-bios-progress');
-        this.$bvModal.show('modal-update-firmware-bmc-progress');
-        this.$store.dispatch('controls/rebootBmc');
-      }
+          }, 2000);
+        }
+        if (updatingFirmware['type'] == 'Bmc') {
+          this.$bvModal.hide('modal-update-firmware-bios-progress');
+          this.$bvModal.show('modal-update-firmware-bmc-progress');
+          this.$store.dispatch('controls/rebootBmc');
+        }
+      }, 3000);
     },
     async dispatchWorkstationUpload(timerId: number | undefined) {
       await this.$store
