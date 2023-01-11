@@ -129,9 +129,6 @@ export default {
     runningBmc() {
       return this.$store.getters['firmware/activeBmcFirmware'];
     },
-    updatingFirmware() {
-      return this.$store.getters['firmware/getUpdatingFirmware'];
-    },
     bmcFirmware() {
       return this.$store.state.firmware.bmcFirmware;
     },
@@ -320,6 +317,7 @@ export default {
       if (updatingFirmware['type'] == 'Bmc') {
         this.$bvModal.hide('modal-update-firmware-bios-progress');
         this.$bvModal.show('modal-update-firmware-bmc-progress');
+        this.$store.dispatch('controls/rebootBmc');
       }
     },
     async dispatchWorkstationUpload(timerId: number | undefined) {
