@@ -89,6 +89,11 @@ export default {
   mounted() {
     setTimeout(() => {
       this.openTerminal();
+      if (navigator.keyboard && navigator.keyboard.lock) {
+        navigator.keyboard.lock();
+      } else {
+        console.log('Your browser Not support!!!');
+      }
     }, 300);
   },
   beforeDestroy() {
