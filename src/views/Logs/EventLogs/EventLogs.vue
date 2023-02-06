@@ -378,10 +378,10 @@ export default {
       expandRowLabel,
       activeFilters: [],
       batchActions: [
-        // {
-        //   value: 'delete',
-        //   label: this.$t('global.action.delete'),
-        // },
+        {
+          value: 'delete',
+          label: this.$t('global.action.delete'),
+        },
       ],
       currentPage: currentPage,
       filterStartDate: null,
@@ -413,10 +413,10 @@ export default {
               value: 'export',
               title: this.$t('global.action.export'),
             },
-            // {
-            //   value: 'delete',
-            //   title: this.$t('global.action.delete'),
-            // },
+            {
+              value: 'delete',
+              title: this.$t('global.action.delete'),
+            },
           ],
         };
       });
