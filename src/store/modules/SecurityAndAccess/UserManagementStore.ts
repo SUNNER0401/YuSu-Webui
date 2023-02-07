@@ -185,22 +185,26 @@ const UserManagementStore = {
         if (privilege != 'Administrator') {
           // Count administrators.
           let adminCount = 0;
+          let curUser: { [index: string]: string } = {};
           state.allUsers.forEach(
             (item: { RoleId: string; UserName: string }) => {
               if (item.RoleId == 'Administrator') {
                 adminCount++;
               }
               if (item.UserName == originalUsername) {
-                return item;
+                curUser = item;
+                return;
               }
             }
           );
           // Prevent make adminCount < 1
           if (adminCount <= 1) {
-            let message = i18n.t('pageUserManagement.toast.errorUpdateUser', {
-              username: originalUsername,
-            });
-            throw new Error(message as string);
+            if (curUser.RoleId == 'Administrator') {
+              let message = i18n.t('pageUserManagement.toast.errorUpdateUser', {
+                username: originalUsername,
+              });
+              throw new Error(message as string);
+            }
           }
         }
         data.RoleId = privilege;

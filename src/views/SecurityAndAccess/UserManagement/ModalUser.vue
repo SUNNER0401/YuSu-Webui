@@ -152,12 +152,16 @@
                   type="password"
                   data-test-id="userManagement-input-password"
                   aria-describedby="password-help-block"
-                  :state="getValidationState($v.form.password)"
+                  :state="
+                    !$v.form.password.required && !newUser
+                      ? true
+                      : getValidationState($v.form.password)
+                  "
                   class="form-control-with-button"
                   @input="$v.form.password.$touch()"
                 />
                 <b-form-invalid-feedback role="alert">
-                  <template v-if="!$v.form.password.required">
+                  <template v-if="newUser && !$v.form.password.required">
                     {{ $t('global.form.fieldRequired') }}
                   </template>
                   <template
@@ -172,7 +176,11 @@
                       })
                     }}
                   </template>
-                  <template v-else-if="!$v.form.password.pattern">
+                  <template
+                    v-else-if="
+                      $v.form.password.required && !$v.form.password.pattern
+                    "
+                  >
                     {{ $t('global.form.simplePassword') }}
                   </template>
                 </b-form-invalid-feedback>
@@ -188,12 +196,18 @@
                   v-model="form.passwordConfirmation"
                   data-test-id="userManagement-input-passwordConfirmation"
                   type="password"
-                  :state="getValidationState($v.form.passwordConfirmation)"
+                  :state="
+                    !$v.form.passwordConfirmation.required && !newUser
+                      ? true
+                      : getValidationState($v.form.passwordConfirmation)
+                  "
                   class="form-control-with-button"
                   @input="$v.form.passwordConfirmation.$touch()"
                 />
                 <b-form-invalid-feedback role="alert">
-                  <template v-if="!$v.form.passwordConfirmation.required">
+                  <template
+                    v-if="newUser && !$v.form.passwordConfirmation.required"
+                  >
                     {{ $t('global.form.fieldRequired') }}
                   </template>
                   <template
@@ -372,9 +386,8 @@ export default {
       let userData: {
         [index: string]: string | boolean;
       } = {};
-
+      this.$v.$touch();
       if (this.newUser) {
-        this.$v.$touch();
         if (this.$v.$invalid) return;
         userData.username = this.form.username;
         userData.status = this.form.status;
@@ -382,7 +395,23 @@ export default {
         userData.password = this.form.password;
         userData.maxdaysexpired = this.form.maxDaysExpired;
       } else {
-        if (this.$v.$invalid) return;
+        if (this.$v.$invalid) {
+          if (
+            this.$v.form.password.required ||
+            this.$v.form.passwordConfirmation.required
+          )
+            return;
+          else {
+            if (
+              this.$v.form.manualUnlock.$error ||
+              this.$v.form.maxDaysExpired.$error ||
+              this.$v.form.privilege.$error ||
+              this.$v.form.status.$error ||
+              this.$v.form.username.$error
+            )
+              return;
+          }
+        }
         userData.originalUsername = this.originalUsername;
         if (this.$v.form.status.$dirty) {
           userData.status = this.form.status;
@@ -393,7 +422,7 @@ export default {
         if (this.$v.form.privilege.$dirty) {
           userData.privilege = this.form.privilege;
         }
-        if (this.$v.form.password.$dirty) {
+        if (this.$v.form.password.$dirty && this.$v.form.password.required) {
           userData.password = this.form.password;
         }
         if (this.$v.form.maxDaysExpired.$dirty) {
