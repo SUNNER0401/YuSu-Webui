@@ -292,7 +292,7 @@
       "errorUnresolveLogs": "有%{count}条错误日志未处理。",
       "successDelete": "成功删除%{count}条日志。",
       "successResolveLogs": "成功处理%{count}条日志。",
-      "successUnresolveLogs": "有%{count}条成功的未处理日志。"
+      "successUnresolveLogs": "成功新增%{count}条未处理日志。"
     }
   },
   "pageFactoryReset": {

@@ -50,12 +50,12 @@
           @batch-action="onBatchAction"
         >
           <template #toolbar-buttons>
-            <!-- <b-button variant="primary" @click="resolveLogs">
+            <b-button variant="primary" @click="resolveLogs">
               {{ $t('pageEventLogs.resolve') }}
             </b-button>
             <b-button variant="primary" @click="unresolveLogs">
               {{ $t('pageEventLogs.unresolve') }}
-            </b-button> -->
+            </b-button>
             <table-toolbar-export
               :data="batchExportData"
               :file-name="exportFileNameByDate()"
@@ -180,7 +180,6 @@
               v-model="row.item.status"
               name="switch"
               switch
-              disabled
               @change="changelogStatus(row.item)"
             >
               <span v-if="row.item.status">
@@ -352,10 +351,10 @@ export default {
           label: this.$t('pageEventLogs.table.description'),
           tdClass: 'text-break',
         },
-        // {
-        //   key: 'status',
-        //   label: this.$t('pageEventLogs.table.status'),
-        // },
+        {
+          key: 'status',
+          label: this.$t('pageEventLogs.table.status'),
+        },
         {
           key: 'actions',
           sortable: false,
