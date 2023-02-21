@@ -24,6 +24,20 @@ const DataFormatterMixin = {
     dataFormatterArray(value: any[]) {
       return value.join(', ');
     },
+    unitFormatter(string: any) {
+      switch (string) {
+        case 'RPMS':
+          return 'RPM';
+        case 'Volts':
+          return 'V';
+        case 'Percent':
+          return '%';
+        case 'Watts':
+          return 'W';
+        default:
+          return string;
+      }
+    },
   },
 };
 

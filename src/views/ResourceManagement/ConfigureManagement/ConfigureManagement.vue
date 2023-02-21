@@ -14,38 +14,59 @@
 <script lang="ts">
 import PageTitle from '@/components/Global/PageTitle';
 import SensorTab from './SensorTab';
+import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
 
 export default {
   name: 'ConfiureManagement',
   components: { PageTitle, SensorTab },
+  mixins: [LoadingBarMixin],
   computed: {
     sensorInfo() {
       return {
-        fields: ['first_name', 'last_name', 'age'],
-        items: [
+        fields: [
           {
-            isActive: true,
-            age: 40,
-            first_name: 'Dickerson',
-            last_name: 'Macdonald',
+            key: 'Name',
+            sortable: false,
+            label: this.$t('pageConfigureManagement.tabs.tab1.fields.name'),
           },
-          { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
           {
-            isActive: false,
-            age: 89,
-            first_name: 'Geneva',
-            last_name: 'Wilson',
+            key: 'CriticalLow',
+            sortable: false,
+            label: this.$t(
+              'pageConfigureManagement.tabs.tab1.fields.criticalLow'
+            ),
           },
-          { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' },
+          {
+            key: 'WarningLow',
+            sortable: false,
+            label: this.$t(
+              'pageConfigureManagement.tabs.tab1.fields.warningLow'
+            ),
+          },
+          {
+            key: 'WarningHigh',
+            sortable: false,
+            label: this.$t(
+              'pageConfigureManagement.tabs.tab1.fields.WarningHigh'
+            ),
+          },
+          {
+            key: 'CriticalHigh',
+            sortable: false,
+            label: this.$t(
+              'pageConfigureManagement.tabs.tab1.fields.criticalHigh'
+            ),
+          },
         ],
+        items: this.$store.getters['configure/sensorInfo'],
       };
     },
   },
   mounted() {
-    this.getConfigures();
-  },
-  methods: {
-    getConfigures() {},
+    this.startLoader();
+    this.$store.dispatch('configure/getConfigures').finally(() => {
+      this.endLoader();
+    });
   },
 };
 </script>

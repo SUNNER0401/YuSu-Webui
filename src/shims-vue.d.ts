@@ -7,6 +7,7 @@ interface Element extends VNode {
   disabled?: boolean;
   style?: any;
   blur?: any;
+  focus?: any;
 }
 
 interface Navigator {
@@ -18,4 +19,6 @@ interface Navigator {
 interface AddEventTarget extends EventTarget {
   value: any;
   parentElement?: { [index: string]: any };
+  nodeName: string;
+  blur: () => void;
 }

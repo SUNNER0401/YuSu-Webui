@@ -339,7 +339,24 @@
     "description": "该页面用于管理资源配置",
     "tabs": {
       "tab1": {
-        "name": "传感器"
+        "name": "传感器",
+        "modal": {
+          "errorNull": "输入不可为空",
+          "errorBadValue": "输入值必须为一个大于零的整数",
+          "confirmSubmit": "您即将更新配置信息，请确认。",
+          "confirmSubmitTitle": "提交确认",
+          "errorUpdate": "更新失败"
+        },
+        "toast": {
+          "successUpdate": "更新成功"
+        },
+        "fields": {
+          "name": "名称",
+          "criticalLow": "最小危险值",
+          "warningLow": "最小警告值",
+          "WarningHigh": "最大警告值",
+          "criticalHigh": "最大危险值"
+        }
       }
     }
   },

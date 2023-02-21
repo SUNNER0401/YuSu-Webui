@@ -339,7 +339,24 @@
     "description": "This page is used for manage configures.",
     "tabs": {
       "tab1": {
-        "name": "Sensors"
+        "name": "Sensors",
+        "modal": {
+          "errorNull": "Error input null.",
+          "errorBadValue": "The input value must be an integer which is greater than zero.",
+          "confirmSubmit": "Do you want to update configures?",
+          "confirmSubmitTitle": "Confirm submit",
+          "errorUpdate": "Error updated."
+        },
+        "toast": {
+          "successUpdate": "updated successfully."
+        },
+        "fields": {
+          "name": "Name",
+          "criticalLow": "CriticalLow",
+          "warningLow": "WarningLow",
+          "WarningHigh": "WarningHigh",
+          "criticalHigh": "CriticalHigh"
+        }
       }
     }
   },
