@@ -14,3 +14,8 @@ interface Navigator {
     lock?: () => void;
   };
 }
+
+interface AddEventTarget extends EventTarget {
+  value: any;
+  parentElement?: { [index: string]: any };
+}

@@ -11,5 +11,8 @@ declare global {
     interface IntrinsicElements {
       [elem: string]: any;
     }
+    interface AddEventTarget extends EventTarget {
+      parentElement?: { [index: string]: any };
+    }
   }
 }

@@ -184,6 +184,11 @@ const AppNavigationMixin = {
               label: this.$t('appNavigation.power'),
               route: '/resource-management/power',
             },
+            {
+              id: 'configureManagement',
+              label: this.$t('appNavigation.configureManagement'),
+              route: '/resource-management/configureManagement',
+            },
           ],
         },
         // {

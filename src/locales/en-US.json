@@ -138,7 +138,8 @@
     "fanSpeed": "@:appPageTitle.fanSpeed",
     "about": "@:appPageTitle.about",
     "aboutUs": "@:appPageTitle.aboutUs",
-    "operatingLogs": "Operating logs"
+    "operatingLogs": "Operating logs",
+    "configureManagement": "Configure management"
   },
   "appPageTitle": {
     "changePassword": "Change password",
@@ -171,7 +172,8 @@
     "fanSpeed": "Fan Speed",
     "about": "About",
     "aboutUs": "About Us",
-    "operatingLogs": "Operating logs"
+    "operatingLogs": "Operating logs",
+    "configureManagement": "Configure management"
   },
   "pageChangePassword": {
     "changePassword": "Change password",
@@ -331,6 +333,14 @@
       "resetBiosError": "Factory reset of server settings failed.",
       "resetToDefaultsSuccess": "Factory reset of BMC and server settings successful.",
       "resetToDefaultsError": "Factory reset of BMC and server settings failed."
+    }
+  },
+  "pageConfigureManagement": {
+    "description": "This page is used for manage configures.",
+    "tabs": {
+      "tab1": {
+        "name": "Sensors"
+      }
     }
   },
   "pageFanSpeed": {

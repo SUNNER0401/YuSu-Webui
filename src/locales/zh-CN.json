@@ -85,7 +85,8 @@
       "unAuthDescription": "当前帐户不可访问，请使用管理员用户查看权限。",
       "warning": "警告",
       "browserNotSupport": "当前浏览器不支持。",
-      "screenShotFailed": "截屏失败"
+      "screenShotFailed": "截屏失败",
+      "noArea": "该区域无法获取。"
     }
   },
   "appHeader": {
@@ -137,7 +138,8 @@
     "fanSpeed": "@:appPageTitle.fanSpeed",
     "about": "@:appPageTitle.about",
     "aboutUs": "@:appPageTitle.aboutUs",
-    "operatingLogs": "操作日志"
+    "operatingLogs": "操作日志",
+    "configureManagement": "配置管理"
   },
   "appPageTitle": {
     "changePassword": "修改密码",
@@ -170,7 +172,8 @@
     "fanSpeed": "风扇速度",
     "about": "关于",
     "aboutUs": "关于我们",
-    "operatingLogs": "操作日志"
+    "operatingLogs": "操作日志",
+    "configureManagement": "配置管理"
   },
   "pageChangePassword": {
     "changePassword": "修改密码",
@@ -330,6 +333,14 @@
       "resetBiosError": "重置服务器设置失败。",
       "resetToDefaultsSuccess": "重置BMC和服务器设置成功。",
       "resetToDefaultsError": "重置BMC和服务器设置失败。"
+    }
+  },
+  "pageConfigureManagement": {
+    "description": "该页面用于管理资源配置",
+    "tabs": {
+      "tab1": {
+        "name": "传感器"
+      }
     }
   },
   "pageFanSpeed": {

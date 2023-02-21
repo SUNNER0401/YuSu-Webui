@@ -244,6 +244,14 @@ export let setRoutes = () => {
           },
         },
         {
+          path: '/resource-management/configureManagement',
+          name: 'configureManagement',
+          component: views.ConfigureManagement,
+          meta: {
+            title: i18n.t('appPageTitle.configureManagement'),
+          },
+        },
+        {
           path: '/operations/reboot-bmc',
           name: 'reboot-bmc',
           component: views.RebootBmc,
