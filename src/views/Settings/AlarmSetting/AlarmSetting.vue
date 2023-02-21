@@ -48,14 +48,6 @@
                         >
                           {{ $t('global.form.fieldRequired') }}
                         </div>
-                        <div
-                          v-if="
-                            !$v.snmpManagers.$each.$iter[index].address
-                              .ipAddress
-                          "
-                        >
-                          {{ $t('global.form.invalidFormat') }}
-                        </div>
                       </b-form-invalid-feedback>
                     </template>
                     <template #cell(port)="{ item, index }">
@@ -151,7 +143,7 @@ import RemoteNetworkSetting from './RemoteNetworkSetting';
 import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
-import { required, between, ipAddress } from 'vuelidate/lib/validators';
+import { required, between } from 'vuelidate/lib/validators';
 
 export default {
   name: 'AlarmSetting',
@@ -190,7 +182,6 @@ export default {
           },
           address: {
             required,
-            ipAddress,
           },
         },
       },
