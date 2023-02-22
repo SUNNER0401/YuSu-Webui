@@ -26,10 +26,22 @@ const DataFormatterMixin = {
     },
     unitFormatter(string: any) {
       switch (string) {
+        case 'DegreesC':
+          return '°C';
         case 'RPMS':
           return 'RPM';
         case 'Volts':
           return 'V';
+        case 'Metters':
+          return 'M';
+        case 'Amperes':
+          return 'A';
+        case 'Joules':
+          return 'J';
+        case 'CFM':
+          return 'CFM';
+        case 'Pascals':
+          return 'P';
         case 'Percent':
           return '%';
         case 'Watts':
