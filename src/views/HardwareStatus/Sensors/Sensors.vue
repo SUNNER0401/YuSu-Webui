@@ -79,19 +79,34 @@
             <status-icon :status="statusIcon(value)" /> {{ value }}
           </template>
           <template #cell(currentValue)="data">
-            {{ data.value }} {{ data.item.units }}
+            <span>{{ data.value }}</span>
+            <span v-if="data.value != '--'">{{
+              unitFormatter(data.item.units)
+            }}</span>
           </template>
           <template #cell(lowerCaution)="data">
-            {{ data.value }} {{ data.item.units }}
+            <span>{{ data.value }}</span>
+            <span v-if="data.value != '--'">{{
+              unitFormatter(data.item.units)
+            }}</span>
           </template>
           <template #cell(upperCaution)="data">
-            {{ data.value }} {{ data.item.units }}
+            <span>{{ data.value }}</span>
+            <span v-if="data.value != '--'">{{
+              unitFormatter(data.item.units)
+            }}</span>
           </template>
           <template #cell(lowerCritical)="data">
-            {{ data.value }} {{ data.item.units }}
+            <span>{{ data.value }}</span>
+            <span v-if="data.value != '--'">{{
+              unitFormatter(data.item.units)
+            }}</span>
           </template>
           <template #cell(upperCritical)="data">
-            {{ data.value }} {{ data.item.units }}
+            <span>{{ data.value }}</span>
+            <span v-if="data.value != '--'">{{
+              unitFormatter(data.item.units)
+            }}</span>
           </template>
         </b-table>
       </b-col>
