@@ -1,4 +1,5 @@
 import api from '@/store/api';
+import i18n from '@/i18n';
 
 const PostCodeLogsStore = {
   namespaced: true,
@@ -19,17 +20,20 @@ const PostCodeLogsStore = {
         .then(({ data: { Members = [] } = {} }) => {
           const postCodeLogs = Members.map(
             (log: {
-              Created: any;
-              MessageArgs: any;
-              AdditionalDataURI: any;
+              Id: string;
+              Severity: string;
+              Message: string;
+              Created: string;
+              Oem: { [index: string]: any };
             }) => {
-              const { Created, MessageArgs, AdditionalDataURI } = log;
+              const { Id, Severity, Message, Created, Oem } = log;
               return {
-                date: new Date(Created),
-                bootCount: MessageArgs[0],
-                timeStampOffset: MessageArgs[1],
-                postCode: MessageArgs[2],
-                uri: AdditionalDataURI,
+                Id: Id,
+                Severity: Severity,
+                Message: Message,
+                Created: Created,
+                TimeStampOffset: Oem.TimeStampOffset,
+                Postcode: Oem.Postcode,
               };
             }
           );
@@ -37,6 +41,26 @@ const PostCodeLogsStore = {
         })
         .catch((error) => {
           console.log('POST Codes Log Data:', error);
+        });
+    },
+    deleteAll({ dispatch }: any, allLogs: { [index: string]: any }) {
+      api
+        .post(
+          '/redfish/v1/Systems/system/LogServices/PostCodes/Actions/LogService.ClearLog',
+          undefined,
+          undefined
+        )
+        .then(() => {
+          dispatch('getPostCodesLogData');
+        })
+        .then(() => {
+          i18n.tc('pagePostCodeLogs.toast.successDelete', allLogs.length);
+        })
+        .catch((error) => {
+          console.log(error);
+          throw new Error(
+            i18n.tc('pagePostCodeLogs.toast.errorDelete', allLogs.length)
+          );
         });
     },
   },

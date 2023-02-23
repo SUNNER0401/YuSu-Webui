@@ -729,14 +729,25 @@
       "exportLogs": "Export log"
     },
     "button": {
-      "exportAll": "Export all"
+      "exportAll": "Export all",
+      "deleteAll": "Delete all"
     },
     "table": {
       "created": "Created",
       "bootCount": "Boot count",
       "postCode": "POST code",
       "searchLogs": "Search logs",
-      "timeStampOffset": "Time stamp offset"
+      "timeStampOffset": "Time stamp offset",
+      "Severity": "Severity",
+      "Message": "Message",
+      "Created": "Created",
+      "Oem": {
+        "TimeStampOffset": "TimeStampOffset"
+      }
+    },
+    "toast": {
+      "successDelete": "Successfully deleted %{count} log. | Successfully deleted %{count} logs.",
+      "errorDelete": "Error deleting %{count} log. | Error deleting %{count} logs."
     }
   },
   "pageProfileSettings": {
@@ -1326,5 +1337,15 @@
     "ZM": "Zambia",
     "ZW": "Zimbabwe",
     "AX": "Åland Islands"
+  },
+  "pageCodeLogs": {
+    "modal": {
+      "deleteLogs": "Delete logs",
+      "deleteAlllogs": "Do you want to delete all logs?"
+    },
+    "toast": {
+      "deleteSuccessfully": "Delete all logs successfully.",
+      "errorDelete": "Delete failed."
+    }
   }
 }

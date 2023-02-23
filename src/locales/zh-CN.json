@@ -730,14 +730,25 @@
       "exportLogs": "导出日志"
     },
     "button": {
-      "exportAll": "导出全部"
+      "exportAll": "导出全部",
+      "deleteAll": "删除全部"
     },
     "table": {
       "created": "已创建的",
       "bootCount": "启动数",
       "postCode": "POST代码",
       "searchLogs": "搜索日志",
-      "timeStampOffset": "时间戳偏移量"
+      "timeStampOffset": "时间戳偏移量",
+      "Severity": "日志等级",
+      "Message": "消息",
+      "Created": "创建时间",
+      "Oem": {
+        "TimeStampOffset": "时间偏移量"
+      }
+    },
+    "toast": {
+      "successDelete": "成功删除了%{count}条日志",
+      "errorDelete": "删除%{count}条日志失败"
     }
   },
   "pageProfileSettings": {
@@ -1327,5 +1338,15 @@
     "ZM": "赞比亚",
     "ZW": "津巴布韦",
     "AX": "奥兰群岛"
+  },
+  "pageCodeLogs": {
+    "modal": {
+      "deleteLogs": "删除日志",
+      "deleteAlllogs": "您是否要删除所有日志"
+    },
+    "toast": {
+      "deleteSuccessfully": "删除日志成功",
+      "errorDelete": "删除日志失败"
+    }
   }
 }

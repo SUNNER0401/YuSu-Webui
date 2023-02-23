@@ -29,6 +29,13 @@
         >
           <icon-export /> {{ $t('pagePostCodeLogs.button.exportAll') }}
         </b-button>
+        <b-button
+          variant="primary"
+          :disabled="allLogs.length === 0"
+          @click="deleteAll"
+        >
+          <icon-trash /> {{ $t('pagePostCodeLogs.button.deleteAll') }}
+        </b-button>
       </b-col>
     </b-row>
     <b-row>
@@ -87,10 +94,9 @@
               <span class="sr-only">{{ $t('global.table.selectItem') }}</span>
             </b-form-checkbox>
           </template>
-          <!-- Date column -->
-          <template #cell(date)="{ value }">
-            <p class="mb-0">{{ value | formatDate }}</p>
-            <p class="mb-0">{{ value | formatTime }}</p>
+          <template #cell(Severity)="{ value }">
+            <status-icon v-if="value" :status="statusIcon(value)" />
+            {{ value }}
           </template>
 
           <!-- Actions column -->
@@ -147,8 +153,10 @@
 </template>
 
 <script lang="ts">
+import StatusIcon from '@/components/Global/StatusIcon';
 import IconDownload from '@carbon/icons-vue/es/download/20';
 import IconExport from '@carbon/icons-vue/es/document--export/20';
+import IconTrash from '@carbon/icons-vue/es/trash-can/20';
 import PageTitle from '@/components/Global/PageTitle';
 import Search from '@/components/Global/Search';
 import TableCellCount from '@/components/Global/TableCellCount';
@@ -156,6 +164,7 @@ import TableDateFilter from '@/components/Global/TableDateFilter';
 import TableRowAction from '@/components/Global/TableRowAction';
 import TableToolbar from '@/components/Global/TableToolbar';
 import TableToolbarExport from '@/components/Global/TableToolbarExport';
+import DataFormatterMixin from '@/components/Mixins/DataFormatterMixin';
 import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
 import TableFilterMixin from '@/components/Mixins/TableFilterMixin';
 import BVPaginationMixin, {
@@ -188,6 +197,8 @@ export default {
     TableToolbar,
     TableToolbarExport,
     TableDateFilter,
+    StatusIcon,
+    IconTrash,
   },
   mixins: [
     BVPaginationMixin,
@@ -198,6 +209,7 @@ export default {
     TableSortMixin,
     TableRowExpandMixin,
     SearchFilterMixin,
+    DataFormatterMixin,
   ],
   beforeRouteLeave(to: any, from: any, next: () => void) {
     // Hide loader if the user navigates to another page
@@ -213,21 +225,33 @@ export default {
           sortable: false,
         },
         {
-          key: 'date',
-          label: this.$t('pagePostCodeLogs.table.created'),
+          key: 'Id',
+          label: 'Id',
           sortable: true,
+          tdClass: 'text-nowrap',
         },
         {
-          key: 'timeStampOffset',
-          label: this.$t('pagePostCodeLogs.table.timeStampOffset'),
+          key: 'Severity',
+          label: this.$t('pagePostCodeLogs.table.Severity'),
+          thClass: 'text-nowrap',
+          tdClass: 'text-nowrap',
         },
         {
-          key: 'bootCount',
-          label: this.$t('pagePostCodeLogs.table.bootCount'),
+          key: 'Message',
+          label: this.$t('pagePostCodeLogs.table.Message'),
         },
         {
-          key: 'postCode',
-          label: this.$t('pagePostCodeLogs.table.postCode'),
+          key: 'Created',
+          label: this.$t('pagePostCodeLogs.table.Created'),
+        },
+        {
+          key: 'Postcode',
+          label: 'Postcode',
+        },
+        {
+          key: 'TimeStampOffset',
+          label: this.$t('pagePostCodeLogs.table.Oem.TimeStampOffset'),
+          thClass: 'text-nowrap',
         },
         {
           key: 'actions',
@@ -303,6 +327,28 @@ export default {
       .finally(() => this.endLoader());
   },
   methods: {
+    deleteAll(allLogs: any) {
+      this.$bvModal
+        .msgBoxConfirm(this.$tc('pageCodeLogs.modal.deleteAlllogs'), {
+          title: this.$tc('pageCodeLogs.modal.deleteLogs'),
+          okTitle: this.$tc('global.action.confirm'),
+          cancelTitle: this.$t('global.action.cancel'),
+        })
+        .then((confirm: any) => {
+          if (confirm) {
+            this.$store
+              .dispatch('postCodeLogs/deleteAll', allLogs)
+              .then(() => {
+                this.successToast(
+                  this.$t('pageCodeLogs.toast.deleteSuccessfully')
+                );
+              })
+              .catch(() => {
+                this.errorToast(this.$t('pageCodeLogs.toast.errorDelete'));
+              });
+          }
+        });
+    },
     exportAllLogsString() {
       {
         return this.$store.getters['postCodeLogs/allPostCodes'].map(
