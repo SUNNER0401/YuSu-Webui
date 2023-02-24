@@ -338,4 +338,7 @@ button img {
 .reset-button button {
   padding-left: 14px;
 }
+.card {
+  box-shadow: none;
+}
 </style>

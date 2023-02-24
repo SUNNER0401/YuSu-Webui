@@ -339,6 +339,7 @@ export default {
           label: this.$t('pageEventLogs.table.severity'),
           sortable: true,
           tdClass: 'text-nowrap',
+          thClass: 'text-nowrap',
         },
         {
           key: 'date',

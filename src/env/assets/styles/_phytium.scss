@@ -66,6 +66,9 @@ $header-height: 48px;
 div.form-background {
   background-color: $form-background-color;
 }
+.card {
+  box-shadow: 2px 2px 10px rgba(0,0,0,.75);
+}
 .card-header {
   background-color: $card-header-color;
 }
@@ -115,8 +118,23 @@ input.form-control, .form-background .custom-select:focus, .form-background .for
     background: transparent;
   }
 }
+.custom-select {
+  background-color: $Page-background-color !important;
+  &:not([disabled]):hover {
+    box-shadow: 0px 0px 12px rgba(0,0,0,.25) inset;
+    cursor: pointer;
+  }
+}
+
 // Custom datails of app-content
 .app-content {
+  text-shadow: 1px 1px 1px rgba(0,0,0,.15);
+  .custom-select {
+    border-radius: 10px;
+  }
+  .b-table {
+    box-shadow: 4px 0px 10px rgba(0,0,0,.5);
+  }
   width: calc(100% - 500px);
   margin: 0 auto;
   background: linear-gradient(to top, #77a3bd, #dbe5df);
@@ -127,8 +145,12 @@ input.form-control, .form-background .custom-select:focus, .form-background .for
     left: 95%;
     width: 70px;
   }
-  button {
+  .btn-primary,.btn-secondary {
+    box-shadow: 1px 1px 10px rgba(0,0,0,.65);
     white-space: nowrap;
+    &:hover {
+      box-shadow: none;
+    }
   }
 }
 // Custom datails of app-header
@@ -160,6 +182,7 @@ input.form-control, .form-background .custom-select:focus, .form-background .for
 }
 
 .app-header {
+  box-shadow: 2px 2px 10px rgba(0,0,0,.5);
   .nav-tags {
     color: #444444;
   }

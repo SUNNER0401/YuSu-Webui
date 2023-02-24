@@ -29,4 +29,7 @@ export default {
 p {
   max-width: 72ch;
 }
+h1 {
+  text-shadow: 3px 3px 0px rgb(0 0 0 / 20%);
+}
 </style>

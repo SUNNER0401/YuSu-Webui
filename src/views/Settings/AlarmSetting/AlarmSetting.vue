@@ -10,7 +10,6 @@
               <b-row class="setting-section">
                 <b-col>
                   <b-table
-                    responsive
                     hover
                     :fields="managerTableFields"
                     :items="form.snmpManagers"

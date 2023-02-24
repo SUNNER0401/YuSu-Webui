@@ -42,7 +42,6 @@
           sort-icon-left
           hover
           no-sort-reset
-          sticky-header="75vh"
           sort-by="status"
           show-empty
           :no-border-collapse="true"
