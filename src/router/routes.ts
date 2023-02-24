@@ -27,7 +27,7 @@ import SerialOverLanConsole from '@/views/Operations/SerialOverLan/SerialOverLan
 import ServerPowerOperations from '@/views/Operations/ServerPowerOperations.vue';
 import Certificates from '@/views/SecurityAndAccess/Certificates.vue';
 import VirtualMedia from '@/views/Operations/VirtualMedia.vue';
-import Power from '@/views/ResourceManagement/Power.vue';
+import Power from '@/views/ResourceManagement/Power/Power.vue';
 import i18n from '@/i18n';
 
 const routes = [
