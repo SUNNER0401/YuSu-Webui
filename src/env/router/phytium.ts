@@ -79,7 +79,6 @@ export let setRoutes = () => {
           name: 'overview',
           component: views.Overview,
           meta: {
-            // title: i18n.t('appPageTitle.overview'),
             title: i18n.t('appPageTitle.overview'),
           },
         },

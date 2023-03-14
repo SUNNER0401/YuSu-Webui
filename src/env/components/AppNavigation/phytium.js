@@ -162,11 +162,11 @@ const AppNavigationMixin = {
               label: this.$t('appNavigation.userManagement'),
               route: '/security-and-access/user-management',
             },
-            {
-              id: 'policies',
-              label: this.$t('appNavigation.policies'),
-              route: '/security-and-access/policies',
-            },
+            // {
+            //   id: 'policies',
+            //   label: this.$t('appNavigation.policies'),
+            //   route: '/security-and-access/policies',
+            // },
             {
               id: 'certificates',
               label: this.$t('appNavigation.certificates'),
