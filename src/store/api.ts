@@ -33,20 +33,20 @@ api.interceptors.response.use(undefined, (error) => {
 });
 
 export default {
-  get(path: string) {
-    return api.get(path);
+  get(path: string, config?: AxiosRequestConfig | undefined) {
+    return api.get(path, config);
   },
-  delete(path: string, payload: AxiosRequestConfig | undefined) {
-    return api.delete(path, payload);
+  delete(path: string, config?: AxiosRequestConfig | undefined) {
+    return api.delete(path, config);
   },
-  post(path: string, payload: any, config: AxiosRequestConfig | undefined) {
+  post(path: string, payload: any, config?: AxiosRequestConfig | undefined) {
     return api.post(path, payload, config);
   },
-  patch(path: string, payload: any) {
-    return api.patch(path, payload);
+  patch(path: string, payload: any, config?: AxiosRequestConfig | undefined) {
+    return api.patch(path, payload, config);
   },
-  put(path: string, payload: any) {
-    return api.put(path, payload);
+  put(path: string, payload: any, config?: AxiosRequestConfig | undefined) {
+    return api.put(path, payload, config);
   },
   all(promises: unknown[]) {
     return Axios.all(promises);
