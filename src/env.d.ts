@@ -3,4 +3,5 @@ export interface AddEventTarget extends EventTarget {
   value?: string;
   nodeName: string;
   blur(): function;
+  files?: { [index: string]: any };
 }

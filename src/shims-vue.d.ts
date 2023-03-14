@@ -21,4 +21,5 @@ interface AddEventTarget extends EventTarget {
   parentElement?: { [index: string]: any };
   nodeName: string;
   blur: () => void;
+  files: { [index: string]: any };
 }

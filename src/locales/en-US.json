@@ -358,6 +358,32 @@
           "criticalHigh": "CriticalHigh"
         }
       }
+    },
+    "modal": {
+      "confirmMessage1": "Do you want to download configure file?",
+      "confirmTitle1": "Download configure",
+      "downloadPrepareTitle": "Resource acquisition",
+      "downloadPrepareBody": "accessing",
+      "successDownload": "Download successfully.",
+      "errorDownload": "Error download.",
+      "uploadTitle": "Upload configure file",
+      "uploadMessage": "You are doing a dangerous action that uploading a new configure file.After this action, BMC will reboot.Do you want to continue your action?",
+      "bmcUpdating": "BMC updating",
+      "bmcRebootingText": "BMC is rebooting.IP address maybe will get changed after rebooting.Don't do any operation in rebooting time.You can login again after rebooting operation.",
+      "bmcReboot": "BMC reboot",
+      "bmcRebooting": "rebooting."
+    },
+    "toast": {
+      "errorUpload": "Error upload.",
+      "successUpload": "Upload successfully.",
+      "errorUpload1": "Error catch BMC firmware version.",
+      "errorUpload2": "BMC firmware version is not matched.",
+      "errorUpload3": "Error binary signature verified.",
+      "errorUpload4": "Error set binary signature."
+    },
+    "button": {
+      "download": "Export",
+      "import": "Deploy"
     }
   },
   "pageFanSpeed": {

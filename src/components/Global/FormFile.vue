@@ -19,7 +19,7 @@
           'btn-primary': !isSecondary,
         }"
       >
-        {{ $t('global.fileUpload.browseText') }}
+        {{ name }}
       </span>
       <slot name="invalid"></slot>
     </label>
@@ -47,6 +47,12 @@ export default {
   name: 'FormFile',
   components: { BFormFile, IconClose },
   props: {
+    name: {
+      type: String,
+      default: function name() {
+        return this.$t('global.fileUpload.browseText');
+      },
+    },
     id: {
       type: String,
       default: '',
@@ -82,6 +88,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+label {
+  border-radius: 20px;
+}
+input[type='file'] {
+  display: none;
+}
 .form-control-file {
   opacity: 0;
   height: 0;

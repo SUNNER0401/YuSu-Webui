@@ -358,6 +358,32 @@
           "criticalHigh": "最大危险值"
         }
       }
+    },
+    "modal": {
+      "confirmMessage1": "您是否要下载配置文件？",
+      "confirmTitle1": "下载配置",
+      "downloadPrepareTitle": "资源获取中",
+      "downloadPrepareBody": "正在获取",
+      "successDownload": "下载成功",
+      "errorDownload": "下载失败",
+      "uploadTitle": "上传配置文件",
+      "uploadMessage": "您将要上传全新的配置文件，现有配置将会被替换，替换之后BMC将会重启，是否继续？",
+      "bmcUpdating": "BMC正在更新",
+      "bmcRebootingText": "BMC正在重启，重启之后网络IP可能发生变化，重启期间请勿进行任何操作。请在重启操作完成后重新登录。",
+      "bmcReboot": "BMC重启",
+      "bmcRebooting": "正在重启"
+    },
+    "toast": {
+      "errorUpload": "上传失败。",
+      "successUpload": "上传成功。",
+      "errorUpload1": "BMC固件版本ID获取失败",
+      "errorUpload2": "BMC固件版本不匹配",
+      "errorUpload3": "二进制验签失败",
+      "errorUpload4": "二进制签名失败"
+    },
+    "button": {
+      "download": "配置导出",
+      "import": "一键部署"
     }
   },
   "pageFanSpeed": {
