@@ -744,7 +744,9 @@
     "systemInformation": "System information",
     "total": "Total",
     "warningEvents": "Warning",
-    "viewMore": "View more"
+    "viewMore": "View more",
+    "BMCVersion": "BMC version",
+    "hostVersion": "Host version"
   },
   "pagePostCodeLogs": {
     "allExportFilePrefix": "All_POST_codes_log_",

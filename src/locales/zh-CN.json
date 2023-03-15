@@ -745,7 +745,9 @@
     "systemInformation": "系统信息",
     "total": "总数",
     "warningEvents": "警告",
-    "viewMore": "查看更多"
+    "viewMore": "查看更多",
+    "BMCVersion": "BMC版本",
+    "hostVersion": "主机版本"
   },
   "pagePostCodeLogs": {
     "allExportFilePrefix": "所有的POST代码日志",

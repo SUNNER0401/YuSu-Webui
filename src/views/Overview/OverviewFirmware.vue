@@ -6,10 +6,12 @@
     <b-row class="mt-3">
       <b-col>
         <dl>
-          <dt>{{ $t('pageOverview.runningVersion') }}</dt>
-          <dd>{{ dataFormatter(runningVersion) }}</dd>
-          <dt v-if="backupVersion">{{ $t('pageOverview.backupVersion') }}</dt>
-          <dd v-if="backupVersion">{{ dataFormatter(backupVersion) }}</dd>
+          <dt v-if="BMCVersion">{{ $t('pageOverview.BMCVersion') }}</dt>
+          <dd v-if="BMCVersion">{{ dataFormatter(BMCVersion) }}</dd>
+          <dt v-if="hostVersion">{{ $t('pageOverview.hostVersion') }}</dt>
+          <dd v-if="hostVersion">{{ dataFormatter(hostVersion) }}</dd>
+          <!-- <dt v-if="backupVersion">{{ $t('pageOverview.backupVersion') }}</dt>
+          <dd v-if="backupVersion">{{ dataFormatter(backupVersion) }}</dd> -->
         </dl>
       </b-col>
     </b-row>
@@ -36,8 +38,14 @@ export default {
     activeBmcFirmware() {
       return this.$store.getters[`firmware/activeBmcFirmware`];
     },
-    runningVersion() {
+    BMCVersion() {
       return this.activeBmcFirmware?.version;
+    },
+    hostFirmware() {
+      return this.$store.getters['firmware/activeHostFirmware'];
+    },
+    hostVersion() {
+      return this.hostFirmware?.version;
     },
   },
   created() {
