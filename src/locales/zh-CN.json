@@ -304,8 +304,8 @@
       "resetOptionsLabel": "重置选项",
       "resetBiosOptionLabel": "仅重置服务器设置",
       "resetBiosOptionHelperText": "重置的固件设置包括: 签名文件、独立NVRAM、区域配置.",
-      "resetToDefaultsOptionLabel": "重置BMC与服务器设置",
-      "resetToDefaultsOptionHelperText": "在重置服务器设置的基础上重置BMC设置, 包括: BMC用户数据、修改过的密码、协议、LDAP配置、网络地址、时间."
+      "resetToDefaultsOptionLabel": "重置BMC",
+      "resetToDefaultsOptionHelperText": "重置BMC设置, 包括: BMC用户数据、修改过的密码、协议、LDAP配置、网络地址、时间."
     },
     "modal": {
       "resetBiosTitle": "重置服务器设置",
