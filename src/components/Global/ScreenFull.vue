@@ -110,12 +110,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.icon {
-  &:hover {
-    background-color: #cccccc;
-    cursor: pointer;
-  }
-}
 .svg-icon {
   height: 18px !important;
   width: 18px !important;

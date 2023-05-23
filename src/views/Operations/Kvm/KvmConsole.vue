@@ -275,6 +275,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.icon {
+  &:hover {
+    background-color: #cccccc;
+    cursor: pointer;
+  }
+}
+
 .button-ctrl-alt-delete {
   float: right;
 }
