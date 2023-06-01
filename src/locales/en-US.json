@@ -575,7 +575,8 @@
     "brandTitle": {
       "screenFull": "Screen Full",
       "screenShot": "Screen Shot"
-    }
+    },
+    "recording": "Recording"
   },
   "pageLdap": {
     "pageDescription": "Configure LDAP settings and manage role groups",

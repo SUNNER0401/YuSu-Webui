@@ -51,14 +51,13 @@ export default {
 .icon-container {
   height: 36px;
   width: 36px;
-
+  margin: 0 auto;
   .svg-icon {
     display: block;
     position: relative;
     top: 5px;
     height: 28px !important;
     width: 28px !important;
-    margin: 0 auto;
   }
 
   &:hover {

@@ -28,6 +28,13 @@
             <screen-shot :element="shotArea" />
           </b-navbar-brand>
           <b-navbar-brand
+            id="kvm-recorder"
+            class="kvm-toolbar2-item"
+            :title="$t('pageKvm.brandTitle.screenShot')"
+          >
+            <kvm-recorder :element="shotArea" />
+          </b-navbar-brand>
+          <b-navbar-brand
             id="kvm-immersion-mode"
             class="kvm-toolbar2-item"
             :title="$t('pageKvm.brandTitle.immersionMode')"
@@ -61,6 +68,7 @@ import StatusIcon from '@/components/Global/StatusIcon';
 import ScreenFull from '@/components/Global/ScreenFull';
 import ScreenShot from '@/components/Global/ScreenShot';
 import ImmersionMode from '@/components/Global/ImmersionMode';
+import KvmRecorder from '@/components/Global/KvmRecorder';
 
 const Connecting = 0;
 const Connected = 1;
@@ -68,7 +76,13 @@ const Disconnected = 2;
 
 export default {
   name: 'KvmConsole',
-  components: { StatusIcon, ScreenFull, ScreenShot, ImmersionMode },
+  components: {
+    StatusIcon,
+    ScreenFull,
+    ScreenShot,
+    ImmersionMode,
+    KvmRecorder,
+  },
   props: {
     isFullWindow: {
       type: Boolean,
@@ -309,13 +323,11 @@ export default {
     height: $canvaHeight;
     width: 7%;
     position: relative;
+    display: grid !important;
+    place-items: center;
     .kvm-toolbar-menu {
       height: auto;
       width: auto;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translateY(-50%) translateX(-50%);
       & > * {
         padding: 0;
         svg {

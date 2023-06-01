@@ -576,7 +576,8 @@
       "screenFull": "全屏",
       "screenShot": "截屏",
       "immersionMode": "沉浸模式"
-    }
+    },
+    "recording": "正在录制"
   },
   "pageLdap": {
     "pageDescription": "配置LDAP设置和管理员组",
