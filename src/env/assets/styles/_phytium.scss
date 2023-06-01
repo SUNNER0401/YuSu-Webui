@@ -113,9 +113,8 @@ input.form-control, .form-background .custom-select:focus, .form-background .for
   }
 }
 #app {
-  background: url('~@/env/assets/images/layout-background.jpg');
   .app-container {
-    background: transparent;
+    background: url('~@/env/assets/images/layout-background.jpg');
   }
 }
 .custom-select {

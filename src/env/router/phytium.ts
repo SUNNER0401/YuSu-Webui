@@ -115,6 +115,14 @@ export let setRoutes = () => {
           },
         },
         {
+          path: '/logs/ras-logs',
+          name: 'ras-logs',
+          component: views.RasLogs,
+          meta: {
+            title: i18n.t('appPageTitle.rasLogs'),
+          },
+        },
+        {
           path: '/hardware-status/inventory',
           name: 'inventory',
           component: views.Inventory,

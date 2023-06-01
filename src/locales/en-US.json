@@ -20,7 +20,9 @@
       "reset": "Reset",
       "save": "Save",
       "saveSettings": "Save settings",
-      "selected": "Selected"
+      "selected": "Selected",
+      "downloadAll": "Download all",
+      "preview": "Preview"
     },
     "ariaLabel": {
       "clearSearch": "Clear search input",
@@ -139,7 +141,8 @@
     "about": "@:appPageTitle.about",
     "aboutUs": "@:appPageTitle.aboutUs",
     "operatingLogs": "Operating logs",
-    "configureManagement": "Configure management"
+    "configureManagement": "Configure management",
+    "rasLogs": "RAS logs"
   },
   "appPageTitle": {
     "changePassword": "Change password",
@@ -173,7 +176,8 @@
     "about": "About",
     "aboutUs": "About Us",
     "operatingLogs": "Operating logs",
-    "configureManagement": "Configure management"
+    "configureManagement": "Configure management",
+    "rasLogs": "RAS logs"
   },
   "pageChangePassword": {
     "changePassword": "Change password",
@@ -275,7 +279,8 @@
       "deleteAllTitle": "Delete all logs",
       "deleteAllMessage": "Are you sure you want to delete all logs? This action cannot be undone.",
       "deleteTitle": "Delete log | Delete logs",
-      "deleteMessage": "Are you sure you want to delete %{count} log? This action cannot be undone. | Are you sure you want to delete %{count} logs? This action cannot be undone."
+      "deleteMessage": "Are you sure you want to delete %{count} log? This action cannot be undone. | Are you sure you want to delete %{count} logs? This action cannot be undone.",
+      "download": "Download %{count} logs failed."
     },
     "table": {
       "date": "Date",
@@ -1376,5 +1381,8 @@
       "deleteSuccessfully": "Delete all logs successfully.",
       "errorDelete": "Delete failed."
     }
+  },
+  "pagepageRasLogs": {
+    "notSupport": "This machine does not support RAS function."
   }
 }
