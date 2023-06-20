@@ -579,7 +579,8 @@
     "browserNotSupport": "Your browser Not support!!!",
     "brandTitle": {
       "screenFull": "Screen Full",
-      "screenShot": "Screen Shot"
+      "screenShot": "Screen Shot",
+      "recorder": "recorder"
     },
     "recording": "Recording"
   },

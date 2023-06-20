@@ -580,7 +580,8 @@
     "brandTitle": {
       "screenFull": "全屏",
       "screenShot": "截屏",
-      "immersionMode": "沉浸模式"
+      "immersionMode": "沉浸模式",
+      "recorder": "录制"
     },
     "recording": "正在录制"
   },

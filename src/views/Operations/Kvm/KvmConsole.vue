@@ -30,7 +30,7 @@
           <b-navbar-brand
             id="kvm-recorder"
             class="kvm-toolbar2-item"
-            :title="$t('pageKvm.brandTitle.screenShot')"
+            :title="$t('pageKvm.brandTitle.recorder')"
           >
             <kvm-recorder :element="shotArea" />
           </b-navbar-brand>
