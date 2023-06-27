@@ -80,7 +80,7 @@ module.exports = {
   },
   devServer: {
     https: true,
-    before: require('./mock/index.js'),
+    // before: require('./mock/index.js'),
     proxy: {
       '/': {
         target: process.env.BASE_URL,
