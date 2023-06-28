@@ -110,7 +110,7 @@
                 <icon-chevron />
               </b-button>
             </template>
-
+            <!-- Details -->
             <template #row-details="{ item }">
               <b-container fluid>
                 <b-row>
@@ -124,6 +124,21 @@
                       <!-- Type -->
                       <dt>{{ $t('pageEventLogs.table.type') }}:</dt>
                       <dd>{{ dataFormatter(item.type) }}</dd>
+                    </dl>
+                    <dl>
+                      <!-- MessageArgs -->
+                      <dt id="dt-MessageArgs">
+                        {{ $t('pageEventLogs.table.MessageArgs') }}:
+                      </dt>
+                      <dd v-if="item.messageArgs == ''">
+                        {{ dataFormatter(messageArg) }}
+                      </dd>
+                      <dd
+                        v-for="(messageArg, index) in item.messageArgs"
+                        :key="index"
+                      >
+                        {{ dataFormatter(messageArg) }}
+                      </dd>
                     </dl>
                   </b-col>
                 </b-row>
@@ -549,3 +564,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+#dt-MessageArgs {
+  float: none;
+}
+</style>

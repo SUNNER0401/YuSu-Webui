@@ -291,7 +291,8 @@
       "searchLogs": "搜索日志",
       "severity": "重要程度",
       "status": "状态",
-      "type": "类型"
+      "type": "类型",
+      "MessageArgs": "消息参数"
     },
     "toast": {
       "errorDelete": "删除日志(%{count}条)失败。",

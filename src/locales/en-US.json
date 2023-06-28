@@ -291,7 +291,8 @@
       "searchLogs": "Search logs",
       "severity": "Severity",
       "status": "Status",
-      "type": "Type"
+      "type": "Type",
+      "MessageArgs": "MessageArgs"
     },
     "toast": {
       "errorDelete": "Error deleting %{count} log. | Error deleting %{count} logs.",

@@ -52,7 +52,7 @@ const RasLogsStore = {
         .get('/redfish/v1/Systems/system/LogServices/RasEvent/Entries')
         .then(({ data: { Members = [] } = {} }) => {
           const rasLogs = Members.map((log: { [x: string]: any }) => {
-            const {
+            let {
               Id,
               Severity,
               Created,
@@ -60,7 +60,9 @@ const RasLogsStore = {
               Message,
               Name,
               AdditionalDataURI,
+              MessageArgs,
             } = log;
+            console.log(MessageArgs);
             return {
               id: Id,
               severity: Severity,
@@ -70,6 +72,7 @@ const RasLogsStore = {
               name: Name,
               uri: log['@odata.id'],
               additionalDataUri: AdditionalDataURI,
+              messageArgs: MessageArgs,
             };
           });
           commit('setAllRasLogs', rasLogs);
