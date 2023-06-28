@@ -412,7 +412,9 @@
     },
     "toast": {
       "successSaving": "Save settings successfully",
-      "errorSetting": "Save setting failed."
+      "errorSetting": "Save setting failed.",
+      "errorSettingZoneMode": "Error setting zone mode",
+      "errorSettingFanPwm": "Error setting pwm."
     },
     "chart": {
       "title": {

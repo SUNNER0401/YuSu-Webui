@@ -24,21 +24,21 @@
             <div class="form-background pt-4">
               <b-row>
                 <b-col sm="6" md="6">
-                  <template v-for="(fanNameList, zoneName, index1) in zones">
+                  <template v-for="(zoneInfo, index1) in allInfo">
                     <b-form
                       :key="index1"
                       class="ml-4 mb-4"
-                      @submit="submitSetting(zoneName)"
+                      @submit="submitSetting(zoneInfo.Zone)"
                     >
                       <b-row>
                         <b-col>
                           <b-row>
                             <b-col>
-                              <h4>{{ zoneName }}</h4>
+                              <h4>{{ 'zone' + zoneInfo.Zone }}</h4>
                               <b-row>
                                 <b-col xl="5">
                                   <b-form-select
-                                    v-model="fanModes[zoneName]"
+                                    v-model="zoneInfo.CurrentMode"
                                     :options="allModes"
                                     size="sm"
                                     class="mb-3"
@@ -49,47 +49,35 @@
                             </b-col>
                           </b-row>
                           <!-- These functions only can be used in manual mode. -->
-                          <template v-if="fanModes[zoneName] === 'MANUAL_MODE'">
+                          <template
+                            v-if="zoneInfo.CurrentMode === 'MANUAL_MODE'"
+                          >
                             <b-row
-                              v-for="(fanName, index2) in fanNameList"
+                              v-for="(fan, index2) in zoneInfo.fanInfo"
                               :key="index2"
                             >
                               <b-col cols="3">
-                                <p>{{ fanName }}</p>
+                                <p>{{ fan.Name }}</p>
                               </b-col>
                               <b-col cols="3">
                                 <b-form-input
-                                  v-model="pwmValues[pwmRelation[fanName]]"
+                                  v-model="pwmValues[fan.Name]"
                                   class="text-center"
                                   type="number"
                                   min="0"
                                   max="100"
                                   :state="
-                                    getValidationState(
-                                      $v.pwmValues[pwmRelation[fanName]]
-                                    )
+                                    getValidationState($v.pwmValues[fan.Name])
                                   "
-                                  @blur="
-                                    $v.pwmValues[pwmRelation[fanName]].$touch()
-                                  "
-                                  @focus="
-                                    $v.pwmValues[pwmRelation[fanName]].$reset()
-                                  "
+                                  @blur="$v.pwmValues[fan.Name].$touch()"
+                                  @focus="$v.pwmValues[fan.Name].$reset()"
                                 />
                                 <b-form-invalid-feedback role="alert">
-                                  <div
-                                    v-if="
-                                      !$v.pwmValues[pwmRelation[fanName]]
-                                        .required
-                                    "
-                                  >
+                                  <div v-if="!$v.pwmValues[fan.Name].required">
                                     {{ $t('global.form.fieldRequired') }}
                                   </div>
                                   <div
-                                    v-else-if="
-                                      !$v.pwmValues[pwmRelation[fanName]]
-                                        .between
-                                    "
+                                    v-else-if="!$v.pwmValues[fan.Name].between"
                                   >
                                     {{
                                       $t('global.form.valueMustBeBetween', {
@@ -147,13 +135,11 @@ export default {
   // @ts-ignore
   validations() {
     let pwmValues = Object.assign({}, this.pwmValues);
-    Object.keys(pwmValues).map((pwm: any) => {
-      let pwmValidation = {
+    Object.keys(pwmValues).forEach((fanName) => {
+      pwmValues[fanName] = {
         required,
         between: between(0, 100),
       };
-      pwmValues[pwm] = pwmValidation;
-      return pwm;
     });
     return {
       pwmValues,
@@ -164,28 +150,31 @@ export default {
       'fanSpeeds',
       'fanUrls',
       'fanModes',
-      'zones',
       'pwmRelation',
       'pwmValues',
+      'allInfo',
       'allModes',
     ]),
   },
-  created(): void {
+  async created(): Promise<void> {
     this.startLoader();
+    this.$store.dispatch('fanSpeed/getAllModes');
     this.$store.dispatch('fanSpeed/getFanAllData').finally(() => {
       this.endLoader();
     });
   },
   methods: {
-    submitSetting(zoneName: string): void {
+    submitSetting(zone: number): void {
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       }
-      let mode: string = this.fanModes[zoneName];
+      let mode: string = this.allInfo[zone - 1].CurrentMode;
       this.$bvModal
         .msgBoxConfirm(
-          this.$t('pageFanSpeed.modal.confirmMessage', { zoneName }),
+          this.$t('pageFanSpeed.modal.confirmMessage', {
+            zoneName: 'zone' + zone,
+          }),
           {
             title: this.$t('pageFanSpeed.modal.confirmTitle'),
             okTitle: this.$t('global.action.confirm'),
@@ -193,46 +182,53 @@ export default {
           }
         )
         .then(async (confirm: boolean) => {
-          // Set zone mode.
           if (confirm) {
             this.startLoader();
-            await this.$store
-              .dispatch('fanSpeed/setFanMode', { zoneName, mode })
+            // Set zone mode.
+            let isSetMode = false;
+            this.$store
+              .dispatch('fanSpeed/setFanMode', {
+                zone,
+                mode,
+              })
               .then(async () => {
-                // Set PWM of each fans.
-                let iferr = false;
-                if (mode == 'MANUAL_MODE') {
-                  let promises: string[] = [];
-                  const fanList = [...this.zones[zoneName]];
-                  fanList.forEach((fanName) => {
-                    let pwmName = this.pwmRelation[fanName];
-                    let value = +this.pwmValues[pwmName];
-                    let promise = this.$store
-                      .dispatch('fanSpeed/setPwmValue', { pwmName, value })
-                      .catch(() => {
-                        iferr = true;
-                      });
+                isSetMode = true;
+                //Judge mode.
+                if (mode != 'MANUAL_MODE') return;
+                // Batch send setPwmValue requests.
+                let promises: Promise<void>[] = [];
+                this.allInfo[zone - 1].fanInfo.forEach(
+                  ({ Name }: { Name: string; Pwm: number }) => {
+                    let promise = this.$store.dispatch('fanSpeed/setPwmValue', {
+                      zone,
+                      fanName: Name,
+                      pwm: this.pwmValues[Name],
+                    });
                     promises.push(promise);
-                  });
-                  await Promise.all(promises);
-                  if (iferr) {
-                    throw new Error();
                   }
-                }
-              })
-              .then(async () => {
-                await this.successToast(
-                  this.$t('pageFanSpeed.toast.successSaving')
                 );
+                // Wait all requests complete.
+                await Promise.all(promises);
               })
-              .catch(async () => {
-                // If you set failed, the modes and speed values will be updated.
-                await this.errorToast(
-                  this.$t('pageFanSpeed.toast.errorSetting')
-                );
+              .then(() => {
+                // Successfully
+                this.successToast(this.$t('pageFanSpeed.toast.successSaving'));
+              })
+              .catch(() => {
+                if (isSetMode)
+                  // Set zone mode failed.
+                  this.errorToast(
+                    this.$t('pageFanSpeed.toast.errorSettingZoneMode')
+                  );
+                // Set zone mode successfully but pwm values failed.
+                else
+                  this.errorToast(
+                    this.$t('pageFanSpeed.toast.errorSettingFanPwm')
+                  );
+              })
+              .finally(async () => {
+                // After operations get fan data again.
                 await this.$store.dispatch('fanSpeed/getFanAllData');
-              })
-              .finally(() => {
                 this.endLoader();
               });
           }

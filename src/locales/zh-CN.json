@@ -412,7 +412,9 @@
     },
     "toast": {
       "successSaving": "设置保存成功",
-      "errorSetting": "保存设置失败"
+      "errorSetting": "保存设置失败",
+      "errorSettingZoneMode": "设置风扇区域模式失败。",
+      "errorSettingFanPwm": "设置PWM失败。"
     },
     "chart": {
       "title": {
