@@ -2,6 +2,7 @@
 node_modules
 /dist
 /docs/.vuepress/dist
+src/utilities/mock
 
 # local env files
 .env.local

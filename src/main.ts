@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import './utilities/mock';
 //Do not change store import.
 //Exact match alias set to support
 //dotenv customizations.
