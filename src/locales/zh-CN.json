@@ -289,7 +289,7 @@
       "modifiedDate": "修改后的日期",
       "name": "名称",
       "searchLogs": "搜索日志",
-      "severity": "重要程度",
+      "severity": "日志等级",
       "status": "状态",
       "type": "类型",
       "MessageArgs": "消息参数"
