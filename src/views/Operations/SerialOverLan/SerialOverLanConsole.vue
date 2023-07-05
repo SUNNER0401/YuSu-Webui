@@ -83,9 +83,6 @@ export default {
       immediate: true,
     },
   },
-  created() {
-    this.$store.dispatch('global/getServerStatus');
-  },
   mounted() {
     setTimeout(() => {
       this.openTerminal();
