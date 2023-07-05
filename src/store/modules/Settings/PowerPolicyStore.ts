@@ -33,7 +33,6 @@ const PowerControlStore = {
               definitions: { PowerRestorePolicyTypes = {} },
             },
           }) => {
-            console.log(PowerRestorePolicyTypes);
             let powerPoliciesData = PowerRestorePolicyTypes.enum.map(
               (powerState: string | number) => {
                 let desc = `${i18n.t(
