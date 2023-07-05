@@ -1,32 +1,15 @@
 import i18n from '@/i18n';
 
-// Import layouts quickly.
-const layouts: { [key: string]: string } = {};
-const context1 = require.context('@/layouts', true, /\.vue$/);
-context1.keys().forEach((key) => {
-  let filename = key.split('/')[key.split('/').length - 1];
-  let viewName = filename.replace('.vue', '');
-  layouts[viewName] = context1(key).default;
-});
-// Import views quickly.
-const views: { [key: string]: string } = {};
-const context2 = require.context('@/views', true, /\.vue$/);
-context2.keys().forEach((key) => {
-  let filename = key.split('/')[key.split('/').length - 1];
-  let viewName = filename.replace('.vue', '');
-  views[viewName] = context2(key).default;
-});
-
 export let setRoutes = () => {
   return [
     {
       path: '/login',
-      component: layouts.LoginLayout,
+      component: () => import('@/layouts/LoginLayout'),
       children: [
         {
           path: '',
           name: 'login',
-          component: views.Login,
+          component: () => import('@/views/Login'),
           meta: {
             title: i18n.t('appPageTitle.login'),
           },
@@ -34,7 +17,7 @@ export let setRoutes = () => {
         {
           path: '/change-password',
           name: 'change-password',
-          component: views.ChangePassword,
+          component: () => import('@/views/ChangePassword'),
           meta: {
             title: i18n.t('appPageTitle.changePassword'),
             requiresAuth: true,
@@ -44,7 +27,7 @@ export let setRoutes = () => {
     },
     {
       path: '/console',
-      component: layouts.ConsoleLayout,
+      component: () => import('@/layouts/ConsoleLayout'),
       meta: {
         requiresAuth: true,
       },
@@ -52,7 +35,8 @@ export let setRoutes = () => {
         {
           path: 'serial-over-lan-console',
           name: 'serial-over-lan-console',
-          component: views.SerialOverLanConsole,
+          component: () =>
+            import('@/views/Operations/SerialOverLan/SerialOverLanConsole'),
           meta: {
             title: i18n.t('appPageTitle.serialOverLan'),
           },
@@ -60,7 +44,7 @@ export let setRoutes = () => {
         {
           path: 'kvm',
           name: 'kvm-console',
-          component: views.KvmConsole,
+          component: () => import('@/views/Operations/Kvm/KvmConsole.vue'),
           meta: {
             title: i18n.t('appPageTitle.kvm'),
           },
@@ -72,12 +56,12 @@ export let setRoutes = () => {
       meta: {
         requiresAuth: true,
       },
-      component: layouts.AppLayout,
+      component: () => import('@/layouts/AppLayout'),
       children: [
         {
           path: '',
           name: 'overview',
-          component: views.Overview,
+          component: () => import('@/views/Overview'),
           meta: {
             title: i18n.t('appPageTitle.overview'),
           },
@@ -85,7 +69,7 @@ export let setRoutes = () => {
         {
           path: '/profile-settings',
           name: 'profile-settings',
-          component: views.ProfileSettings,
+          component: () => import('@/views/ProfileSettings'),
           meta: {
             title: i18n.t('appPageTitle.profileSettings'),
           },
@@ -93,7 +77,7 @@ export let setRoutes = () => {
         {
           path: '/logs/event-logs',
           name: 'event-logs',
-          component: views.EventLogs,
+          component: () => import('@/views/Logs/EventLogs'),
           meta: {
             title: i18n.t('appPageTitle.eventLogs'),
           },
@@ -101,7 +85,7 @@ export let setRoutes = () => {
         {
           path: '/logs/post-code-logs',
           name: 'post-code-logs',
-          component: views.PostCodeLogs,
+          component: () => import('@/views/Logs/PostCodeLogs'),
           meta: {
             title: i18n.t('appPageTitle.postCodeLogs'),
           },
@@ -109,7 +93,7 @@ export let setRoutes = () => {
         {
           path: '/logs/operating-logs',
           name: 'operating-logs',
-          component: views.OperatingLogs,
+          component: () => import('@/views/Logs/OperatingLogs'),
           meta: {
             title: i18n.t('appPageTitle.operatingLogs'),
           },
@@ -117,7 +101,7 @@ export let setRoutes = () => {
         {
           path: '/logs/ras-logs',
           name: 'ras-logs',
-          component: views.RasLogs,
+          component: () => import('@/views/Logs/RasLogs'),
           meta: {
             title: i18n.t('appPageTitle.rasLogs'),
           },
@@ -125,7 +109,7 @@ export let setRoutes = () => {
         {
           path: '/hardware-status/inventory',
           name: 'inventory',
-          component: views.Inventory,
+          component: () => import('@/views/HardwareStatus/Inventory'),
           meta: {
             title: i18n.t('appPageTitle.inventory'),
           },
@@ -133,63 +117,15 @@ export let setRoutes = () => {
         {
           path: '/hardware-status/sensors',
           name: 'sensors',
-          component: views.Sensors,
+          component: () => import('@/views/HardwareStatus/Sensors'),
           meta: {
             title: i18n.t('appPageTitle.sensors'),
           },
         },
         {
-          path: '/security-and-access/sessions',
-          name: 'sessions',
-          component: views.Sessions,
-          meta: {
-            title: i18n.t('appPageTitle.sessions'),
-          },
-        },
-        {
-          path: '/security-and-access/ldap',
-          name: 'ldap',
-          component: views.Ldap,
-          meta: {
-            title: i18n.t('appPageTitle.ldap'),
-          },
-        },
-        {
-          path: '/security-and-access/user-management',
-          name: 'local-users',
-          component: views.UserManagement,
-          meta: {
-            title: i18n.t('appPageTitle.userManagement'),
-          },
-        },
-        {
-          path: '/security-and-access/policies',
-          name: 'policies',
-          component: views.Policies,
-          meta: {
-            title: i18n.t('appPageTitle.policies'),
-          },
-        },
-        {
-          path: '/security-and-access/certificates',
-          name: 'certificates',
-          component: views.Certificates,
-          meta: {
-            title: i18n.t('appPageTitle.certificates'),
-          },
-        },
-        {
-          path: '/settings/date-time',
-          name: 'date-time',
-          component: views.DateTime,
-          meta: {
-            title: i18n.t('appPageTitle.dateTime'),
-          },
-        },
-        {
           path: '/operations/factory-reset',
           name: 'factory-reset',
-          component: views.FactoryReset,
+          component: () => import('@/views/Operations/FactoryReset'),
           meta: {
             title: i18n.t('appPageTitle.factoryReset'),
           },
@@ -197,7 +133,7 @@ export let setRoutes = () => {
         {
           path: '/operations/fan-speed',
           name: 'fan-speed',
-          component: views.FanSpeed,
+          component: () => import('@/views/Operations/FanSpeed'),
           meta: {
             title: i18n.t('appPageTitle.fanSpeed'),
           },
@@ -205,7 +141,7 @@ export let setRoutes = () => {
         {
           path: '/operations/kvm',
           name: 'kvm',
-          component: views.Kvm,
+          component: () => import('@/views/Operations/Kvm'),
           meta: {
             title: i18n.t('appPageTitle.kvm'),
           },
@@ -213,55 +149,15 @@ export let setRoutes = () => {
         {
           path: '/operations/firmware',
           name: 'firmware',
-          component: views.Firmware,
+          component: () => import('@/views/Operations/Firmware'),
           meta: {
             title: i18n.t('appPageTitle.firmware'),
           },
         },
         {
-          path: '/settings/network',
-          name: 'network',
-          component: views.Network,
-          meta: {
-            title: i18n.t('appPageTitle.network'),
-          },
-        },
-        {
-          path: '/settings/power-restore-policy',
-          name: 'power-restore-policy',
-          component: views.PowerRestorePolicy,
-          meta: {
-            title: i18n.t('appPageTitle.powerRestorePolicy'),
-          },
-        },
-        {
-          path: '/settings/alarm-setting',
-          name: 'alarm-setting',
-          component: views.AlarmSetting,
-          meta: {
-            title: i18n.t('appPageTitle.alarmSetting'),
-          },
-        },
-        {
-          path: '/resource-management/power',
-          name: 'power',
-          component: views.Power,
-          meta: {
-            title: i18n.t('appPageTitle.power'),
-          },
-        },
-        {
-          path: '/resource-management/configureManagement',
-          name: 'configureManagement',
-          component: views.ConfigureManagement,
-          meta: {
-            title: i18n.t('appPageTitle.configureManagement'),
-          },
-        },
-        {
           path: '/operations/reboot-bmc',
           name: 'reboot-bmc',
-          component: views.RebootBmc,
+          component: () => import('@/views/Operations/RebootBmc'),
           meta: {
             title: i18n.t('appPageTitle.rebootBmc'),
           },
@@ -269,7 +165,7 @@ export let setRoutes = () => {
         {
           path: '/operations/serial-over-lan',
           name: 'serial-over-lan',
-          component: views.SerialOverLan,
+          component: () => import('@/views/Operations/SerialOverLan'),
           meta: {
             title: i18n.t('appPageTitle.serialOverLan'),
           },
@@ -277,7 +173,7 @@ export let setRoutes = () => {
         {
           path: '/operations/server-power-operations',
           name: 'server-power-operations',
-          component: views.ServerPowerOperations,
+          component: () => import('@/views/Operations/ServerPowerOperations'),
           meta: {
             title: i18n.t('appPageTitle.serverPowerOperations'),
           },
@@ -285,23 +181,104 @@ export let setRoutes = () => {
         {
           path: '/operations/virtual-media',
           name: 'virtual-media',
-          component: views.VirtualMedia,
+          component: () => import('@/views/Operations/VirtualMedia'),
           meta: {
             title: i18n.t('appPageTitle.virtualMedia'),
           },
         },
         {
-          path: '/about/about-us',
-          name: 'about-us',
-          component: views.AboutUs,
+          path: '/settings/date-time',
+          name: 'date-time',
+          component: () => import('@/views/Settings/DateTime'),
           meta: {
-            title: '关于我们',
+            title: i18n.t('appPageTitle.dateTime'),
+          },
+        },
+        {
+          path: '/settings/network',
+          name: 'network',
+          component: () => import('@/views/Settings/Network'),
+          meta: {
+            title: i18n.t('appPageTitle.network'),
+          },
+        },
+        {
+          path: '/settings/power-restore-policy',
+          name: 'power-restore-policy',
+          component: () => import('@/views/Settings/PowerRestorePolicy'),
+          meta: {
+            title: i18n.t('appPageTitle.powerRestorePolicy'),
+          },
+        },
+        {
+          path: '/settings/alarm-setting',
+          name: 'alarm-setting',
+          component: () => import('@/views/Settings/AlarmSetting'),
+          meta: {
+            title: i18n.t('appPageTitle.alarmSetting'),
+          },
+        },
+        {
+          path: '/security-and-access/sessions',
+          name: 'sessions',
+          component: () => import('@/views/SecurityAndAccess/Sessions'),
+          meta: {
+            title: i18n.t('appPageTitle.sessions'),
+          },
+        },
+        {
+          path: '/security-and-access/ldap',
+          name: 'ldap',
+          component: () => import('@/views/SecurityAndAccess/Ldap'),
+          meta: {
+            title: i18n.t('appPageTitle.ldap'),
+          },
+        },
+        {
+          path: '/security-and-access/user-management',
+          name: 'local-users',
+          component: () => import('@/views/SecurityAndAccess/UserManagement'),
+          meta: {
+            title: i18n.t('appPageTitle.userManagement'),
+          },
+        },
+        {
+          path: '/security-and-access/policies',
+          name: 'policies',
+          component: () => import('@/views/SecurityAndAccess/Policies'),
+          meta: {
+            title: i18n.t('appPageTitle.policies'),
+          },
+        },
+        {
+          path: '/security-and-access/certificates',
+          name: 'certificates',
+          component: () => import('@/views/SecurityAndAccess/Certificates'),
+          meta: {
+            title: i18n.t('appPageTitle.certificates'),
+          },
+        },
+        {
+          path: '/resource-management/power',
+          name: 'power',
+          component: () => import('@/views/ResourceManagement/Power'),
+          meta: {
+            title: i18n.t('appPageTitle.power'),
+          },
+        },
+        {
+          path: '/resource-management/configureManagement',
+          name: 'configureManagement',
+          component: () =>
+            import('@/views/ResourceManagement/ConfigureManagement'),
+          meta: {
+            title: i18n.t('appPageTitle.configureManagement'),
           },
         },
         {
           path: '*',
           name: 'page-not-found',
-          component: views.PageNotFound,
+          component: () => import('@/views/PageNotFound'),
           meta: {
             title: i18n.t('appPageTitle.pageNotFound'),
           },
