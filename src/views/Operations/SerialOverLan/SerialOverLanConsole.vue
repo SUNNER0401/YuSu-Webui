@@ -59,7 +59,7 @@ export default {
   },
   data() {
     return {
-      resizeConsoleWindow: null,
+      resizeConsoleWindow: () => {},
     };
   },
   computed: {
