@@ -36,7 +36,7 @@
       hide-header-close
     >
       <p>{{ $t('pageConfigureManagement.modal.bmcRebootingText') }}</p>
-      <b-progress :max="updateProgressMax" class="mt-3">
+      <b-progress max="100" class="mt-3">
         <b-progress-bar
           :value="100"
           variant="danger"
