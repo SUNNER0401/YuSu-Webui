@@ -114,4 +114,10 @@ export default {
   height: 18px !important;
   width: 18px !important;
 }
+svg {
+  &:hover {
+    background-color: #cccccc;
+    cursor: pointer;
+  }
+}
 </style>
