@@ -6,11 +6,7 @@
     >
       <main>
         <div key="1" class="login-brand mb-5">
-          <img
-            width="353px"
-            src="@/assets/images/login-company-logo.svg"
-            :alt="altLogo"
-          />
+          <img src="@/env/assets/images/OurBMC-logo.png" :alt="altLogo" />
         </div>
         <div v-show="onload" class="login-container">
           <div class="login-main">
@@ -176,11 +172,11 @@ main {
   overflow: hidden;
   .login-brand {
     position: absolute;
-    left: 63vw;
-    top: 34vh;
+    left: 58vw;
+    top: 41vh;
     img {
-      width: 15vw;
-      height: 33vh;
+      width: 24vw;
+      height: 12vh;
     }
   }
 }

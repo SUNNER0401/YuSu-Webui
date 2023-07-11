@@ -37,7 +37,7 @@
           >
             <img
               class="header-logo"
-              src="@/assets/images/login-company-logo.svg"
+              src="@/env/assets/images/OurBMC-logo.png"
               :alt="altLogo"
             />
           </b-navbar-brand>
