@@ -142,7 +142,8 @@
     "aboutUs": "@:appPageTitle.aboutUs",
     "operatingLogs": "Operating logs",
     "configureManagement": "Configure management",
-    "rasLogs": "RAS logs"
+    "rasLogs": "RAS logs",
+    "performanceMonitor": "@:appPageTitle.performanceMonitor"
   },
   "appPageTitle": {
     "changePassword": "Change password",
@@ -177,7 +178,8 @@
     "aboutUs": "About Us",
     "operatingLogs": "Operating logs",
     "configureManagement": "Configure management",
-    "rasLogs": "RAS logs"
+    "rasLogs": "RAS logs",
+    "performanceMonitor": "Performance monitor"
   },
   "pageChangePassword": {
     "changePassword": "Change password",
@@ -1388,5 +1390,13 @@
   },
   "pagepageRasLogs": {
     "notSupport": "This machine does not support RAS function."
+  },
+  "pagePerformanceMonitor": {
+    "currentStatus": "Current status",
+    "history": "History",
+    "usage": "usage",
+    "Memory": "Memory",
+    "Disk": "Disk",
+    "NetInterface": "Network"
   }
 }

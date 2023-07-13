@@ -142,7 +142,8 @@
     "aboutUs": "@:appPageTitle.aboutUs",
     "operatingLogs": "操作日志",
     "configureManagement": "配置管理",
-    "rasLogs": "RAS日志"
+    "rasLogs": "RAS日志",
+    "performanceMonitor": "@:appPageTitle.performanceMonitor"
   },
   "appPageTitle": {
     "changePassword": "修改密码",
@@ -177,7 +178,8 @@
     "aboutUs": "关于我们",
     "operatingLogs": "操作日志",
     "configureManagement": "配置管理",
-    "rasLogs": "RAS日志"
+    "rasLogs": "RAS日志",
+    "performanceMonitor": "服务器性能监控"
   },
   "pageChangePassword": {
     "changePassword": "修改密码",
@@ -1389,5 +1391,13 @@
   },
   "pagepageRasLogs": {
     "notSupport": "该机器不支持RAS功能"
+  },
+  "pagePerformanceMonitor": {
+    "currentStatus": "当前状态",
+    "history": "历史数据",
+    "usage": "利用率",
+    "Memory": "内存",
+    "Disk": "硬盘",
+    "NetInterface": "网络"
   }
 }

@@ -71,6 +71,11 @@ const AppNavigationMixin = {
               label: this.$t('appNavigation.sensors'),
               route: '/hardware-status/sensors',
             },
+            {
+              id: 'performanceMonitor',
+              label: this.$t('appNavigation.performanceMonitor'),
+              route: '/hardware-status/performanceMonitor',
+            },
           ],
         },
         {

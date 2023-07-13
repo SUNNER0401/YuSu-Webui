@@ -123,6 +123,14 @@ export let setRoutes = () => {
           },
         },
         {
+          path: '/hardware-status/performanceMonitor',
+          name: 'performanceMonitor',
+          component: () => import('@/views/HardwareStatus/PerformanceMonitor'),
+          meta: {
+            title: i18n.t('appPageTitle.performanceMonitor'),
+          },
+        },
+        {
           path: '/operations/factory-reset',
           name: 'factory-reset',
           component: () => import('@/views/Operations/FactoryReset'),
