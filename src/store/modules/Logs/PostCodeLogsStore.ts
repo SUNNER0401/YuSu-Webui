@@ -33,7 +33,7 @@ const PostCodeLogsStore = {
                 Message: Message,
                 Created: Created,
                 TimeStampOffset: Oem.TimeStampOffset,
-                Postcode: Oem.Postcode,
+                CodeType: Oem.Codetype,
               };
             }
           );

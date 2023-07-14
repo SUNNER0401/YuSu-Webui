@@ -783,7 +783,8 @@
       "Created": "Created",
       "Oem": {
         "TimeStampOffset": "TimeStampOffset"
-      }
+      },
+      "CodeType": "CodeType"
     },
     "toast": {
       "successDelete": "Successfully deleted %{count} log. | Successfully deleted %{count} logs.",

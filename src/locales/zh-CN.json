@@ -784,7 +784,8 @@
       "Created": "创建时间",
       "Oem": {
         "TimeStampOffset": "时间偏移量"
-      }
+      },
+      "CodeType": "类型"
     },
     "toast": {
       "successDelete": "成功删除了%{count}条日志",

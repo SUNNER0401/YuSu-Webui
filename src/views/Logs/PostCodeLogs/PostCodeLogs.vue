@@ -237,16 +237,16 @@ export default {
           tdClass: 'text-nowrap',
         },
         {
-          key: 'Message',
-          label: this.$t('pagePostCodeLogs.table.Message'),
+          key: 'CodeType',
+          label: this.$t('pagePostCodeLogs.table.CodeType'),
         },
         {
           key: 'Created',
           label: this.$t('pagePostCodeLogs.table.Created'),
         },
         {
-          key: 'Postcode',
-          label: 'Postcode',
+          key: 'Message',
+          label: this.$t('pagePostCodeLogs.table.Message'),
         },
         {
           key: 'TimeStampOffset',
