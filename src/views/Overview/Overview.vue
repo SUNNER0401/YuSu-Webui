@@ -55,13 +55,13 @@ export default {
   mixins: [LoadingBarMixin],
   data() {
     return {
-      showDumps: process.env.VUE_APP_ENV_NAME !== 'phytium',
+      showDumps: process.env.VUE_APP_ENV_NAME !== 'ourbmc',
     };
   },
   created() {
     this.startLoader();
     const dumpsPromise =
-      process.env.VUE_APP_ENV_NAME !== 'phytium'
+      process.env.VUE_APP_ENV_NAME !== 'ourbmc'
         ? new Promise((resolve) => {
             this.$root.$on('overview-dumps-complete', () => resolve());
           })

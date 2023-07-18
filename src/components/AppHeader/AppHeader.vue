@@ -33,7 +33,7 @@
             class="mr-0"
             to="/"
             data-test-id="appHeader-container-overview"
-            title="OpenBMC"
+            :title="companyName"
           >
             <img
               class="header-logo"
@@ -143,6 +143,7 @@ export default {
       isNavigationOpen: false,
       altLogo: process.env.VUE_APP_COMPANY_NAME || 'Built on OpenBMC',
       isFullscreen: false,
+      companyName: process.env.VUE_APP_COMPANY_NAME,
     };
   },
   computed: {

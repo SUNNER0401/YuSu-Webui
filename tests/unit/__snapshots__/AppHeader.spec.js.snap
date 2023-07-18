@@ -51,7 +51,6 @@ exports[`AppHeader.vue should render correctly 1`] = `
         <b-navbar-brand
           class="mr-0"
           data-test-id="appHeader-container-overview"
-          title="OpenBMC"
           to="/"
         >
           <img

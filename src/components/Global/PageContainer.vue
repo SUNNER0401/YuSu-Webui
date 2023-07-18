@@ -35,6 +35,5 @@ main {
   @include media-breakpoint-up($responsive-layout-bp) {
     padding-left: $spacer * 2;
   }
-  // background-image: url('~@/env/assets/images/phytium_logo.jpeg');
 }
 </style>

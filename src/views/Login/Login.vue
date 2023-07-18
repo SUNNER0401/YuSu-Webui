@@ -69,7 +69,7 @@ import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 import i18n from '@/i18n';
 import Alert from '@/components/Global/Alert';
 import InputPasswordToggle from '@/components/Global/InputPasswordToggle';
-import { setRoutes } from '@/env/router/phytium';
+import { setRoutes } from '@/env/router/ourbmc';
 import VueRouter from 'vue-router';
 
 export default {
