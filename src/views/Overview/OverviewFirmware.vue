@@ -10,8 +10,6 @@
           <dd v-if="BMCVersion">{{ dataFormatter(BMCVersion) }}</dd>
           <dt v-if="hostVersion">{{ $t('pageOverview.hostVersion') }}</dt>
           <dd v-if="hostVersion">{{ dataFormatter(hostVersion) }}</dd>
-          <!-- <dt v-if="backupVersion">{{ $t('pageOverview.backupVersion') }}</dt>
-          <dd v-if="backupVersion">{{ dataFormatter(backupVersion) }}</dd> -->
         </dl>
       </b-col>
     </b-row>

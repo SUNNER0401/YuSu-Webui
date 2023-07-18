@@ -13,16 +13,7 @@
       </transition>
       <!-- Scroll to top button -->
       <button-back-to-top />
-      <!-- <div class="two-dimension">
-        <img
-          class="two-dimension"
-          src="@/env/assets/images/phytium-two-dimension.jpg"
-        />
-      </div> -->
     </page-container>
-    <!-- <app-footer class="app-footer">
-      <copy-right class="app-copyright" />
-    </app-footer> -->
   </div>
 </template>
 

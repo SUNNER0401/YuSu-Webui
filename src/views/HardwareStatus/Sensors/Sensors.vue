@@ -56,24 +56,6 @@
           @row-selected="onRowSelected($event, filteredSensors.length)"
         >
           <!-- Checkbox column -->
-          <!-- <template #head(checkbox)>
-            <b-form-checkbox
-              v-model="tableHeaderCheckboxModel"
-              :indeterminate="tableHeaderCheckboxIndeterminate"
-              @change="onChangeHeaderCheckbox($refs.table)"
-            >
-              <span class="sr-only">{{ $t('global.table.selectAll') }}</span>
-            </b-form-checkbox>
-          </template>
-          <template #cell(checkbox)="row">
-            <b-form-checkbox
-              v-model="row.rowSelected"
-              @change="toggleSelectRow($refs.table, row.index)"
-            >
-              <span class="sr-only">{{ $t('global.table.selectItem') }}</span>
-            </b-form-checkbox>
-          </template> -->
-
           <template #cell(status)="{ value }">
             <status-icon :status="statusIcon(value)" /> {{ value }}
           </template>

@@ -83,26 +83,6 @@
           <template v-else>
             <!-- Reboot server options -->
             <b-form novalidate class="mb-5" @submit.prevent="rebootServer">
-              <!-- <b-form-group
-                :label="$t('pageServerPowerOperations.rebootServer')"
-              >
-                <b-form-radio
-                  v-model="form.rebootOption"
-                  name="reboot-option"
-                  data-test-id="serverPowerOperations-radio-rebootOrderly"
-                  value="orderly"
-                >
-                  {{ $t('pageServerPowerOperations.orderlyReboot') }}
-                </b-form-radio>
-                <b-form-radio
-                  v-model="form.rebootOption"
-                  name="reboot-option"
-                  data-test-id="serverPowerOperations-radio-rebootImmediate"
-                  value="immediate"
-                >
-                  {{ $t('pageServerPowerOperations.immediateReboot') }}
-                </b-form-radio>
-              </b-form-group> -->
               <p>{{ $t('pageServerPowerOperations.immediateReboot') }}</p>
               <b-button
                 variant="primary"
@@ -114,26 +94,6 @@
             </b-form>
             <!-- Shutdown server options -->
             <b-form novalidate @submit.prevent="shutdownServer">
-              <!-- <b-form-group
-                :label="$t('pageServerPowerOperations.shutdownServer')"
-              >
-                <b-form-radio
-                  v-model="form.shutdownOption"
-                  name="shutdown-option"
-                  data-test-id="serverPowerOperations-radio-shutdownOrderly"
-                  value="orderly"
-                >
-                  {{ $t('pageServerPowerOperations.orderlyShutdown') }}
-                </b-form-radio>
-                <b-form-radio
-                  v-model="form.shutdownOption"
-                  name="shutdown-option"
-                  data-test-id="serverPowerOperations-radio-shutdownImmediate"
-                  value="immediate"
-                >
-                  {{ $t('pageServerPowerOperations.immediateShutdown') }}
-                </b-form-radio>
-              </b-form-group> -->
               <p>{{ $t('pageServerPowerOperations.immediateShutdown') }}</p>
               <b-button
                 variant="primary"

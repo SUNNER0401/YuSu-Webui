@@ -10,7 +10,6 @@ const SensorsStore = {
   },
   mutations: {
     setSensors: (state: { sensors: any[] }, sensors: any[]) => {
-      // state.sensors = uniqBy([...state.sensors, ...sensors], 'name');
       sensors.forEach((item: { name: any }) => {
         for (let i = 0; i < state.sensors.length; i++) {
           if (state.sensors[i].name === item.name) {
