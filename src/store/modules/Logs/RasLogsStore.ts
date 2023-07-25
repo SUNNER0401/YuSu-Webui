@@ -1,5 +1,6 @@
 import api, { getResponseCount } from '@/store/api';
 import i18n from '@/i18n';
+import { ReturnGetters, ActionContext } from '../../../types/store';
 
 const getHealthStatus = (logs: any, loadedEvents: any) => {
   let status = loadedEvents ? 'OK' : '';
@@ -20,165 +21,199 @@ const getHealthStatus = (logs: any, loadedEvents: any) => {
 const getHighPriorityEvents = (logs: any[]) =>
   logs.filter(({ severity }) => severity === 'Critical');
 
-const RasLogsStore = {
-  namespaced: true,
-  state: {
-    allRasLogs: [],
-    loadedEvents: false,
-  },
-  getters: {
-    allRasLogs: (state: { allRasLogs: any }) => state.allRasLogs,
-    highPriorityEvents: (state: { allRasLogs: any }) =>
-      getHighPriorityEvents(state.allRasLogs),
-    healthStatus: (state: { allRasLogs: any; loadedEvents: any }) =>
-      getHealthStatus(state.allRasLogs, state.loadedEvents),
-  },
-  mutations: {
-    setAllRasLogs: (
-      state: { allRasLogs: any; loadedEvents: boolean },
-      allRasLogs: any
-    ) => ((state.allRasLogs = allRasLogs), (state.loadedEvents = true)),
-  },
-  actions: {
-    async getRasResource() {
-      return await api
-        .get('/redfish/v1/Systems/system/LogServices/RasEvent')
-        .catch((err) => {
-          throw err;
-        });
-    },
-    async getRasLogData({ commit }: any) {
-      return await api
-        .get('/redfish/v1/Systems/system/LogServices/RasEvent/Entries')
-        .then(({ data: { Members = [] } = {} }) => {
-          const rasLogs = Members.map((log: { [x: string]: any }) => {
-            let {
-              Id,
-              Severity,
-              Created,
-              EntryType,
-              Message,
-              Name,
-              AdditionalDataURI,
-              MessageArgs,
-            } = log;
-            console.log(MessageArgs);
-            return {
-              id: Id,
-              severity: Severity,
-              date: new Date(Created),
-              type: EntryType,
-              description: Message,
-              name: Name,
-              uri: log['@odata.id'],
-              additionalDataUri: AdditionalDataURI,
-              messageArgs: MessageArgs,
-            };
-          });
-          commit('setAllRasLogs', rasLogs);
-        })
-        .catch((error) => {
-          console.log('Event Log Data:', error);
-        });
-    },
-    async deleteAllRasLogs({ dispatch }: any, data: string | any[]) {
-      return await api
-        .post(
-          '/redfish/v1/Systems/system/LogServices/RasEvent/Actions/LogService.ClearLog',
-          '',
-          undefined
-        )
-        .then(() => dispatch('getRasLogData'))
-        .then(() => i18n.tc('pageEventLogs.toast.successDelete', data.length))
-        .catch((error) => {
-          console.log(error);
-          throw new Error(
-            i18n.tc('pageEventLogs.toast.errorDelete', data.length)
-          );
-        });
-    },
-    async deleteRasLogs({ dispatch }: any, uris = []) {
-      const promises = uris.map((uri) =>
-        api.delete(uri, undefined).catch((error) => {
-          console.log(error);
-          return error;
-        })
-      );
-      return await api
-        .all(promises)
-        .then((response) => {
-          dispatch('getRasLogData');
-          return response;
-        })
-        .then(
-          api.spread((...responses) => {
-            const { successCount, errorCount } = getResponseCount(responses);
-            const toastMessages = [];
+const state = {
+  allRasLogs: [],
+  loadedEvents: false,
+};
+type State = typeof state;
 
-            if (successCount) {
-              const message = i18n.tc(
-                'pageEventLogs.toast.successDelete',
-                successCount
-              );
-              toastMessages.push({ type: 'success', message });
-            }
+const getters = {
+  allRasLogs: (state: State) => state.allRasLogs,
+  highPriorityEvents: (state: State) => getHighPriorityEvents(state.allRasLogs),
+  healthStatus: (state: State) =>
+    getHealthStatus(state.allRasLogs, state.loadedEvents),
+};
+type Getters = ReturnGetters<typeof getters>;
 
-            if (errorCount) {
-              const message = i18n.tc(
-                'pageEventLogs.toast.errorDelete',
-                errorCount
-              );
-              toastMessages.push({ type: 'error', message });
-            }
+const mutations = {
+  setAllRasLogs: (state: State, allRasLogs: any) => (
+    (state.allRasLogs = allRasLogs), (state.loadedEvents = true)
+  ),
+};
 
-            return toastMessages;
-          })
+type Multations = keyof typeof mutations;
+
+const actionsNames = [
+  'getRasResource',
+  'getRasLogData',
+  'deleteAllRasLogs',
+  'deleteRasLogs',
+  'downloadRasLogs',
+  'viewRasLog',
+] as const;
+type ActionNames = typeof actionsNames[number];
+
+const actions = {
+  async getRasResource() {
+    return await api
+      .get('/redfish/v1/Systems/system/LogServices/RasEvent')
+      .catch((err) => {
+        throw err;
+      });
+  },
+  async getRasLogData({
+    commit,
+  }: ActionContext<ActionNames, Multations, State, Getters>) {
+    return await api
+      .get('/redfish/v1/Systems/system/LogServices/RasEvent/Entries')
+      .then(({ data: { Members = [] } = {} }) => {
+        const rasLogs = Members.map((log: { [x: string]: any }) => {
+          let {
+            Id,
+            Severity,
+            Created,
+            EntryType,
+            Message,
+            Name,
+            AdditionalDataURI,
+            MessageArgs,
+          } = log;
+          console.log(MessageArgs);
+          return {
+            id: Id,
+            severity: Severity,
+            date: new Date(Created),
+            type: EntryType,
+            description: Message,
+            name: Name,
+            uri: log['@odata.id'],
+            additionalDataUri: AdditionalDataURI,
+            messageArgs: MessageArgs,
+          };
+        });
+        commit('setAllRasLogs', rasLogs);
+      })
+      .catch((error) => {
+        console.log('Event Log Data:', error);
+      });
+  },
+  async deleteAllRasLogs(
+    { dispatch }: ActionContext<ActionNames, Multations, State, Getters>,
+    data: string | any[]
+  ) {
+    return await api
+      .post(
+        '/redfish/v1/Systems/system/LogServices/RasEvent/Actions/LogService.ClearLog',
+        '',
+        undefined
+      )
+      .then(() => dispatch('getRasLogData'))
+      .then(() => i18n.tc('pageEventLogs.toast.successDelete', data.length))
+      .catch((error) => {
+        console.log(error);
+        throw new Error(
+          i18n.tc('pageEventLogs.toast.errorDelete', data.length)
         );
-    },
-    async downloadRasLogs(_: any, uris = []) {
-      const promises = uris.map((uri) =>
-        api
-          .get(uri, {
-            responseType: 'blob',
-          })
-          .then((res) => {
-            let filename = res.headers['content-disposition']
-              .split('filename=')[1]
-              .replace(/"/g, '');
-            let URL = window.URL.createObjectURL(res.data);
+      });
+  },
+  async deleteRasLogs(
+    { dispatch }: ActionContext<ActionNames, Multations, State, Getters>,
+    uris = []
+  ) {
+    const promises = uris.map((uri) =>
+      api.delete(uri, undefined).catch((error) => {
+        console.log(error);
+        return error;
+      })
+    );
+    return await api
+      .all(promises)
+      .then((response) => {
+        dispatch('getRasLogData');
+        return response;
+      })
+      .then(
+        api.spread((...responses) => {
+          const { successCount, errorCount } = getResponseCount(responses);
+          const toastMessages = [];
 
-            let link = document.createElement('a');
-            link.href = URL;
-            link.download = filename;
-            link.click();
-            window.URL.revokeObjectURL(URL);
-            return 'success';
-          })
-          .catch((error) => {
-            console.log(error);
-            return 'failed';
-          })
-      );
-      return await api.all(promises).then((res) => {
-        let count = 0;
-        res.forEach((res) => {
-          if (res === 'failed') {
-            count++;
+          if (successCount) {
+            const message = i18n.tc(
+              'pageEventLogs.toast.successDelete',
+              successCount
+            );
+            toastMessages.push({ type: 'success', message });
           }
-        });
-        if (count) {
-          alert(i18n.tc('pageEventLogs.modal.download', count));
+
+          if (errorCount) {
+            const message = i18n.tc(
+              'pageEventLogs.toast.errorDelete',
+              errorCount
+            );
+            toastMessages.push({ type: 'error', message });
+          }
+
+          return toastMessages;
+        })
+      );
+  },
+  async downloadRasLogs(
+    _: ActionContext<ActionNames, Multations, State, Getters>,
+    uris = []
+  ) {
+    const promises = uris.map((uri) =>
+      api
+        .get(uri, {
+          responseType: 'blob',
+        })
+        .then((res) => {
+          let filename = res.headers['content-disposition']
+            .split('filename=')[1]
+            .replace(/"/g, '');
+          let URL = window.URL.createObjectURL(res.data);
+
+          let link = document.createElement('a');
+          link.href = URL;
+          link.download = filename;
+          link.click();
+          window.URL.revokeObjectURL(URL);
+          return 'success';
+        })
+        .catch((error) => {
+          console.log(error);
+          return 'failed';
+        })
+    );
+    return await api.all(promises).then((res) => {
+      let count = 0;
+      res.forEach((res) => {
+        if (res === 'failed') {
+          count++;
         }
       });
-    },
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async viewRasLog(_: any, url: string) {
-      let link = document.createElement('a');
-      link.target = '_blank';
-      link.href = url.split('/attachment')[0] + '/json';
-      link.click();
-    },
+      if (count) {
+        alert(i18n.tc('pageEventLogs.modal.download', count));
+      }
+    });
   },
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async viewRasLog(
+    _: ActionContext<ActionNames, Multations, State, Getters>,
+    url: string
+  ) {
+    let link = document.createElement('a');
+    link.target = '_blank';
+    link.href = url.split('/attachment')[0] + '/json';
+    link.click();
+  },
+};
+
+const RasLogsStore = {
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions,
 };
 
 export default RasLogsStore;

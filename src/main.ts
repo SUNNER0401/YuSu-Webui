@@ -4,7 +4,7 @@ import router from './router';
 //Do not change store import.
 //Exact match alias set to support
 //dotenv customizations.
-import store from './store';
+import store, { Store } from './store/index';
 
 import './icons'; // icon
 
@@ -46,7 +46,6 @@ import {
 import Vuelidate from 'vuelidate';
 import i18n from './i18n';
 import { format, OptionsWithTZ } from 'date-fns-tz';
-import { ThisTypedComponentOptionsWithArrayProps } from 'vue/types/options';
 import _ from 'lodash';
 
 // Filters
@@ -147,19 +146,28 @@ Vue.use(IconsPlugin);
 Vue.use(Vuelidate);
 
 Vue.prototype._ = _;
+Vue.prototype.$$store = store;
+Vue.prototype.$$emit = (that: any, mutationName: string, ...params: any) => {
+  if (!mutationName) throw new Error('$$emit need mutationName param');
+  return new Promise((resolve, reject) => {
+    that.$emit(mutationName, ...params, {
+      success: resolve,
+      fail: reject,
+    });
+  });
+};
 
-const vueOptions = <
-  ThisTypedComponentOptionsWithArrayProps<
-    Vue,
-    Record<string, unknown>,
-    Record<string, unknown>,
-    Record<string, unknown>,
-    never
-  >
->{
+new Vue({
   i18n,
   router,
   store,
   render: (h) => h(App),
-};
-new Vue(vueOptions).$mount('#app');
+}).$mount('#app');
+
+declare module 'vue/types/vue' {
+  interface Vue {
+    $$store: Store;
+    $$emit: <T>(that: any, mutationName: string, ...params: any) => Promise<T>;
+    [index: string]: any;
+  }
+}
