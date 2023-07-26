@@ -20,26 +20,26 @@
           </b-row>
         </page-section>
         <page-section :section-title="$t('pageFanSpeed.zoneControl')">
-          <b-form @submit.prevent="setFanMode(selected)">
+          <b-form>
             <div class="form-background pt-4">
               <b-row>
-                <b-col sm="6" md="6">
-                  <template v-for="(zoneInfo, index1) in allInfo">
+                <b-col>
+                  <template v-for="(zoneInfo, index1) in zoneInfos">
                     <b-form
                       :key="index1"
                       class="ml-4 mb-4"
-                      @submit="submitSetting(zoneInfo.Zone)"
+                      @submit="submitSetting(zoneInfo, pwmValues)"
                     >
                       <b-row>
                         <b-col>
                           <b-row>
                             <b-col>
-                              <h4>{{ 'zone' + zoneInfo.Zone }}</h4>
+                              <h4>{{ zoneInfo.ZoneName }}</h4>
                               <b-row>
-                                <b-col xl="5">
+                                <b-col lg="3" xl="2">
                                   <b-form-select
-                                    v-model="zoneInfo.CurrentMode"
-                                    :options="allModes"
+                                    v-model="zoneInfo.Current"
+                                    :options="zoneInfo.Supported"
                                     size="sm"
                                     class="mb-3"
                                   >
@@ -49,46 +49,63 @@
                             </b-col>
                           </b-row>
                           <!-- These functions only can be used in manual mode. -->
-                          <template
-                            v-if="zoneInfo.CurrentMode === 'MANUAL_MODE'"
-                          >
-                            <b-row
-                              v-for="(fan, index2) in zoneInfo.fanInfo"
-                              :key="index2"
+                          <template v-if="zoneInfo.Current === 'MANUAL_MODE'">
+                            <div
+                              v-for="(tachNames, pwmName) in zoneInfo.FanInfo"
+                              :key="pwmName"
                             >
-                              <b-col cols="3">
-                                <p>{{ fan.Name }}</p>
-                              </b-col>
-                              <b-col cols="3">
-                                <b-form-input
-                                  v-model="pwmValues[fan.Name]"
-                                  class="text-center"
-                                  type="number"
-                                  min="0"
-                                  max="100"
-                                  :state="
-                                    getValidationState($v.pwmValues[fan.Name])
-                                  "
-                                  @blur="$v.pwmValues[fan.Name].$touch()"
-                                  @focus="$v.pwmValues[fan.Name].$reset()"
-                                />
-                                <b-form-invalid-feedback role="alert">
-                                  <div v-if="!$v.pwmValues[fan.Name].required">
-                                    {{ $t('global.form.fieldRequired') }}
-                                  </div>
-                                  <div
-                                    v-else-if="!$v.pwmValues[fan.Name].between"
-                                  >
-                                    {{
-                                      $t('global.form.valueMustBeBetween', {
-                                        min: 0,
-                                        max: 100,
-                                      })
-                                    }}
-                                  </div>
-                                </b-form-invalid-feedback>
+                              <b-row
+                                v-for="(tachName, index2) in tachNames"
+                                :key="index2"
+                                style="width: 500px"
+                              >
+                                <b-col sm="4" md="4" lg="3" xl="3">
+                                  <p>{{ tachName }}</p>
+                                </b-col>
+                                <b-col sm="4" md="4" lg="3" xl="3">
+                                  <b-form-input
+                                    v-model="pwmValues[pwmName]"
+                                    class="text-center"
+                                    type="number"
+                                    min="0"
+                                    max="100"
+                                    :state="
+                                      getValidationState($v.pwmValues[pwmName])
+                                    "
+                                    @blur="$v.pwmValues[pwmName].$touch()"
+                                    @focus="$v.pwmValues[pwmName].$reset()"
+                                  />
+                                  <b-form-invalid-feedback role="alert">
+                                    <div v-if="!$v.pwmValues[pwmName].required">
+                                      {{ $t('global.form.fieldRequired') }}
+                                    </div>
+                                    <div
+                                      v-else-if="!$v.pwmValues[pwmName].between"
+                                    >
+                                      {{
+                                        $t('global.form.valueMustBeBetween', {
+                                          min: 0,
+                                          max: 100,
+                                        })
+                                      }}
+                                    </div>
+                                  </b-form-invalid-feedback>
+                                </b-col>
+                              </b-row>
+                            </div>
+                            <b-row>
+                              <b-col>
+                                <a
+                                  href=""
+                                  class="fan-relationship"
+                                  @click="showRelationship(zoneInfo, $event)"
+                                  >{{ $t('pageFanSpeed.zoneRelationship') }}</a
+                                >
                               </b-col>
                             </b-row>
+                            <modal-fan-speed-relationship
+                              :zone-info="zoneInfo"
+                            />
                           </template>
                           <b-row>
                             <b-col>
@@ -123,6 +140,7 @@ import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 import { required, between } from 'vuelidate/lib/validators';
+import ModalFanSpeedRelationship from './FanSpeedModalRelationship.vue';
 
 export default {
   name: 'FanSpeed',
@@ -130,6 +148,7 @@ export default {
     FanSpeedChart,
     PageTitle,
     PageSection,
+    ModalFanSpeedRelationship,
   },
   mixins: [LoadingBarMixin, BVToastMixin, VuelidateMixin],
   // @ts-ignore
@@ -146,34 +165,36 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('fanSpeed', [
-      'fanSpeeds',
-      'fanUrls',
-      'fanModes',
-      'pwmRelation',
-      'pwmValues',
-      'allInfo',
-      'allModes',
-    ]),
+    ...mapGetters('fanSpeed', ['fanSpeeds', 'pwmValues', 'zoneInfos']),
   },
   async created(): Promise<void> {
     this.startLoader();
-    this.$store.dispatch('fanSpeed/getAllModes');
     this.$store.dispatch('fanSpeed/getFanAllData').finally(() => {
       this.endLoader();
     });
   },
   methods: {
-    submitSetting(zone: number): void {
+    showRelationship(zoneInfo: any, event: any) {
+      event.preventDefault();
+      this.$bvModal.show('modal-fan-speed-relationship-' + zoneInfo.ZoneName);
+    },
+    submitSetting(
+      zoneInfo: { [index: string]: any },
+      pwmValues: { [index: string]: number | string }
+    ): void {
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       }
-      let mode: string = this.allInfo[zone - 1].CurrentMode;
+      for (let pwmName in pwmValues) {
+        if (typeof pwmValues[pwmName] == 'string') {
+          pwmValues[pwmName] = parseInt(pwmValues[pwmName] as string);
+        }
+      }
       this.$bvModal
         .msgBoxConfirm(
           this.$t('pageFanSpeed.modal.confirmMessage', {
-            zoneName: 'zone' + zone,
+            zoneName: zoneInfo.ZoneName,
           }),
           {
             title: this.$t('pageFanSpeed.modal.confirmTitle'),
@@ -184,47 +205,18 @@ export default {
         .then(async (confirm: boolean) => {
           if (confirm) {
             this.startLoader();
-            // Set zone mode.
-            let isSetMode = false;
             this.$store
-              .dispatch('fanSpeed/setFanMode', {
-                zone,
-                mode,
-              })
-              .then(async () => {
-                isSetMode = true;
-                //Judge mode.
-                if (mode != 'MANUAL_MODE') return;
-                // Batch send setPwmValue requests.
-                let promises: Promise<void>[] = [];
-                this.allInfo[zone - 1].fanInfo.forEach(
-                  ({ Name }: { Name: string; Pwm: number }) => {
-                    let promise = this.$store.dispatch('fanSpeed/setPwmValue', {
-                      zone,
-                      fanName: Name,
-                      pwm: this.pwmValues[Name],
-                    });
-                    promises.push(promise);
-                  }
-                );
-                // Wait all requests complete.
-                await Promise.all(promises);
+              .dispatch('fanSpeed/manualControl', {
+                zoneInfo,
+                pwmValues,
               })
               .then(() => {
                 // Successfully
                 this.successToast(this.$t('pageFanSpeed.toast.successSaving'));
               })
               .catch(() => {
-                if (isSetMode)
-                  // Set zone mode failed.
-                  this.errorToast(
-                    this.$t('pageFanSpeed.toast.errorSettingZoneMode')
-                  );
-                // Set zone mode successfully but pwm values failed.
-                else
-                  this.errorToast(
-                    this.$t('pageFanSpeed.toast.errorSettingFanPwm')
-                  );
+                // Set failed.
+                this.errorToast(this.$t('pageFanSpeed.toast.errorSetting'));
               })
               .finally(async () => {
                 // After operations get fan data again.
@@ -254,5 +246,8 @@ export default {
 }
 ::v-deep .form-control {
   height: 26px;
+}
+.fan-relationship:hover {
+  text-decoration: none;
 }
 </style>

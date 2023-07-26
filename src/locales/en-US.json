@@ -424,7 +424,8 @@
         "subtext": "Show fan speed of each fan"
       },
       "fanSpeed": "Fan Speed"
-    }
+    },
+    "zoneRelationship": "Relationship of fan zone"
   },
   "pageFirmware": {
     "cardActionSwitchToRunning": "Switch to running",

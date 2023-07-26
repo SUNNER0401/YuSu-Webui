@@ -424,7 +424,8 @@
         "subtext": "显示每个风扇的转速"
       },
       "fanSpeed": "风扇转速"
-    }
+    },
+    "zoneRelationship": "风扇区域控制关系"
   },
   "pageFirmware": {
     "cardActionSwitchToRunning": "切换运行",
