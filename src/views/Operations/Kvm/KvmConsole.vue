@@ -18,36 +18,38 @@
       </b-row>
     </div>
     <div id="terminal-kvm" ref="panel1" :class="terminalClass">
-      <div ref="toolbar2" class="kvm-toolbar2">
-        <div class="kvm-toolbar-menu">
-          <b-navbar-brand
-            id="kvm-screenshot"
-            class="kvm-toolbar2-item"
-            :title="$t('pageKvm.brandTitle.screenShot')"
-          >
-            <screen-shot :element="shotArea" />
-          </b-navbar-brand>
-          <b-navbar-brand
-            id="kvm-recorder"
-            class="kvm-toolbar2-item"
-            :title="$t('pageKvm.brandTitle.recorder')"
-          >
-            <kvm-recorder :element="shotArea" />
-          </b-navbar-brand>
-          <b-navbar-brand
-            id="kvm-immersion-mode"
-            class="kvm-toolbar2-item"
-            :title="$t('pageKvm.brandTitle.immersionMode')"
-          >
-            <immersion-mode :area="shotArea" />
-          </b-navbar-brand>
-          <b-navbar-brand
-            id="kvm-screen-full"
-            class="kvm-toolbar2-item"
-            :title="$t('pageKvm.brandTitle.screenFull')"
-          >
-            <screen-full :element="element" />
-          </b-navbar-brand>
+      <div v-show="loadFinished" class="kvm-toolbar2">
+        <div id="kvm-toolbar-menu-row">
+          <div class="kvm-toolbar-menu">
+            <b-navbar-brand
+              id="kvm-screenshot"
+              class="kvm-toolbar2-item"
+              :title="$t('pageKvm.brandTitle.screenShot')"
+            >
+              <screen-shot :element="shotArea" />
+            </b-navbar-brand>
+            <b-navbar-brand
+              id="kvm-recorder"
+              class="kvm-toolbar2-item"
+              :title="$t('pageKvm.brandTitle.recorder')"
+            >
+              <kvm-recorder :element="shotArea" />
+            </b-navbar-brand>
+            <b-navbar-brand
+              id="kvm-immersion-mode"
+              class="kvm-toolbar2-item"
+              :title="$t('pageKvm.brandTitle.immersionMode')"
+            >
+              <immersion-mode :area="shotArea" />
+            </b-navbar-brand>
+            <b-navbar-brand
+              id="kvm-screen-full"
+              class="kvm-toolbar2-item"
+              :title="$t('pageKvm.brandTitle.screenFull')"
+            >
+              <screen-full :element="element" />
+            </b-navbar-brand>
+          </div>
         </div>
         <b-navbar-brand class="power-button">
           <b-icon
@@ -97,6 +99,8 @@ export default {
       resizeKvmWindow: null,
       element: null,
       shotArea: null,
+      loadFinished: false,
+      timer: null,
     };
   },
   computed: {
@@ -155,6 +159,7 @@ export default {
     this.element = document.querySelector('#terminal-kvm');
     this.openTerminal();
     setTimeout(() => {
+      this.loadFinished = true;
       this.amendToolbar2Position();
       window.addEventListener(
         'resize',
@@ -166,7 +171,7 @@ export default {
       document.querySelector(
         '.kvm-toolbar2'
       )!.style.height = this.shotArea.height;
-      this.a = setInterval(() => {
+      this.timer = setInterval(() => {
         if (!document.querySelector('.kvm-toolbar2')) return;
         this.amendToolbar2Position();
         this.shotArea.style.top = `calc( (100vh - ${this.shotArea.style.height}) / 2 )`;
@@ -175,7 +180,7 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.resizeKvmWindow);
-    clearInterval(this.a);
+    clearInterval(this.timer);
     this.closeTerminal();
   },
   methods: {
@@ -184,14 +189,14 @@ export default {
     // },
     amendToolbar2Position() {
       let toolbar2 = document.querySelector('.kvm-toolbar2');
-      let div = document.querySelector('#terminal-kvm > div:nth-child(2)');
+      let div = document.querySelector('#terminal-kvm');
       let canvas = document.querySelector(
         '#terminal-kvm > div:nth-child(2) > canvas'
       );
       if (!this.isFullWindow) {
         toolbar2!.style.right = `calc(${div!.clientWidth}px - ${
           canvas!.style.width
-        })`;
+        } - 61px)`;
         toolbar2!.style.height = canvas!.style.height;
       } else {
         toolbar2!.style.right = '0px';
@@ -323,7 +328,6 @@ export default {
     height: $canvaHeight;
     width: 7%;
     position: relative;
-    display: grid !important;
     place-items: center;
     .kvm-toolbar-menu {
       height: auto;
@@ -383,5 +387,12 @@ export default {
       margin: 0 auto;
     }
   }
+}
+
+#kvm-toolbar-menu-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 }
 </style>
