@@ -489,7 +489,8 @@
       "verifySwitchMessage": "Refresh the application to verify the running and backup images switched.",
       "verifyUpdate": "Verify update",
       "verifyUpdateMessage": "Refresh the application to verify firmware updated successfully",
-      "updateSuccessfully": "Update successfully!"
+      "updateSuccessfully": "Update successfully!",
+      "errorUpdate": "Error update！"
     }
   },
   "pageInventory": {

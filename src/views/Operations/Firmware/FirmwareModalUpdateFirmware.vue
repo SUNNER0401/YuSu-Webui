@@ -46,12 +46,8 @@
         >
         </b-progress-bar>
       </b-progress>
-      <div style="float: left">
-        <p>{{ complete }}: {{ updateProgress }}%</p>
-      </div>
-      <div style="float: right">
-        <p>{{ Activation }}</p>
-      </div>
+      <p style="float: left">{{ complete }}: {{ updateProgress }}%</p>
+      <p style="float: right">{{ activation }}</p>
     </b-modal>
     <b-modal
       id="modal-update-firmware-bmc-progress"
@@ -77,6 +73,12 @@
 
 <script lang="ts">
 export default {
+  props: {
+    updateFirmware: {
+      type: Object,
+      default: () => {},
+    },
+  },
   data() {
     return {
       updateProgressMax: 100,
@@ -85,37 +87,29 @@ export default {
   computed: {
     updatingTitle() {
       let updateTitle = {
-        Updating: this.$t('pageFirmware.modal.updating'),
-        updatingId: this.$store.state.firmware.updateFirmware.id,
-        type: this.$t('pageFirmware.modal.type'),
-        firmtype: this.$store.state.firmware.updateFirmware.type,
+        updating: this.$t('pageFirmware.modal.updating'),
+        firmtype: this.updateFirmware.type,
       };
-      if (updateTitle.updatingId)
-        return (
-          updateTitle.Updating +
-          updateTitle.updatingId +
-          ' ' +
-          updateTitle.type +
-          updateTitle.firmtype
-        );
-      else return updateTitle.Updating.split(':')[0];
+      return updateTitle.firmtype
+        ? updateTitle.updating + updateTitle.firmtype
+        : updateTitle.updating.split(':')[0];
     },
     complete() {
       return this.$t('pageFirmware.modal.complete');
     },
     runningBmc() {
-      return this.$store.getters['firmware/activeBmcFirmware'];
+      return this.$$store.getters['firmware/activeBmcFirmware'];
     },
     runningBmcVersion() {
       return this.runningBmc?.version || '--';
     },
     isSingleFileUploadEnabled() {
-      return this.$store.getters['firmware/isSingleFileUploadEnabled'];
+      return this.$$store.getters['firmware/isSingleFileUploadEnabled'];
     },
     updateProgress() {
-      return this.$store.state.firmware.updateProgress;
+      return this.$$store.state.firmware.updateProgress;
     },
-    Activation() {
+    activation() {
       if (this.updateProgress >= 0 && this.updateProgress < 20)
         return this.$t('pageFirmware.modal.state.uploading');
       if (this.updateProgress >= 20 && this.updateProgress < 40)

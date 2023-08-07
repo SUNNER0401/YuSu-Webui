@@ -489,7 +489,8 @@
       "verifySwitchMessage": "刷新应用程序以验证运行和备份映像已切换。",
       "verifyUpdate": "验证更新",
       "verifyUpdateMessage": "刷新应用程序以验证固件更新成功",
-      "updateSuccessfully": "更新成功！"
+      "updateSuccessfully": "更新成功！",
+      "errorUpdate": "更新失败！"
     }
   },
   "pageInventory": {

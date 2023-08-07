@@ -10,8 +10,6 @@ const state = {
   applyTime: null,
   tftpAvailable: false,
   updateProgress: 0,
-  updateFirmware: '',
-  lastGetProgress: 0,
 };
 type State = typeof state;
 
@@ -65,6 +63,8 @@ const mutations = {
   setApplyTime: (state: State, applyTime: any) => (state.applyTime = applyTime),
   setTftpUploadAvailable: (state: State, tftpAvailable: any) =>
     (state.tftpAvailable = tftpAvailable),
+  setUpdateProgress: (state: State, updateProgress: any) =>
+    (state.updateProgress = updateProgress),
 };
 type Multations = keyof typeof mutations;
 
@@ -88,9 +88,14 @@ const actions = {
   async getFirmwareInformation({
     dispatch,
   }: ActionContext<ActionNames, Multations, State, Getters>) {
-    dispatch('getActiveHostFirmware');
-    dispatch('getActiveBmcFirmware');
-    return await dispatch('getFirmwareInventory');
+    await api
+      .all([
+        dispatch('getActiveHostFirmware'),
+        dispatch('getActiveBmcFirmware'),
+      ])
+      .then(async () => {
+        await dispatch('getFirmwareInventory');
+      });
   },
   getActiveBmcFirmware({
     commit,
@@ -211,8 +216,14 @@ const actions = {
       .post('/redfish/v1/UpdateService', image, {
         headers: { 'Content-Type': 'application/octet-stream' },
       })
-      .catch((error) => {
-        console.log(error);
+      .then(async ({ data }) => {
+        const { Type: type, '@odata.id': taskUrl } = data;
+        return {
+          type,
+          taskUrl,
+        };
+      })
+      .catch(() => {
         throw new Error(
           i18n.t('pageFirmware.toast.errorUpdateFirmware') as string
         );
@@ -237,6 +248,13 @@ const actions = {
         data,
         undefined
       )
+      .then(async ({ data }) => {
+        const { Type: type, '@odata.id': taskUrl } = data;
+        return {
+          type,
+          taskUrl,
+        };
+      })
       .catch((error) => {
         console.log(error);
         throw new Error(
@@ -261,16 +279,14 @@ const actions = {
     });
   },
   async getUpdateinfo(
-    { state }: ActionContext<ActionNames, Multations, State, Getters>,
-    id: string
+    { commit }: ActionContext<ActionNames, Multations, State, Getters>,
+    taskUrl: string
   ) {
     return await api
-      .get('/xyz/openbmc_project/software/' + id)
-      .then(({ data: { data } }) => {
-        if (data.Progress) {
-          state.updateProgress = data.Progress;
-        }
-        return data;
+      .get(taskUrl)
+      .then(({ data: { TaskState, PercentComplete } }) => {
+        commit('setUpdateProgress', PercentComplete);
+        return { TaskState };
       })
       .catch(() => {
         throw 'page not found!';
