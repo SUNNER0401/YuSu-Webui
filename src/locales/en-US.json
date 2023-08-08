@@ -89,7 +89,9 @@
       "browserNotSupport": "Your browser can not work.",
       "screenShotFailed": "Shot screen failed!",
       "noArea": "Can not catch this Area."
-    }
+    },
+    "BrowserVersionLow": "Version of browser is too low.We recommand you use Chrome(>=113), Firefox(>=113), Edge(>=113).",
+    "BrowserVersionMisMatch": "We recommand you use Chrome(>=113), Firefox(>=113), Edge(>=113)."
   },
   "appHeader": {
     "applicationHeader": "Application header",

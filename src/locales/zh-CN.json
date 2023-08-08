@@ -89,7 +89,9 @@
       "browserNotSupport": "当前浏览器不支持。",
       "screenShotFailed": "截屏失败",
       "noArea": "该区域无法获取。"
-    }
+    },
+    "BrowserVersionLow": "浏览器版本过低，推荐使用Chrome(>=113), Firefox(>=113), Edge(>=113)浏览器",
+    "BrowserVersionMisMatch": "推荐使用Chrome(>=113), Firefox(>=113), Edge(>=113)浏览器"
   },
   "appHeader": {
     "applicationHeader": "应用顶部",

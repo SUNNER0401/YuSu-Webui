@@ -158,7 +158,6 @@ export default {
 main {
   position: absolute;
   top: 0;
-  z-index: 9999;
   height: 100vh;
   width: 100vw;
   background: url('~@/env/assets/images/login-background.webp') no-repeat fixed
