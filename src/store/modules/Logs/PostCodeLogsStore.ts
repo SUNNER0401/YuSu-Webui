@@ -19,17 +19,32 @@ const mutations = {
 
 type Multations = keyof typeof mutations;
 
-const actionsNames = ['getPostCodesLogData', 'deleteAll'] as const;
+const actionsNames = [
+  'getPostCodesLogData',
+  'cutPostCodesLog',
+  'deleteAll',
+] as const;
 type ActionNames = typeof actionsNames[number];
 
 const actions = {
   async getPostCodesLogData({
+    dispatch,
     commit,
   }: ActionContext<ActionNames, Multations, State, Getters>) {
+    const postCodeLogs = await dispatch(
+      'cutPostCodesLog',
+      '/redfish/v1/Managers/bmc/LogServices/AuditLog/Entries'
+    );
+    commit('setAllPostCodes', postCodeLogs);
+  },
+  async cutPostCodesLog(
+    { dispatch }: ActionContext<ActionNames, Multations, State, Getters>,
+    url: string
+  ) {
     return await api
-      .get('/redfish/v1/Systems/system/LogServices/PostCodes/Entries')
-      .then(({ data: { Members = [] } = {} }) => {
-        const postCodeLogs = Members.map(
+      .get(url)
+      .then(async ({ data }) => {
+        let postCodeLogs = data.Members.map(
           (log: {
             Id: string;
             Severity: string;
@@ -48,7 +63,16 @@ const actions = {
             };
           }
         );
-        commit('setAllPostCodes', postCodeLogs);
+        if (data['Members@odata.nextLink']) {
+          postCodeLogs = [
+            ...postCodeLogs,
+            ...(await dispatch(
+              'cutPostCodesLog',
+              data['Members@odata.nextLink']
+            )),
+          ];
+        }
+        return postCodeLogs;
       })
       .catch((error) => {
         console.log('POST Codes Log Data:', error);

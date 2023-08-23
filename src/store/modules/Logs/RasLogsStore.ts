@@ -46,6 +46,7 @@ type Multations = keyof typeof mutations;
 const actionsNames = [
   'getRasResource',
   'getRasLogData',
+  'cutRasLogs',
   'deleteAllRasLogs',
   'deleteRasLogs',
   'downloadRasLogs',
@@ -62,12 +63,23 @@ const actions = {
       });
   },
   async getRasLogData({
+    dispatch,
     commit,
   }: ActionContext<ActionNames, Multations, State, Getters>) {
+    const postCodeLogs = await dispatch(
+      'cutRasLogs',
+      '/redfish/v1/Managers/bmc/LogServices/AuditLog/Entries'
+    );
+    commit('setAllRasLogs', postCodeLogs);
+  },
+  async cutRasLogs(
+    { dispatch }: ActionContext<ActionNames, Multations, State, Getters>,
+    url: string
+  ) {
     return await api
-      .get('/redfish/v1/Systems/system/LogServices/RasEvent/Entries')
-      .then(({ data: { Members = [] } = {} }) => {
-        const rasLogs = Members.map((log: { [x: string]: any }) => {
+      .get(url)
+      .then(async ({ data }) => {
+        let rasLogs = data.Members.map((log: { [x: string]: any }) => {
           let {
             Id,
             Severity,
@@ -78,7 +90,6 @@ const actions = {
             AdditionalDataURI,
             MessageArgs,
           } = log;
-          console.log(MessageArgs);
           return {
             id: Id,
             severity: Severity,
@@ -91,7 +102,13 @@ const actions = {
             messageArgs: MessageArgs,
           };
         });
-        commit('setAllRasLogs', rasLogs);
+        if (data['Members@odata.nextLink']) {
+          rasLogs = [
+            ...rasLogs,
+            ...(await dispatch('cutRasLogs', data['Members@odata.nextLink'])),
+          ];
+        }
+        return rasLogs;
       })
       .catch((error) => {
         console.log('Event Log Data:', error);

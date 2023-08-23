@@ -23,6 +23,7 @@ type Multations = keyof typeof mutations;
 
 const actionsNames = [
   'getEventLogData',
+  'cutEventLog',
   'deleteAllEventLogs',
   'download',
 ] as const;
@@ -30,12 +31,23 @@ type ActionNames = typeof actionsNames[number];
 
 const actions = {
   async getEventLogData({
+    dispatch,
     commit,
   }: ActionContext<ActionNames, Multations, State, Getters>) {
+    const eventLogs = await dispatch(
+      'cutEventLog',
+      '/redfish/v1/Managers/bmc/LogServices/AuditLog/Entries'
+    );
+    commit('setAllEvents', eventLogs);
+  },
+  async cutEventLog(
+    { dispatch }: ActionContext<ActionNames, Multations, State, Getters>,
+    url: string
+  ) {
     return await api
-      .get('/redfish/v1/Managers/bmc/LogServices/AuditLog/Entries')
-      .then(({ data: { Members = [] } = {} }) => {
-        const eventLogs = Members.map(
+      .get(url)
+      .then(async ({ data }) => {
+        let eventLogs = data.Members.map(
           (log: {
             [x: string]: any;
             Created?: any;
@@ -55,7 +67,13 @@ const actions = {
             };
           }
         );
-        commit('setAllEvents', eventLogs);
+        if (data['Members@odata.nextLink']) {
+          eventLogs = [
+            ...eventLogs,
+            ...(await dispatch('cutEventLog', data['Members@odata.nextLink'])),
+          ];
+        }
+        return eventLogs;
       })
       .catch((error) => {
         console.log('Event Log Data:', error);
