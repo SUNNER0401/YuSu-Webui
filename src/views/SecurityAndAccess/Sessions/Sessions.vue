@@ -16,6 +16,14 @@
           :total-number-of-cells="allConnections.length"
         ></table-cell-count>
       </b-col>
+      <b-col class="d-flex justify-content-end">
+        <b-button-group>
+          <b-button variant="primary" @click="setting()">
+            <icon-settings />
+            {{ $t('pageSessions.table.setting') }}
+          </b-button>
+        </b-button-group>
+      </b-col>
     </b-row>
     <b-row>
       <b-col>
@@ -110,6 +118,7 @@
         />
       </b-col>
     </b-row>
+    <modal-session-setting-vue />
   </b-container>
 </template>
 
@@ -136,6 +145,9 @@ import SearchFilterMixin, {
   searchFilter,
 } from '@/components/Mixins/SearchFilterMixin';
 
+import IconSettings from '@carbon/icons-vue/es/settings/20';
+import ModalSessionSettingVue from './ModalSessionSetting.vue';
+
 export default {
   components: {
     PageTitle,
@@ -143,6 +155,8 @@ export default {
     TableCellCount,
     TableRowAction,
     TableToolbar,
+    IconSettings,
+    ModalSessionSettingVue,
   },
   mixins: [
     BVPaginationMixin,
@@ -281,6 +295,9 @@ export default {
             }
           });
       }
+    },
+    setting() {
+      this.$bvModal.show('modal-session-setting');
     },
   },
 };

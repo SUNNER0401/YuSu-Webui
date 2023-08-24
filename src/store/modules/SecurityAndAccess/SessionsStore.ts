@@ -2,23 +2,37 @@ import api, { getResponseCount } from '@/store/api';
 import i18n from '@/i18n';
 import { ReturnGetters, ActionContext } from '../../../types/store';
 
+type SessionSettingsForm = {
+  SessionTimeout: number;
+};
+
 const state = {
   allConnections: [],
+  sessionTimeout: 0,
 };
 type State = typeof state;
 
 const getters = {
   allConnections: (state: State) => state.allConnections,
+  sessionTimeout: (state: State) => state.sessionTimeout,
 };
 type Getters = ReturnGetters<typeof getters>;
 
 const mutations = {
   setAllConnections: (state: State, allConnections: any) =>
     (state.allConnections = allConnections),
+  setSessionTimeout: (state: State, sessionTimeout: number) =>
+    (state.sessionTimeout = sessionTimeout),
 };
 type Multations = keyof typeof mutations;
 
-const actionsNames = ['getSessionsData', 'disconnectSessions'] as const;
+const actionsNames = [
+  'getSessionsData',
+  'disconnectSessions',
+  'getSessionTimeout',
+  'setSessionTimeout',
+  'commitSessionSettings',
+] as const;
 type ActionNames = typeof actionsNames[number];
 
 const actions = {
@@ -91,6 +105,41 @@ const actions = {
           return toastMessages;
         })
       );
+  },
+  async getSessionTimeout({
+    commit,
+  }: ActionContext<ActionNames, Multations, State, Getters>) {
+    return api
+      .get('/redfish/v1/SessionService/')
+      .then(({ data: { SessionTimeout } }) => {
+        commit('setSessionTimeout', SessionTimeout);
+      });
+  },
+  async setSessionTimeout(
+    { dispatch }: ActionContext<ActionNames, Multations, State, Getters>,
+    payload: { SessionTimeout: number }
+  ) {
+    return api
+      .patch('/redfish/v1/SessionService/', payload)
+      .then(async () => {
+        await dispatch('getSessionTimeout');
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+  async commitSessionSettings(
+    { dispatch }: ActionContext<ActionNames, Multations, State, Getters>,
+    payload: SessionSettingsForm
+  ) {
+    let promises: Promise<any>[] = [];
+    let p = dispatch('setSessionTimeout', {
+      SessionTimeout: payload.SessionTimeout,
+    });
+    promises.push(p);
+    await Promise.all(promises).catch((err) => {
+      throw err;
+    });
   },
 };
 

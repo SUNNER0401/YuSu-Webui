@@ -199,13 +199,17 @@
     "modal": {
       "disconnectTitle": "断开会话连接",
       "disconnectMessage1": "您确定断开该会话的连接吗? 该操作无法撤销。",
-      "disconnectMessage2": "您确定断开%{count}个会话的连接吗? 该操作无法撤销。"
+      "disconnectMessage2": "您确定断开%{count}个会话的连接吗? 该操作无法撤销。",
+      "sessionTimeout": "会话超时时间(秒)"
     },
     "table": {
       "clientID": "客户端ID",
       "username": "用户名",
       "ipAddress": "用户地址",
-      "searchSessions": "搜素会话"
+      "searchSessions": "搜素会话",
+      "setting": "会话设置",
+      "settingSuccessfully": "设置成功",
+      "errorSetting": "设置失败"
     },
     "toast": {
       "errorDelete": "断开%{count}个会话失败",

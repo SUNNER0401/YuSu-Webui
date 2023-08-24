@@ -199,13 +199,17 @@
     "modal": {
       "disconnectTitle": "Disconnect session| Disconnect sessions",
       "disconnectMessage1": "Are you sure you want to disconnect %{count} session? This action cannot be undone. | Are you sure you want to disconnect %{count} sessions? This action cannot be undone.",
-      "disconnectMessage2": "Are you sure you want to disconnect %{count} session? This action cannot be undone. | Are you sure you want to disconnect %{count} sessions? This action cannot be undone."
+      "disconnectMessage2": "Are you sure you want to disconnect %{count} session? This action cannot be undone. | Are you sure you want to disconnect %{count} sessions? This action cannot be undone.",
+      "sessionTimeout": "Session timeout(s)"
     },
     "table": {
       "clientID": "Client ID",
       "username": "Username",
       "ipAddress": "IP address",
-      "searchSessions": "Search sessions"
+      "searchSessions": "Search sessions",
+      "setting": "Session setting",
+      "settingSuccessfully": "Setting successfully.",
+      "errorSetting": "Error setting."
     },
     "toast": {
       "errorDelete": "Error disconnecting %{count} session. | Error disconnecting %{count} sessions.",
