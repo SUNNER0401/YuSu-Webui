@@ -33,7 +33,7 @@ const actions = {
   }: ActionContext<ActionNames, Multations, State, Getters>) {
     const postCodeLogs = await dispatch(
       'cutPostCodesLog',
-      '/redfish/v1/Managers/bmc/LogServices/AuditLog/Entries'
+      '/redfish/v1/Managers/bmc/LogServices/PostCodes/Entries'
     );
     commit('setAllPostCodes', postCodeLogs);
   },

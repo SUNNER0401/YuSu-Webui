@@ -68,7 +68,7 @@ const actions = {
   }: ActionContext<ActionNames, Multations, State, Getters>) {
     const postCodeLogs = await dispatch(
       'cutRasLogs',
-      '/redfish/v1/Managers/bmc/LogServices/AuditLog/Entries'
+      '/redfish/v1/Managers/bmc/LogServices/RasEvent/Entries'
     );
     commit('setAllRasLogs', postCodeLogs);
   },
