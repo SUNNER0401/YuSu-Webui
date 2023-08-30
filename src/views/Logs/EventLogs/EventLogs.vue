@@ -572,7 +572,7 @@ export default {
       this.searchTotalFilteredRows = filteredItems.length;
     },
     // Create export file name based on date
-    exportFileNameByDate(value: string) {
+    exportFileNameByDate(value?: string) {
       let date: Date | string = new Date();
       date =
         date.toISOString().slice(0, 10) +
