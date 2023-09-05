@@ -76,7 +76,7 @@ export default {
   },
   data() {
     return {
-      file: null,
+      file: null as null | File,
     };
   },
   computed: {
