@@ -7,12 +7,10 @@
           :label="$t('pageFirmware.form.updateFirmware.fileSource')"
           :disabled="isPageDisabled"
         >
-          <b-form-radio v-model="isWorkstationSelected" :value="true">
-            {{ $t('pageFirmware.form.updateFirmware.workstation') }}
-          </b-form-radio>
-          <b-form-radio v-model="isWorkstationSelected" :value="false">
-            {{ $t('pageFirmware.form.updateFirmware.tftpServer') }}
-          </b-form-radio>
+          <b-form-radio-group
+            v-model="isWorkstationSelected"
+            :options="options"
+          ></b-form-radio-group>
         </b-form-group>
 
         <!-- Workstation Upload -->
@@ -118,6 +116,16 @@ export default {
         process.env.VUE_APP_SERVER_OFF_REQUIRED === 'true',
       updateProgress: 0,
       updateFirmware: {},
+      options: [
+        {
+          text: this.$t('pageFirmware.form.updateFirmware.workstation'),
+          value: 'true',
+        },
+        {
+          text: this.$t('pageFirmware.form.updateFirmware.tftpServer'),
+          value: 'false',
+        },
+      ],
     };
   },
   computed: {

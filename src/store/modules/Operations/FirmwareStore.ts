@@ -5,8 +5,10 @@ import { ReturnGetters, ActionContext } from '../../../types/store';
 const state = {
   bmcFirmware: [],
   hostFirmware: [],
+  cpldFirmware: [],
   bmcActiveFirmwareId: null,
   hostActiveFirmwareId: null,
+  cpldActiveFirmwareId: null,
   applyTime: null,
   tftpAvailable: false,
   updateProgress: 0,
@@ -32,6 +34,14 @@ const getters = {
       (firmware: { id: any }) => firmware.id === state.hostActiveFirmwareId
     );
   },
+  activeCpldFirmware: (state: {
+    cpldFirmware: any[];
+    cpldActiveFirmwareId: any;
+  }) => {
+    return state.cpldFirmware.find(
+      (firmware: { id: any }) => firmware.id === state.cpldActiveFirmwareId
+    );
+  },
   backupBmcFirmware: (state: {
     bmcFirmware: any[];
     bmcActiveFirmwareId: any;
@@ -48,6 +58,14 @@ const getters = {
       (firmware: { id: any }) => firmware.id !== state.hostActiveFirmwareId
     );
   },
+  backupCpldtFirmware: (state: {
+    cpldFirmware: any[];
+    cpldActiveFirmwareId: any;
+  }) => {
+    return state.cpldFirmware.find(
+      (firmware: { id: any }) => firmware.id !== state.cpldActiveFirmwareId
+    );
+  },
 };
 type Getters = ReturnGetters<typeof getters>;
 
@@ -56,10 +74,14 @@ const mutations = {
     (state.bmcActiveFirmwareId = id),
   setActiveHostFirmwareId: (state: State, id: any) =>
     (state.hostActiveFirmwareId = id),
+  setActiveCpldFirmwareId: (state: State, id: any) =>
+    (state.cpldActiveFirmwareId = id),
   setBmcFirmware: (state: State, firmware: any) =>
     (state.bmcFirmware = firmware),
   setHostFirmware: (state: State, firmware: any) =>
     (state.hostFirmware = firmware),
+  setCpldFirmware: (state: State, firmware: any) =>
+    (state.cpldFirmware = firmware),
   setApplyTime: (state: State, applyTime: any) => (state.applyTime = applyTime),
   setTftpUploadAvailable: (state: State, tftpAvailable: any) =>
     (state.tftpAvailable = tftpAvailable),
@@ -72,6 +94,7 @@ const actionsNames = [
   'getFirmwareInformation',
   'getActiveBmcFirmware',
   'getActiveHostFirmware',
+  'getActiveCpldFirmware',
   'getFirmwareInventory',
   'getUpdateServiceSettings',
   'setApplyTimeOnReset',
@@ -92,6 +115,7 @@ const actions = {
       .all([
         dispatch('getActiveHostFirmware'),
         dispatch('getActiveBmcFirmware'),
+        dispatch('getActiveCpldFirmware'),
       ])
       .then(async () => {
         await dispatch('getFirmwareInventory');
@@ -112,10 +136,19 @@ const actions = {
     commit,
   }: ActionContext<ActionNames, Multations, State, Getters>) {
     return api
-      .get('/redfish/v1/Systems/system/Bios')
-      .then(({ data: { Links } }) => {
-        const id = Links?.ActiveSoftwareImage['@odata.id'].split('/').pop();
-        commit('setActiveHostFirmwareId', id);
+      .get('/redfish/v1/UpdateService/FirmwareInventory/bios_active')
+      .then(({ data: { Version } }) => {
+        commit('setActiveHostFirmwareId', Version);
+      })
+      .catch((error) => console.log(error));
+  },
+  getActiveCpldFirmware({
+    commit,
+  }: ActionContext<ActionNames, Multations, State, Getters>) {
+    return api
+      .get('/redfish/v1/UpdateService/FirmwareInventory/cpld_active')
+      .then(({ data: { Version } }) => {
+        commit('setActiveCpldFirmwareId', Version);
       })
       .catch((error) => console.log(error));
   },
@@ -303,7 +336,7 @@ const actions = {
       });
   },
   async deleteBrokenFirmware(
-    context: ActionContext<ActionNames, Multations, State, Getters>,
+    _: ActionContext<ActionNames, Multations, State, Getters>,
     id: string
   ) {
     const data = JSON.stringify({ data: [] });

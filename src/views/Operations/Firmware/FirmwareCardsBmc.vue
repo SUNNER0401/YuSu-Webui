@@ -14,6 +14,17 @@
             <dd class="mb-0">{{ runningVersion }}</dd>
           </dl>
         </b-card>
+        <b-card>
+          <template #header>
+            <p class="font-weight-bold m-0">
+              {{ $t('pageFirmware.cardTitleBackup') }}
+            </p>
+          </template>
+          <dl class="mb-0">
+            <dt>{{ $t('pageFirmware.cardBodyVersion') }}</dt>
+            <dd class="mb-0">{{ backupVersion }}</dd>
+          </dl>
+        </b-card>
       </b-card-group>
     </page-section>
     <modal-switch-to-running :backup="backupVersion" @ok="switchToRunning" />
@@ -61,10 +72,10 @@ export default {
       return this.$store.getters['firmware/backupBmcFirmware'];
     },
     runningVersion() {
-      return this.running?.version || '--';
+      return this.running?.version || 'none';
     },
     backupVersion() {
-      return this.backup?.version || '--';
+      return this.backup?.version || 'none';
     },
     backupStatus() {
       return this.backup?.status || null;

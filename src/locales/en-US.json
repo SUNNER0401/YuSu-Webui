@@ -497,6 +497,11 @@
       "verifyUpdateMessage": "Refresh the application to verify firmware updated successfully",
       "updateSuccessfully": "Update successfully!",
       "errorUpdate": "Error update！"
+    },
+    "sectionTitleVersionList": "Version list",
+    "table": {
+      "name": "Name",
+      "currentVersion": "Current version"
     }
   },
   "pageInventory": {

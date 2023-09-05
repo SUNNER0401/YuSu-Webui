@@ -11,9 +11,6 @@
       <b-col xl="10">
         <!-- BMC Firmware -->
         <bmc-cards :is-page-disabled="isPageDisabled" />
-
-        <!-- Host Firmware -->
-        <host-cards v-if="!isSingleFileUploadEnabled" />
       </b-col>
     </b-row>
 
@@ -31,6 +28,9 @@
         </b-col>
       </b-row>
     </page-section>
+    <page-section :section-title="$t('pageFirmware.sectionTitleVersionList')">
+      <firmware-version-list />
+    </page-section>
   </b-container>
 </template>
 
@@ -38,9 +38,9 @@
 import AlertsServerPower from './FirmwareAlertServerPower';
 import BmcCards from './FirmwareCardsBmc';
 import FormUpdate from './FirmwareFormUpdate';
-import HostCards from './FirmwareCardsHost';
 import PageSection from '@/components/Global/PageSection';
 import PageTitle from '@/components/Global/PageTitle';
+import FirmwareVersionList from './FirmwareVersionList';
 
 import LoadingBarMixin, { loading } from '@/components/Mixins/LoadingBarMixin';
 
@@ -50,9 +50,9 @@ export default {
     AlertsServerPower,
     BmcCards,
     FormUpdate,
-    HostCards,
     PageSection,
     PageTitle,
+    FirmwareVersionList,
   },
   mixins: [LoadingBarMixin],
   beforeRouteLeave(to: any, from: any, next: () => void) {
