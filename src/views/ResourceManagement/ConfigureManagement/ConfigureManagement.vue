@@ -37,14 +37,7 @@
     >
       <p>{{ $t('pageConfigureManagement.modal.bmcRebootingText') }}</p>
       <b-progress max="100" class="mt-3">
-        <b-progress-bar
-          :value="100"
-          variant="danger"
-          animated
-          :label="
-            $t('pageConfigureManagement.modal.bmcRebooting').split(':')[0]
-          "
-        >
+        <b-progress-bar :value="100" variant="danger" animated :label="label">
         </b-progress-bar>
       </b-progress>
     </b-modal>
@@ -76,6 +69,9 @@ export default {
   data() {
     return {
       file: null,
+      label: (this.$t(
+        'pageConfigureManagement.modal.bmcRebooting'
+      ) as string).split(':')[0],
     };
   },
   computed: {
