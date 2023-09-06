@@ -7,48 +7,51 @@
             <b-col v-if="!tab1.powerInformations">
               {{ $t('pagePower.tabs.tab1.powerInfo.empty') }}
             </b-col>
-            <b-col
-              v-for="(value1, key1, index1) in tab1.powerInformations"
-              v-else
-              :key="index1"
-            >
-              <b-card class="power-supply-card" no-body>
-                <b-card-body>
-                  <b-row>
-                    <b-col>
-                      <h4 class="mb-0 d-inline">
-                        {{ $t('pagePower.tabs.tab1.power') + `${index1 + 1}` }}
-                      </h4>
-                      <div style="float: right">
-                        <h4 class="mb-0 power-number d-inline">
-                          {{ tab1.powerNumber }}
-                        </h4>
-                        <sup class="mb-0 unit">{{ tab1.unit }}</sup>
-                      </div>
-                    </b-col>
-                  </b-row>
-                  <b-row>
-                    <b-col>
-                      <h4 style="float: right">
-                        {{ $t('pagePower.tabs.tab1.status') }}
-                      </h4>
-                    </b-col>
-                  </b-row>
-                  <hr />
-                  <b-card-text
-                    v-for="(value2, key2, index2) in value1.fieldName"
-                    :key="index2"
-                  >
+            <template v-else>
+              <b-col
+                v-for="(value1, key1, index1) in tab1.powerInformations"
+                :key="index1"
+              >
+                <b-card class="power-supply-card" no-body>
+                  <b-card-body>
                     <b-row>
-                      <b-col>{{ value2 }}</b-col>
                       <b-col>
-                        {{ value1.value[key2] }}
+                        <h4 class="mb-0 d-inline">
+                          {{
+                            $t('pagePower.tabs.tab1.power') + `${index1 + 1}`
+                          }}
+                        </h4>
+                        <div style="float: right">
+                          <h4 class="mb-0 power-number d-inline">
+                            {{ tab1.powerNumber }}
+                          </h4>
+                          <sup class="mb-0 unit">{{ tab1.unit }}</sup>
+                        </div>
                       </b-col>
                     </b-row>
-                  </b-card-text>
-                </b-card-body>
-              </b-card>
-            </b-col>
+                    <b-row>
+                      <b-col>
+                        <h4 style="float: right">
+                          {{ $t('pagePower.tabs.tab1.status') }}
+                        </h4>
+                      </b-col>
+                    </b-row>
+                    <hr />
+                    <b-card-text
+                      v-for="(value2, key2, index2) in value1.fieldName"
+                      :key="index2"
+                    >
+                      <b-row>
+                        <b-col>{{ value2 }}</b-col>
+                        <b-col>
+                          {{ value1.value[key2] }}
+                        </b-col>
+                      </b-row>
+                    </b-card-text>
+                  </b-card-body>
+                </b-card>
+              </b-col>
+            </template>
           </b-row>
         </b-tab>
         <b-tab :title="$t('pagePower.tabs.tab2.name')">
@@ -238,7 +241,7 @@ export default {
     },
     tab1() {
       return {
-        powerNumber: 120,
+        powerNumber: this.powerConsumptionValue,
         unit: 'W',
         powerInformations: this.powerInformations,
       };
