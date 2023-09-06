@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       timer: '',
-      cpuPanelChart: '',
+      panelChart: '',
     };
   },
   beforeDestroy() {
@@ -43,7 +43,7 @@ export default {
         break;
     }
     const _this = this;
-    this.cpuPanelChart = echarts.init(this.$refs.Panel);
+    this.panelChart = echarts.init(this.$refs.Panel);
     this.timer = setInterval(() => {
       var dataArr = parseInt(this.currentData.usage.split('%')[0]);
       var colorSet = {
@@ -195,15 +195,13 @@ export default {
           },
         ],
       };
-      this.cpuPanelChart.setOption(options, {
+      this.panelChart.setOption(options, {
         notMerge: false,
         lazyUpdate: true,
         silent: false,
       });
-      this.cpuPanelChart.resize();
+      this.panelChart.resize();
     }, 1000);
   },
 };
 </script>
-
-<style></style>
