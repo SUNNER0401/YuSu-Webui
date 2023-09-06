@@ -117,7 +117,10 @@ export default {
     };
 
     // Refresh the chart per 5 seconds
-    this.timer = setInterval(setPowerChart(), 2000);
+    this.timer = setInterval(() => {
+      setPowerChart();
+      powerChart.resize();
+    }, 2000);
   },
   beforeDestroy() {
     clearInterval(this.timer);

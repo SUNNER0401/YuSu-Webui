@@ -3,7 +3,7 @@ import i18n from '@/i18n';
 import { ReturnGetters, ActionContext } from '../../../types/store';
 
 const state = {
-  powerCapValue: null,
+  powerCapValue: 0,
   powerConsumptionValue: 0,
   powerChartData1: [], // current power chart data.
   powerChartData1Interval: null, // current power chart data Interval.
@@ -14,8 +14,8 @@ const state = {
   averagePower: 0,
   currentPeakPower: 0,
   historyInfo: [],
-  chassisId: [],
-  powerChassisId: [],
+  chassisId: [] as string[],
+  powerChassisId: [] as string[],
   duringCalculateTime: 0,
 };
 type State = typeof state;
@@ -41,9 +41,9 @@ const getters = {
 type Getters = ReturnGetters<typeof getters>;
 
 const mutations = {
-  setPowerCapValue: (state: State, powerCapValue: any) =>
+  setPowerCapValue: (state: State, powerCapValue: number) =>
     (state.powerCapValue = powerCapValue),
-  setPowerConsumptionValue: (state: State, powerConsumptionValue: any) =>
+  setPowerConsumptionValue: (state: State, powerConsumptionValue: number) =>
     (state.powerConsumptionValue = powerConsumptionValue),
   // Set power chart data currently.
   setpowerChartData1: (state: {
@@ -77,10 +77,10 @@ const mutations = {
   setHistoryInfo: (state: State, historyInfo: any) => {
     state.historyInfo = historyInfo;
   },
-  setChassisId: (state: State, chassisId: any) => {
+  setChassisId: (state: State, chassisId: string[]) => {
     state.chassisId = chassisId;
   },
-  setPowerChassisId: (state: State, powerChassisId: any) => {
+  setPowerChassisId: (state: State, powerChassisId: string[]) => {
     state.powerChassisId = powerChassisId;
   },
   setCurrentPeakPower: (state: State, currentPeakPower: any) => {
@@ -104,7 +104,7 @@ type ActionNames = typeof actionsNames[number];
 const actions = {
   setPowerCapUpdatedValue(
     { commit }: ActionContext<ActionNames, Multations, State, Getters>,
-    value: any
+    value: number
   ) {
     commit('setPowerCapValue', value);
   },
@@ -113,10 +113,13 @@ const actions = {
     state,
   }: ActionContext<ActionNames, Multations, State, Getters>) {
     let PowerChassisId = state.powerChassisId;
+    if (!PowerChassisId) {
+      this.$bvModal.msgBoxOk('当前未检测到电源');
+    }
     return await api
       .get(`/redfish/v1/Chassis/${PowerChassisId}/Power`)
-      .then((response) => {
-        const powerControl = response.data.PowerControl;
+      .then(({ data }) => {
+        const powerControl = data.PowerControl;
         const powerCap = powerControl[0].PowerLimit.LimitInWatts;
         // If system is powered off, power consumption does not exist in the PowerControl
         const powerConsumption = powerControl[0].PowerConsumedWatts;
@@ -130,7 +133,7 @@ const actions = {
   },
   async setPowerControl(
     { state }: ActionContext<ActionNames, Multations, State, Getters>,
-    powerCapValue: any
+    powerCapValue: number
   ) {
     let PowerChassisId = state.powerChassisId;
     const data = {
@@ -172,7 +175,7 @@ const actions = {
   async getChassisId({
     commit,
   }: ActionContext<ActionNames, Multations, State, Getters>) {
-    let chassisId: any[] = [];
+    let chassisId: string[] = [];
     await api.get('/redfish/v1/Chassis/').then(({ data: { Members } }) => {
       for (let member of Members) {
         let chassisUrl = Object.values(member)[0] as string;
@@ -188,8 +191,8 @@ const actions = {
     commit,
   }: ActionContext<ActionNames, Multations, State, Getters>) {
     let chassisId = await dispatch('getChassisId');
-    let promises: any[] = [];
-    chassisId.forEach((id: any) => {
+    let promises: Promise<any>[] = [];
+    chassisId.forEach((id: string) => {
       let p = api
         .get(`/redfish/v1/Chassis/${id}/Power`)
         .then(({ data }) => {
@@ -206,7 +209,10 @@ const actions = {
     commit('setPowerChassisId', chassisId);
     return chassisId;
   },
-  async getHistoryInfo({ commit, state }: any) {
+  async getHistoryInfo({
+    commit,
+    state,
+  }: ActionContext<ActionNames, Multations, State, Getters>) {
     let PowerChassisId = state.powerChassisId;
     let promise1 = api
       .get(`/redfish/v1/Chassis/${PowerChassisId}/Power`)

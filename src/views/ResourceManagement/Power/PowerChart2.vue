@@ -196,6 +196,13 @@ export default {
       powerChart.setOption(option);
     };
     setPowerChart();
+    this.timer = setInterval(() => {
+      setPowerChart();
+      powerChart.resize();
+    }, 2000);
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
   },
 };
 </script>

@@ -9,7 +9,9 @@
             </b-col>
             <template v-else>
               <b-col
-                v-for="(value1, key1, index1) in tab1.powerInformations"
+                v-for="(
+                  powerinformation, key1, index1
+                ) in tab1.powerInformations"
                 :key="index1"
               >
                 <b-card class="power-supply-card" no-body>
@@ -38,13 +40,13 @@
                     </b-row>
                     <hr />
                     <b-card-text
-                      v-for="(value2, key2, index2) in value1.fieldName"
+                      v-for="(value2, key2, index2) in powerinformation"
                       :key="index2"
                     >
                       <b-row>
-                        <b-col>{{ value2 }}</b-col>
+                        <b-col>{{ key2 }}</b-col>
                         <b-col>
-                          {{ value1.value[key2] }}
+                          {{ value2 }}
                         </b-col>
                       </b-row>
                     </b-card-text>
@@ -222,18 +224,13 @@ export default {
           index: any
         ) => {
           powerInformations[`power${index}`] = {
-            fieldName: {
-              name: this.$t('pagePower.tabs.tab1.powerInfo.name'),
-              manufacturer: this.$t(
-                'pagePower.tabs.tab1.powerInfo.manufacturer'
-              ),
-              statusState: this.$t('pagePower.tabs.tab1.powerInfo.statusState'),
-            },
-            value: {
-              name: item.name,
-              manufacturer: item.manufacturer,
-              statusState: item.statusState,
-            },
+            [this.$t('pagePower.tabs.tab1.powerInfo.name')]: item.name,
+            [this.$t(
+              'pagePower.tabs.tab1.powerInfo.manufacturer'
+            )]: item.manufacturer,
+            [this.$t(
+              'pagePower.tabs.tab1.powerInfo.statusState'
+            )]: item.statusState,
           };
         }
       );
