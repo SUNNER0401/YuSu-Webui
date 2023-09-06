@@ -113,8 +113,8 @@ const actions = {
     state,
   }: ActionContext<ActionNames, Multations, State, Getters>) {
     let PowerChassisId = state.powerChassisId;
-    if (!PowerChassisId) {
-      this.$bvModal.msgBoxOk('当前未检测到电源');
+    if (PowerChassisId.length == 0) {
+      throw i18n.t('pagePower.msgBox.noPower') as string;
     }
     return await api
       .get(`/redfish/v1/Chassis/${PowerChassisId}/Power`)

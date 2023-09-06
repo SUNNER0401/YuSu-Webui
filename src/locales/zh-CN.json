@@ -1007,6 +1007,9 @@
         "averagePower": "平均功率",
         "totalConsumedPower": "总功耗"
       }
+    },
+    "msgBox": {
+      "noPower": "当前未检测到电源。"
     }
   },
   "pageSensors": {
@@ -1412,6 +1415,9 @@
     "usage": "利用率",
     "Memory": "内存",
     "Disk": "硬盘",
-    "NetInterface": "网络"
+    "NetInterface": "网络",
+    "msgBox": {
+      "missHardware": "获取硬件数据失败"
+    }
   }
 }

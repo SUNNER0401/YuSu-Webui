@@ -118,9 +118,14 @@ export default {
   async created() {
     this.startLoader();
     await this.$store.dispatch('powerControl/getPowerChassisId');
-    await this.$store.dispatch('powerControl/getPowerControl').then(() => {
-      this.$store.commit('powerControl/setpowerChartData1');
-    });
+    await this.$store
+      .dispatch('powerControl/getPowerControl')
+      .then(() => {
+        this.$store.commit('powerControl/setpowerChartData1');
+      })
+      .catch((err: string) => {
+        this.$bvModal.msgBoxOk(err);
+      });
     this.$store.dispatch('powerControl/getReadingRangeMax').then(() => {
       this.$root.$emit('getRealTimeData-complete');
     });

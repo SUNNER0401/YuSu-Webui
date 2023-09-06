@@ -1006,6 +1006,9 @@
         "averagePower": "Average power",
         "totalConsumedPower": "Total consumed power"
       }
+    },
+    "msgBox": {
+      "noPower": "Power missed."
     }
   },
   "pageSensors": {
@@ -1411,6 +1414,9 @@
     "usage": "usage",
     "Memory": "Memory",
     "Disk": "Disk",
-    "NetInterface": "Network"
+    "NetInterface": "Network",
+    "msgBox": {
+      "missHardware": "Hardware missed."
+    }
   }
 }

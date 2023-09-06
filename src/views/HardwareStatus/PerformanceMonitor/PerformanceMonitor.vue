@@ -70,10 +70,18 @@ export default {
   mounted() {
     this.startLoader();
     this.timer = setInterval(() => {
-      this.$store.dispatch('performanceMonitor/getHostStatus').finally(() => {
-        this.endLoader();
-      });
-    }, 1000);
+      this.$store
+        .dispatch('performanceMonitor/getHostStatus')
+        .catch(() => {
+          clearInterval(this.timer);
+          this.$bvModal.msgBoxOk(
+            this.$t('pagePerformanceMonitor.msgBox.missHardware')
+          );
+        })
+        .finally(() => {
+          this.endLoader();
+        });
+    }, 2500);
   },
   beforeDestroy() {
     clearInterval(this.timer);
