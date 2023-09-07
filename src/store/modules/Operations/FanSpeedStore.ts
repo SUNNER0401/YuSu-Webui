@@ -64,7 +64,7 @@ const actions = {
       ZoneInfo: [{ Current: zoneInfo.Current, ZoneID: zoneInfo.ZoneID }],
     };
     let PwmInfo = { PwmInfo: {} as any };
-    if (zoneInfo.Current == 'MANUAL_MODE') {
+    if (zoneInfo.Current == zoneInfo.Supported[0]) {
       Object.keys(zoneInfo.FanInfo).forEach((pwmName) => {
         PwmInfo.PwmInfo[pwmName] = pwmValues[pwmName];
       });

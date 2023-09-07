@@ -49,7 +49,9 @@
                             </b-col>
                           </b-row>
                           <!-- These functions only can be used in manual mode. -->
-                          <template v-if="zoneInfo.Current === 'MANUAL_MODE'">
+                          <template
+                            v-if="zoneInfo.Current === zoneInfo.Supported[0]"
+                          >
                             <div
                               v-for="(tachNames, pwmName) in zoneInfo.FanInfo"
                               :key="pwmName"
