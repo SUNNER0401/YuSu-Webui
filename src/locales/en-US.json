@@ -106,7 +106,8 @@
     "titleProfile": "Show profile menu",
     "titleRefresh": "Refresh application data",
     "fullScreen": "Full",
-    "exitfullscreen": "Exit full"
+    "exitfullscreen": "Exit full",
+    "switchLanguage": "中文"
   },
   "appNavigation": {
     "resourceManagement": "Resource management",

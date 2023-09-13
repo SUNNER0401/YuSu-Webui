@@ -106,7 +106,8 @@
     "titleProfile": "显示配置文件菜单",
     "titleRefresh": "刷新应用数据",
     "fullScreen": "全屏显示",
-    "exitFullscreen": "退出全屏"
+    "exitFullscreen": "退出全屏",
+    "switchLanguage": "English"
   },
   "appNavigation": {
     "resourceManagement": "资源管理",

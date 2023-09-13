@@ -22,4 +22,5 @@ interface AddEventTarget extends EventTarget {
   nodeName: string;
   blur: () => void;
   files: { [index: string]: any };
+  innerHTML: string;
 }

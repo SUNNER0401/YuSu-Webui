@@ -97,6 +97,11 @@
                 <span class="responsive-text">{{ username }}</span>
               </template>
               <b-dropdown-item
+                data-test-id="appHeader-link-switchLanguage"
+                @click="switchLanguage($event)"
+                >{{ $t('appHeader.switchLanguage') }}
+              </b-dropdown-item>
+              <b-dropdown-item
                 to="/profile-settings"
                 data-test-id="appHeader-link-profile"
                 >{{ $t('appHeader.profileSettings') }}
@@ -125,6 +130,8 @@ import IconRenew from '@carbon/icons-vue/es/renew/20';
 import StatusIcon from '@/components/Global/StatusIcon';
 import LoadingBar from '@/components/Global/LoadingBar';
 import ScreenFull from '@/components/Global/ScreenFull';
+import { AddEventTarget } from '@/.env.d.ts';
+import router from '@/router';
 
 export default {
   name: 'AppHeader',
@@ -221,6 +228,15 @@ export default {
     );
   },
   methods: {
+    switchLanguage($event: Event) {
+      if (($event!.target! as AddEventTarget).innerHTML.trim() == '中文') {
+        localStorage.setItem('storedLanguage', 'zh-CN');
+      } else if (
+        ($event!.target! as AddEventTarget).innerHTML.trim() == 'English'
+      )
+        localStorage.setItem('storedLanguage', 'en-US');
+      router.go(0);
+    },
     blur(event: { which: number }) {
       if (event.which == 1) {
         document.querySelector('#global-fullscreen>.nav-link')!.blur();
