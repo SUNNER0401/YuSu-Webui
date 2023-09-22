@@ -110,6 +110,7 @@
     "switchLanguage": "English"
   },
   "appNavigation": {
+    "systemManagement": "系统管理",
     "resourceManagement": "资源管理",
     "securityAndAccess": "安全访问",
     "sessions": "@:appPageTitle.sessions",
@@ -146,7 +147,12 @@
     "operatingLogs": "操作日志",
     "configureManagement": "配置管理",
     "rasLogs": "RAS日志",
-    "performanceMonitor": "@:appPageTitle.performanceMonitor"
+    "performanceMonitor": "性能监控",
+    "diagnostic": "维护诊断",
+    "UserSecurity": "用户&安全",
+    "Services": "服务管理",
+    "Settings": "BMC管理",
+    "systemInformation": "系统信息"
   },
   "appPageTitle": {
     "changePassword": "修改密码",
@@ -157,7 +163,7 @@
     "eventLogs": "事件日志",
     "factoryReset": "恢复出厂设置",
     "firmware": "固件管理",
-    "inventory": "功能部件与LED灯",
+    "inventory": "系统信息",
     "kvm": "KVM",
     "ldap": "LDAP",
     "userManagement": "用户管理",
@@ -176,13 +182,13 @@
     "certificates": "安全证书",
     "virtualMedia": "虚拟媒体",
     "alarmSetting": "告警设置",
-    "fanSpeed": "风扇速度",
+    "fanSpeed": "风扇&散热",
     "about": "关于",
     "aboutUs": "关于我们",
     "operatingLogs": "操作日志",
     "configureManagement": "配置管理",
     "rasLogs": "RAS日志",
-    "performanceMonitor": "服务器性能监控"
+    "performanceMonitor": "性能监控"
   },
   "pageChangePassword": {
     "changePassword": "修改密码",

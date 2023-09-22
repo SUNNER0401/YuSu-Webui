@@ -116,10 +116,12 @@ module.exports = {
         config.resolve.alias['./routes$'] = `@/env/router/${envName}.ts`;
       }
       if (hasCustomAppNav) {
-        // If env has custom AppNavigation, resolve AppNavigationMixin module in src/components/AppNavigation/AppNavigation.vue
         config.resolve.alias[
-          './AppNavigationMixin$'
-        ] = `@/env/components/AppNavigation/${envName}.js`;
+          './HeaderNavigation'
+        ] = `@/env/components/AppNavigation/${envName}.ts`;
+        config.resolve.alias[
+          '../AppHeader/HeaderNavigation'
+        ] = `@/env/components/AppNavigation/${envName}.ts`;
       }
     }
 

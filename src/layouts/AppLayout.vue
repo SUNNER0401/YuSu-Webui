@@ -1,31 +1,43 @@
 <template>
-  <div class="app-container">
-    <app-header ref="focusTarget" class="app-header" @refresh="refresh" />
-    <app-navigation class="app-navigation" />
-    <page-container class="app-content">
-      <transition
-        name="animate__animated animate__bounce"
-        leave-active-class="animate__fadeOut"
-        enter-active-class="animate__fadeIn"
-        mode="out-in"
+  <el-container>
+    <el-header
+      ><app-header ref="focusTarget" class="app-header" @refresh="refresh"
+    /></el-header>
+    <el-container>
+      <el-aside> <app-navigation /></el-aside>
+      <el-main
+        :class="{
+          isFullScreen:
+            $route.path === '/' ||
+            $route.name === 'page-not-found' ||
+            $route.path === '/profile-settings',
+        }"
       >
-        <router-view ref="routerView" :key="routerKey" />
-      </transition>
-      <!-- Scroll to top button -->
-      <button-back-to-top />
-    </page-container>
-  </div>
+        <page-container class="app-content">
+          <transition
+            name="animate__animated animate__bounce"
+            leave-active-class="animate__fadeOut"
+            enter-active-class="animate__fadeIn"
+            mode="out-in"
+          >
+            <router-view ref="routerView" :key="routerKey" />
+          </transition>
+          <!-- Scroll to top button -->
+          <button-back-to-top />
+        </page-container>
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 
 <script lang="ts">
 import AppHeader from '@/components/AppHeader';
 import AppNavigation from '@/components/AppNavigation';
 import PageContainer from '@/components/Global/PageContainer';
-// import AppFooter from '@/components/AppFooter';
 import ButtonBackToTop from '@/components/Global/ButtonBackToTop';
-// import CopyRight from '@/components/Global/CopyRight';
 import JumpLinkMixin from '@/components/Mixins/JumpLinkMixin';
 import 'animate.css';
+import { Container, Header, Main, Aside } from 'element-ui';
 
 export default {
   name: 'App',
@@ -33,9 +45,11 @@ export default {
     AppHeader,
     AppNavigation,
     PageContainer,
-    // AppFooter,
     ButtonBackToTop,
-    // CopyRight,
+    [Container.name]: Container,
+    [Header.name]: Header,
+    [Main.name]: Main,
+    [Aside.name]: Aside,
   },
   mixins: [JumpLinkMixin],
   data() {
@@ -64,24 +78,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.app-container {
-  display: grid;
-  background-color: $Page-background-color;
-  grid-template-columns: 100%;
-  grid-template-rows: auto;
-  grid-template-areas:
-    'header'
-    'content';
-
-  @include media-breakpoint-up($responsive-layout-bp) {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      'header'
-      'content'
-      'footer';
-  }
-}
-
 .app-header {
   grid-area: header;
   position: sticky;
@@ -89,14 +85,6 @@ export default {
   z-index: $zindex-fixed + 1;
 }
 
-.app-navigation {
-  grid-area: navigation;
-}
-
-.app-content {
-  grid-area: content;
-  overflow: hidden;
-}
 .two-dimension {
   position: fixed;
   bottom: 10px;
@@ -107,8 +95,38 @@ export default {
   animation-duration: 500ms;
   -webkit-animation-duration: 500ms;
 }
-.app-footer {
-  grid-area: footer;
-  background-color: #c3e2e5;
+
+.el-header,
+.el-footer {
+  background-color: #b3c0d1;
+  color: #333;
+  text-align: center;
+  line-height: 60px;
+  padding: 0px;
+}
+
+.el-aside {
+  width: $navigation-width !important;
+  background-color: #d3dce6;
+  color: #333;
+  text-align: center;
+  height: calc(100vh - #{$header-height} - 9px);
+}
+
+.el-main {
+  position: fixed;
+  background-color: #e9eef3;
+  color: #333;
+  height: 100%;
+  left: $navigation-width;
+  right: 0;
+  padding: 0;
+}
+.el-main.isFullScreen {
+  left: 0;
+}
+
+body > .el-container {
+  margin-bottom: 40px;
 }
 </style>

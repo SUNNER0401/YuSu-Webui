@@ -41,33 +41,85 @@
               :alt="altLogo"
             />
           </b-navbar-brand>
-          <div v-if="isNavTagPresent" class="pl-2 nav-tags">
-            <span>|</span>
-            <span class="pl-3 asset-tag">{{ assetTag }}</span>
-            <span class="pl-3">{{ modelType }}</span>
-            <span class="pl-3">{{ serialNumber }}</span>
-          </div>
         </b-navbar-nav>
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto helper-menu">
-          <b-nav-item
-            id="global-fullscreen"
-            @click="fullscreen"
-            @mouseup="blur"
+        <div class="header-nav mx-auto">
+          <el-menu
+            :default-active="activeIndex"
+            class="el-menu-demo"
+            mode="horizontal"
+            @select="handleSelect"
           >
-            <screen-full ref="globalFullScreen" />
-            <span v-if="!isFullscreen">{{ $t('appHeader.fullScreen') }}</span>
-            <span v-else>{{ $t('appHeader.exitfullscreen') }}</span>
-          </b-nav-item>
+            <el-menu-item id="overview-button" index="/">{{
+              $t('appPageTitle.overview')
+            }}</el-menu-item>
+            <el-submenu index="/system-management">
+              <template slot="title">{{
+                $t('appNavigation.systemManagement')
+              }}</template>
+              <el-menu-item
+                v-for="(info, i) in headerNavigation['system-management']"
+                :key="i"
+                :index="info.path"
+                >{{ info.meta.title }}</el-menu-item
+              >
+            </el-submenu>
+            <el-submenu index="/diagnostic">
+              <template slot="title">{{
+                $t('appNavigation.diagnostic')
+              }}</template>
+              <el-menu-item
+                v-for="(info, i) in headerNavigation['diagnostic']"
+                :key="i"
+                :index="info.path"
+                >{{ info.meta.title }}</el-menu-item
+              >
+            </el-submenu>
+            <el-submenu index="/user-security">
+              <template slot="title">{{
+                $t('appNavigation.UserSecurity')
+              }}</template>
+              <el-menu-item
+                v-for="(info, i) in headerNavigation['user-security']"
+                :key="i"
+                :index="info.path"
+                >{{ info.meta.title }}</el-menu-item
+              >
+            </el-submenu>
+            <el-submenu index="/services">
+              <template slot="title">{{
+                $t('appNavigation.Services')
+              }}</template>
+              <el-menu-item
+                v-for="(info, i) in headerNavigation['services']"
+                :key="i"
+                :index="info.path"
+                >{{ info.meta.title }}</el-menu-item
+              >
+            </el-submenu>
+            <el-submenu index="/settings">
+              <template slot="title">{{
+                $t('appNavigation.settings')
+              }}</template>
+              <el-menu-item
+                v-for="(info, i) in headerNavigation['settings']"
+                :key="i"
+                :index="info.path"
+                >{{ info.meta.title }}</el-menu-item
+              >
+            </el-submenu>
+          </el-menu>
+        </div>
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="helper-menu">
           <b-nav-item
-            to="/logs/event-logs"
+            to="/diagnostic/event-logs"
             data-test-id="appHeader-container-health"
           >
             <status-icon :status="healthStatusIcon" />
             {{ $t('appHeader.health') }}
           </b-nav-item>
           <b-nav-item
-            to="/operations/server-power-operations"
+            to="/settings/server-power-operations"
             data-test-id="appHeader-container-power"
           >
             <status-icon :status="serverStatusIcon" />
@@ -129,9 +181,10 @@ import IconMenu from '@carbon/icons-vue/es/menu/20';
 import IconRenew from '@carbon/icons-vue/es/renew/20';
 import StatusIcon from '@/components/Global/StatusIcon';
 import LoadingBar from '@/components/Global/LoadingBar';
-import ScreenFull from '@/components/Global/ScreenFull';
 import { AddEventTarget } from '@/.env.d.ts';
 import router from '@/router';
+import { Menu, MenuItem, Submenu } from 'element-ui';
+import HeaderNavigation from './HeaderNavigation';
 
 export default {
   name: 'AppHeader',
@@ -142,7 +195,9 @@ export default {
     IconRenew,
     StatusIcon,
     LoadingBar,
-    ScreenFull,
+    [Menu.name]: Menu,
+    [MenuItem.name]: MenuItem,
+    [Submenu.name]: Submenu,
   },
   mixins: [BVToastMixin],
   data() {
@@ -154,6 +209,12 @@ export default {
     };
   },
   computed: {
+    activeIndex() {
+      return this.$route.path;
+    },
+    headerNavigation() {
+      return HeaderNavigation;
+    },
     isNavTagPresent() {
       return this.assetTag || this.modelType || this.serialNumber;
     },
@@ -228,6 +289,9 @@ export default {
     );
   },
   methods: {
+    handleSelect(key: string) {
+      this.$router.push(key);
+    },
     switchLanguage($event: Event) {
       if (($event!.target! as AddEventTarget).innerHTML.trim() == '中文') {
         localStorage.setItem('storedLanguage', 'zh-CN');
@@ -288,6 +352,7 @@ export default {
   .navbar-text,
   .nav-link,
   .btn-link {
+    line-height: 2;
     height: $header-height;
     .responsive-text {
       color: #444444;
@@ -295,6 +360,12 @@ export default {
     svg {
       color: #444444;
       transition: all 0.3s;
+    }
+    .status-icon {
+      ::v-deep svg {
+        bottom: -4px;
+        position: relative;
+      }
     }
     color: #444444 !important;
     fill: currentColor;
@@ -433,5 +504,37 @@ img {
 }
 #global-fullscreen span {
   margin-left: 5px;
+}
+
+.header-nav {
+  height: $header-height;
+  span.active {
+    background: white;
+  }
+}
+.el-menu {
+  background: transparent;
+  height: $header-height;
+  .el-menu-item,
+  .el-submenu {
+    line-height: $header-height;
+    height: $header-height !important;
+    ::v-deep .el-submenu__title {
+      line-height: $header-height;
+      height: $header-height !important;
+    }
+  }
+  .el-submenu {
+    &:not(.is-active) {
+      ::v-deep .el-submenu__title {
+        color: #6a707c;
+      }
+    }
+  }
+  #overview-button {
+    &:not(.is-active) {
+      color: #6a707c;
+    }
+  }
 }
 </style>

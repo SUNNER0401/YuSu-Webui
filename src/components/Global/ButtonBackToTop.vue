@@ -23,17 +23,19 @@ export default {
       showButton: false,
     };
   },
-  created() {
-    window.addEventListener('scroll', this._.debounce(this.handleScroll, 200));
+  mounted() {
+    document
+      .querySelector('.el-main')!
+      .addEventListener('scroll', this._.debounce(this.handleScroll, 200));
   },
   methods: {
     handleScroll() {
-      document.documentElement.scrollTop > 500
+      document.querySelector('.el-main')!.scrollTop > 500
         ? (this.showButton = true)
         : (this.showButton = false);
     },
     scrollToTop() {
-      document.documentElement.scrollTo({
+      document.querySelector('.el-main')!.scrollTo({
         top: 0,
         behavior: 'smooth',
       });

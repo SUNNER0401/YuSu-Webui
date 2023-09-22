@@ -110,6 +110,7 @@
     "switchLanguage": "中文"
   },
   "appNavigation": {
+    "systemManagement": "System Management",
     "resourceManagement": "Resource management",
     "securityAndAccess": "Security and access",
     "sessions": "@:appPageTitle.sessions",
@@ -146,7 +147,12 @@
     "operatingLogs": "Operating logs",
     "configureManagement": "Configure management",
     "rasLogs": "RAS logs",
-    "performanceMonitor": "@:appPageTitle.performanceMonitor"
+    "performanceMonitor": "@:appPageTitle.performanceMonitor",
+    "diagnostic": "Diagnostic",
+    "UserSecurity": "User & Security",
+    "Services": "Services Management",
+    "Settings": "Settings",
+    "systemInformation": "System Information"
   },
   "appPageTitle": {
     "changePassword": "Change password",
@@ -157,7 +163,7 @@
     "eventLogs": "Event logs",
     "factoryReset": "Factory reset",
     "firmware": "Firmware",
-    "inventory": "Inventory and LEDs",
+    "inventory": "System information",
     "kvm": "KVM",
     "ldap": "LDAP",
     "userManagement": "User management",

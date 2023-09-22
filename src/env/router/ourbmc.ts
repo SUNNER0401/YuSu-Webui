@@ -36,7 +36,7 @@ export let setRoutes = () => {
           path: 'serial-over-lan-console',
           name: 'serial-over-lan-console',
           component: () =>
-            import('@/views/Operations/SerialOverLan/SerialOverLanConsole'),
+            import('@/views/Services/SerialOverLan/SerialOverLanConsole'),
           meta: {
             title: i18n.t('appPageTitle.serialOverLan'),
           },
@@ -44,7 +44,7 @@ export let setRoutes = () => {
         {
           path: 'kvm',
           name: 'kvm-console',
-          component: () => import('@/views/Operations/Kvm/KvmConsole.vue'),
+          component: () => import('@/views/Services/Kvm/KvmConsole.vue'),
           meta: {
             title: i18n.t('appPageTitle.kvm'),
           },
@@ -75,131 +75,156 @@ export let setRoutes = () => {
           },
         },
         {
-          path: '/logs/event-logs',
-          name: 'event-logs',
-          component: () => import('@/views/Logs/EventLogs'),
-          meta: {
-            title: i18n.t('appPageTitle.eventLogs'),
-          },
-        },
-        {
-          path: '/logs/post-code-logs',
-          name: 'post-code-logs',
-          component: () => import('@/views/Logs/PostCodeLogs'),
-          meta: {
-            title: i18n.t('appPageTitle.postCodeLogs'),
-          },
-        },
-        {
-          path: '/logs/operating-logs',
-          name: 'operating-logs',
-          component: () => import('@/views/Logs/OperatingLogs'),
-          meta: {
-            title: i18n.t('appPageTitle.operatingLogs'),
-          },
-        },
-        {
-          path: '/logs/ras-logs',
-          name: 'ras-logs',
-          component: () => import('@/views/Logs/RasLogs'),
-          meta: {
-            title: i18n.t('appPageTitle.rasLogs'),
-          },
-        },
-        {
-          path: '/hardware-status/inventory',
-          name: 'inventory',
-          component: () => import('@/views/HardwareStatus/Inventory'),
+          path: '/system-management/system-information',
+          name: 'system-information',
+          component: () => import('@/views/SystemManagement/Inventory'),
           meta: {
             title: i18n.t('appPageTitle.inventory'),
           },
         },
         {
-          path: '/hardware-status/sensors',
-          name: 'sensors',
-          component: () => import('@/views/HardwareStatus/Sensors'),
-          meta: {
-            title: i18n.t('appPageTitle.sensors'),
-          },
-        },
-        {
-          path: '/hardware-status/performanceMonitor',
+          path: '/system-management/performance-monitor',
           name: 'performanceMonitor',
-          component: () => import('@/views/HardwareStatus/PerformanceMonitor'),
+          component: () =>
+            import('@/views/SystemManagement/PerformanceMonitor'),
           meta: {
             title: i18n.t('appPageTitle.performanceMonitor'),
           },
         },
         {
-          path: '/operations/factory-reset',
-          name: 'factory-reset',
-          component: () => import('@/views/Operations/FactoryReset'),
+          path: '/system-management/power',
+          name: 'power',
+          component: () => import('@/views/SystemManagement/Power'),
           meta: {
-            title: i18n.t('appPageTitle.factoryReset'),
+            title: i18n.t('appPageTitle.power'),
           },
         },
         {
-          path: '/operations/fan-speed',
+          path: '/system-management/fan-speed',
           name: 'fan-speed',
-          component: () => import('@/views/Operations/FanSpeed'),
+          component: () => import('@/views/SystemManagement/FanSpeed'),
           meta: {
             title: i18n.t('appPageTitle.fanSpeed'),
           },
         },
         {
-          path: '/operations/kvm',
+          path: '/system-management/sensors',
+          name: 'sensors',
+          component: () => import('@/views/SystemManagement/Sensors'),
+          meta: {
+            title: i18n.t('appPageTitle.sensors'),
+          },
+        },
+        {
+          path: '/diagnostic/event-logs',
+          name: 'event-logs',
+          component: () => import('@/views/Diagnostic/EventLogs'),
+          meta: {
+            title: i18n.t('appPageTitle.eventLogs'),
+          },
+        },
+        {
+          path: '/diagnostic/post-code-logs',
+          name: 'post-code-logs',
+          component: () => import('@/views/Diagnostic/PostCodeLogs'),
+          meta: {
+            title: i18n.t('appPageTitle.postCodeLogs'),
+          },
+        },
+        {
+          path: '/diagnostic/operating-logs',
+          name: 'operating-logs',
+          component: () => import('@/views/Diagnostic/OperatingLogs'),
+          meta: {
+            title: i18n.t('appPageTitle.operatingLogs'),
+          },
+        },
+        {
+          path: '/diagnostic/ras-logs',
+          name: 'ras-logs',
+          component: () => import('@/views/Diagnostic/RasLogs'),
+          meta: {
+            title: i18n.t('appPageTitle.rasLogs'),
+          },
+        },
+        {
+          path: '/user-security/sessions',
+          name: 'sessions',
+          component: () => import('@/views/UserSecurity/Sessions'),
+          meta: {
+            title: i18n.t('appPageTitle.sessions'),
+          },
+        },
+        {
+          path: '/user-security/ldap',
+          name: 'ldap',
+          component: () => import('@/views/UserSecurity/Ldap'),
+          meta: {
+            title: i18n.t('appPageTitle.ldap'),
+          },
+        },
+        {
+          path: '/user-security/user-management',
+          name: 'local-users',
+          component: () => import('@/views/UserSecurity/UserManagement'),
+          meta: {
+            title: i18n.t('appPageTitle.userManagement'),
+          },
+        },
+        {
+          path: '/user-security/certificates',
+          name: 'certificates',
+          component: () => import('@/views/UserSecurity/Certificates'),
+          meta: {
+            title: i18n.t('appPageTitle.certificates'),
+          },
+        },
+        {
+          path: '/user-security/policies',
+          name: 'policies',
+          component: () => import('@/views/UserSecurity/Policies'),
+          meta: {
+            title: i18n.t('appPageTitle.policies'),
+          },
+        },
+        {
+          path: '/services/factory-reset',
+          name: 'factory-reset',
+          component: () => import('@/views/Services/FactoryReset'),
+          meta: {
+            title: i18n.t('appPageTitle.factoryReset'),
+          },
+        },
+        {
+          path: '/services/kvm',
           name: 'kvm',
-          component: () => import('@/views/Operations/Kvm'),
+          component: () => import('@/views/Services/Kvm'),
           meta: {
             title: i18n.t('appPageTitle.kvm'),
           },
         },
         {
-          path: '/operations/firmware',
-          name: 'firmware',
-          component: () => import('@/views/Operations/Firmware'),
-          meta: {
-            title: i18n.t('appPageTitle.firmware'),
-          },
-        },
-        {
-          path: '/operations/reboot-bmc',
-          name: 'reboot-bmc',
-          component: () => import('@/views/Operations/RebootBmc'),
-          meta: {
-            title: i18n.t('appPageTitle.rebootBmc'),
-          },
-        },
-        {
-          path: '/operations/serial-over-lan',
+          path: '/services/serial-over-lan',
           name: 'serial-over-lan',
-          component: () => import('@/views/Operations/SerialOverLan'),
+          component: () => import('@/views/Services/SerialOverLan'),
           meta: {
             title: i18n.t('appPageTitle.serialOverLan'),
           },
         },
         {
-          path: '/operations/server-power-operations',
-          name: 'server-power-operations',
-          component: () => import('@/views/Operations/ServerPowerOperations'),
+          path: '/services/alarm-setting',
+          name: 'alarm-setting',
+          component: () => import('@/views/Services/AlarmSetting'),
           meta: {
-            title: i18n.t('appPageTitle.serverPowerOperations'),
+            title: i18n.t('appPageTitle.alarmSetting'),
           },
         },
         {
-          path: '/operations/virtual-media',
+          path: '/services/virtual-media',
           name: 'virtual-media',
-          component: () => import('@/views/Operations/VirtualMedia'),
+          component: () => import('@/views/Services/VirtualMedia'),
           meta: {
             title: i18n.t('appPageTitle.virtualMedia'),
-          },
-        },
-        {
-          path: '/settings/date-time',
-          name: 'date-time',
-          component: () => import('@/views/Settings/DateTime'),
-          meta: {
-            title: i18n.t('appPageTitle.dateTime'),
           },
         },
         {
@@ -211,76 +236,43 @@ export let setRoutes = () => {
           },
         },
         {
-          path: '/settings/power-restore-policy',
-          name: 'power-restore-policy',
-          component: () => import('@/views/Settings/PowerRestorePolicy'),
+          path: '/settings/firmware',
+          name: 'firmware',
+          component: () => import('@/views/Settings/Firmware'),
           meta: {
-            title: i18n.t('appPageTitle.powerRestorePolicy'),
+            title: i18n.t('appPageTitle.firmware'),
           },
         },
         {
-          path: '/settings/alarm-setting',
-          name: 'alarm-setting',
-          component: () => import('@/views/Settings/AlarmSetting'),
-          meta: {
-            title: i18n.t('appPageTitle.alarmSetting'),
-          },
-        },
-        {
-          path: '/security-and-access/sessions',
-          name: 'sessions',
-          component: () => import('@/views/SecurityAndAccess/Sessions'),
-          meta: {
-            title: i18n.t('appPageTitle.sessions'),
-          },
-        },
-        {
-          path: '/security-and-access/ldap',
-          name: 'ldap',
-          component: () => import('@/views/SecurityAndAccess/Ldap'),
-          meta: {
-            title: i18n.t('appPageTitle.ldap'),
-          },
-        },
-        {
-          path: '/security-and-access/user-management',
-          name: 'local-users',
-          component: () => import('@/views/SecurityAndAccess/UserManagement'),
-          meta: {
-            title: i18n.t('appPageTitle.userManagement'),
-          },
-        },
-        {
-          path: '/security-and-access/policies',
-          name: 'policies',
-          component: () => import('@/views/SecurityAndAccess/Policies'),
-          meta: {
-            title: i18n.t('appPageTitle.policies'),
-          },
-        },
-        {
-          path: '/security-and-access/certificates',
-          name: 'certificates',
-          component: () => import('@/views/SecurityAndAccess/Certificates'),
-          meta: {
-            title: i18n.t('appPageTitle.certificates'),
-          },
-        },
-        {
-          path: '/resource-management/power',
-          name: 'power',
-          component: () => import('@/views/ResourceManagement/Power'),
-          meta: {
-            title: i18n.t('appPageTitle.power'),
-          },
-        },
-        {
-          path: '/resource-management/configureManagement',
+          path: '/settings/configure-management',
           name: 'configureManagement',
-          component: () =>
-            import('@/views/ResourceManagement/ConfigureManagement'),
+          component: () => import('@/views/Settings/ConfigureManagement'),
           meta: {
             title: i18n.t('appPageTitle.configureManagement'),
+          },
+        },
+        {
+          path: '/settings/date-time',
+          name: 'date-time',
+          component: () => import('@/views/Settings/DateTime'),
+          meta: {
+            title: i18n.t('appPageTitle.dateTime'),
+          },
+        },
+        {
+          path: '/settings/server-power-operations',
+          name: 'server-power-operations',
+          component: () => import('@/views/Settings/ServerPowerOperations'),
+          meta: {
+            title: i18n.t('appPageTitle.serverPowerOperations'),
+          },
+        },
+        {
+          path: '/settings/reboot-bmc',
+          name: 'reboot-bmc',
+          component: () => import('@/views/Settings/RebootBmc'),
+          meta: {
+            title: i18n.t('appPageTitle.rebootBmc'),
           },
         },
         {

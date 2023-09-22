@@ -46,7 +46,8 @@ $loading-color: $cyan;
 $navbar-color: $primary;
 
 //Some basic setting
-$header-height: 48px;
+$header-height: 51px;
+$navigation-width: 280px;
 
 // Custom display details
 .status-icon.secondary {
@@ -117,7 +118,8 @@ input.form-control, .form-background .custom-select:focus, .form-background .for
 }
 #app {
   .app-container {
-    background: url('~@/env/assets/images/layout-background.jpg');
+    // background: url('~@/env/assets/images/layout-background.jpg');
+    background: radial-gradient(circle at 10% 20%, rgb(239, 246, 249) 0%, rgb(206, 239, 253) 90%)
   }
 }
 .custom-select {
@@ -137,11 +139,10 @@ input.form-control, .form-background .custom-select:focus, .form-background .for
   .b-table {
     box-shadow: 4px 0px 10px rgba(0,0,0,.5);
   }
-  width: calc(100% - 500px);
+  width: calc(100%);
   margin: 0 auto;
   background: linear-gradient(to top, #77a3bd, #dbe5df);
   padding-top: 10px;
-  margin-top: 24px;
   #scrollToTopBtn {
     bottom: 105px;
     left: 95%;
