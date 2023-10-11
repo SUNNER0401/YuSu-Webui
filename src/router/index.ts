@@ -15,15 +15,53 @@ const router = new VueRouter({
   linkExactActiveClass: 'nav-link--current',
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
+function allowRouterToNavigate(
+  to: any,
+  next: (path?: string) => void,
+  currentUserRole: string
+) {
+  if (
+    to.matched.some(
+      (record: { meta: { requiresAuth: any } }) => record.meta.requiresAuth
+    )
+  ) {
     if (store.getters['authentication/isLoggedIn']) {
+      console.log(to.meta);
+      if (to.meta.exclusiveToRoles) {
+        // The privilege for the specific router was verified using the
+        // exclusiveToRoles roles in the router.
+        if (to.meta.exclusiveToRoles.includes(currentUserRole)) {
+          next();
+        } else {
+          next('*');
+        }
+        return;
+      }
       next();
       return;
     }
     next('/login');
   } else {
     next();
+  }
+}
+
+router.beforeEach((to, from, next) => {
+  let currentUserRole = store.getters['global/userPrivilege'];
+  // condition will get satisfied if user refreshed after login
+  if (!currentUserRole && store.getters['authentication/isLoggedIn']) {
+    // invoke API call to get the role ID
+    let username = localStorage.getItem('storedUsername');
+    store.dispatch('authentication/getUserInfo', username).then((response) => {
+      if (response?.RoleId) {
+        // set role ID
+        store.commit('global/setPrivilege', response.RoleId);
+        // allow the route to continue
+        allowRouterToNavigate(to, next, response.RoleId);
+      }
+    });
+  } else {
+    allowRouterToNavigate(to, next, currentUserRole);
   }
 });
 

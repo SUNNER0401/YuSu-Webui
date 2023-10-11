@@ -90,7 +90,9 @@
                 $t('appNavigation.Services')
               }}</template>
               <el-menu-item
-                v-for="(info, i) in headerNavigation['services']"
+                v-for="(info, i) in filteredNavigation(
+                  headerNavigation['services']
+                )"
                 :key="i"
                 :index="info.path"
                 >{{ info.meta.title }}</el-menu-item
@@ -184,7 +186,7 @@ import LoadingBar from '@/components/Global/LoadingBar';
 import { AddEventTarget } from '@/.env.d.ts';
 import router from '@/router';
 import { Menu, MenuItem, Submenu } from 'element-ui';
-import HeaderNavigation from './HeaderNavigation';
+import HeaderNavigation, { NavItemType } from './HeaderNavigation';
 
 export default {
   name: 'AppHeader',
@@ -206,6 +208,7 @@ export default {
       altLogo: process.env.VUE_APP_COMPANY_NAME || 'Built on OpenBMC',
       isFullscreen: false,
       companyName: process.env.VUE_APP_COMPANY_NAME,
+      currentUserRole: null,
     };
   },
   computed: {
@@ -229,6 +232,9 @@ export default {
     },
     isAuthorized() {
       return this.$store.getters['global/isAuthorized'];
+    },
+    userPrivilege() {
+      return this.$store.getters['global/userPrivilege'];
     },
     serverStatus() {
       return this.$store.getters['global/serverStatus'];
@@ -282,7 +288,7 @@ export default {
     this.getEvents();
   },
   mounted() {
-    this.isFullscreen = this.$refs.globalFullScreen.isFullscreen;
+    this.getPrivilege();
     this.$root.$on(
       'change-is-navigation-open',
       (isNavigationOpen: any) => (this.isNavigationOpen = isNavigationOpen)
@@ -328,6 +334,18 @@ export default {
     setFocus(event: { preventDefault: () => void }) {
       event.preventDefault();
       this.$root.$emit('skip-navigation');
+    },
+    getPrivilege() {
+      this.currentUserRole = this.$store?.getters['global/userPrivilege'];
+    },
+    filteredNavigation(navigation: NavItemType[]) {
+      if (this.currentUserRole) {
+        return navigation.filter((item) => {
+          if (item.meta.exclusiveToRoles) {
+            return item.meta.exclusiveToRoles!.includes(this.currentUserRole);
+          } else return true;
+        });
+      } else return navigation;
     },
   },
 };

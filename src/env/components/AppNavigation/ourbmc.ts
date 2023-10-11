@@ -9,6 +9,13 @@ export const FatherName = {
   settings: i18n.t('appNavigation.settings'),
 };
 
+const roles = {
+  administrator: 'Administrator',
+  operator: 'Operator',
+  readonly: 'ReadOnly',
+  noaccess: 'NoAccess',
+};
+
 export default {
   '/': [
     {
@@ -153,6 +160,7 @@ export default {
       component: () => import('@/views/Services/Kvm'),
       meta: {
         title: i18n.t('appPageTitle.kvm'),
+        exclusiveToRoles: [roles.administrator],
       },
     },
     {
@@ -161,6 +169,7 @@ export default {
       component: () => import('@/views/Services/SerialOverLan'),
       meta: {
         title: i18n.t('appPageTitle.serialOverLan'),
+        exclusiveToRoles: [roles.administrator],
       },
     },
     {

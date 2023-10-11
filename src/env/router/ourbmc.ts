@@ -1,5 +1,12 @@
 import i18n from '@/i18n';
 
+const roles = {
+  administrator: 'Administrator',
+  operator: 'Operator',
+  readonly: 'ReadOnly',
+  noaccess: 'NoAccess',
+};
+
 export let setRoutes = () => {
   return [
     {
@@ -201,6 +208,7 @@ export let setRoutes = () => {
           component: () => import('@/views/Services/Kvm'),
           meta: {
             title: i18n.t('appPageTitle.kvm'),
+            exclusiveToRoles: [roles.administrator],
           },
         },
         {
@@ -209,6 +217,7 @@ export let setRoutes = () => {
           component: () => import('@/views/Services/SerialOverLan'),
           meta: {
             title: i18n.t('appPageTitle.serialOverLan'),
+            exclusiveToRoles: [roles.administrator],
           },
         },
         {

@@ -40,6 +40,7 @@ const state = {
     : true,
   username: localStorage.getItem('storedUsername'),
   isAuthorized: true,
+  userPrivilege: null as string | null,
 };
 type State = typeof state;
 
@@ -53,6 +54,7 @@ const getters = {
   isUtcDisplay: (state: State) => state.isUtcDisplay,
   username: (state: State) => state.username,
   isAuthorized: (state: State) => state.isAuthorized,
+  userPrivilege: (state: State) => state.userPrivilege,
 };
 type Getters = ReturnGetters<typeof getters>;
 
@@ -74,6 +76,9 @@ const mutations = {
     window.setTimeout(() => {
       state.isAuthorized = true;
     }, 100);
+  },
+  setPrivilege: (state: State, privilege: string) => {
+    state.userPrivilege = privilege;
   },
 };
 type Multations = keyof typeof mutations;

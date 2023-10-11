@@ -46,6 +46,7 @@ type Multations = keyof typeof mutations;
 const actionsNames = [
   'login',
   'logout',
+  'getUserInfo',
   'checkPasswordChangeRequired',
   'resetStoreState',
 ] as const;
@@ -70,6 +71,15 @@ const actions = {
       .post('/logout', { data: [] }, undefined)
       .then(() => commit('logout'))
       .then(() => router.go('/login' as any))
+      .catch((error) => console.log(error));
+  },
+  getUserInfo(
+    _: ActionContext<ActionNames, Multations, State, Getters>,
+    username: string
+  ) {
+    return api
+      .get(`/redfish/v1/AccountService/Accounts/${username}`)
+      .then(({ data }) => data)
       .catch((error) => console.log(error));
   },
   async checkPasswordChangeRequired(

@@ -1,5 +1,15 @@
 import i18n from '@/i18n';
 
+export type NavItemType = {
+  path: string;
+  name: string;
+  component: () => any;
+  meta: {
+    title: string;
+    exclusiveToRoles?: string[];
+  };
+};
+
 export const FatherName = {
   '/': i18n.t('appPageTitle.overview'),
   'system-management': i18n.t('appNavigation.systemManagement'),
@@ -7,6 +17,13 @@ export const FatherName = {
   'user-security': i18n.t('appNavigation.UserSecurity'),
   services: i18n.t('appNavigation.Services'),
   settings: i18n.t('appNavigation.settings'),
+};
+
+const roles = {
+  administrator: 'Administrator',
+  operator: 'Operator',
+  readonly: 'ReadOnly',
+  noaccess: 'NoAccess',
 };
 
 export default {
@@ -153,6 +170,7 @@ export default {
       component: () => import('@/views/Services/Kvm'),
       meta: {
         title: i18n.t('appPageTitle.kvm'),
+        exclusiveToRoles: [roles.administrator],
       },
     },
     {
@@ -161,6 +179,7 @@ export default {
       component: () => import('@/views/Services/SerialOverLan'),
       meta: {
         title: i18n.t('appPageTitle.serialOverLan'),
+        exclusiveToRoles: [roles.administrator],
       },
     },
     {

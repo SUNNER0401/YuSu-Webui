@@ -1,9 +1,9 @@
 <template>
   <div class="app-navigation">
-    <div style="font-size: 2rem" class="pt-3">{{ FatherName[FatherPath] }}</div>
+    <div style="font-size: 2rem" class="pt-3">{{ fatherName[fatherPath] }}</div>
     <el-divider></el-divider>
     <div
-      v-for="(item, i) in headerNavigation[FatherPath]"
+      v-for="(item, i) in filteredNavigation(headerNavigation[fatherPath])"
       :key="i"
       class="nav-item py-3"
       :class="{ active: isActive(item.path) }"
@@ -19,23 +19,34 @@
 //Exact match alias set to support
 //dotenv customizations.
 import { Divider } from 'element-ui';
-import headerNavigation, { FatherName } from '../AppHeader/HeaderNavigation';
+import headerNavigation, {
+  FatherName,
+  NavItemType,
+} from '../AppHeader/HeaderNavigation';
 
 export default {
   name: 'AppNavigation',
   components: {
     'el-divider': Divider,
   },
+  data() {
+    return {
+      currentUserRole: null,
+    };
+  },
   computed: {
-    FatherPath() {
+    fatherPath() {
       return this.$route.path === '/' ? '/' : this.$route.path.split('/')[1];
     },
-    FatherName() {
+    fatherName() {
       return FatherName;
     },
     headerNavigation() {
       return headerNavigation;
     },
+  },
+  mounted() {
+    this.getPrivilege();
   },
   methods: {
     routerPush(key: string) {
@@ -44,6 +55,18 @@ export default {
     isActive(path: string) {
       if (path != '/') return new RegExp('^' + path).test(this.$route.path);
       return path == this.$route.path;
+    },
+    getPrivilege() {
+      this.currentUserRole = this.$store?.getters['global/userPrivilege'];
+    },
+    filteredNavigation(navigation: NavItemType[]) {
+      if (this.currentUserRole) {
+        return navigation.filter((item) => {
+          if (item.meta.exclusiveToRoles) {
+            return item.meta.exclusiveToRoles!.includes(this.currentUserRole);
+          } else return true;
+        });
+      } else return navigation;
     },
   },
 };

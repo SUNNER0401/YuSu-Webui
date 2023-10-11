@@ -157,24 +157,32 @@ export default {
           this.$store.commit('global/setUsername', username);
           this.$store.commit('global/setLanguagePreference', i18n.locale);
           this.reCalculateRoutes();
-          return this.$store.dispatch(
-            'authentication/checkPasswordChangeRequired',
-            username
-          );
+          return this.$store.dispatch('authentication/getUserInfo', username);
         })
-        .then((passwordChangeRequired: boolean) => {
-          if (passwordChangeRequired) {
-            this.$router.push('/change-password');
-          } else {
-            if (localStorage.getItem('LastPathname')) {
-              let lastPathName = localStorage.getItem('LastPathname');
-              localStorage.removeItem('LastPathname');
-              this.$router.push(lastPathName);
+        .then(
+          ({
+            PasswordChangeRequired,
+            RoleId,
+          }: {
+            PasswordChangeRequired: boolean;
+            RoleId: string;
+          }) => {
+            if (PasswordChangeRequired) {
+              this.$router.push('/change-password');
             } else {
-              this.$router.push('/');
+              if (localStorage.getItem('LastPathname')) {
+                let lastPathName = localStorage.getItem('LastPathname');
+                localStorage.removeItem('LastPathname');
+                this.$router.push(lastPathName);
+              } else {
+                this.$router.push('/');
+              }
+            }
+            if (RoleId) {
+              this.$store.commit('global/setPrivilege', RoleId);
             }
           }
-        })
+        )
         .catch((error: string) => console.log(error))
         .finally(() => (this.disableSubmitButton = false));
     },
