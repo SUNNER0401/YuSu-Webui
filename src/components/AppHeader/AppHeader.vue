@@ -10,24 +10,6 @@
       </a>
       <b-navbar type="dark" :aria-label="$t('appHeader.applicationHeader')">
         <!-- Left aligned nav items -->
-        <b-button
-          id="app-header-trigger"
-          class="nav-trigger"
-          aria-hidden="true"
-          type="button"
-          variant="link"
-          :class="{ open: isNavigationOpen }"
-          @click="toggleNavigation"
-        >
-          <icon-close
-            v-if="isNavigationOpen"
-            :title="$t('appHeader.titleHideNavigation')"
-          />
-          <icon-menu
-            v-if="!isNavigationOpen"
-            :title="$t('appHeader.titleShowNavigation')"
-          />
-        </b-button>
         <b-navbar-nav>
           <b-navbar-brand
             class="mr-0"
@@ -178,8 +160,6 @@
 <script lang="ts">
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
 import IconAvatar from '@carbon/icons-vue/es/user--avatar/20';
-import IconClose from '@carbon/icons-vue/es/close/20';
-import IconMenu from '@carbon/icons-vue/es/menu/20';
 import IconRenew from '@carbon/icons-vue/es/renew/20';
 import StatusIcon from '@/components/Global/StatusIcon';
 import LoadingBar from '@/components/Global/LoadingBar';
@@ -192,8 +172,6 @@ export default {
   name: 'AppHeader',
   components: {
     IconAvatar,
-    IconClose,
-    IconMenu,
     IconRenew,
     StatusIcon,
     LoadingBar,
@@ -356,6 +334,7 @@ export default {
   box-shadow: inset 0 0 0 3px $padding-color, inset 0 0 0 5px $outline-color;
 }
 .app-header {
+  min-width: 1454px;
   .link-skip-nav {
     position: absolute;
     top: -60px;
@@ -530,6 +509,11 @@ img {
     background: white;
   }
 }
+
+a.nav-link {
+  display: flex;
+}
+
 .el-menu {
   background: transparent;
   height: $header-height;

@@ -3,7 +3,7 @@
     <el-header
       ><app-header ref="focusTarget" class="app-header" @refresh="refresh"
     /></el-header>
-    <el-container>
+    <el-container id="body-container">
       <el-aside> <app-navigation /></el-aside>
       <el-main
         :class="{
@@ -110,23 +110,26 @@ export default {
   background-color: #d3dce6;
   color: #333;
   text-align: center;
-  height: calc(100vh - #{$header-height} - 9px);
 }
 
 .el-main {
-  position: fixed;
   background-color: #e9eef3;
   color: #333;
   height: 100%;
+  width: 100%;
   left: $navigation-width;
   right: 0;
   padding: 0;
 }
 .el-main.isFullScreen {
   left: 0;
+  position: fixed;
 }
 
 body > .el-container {
   margin-bottom: 40px;
+}
+#body-container {
+  min-width: 1454px;
 }
 </style>

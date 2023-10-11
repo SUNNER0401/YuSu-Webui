@@ -110,7 +110,7 @@
     "switchLanguage": "中文"
   },
   "appNavigation": {
-    "systemManagement": "System Management",
+    "systemManagement": "System",
     "resourceManagement": "Resource management",
     "securityAndAccess": "Security and access",
     "sessions": "@:appPageTitle.sessions",
@@ -150,7 +150,7 @@
     "performanceMonitor": "@:appPageTitle.performanceMonitor",
     "diagnostic": "Diagnostic",
     "UserSecurity": "User & Security",
-    "Services": "Services Management",
+    "Services": "Services",
     "Settings": "Settings",
     "systemInformation": "System Information"
   },
