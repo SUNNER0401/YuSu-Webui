@@ -5,7 +5,7 @@
     :export-button="true"
     :file-name="exportFileNameByDate()"
     :title="$t('pageOverview.eventLogs')"
-    :to="`/logs/event-logs`"
+    :to="`/diagnostic/event-logs`"
   >
     <b-row class="mt-3">
       <b-col sm="6">

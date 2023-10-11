@@ -1,7 +1,7 @@
 <template>
   <overview-card
     :title="$t('pageOverview.powerInformation')"
-    :to="`/resource-management/power`"
+    :to="`/system-management/power`"
   >
     <b-row class="mt-3">
       <b-col sm="6">

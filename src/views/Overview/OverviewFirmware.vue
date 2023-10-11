@@ -1,7 +1,7 @@
 <template>
   <overview-card
     :title="$t('pageOverview.firmwareInformation')"
-    :to="`/operations/firmware`"
+    :to="`/settings/firmware`"
   >
     <b-row class="mt-3">
       <b-col>

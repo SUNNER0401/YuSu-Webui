@@ -1,7 +1,7 @@
 <template>
   <overview-card
     :title="$t('pageOverview.serverInformation')"
-    :to="`/hardware-status/inventory`"
+    :to="`/system-management/system-information`"
   >
     <b-row class="mt-3">
       <b-col lg="6">
