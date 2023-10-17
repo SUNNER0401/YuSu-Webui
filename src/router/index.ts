@@ -26,7 +26,6 @@ function allowRouterToNavigate(
     )
   ) {
     if (store.getters['authentication/isLoggedIn']) {
-      console.log(to.meta);
       if (to.meta.exclusiveToRoles) {
         // The privilege for the specific router was verified using the
         // exclusiveToRoles roles in the router.
