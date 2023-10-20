@@ -69,4 +69,7 @@ export default {
 #app {
   position: relative;
 }
+#__SVG_SPRITE_NODE__ {
+  display: none;
+}
 </style>

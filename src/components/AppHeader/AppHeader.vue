@@ -1,13 +1,6 @@
 <template>
   <div>
     <header id="page-header">
-      <a
-        class="link-skip-nav btn btn-light"
-        href="#main-content"
-        @click="setFocus"
-      >
-        {{ $t('appHeader.skipToContent') }}
-      </a>
       <b-navbar type="dark" :aria-label="$t('appHeader.applicationHeader')">
         <!-- Left aligned nav items -->
         <b-navbar-nav>
@@ -335,17 +328,6 @@ export default {
 }
 .app-header {
   min-width: 1454px;
-  .link-skip-nav {
-    position: absolute;
-    top: -60px;
-    left: 0.5rem;
-    z-index: $zindex-popover;
-    transition: $duration--moderate-01 $exit-easing--expressive;
-    &:focus {
-      top: 0.5rem;
-      transition-timing-function: $entrance-easing--expressive;
-    }
-  }
   .navbar-text,
   .nav-link,
   .btn-link {
