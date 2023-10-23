@@ -57,6 +57,7 @@ const mutations = {
           TotalThreads,
           Location,
           LocationIndicatorActive,
+          Oem,
         } = processor;
         return {
           id: Id,
@@ -81,6 +82,7 @@ const mutations = {
           locationNumber: Location?.PartLocation?.ServiceLabel,
           identifyLed: LocationIndicatorActive,
           uri: processor['@odata.id'],
+          Oem,
         };
       }
     );

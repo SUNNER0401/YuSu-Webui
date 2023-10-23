@@ -197,6 +197,122 @@
               </dl>
             </b-col>
           </b-row>
+          <template v-for="(cache, index) in item.Oem">
+            <div :key="index" class="section-divider mb-3 mt-3"></div>
+            <b-row :key="index">
+              <b-col cols="12">
+                <h4 v-if="cache.CacheLevel === 'L1 cache'">
+                  {{ $t('pageInventory.table.cacheLevelL1') }}
+                </h4>
+                <h4 v-else-if="cache.CacheLevel === 'L2 cache'">
+                  {{ $t('pageInventory.table.cacheLevelL2') }}
+                </h4>
+                <h4 v-else>
+                  <!-- 三级缓存 -->
+                  {{ $t('pageInventory.table.cacheLevelL3') }}
+                </h4>
+              </b-col>
+              <b-col class="mt-1" sm="6" xl="6">
+                <dl>
+                  <dt v-if="cache.Associativity">
+                    {{ $t('pageInventory.table.associativity') }}:
+                  </dt>
+                  <dd v-if="cache.Associativity">
+                    {{ dataFormatter(cache.Associativity) }}
+                  </dd>
+                  <dt v-if="cache.CacheLocation">
+                    {{ $t('pageInventory.table.cacheLocation') }}:
+                  </dt>
+                  <dd v-if="cache.CacheLocation">
+                    {{ dataFormatter(cache.CacheLocation) }}
+                  </dd>
+                  <dt v-if="cache.CacheSocketed">
+                    {{ $t('pageInventory.table.cacheSocketed') }}:
+                  </dt>
+                  <dd v-if="cache.CacheSocketed">
+                    {{ dataFormatter(cache.CacheSocketed) }}
+                  </dd>
+                  <dt v-if="cache.CurrentSRAMType">
+                    {{ $t('pageInventory.table.currentSRAMType') }}:
+                  </dt>
+                  <dd v-if="cache.CurrentSRAMType">
+                    {{ dataFormatter(cache.CurrentSRAMType) }}
+                  </dd>
+                  <dt v-if="cache.ErrorCorrectionType">
+                    {{ $t('pageInventory.table.errorCorrectionType') }}:
+                  </dt>
+                  <dd v-if="cache.ErrorCorrectionType">
+                    {{ dataFormatter(cache.ErrorCorrectionType) }}
+                  </dd>
+                  <dt v-if="cache.InstalledCacheSizeInKB">
+                    {{ $t('pageInventory.table.installedCacheSizeInKB') }}:
+                  </dt>
+                  <dd v-if="cache.InstalledCacheSizeInKB">
+                    {{ dataFormatter(cache.InstalledCacheSizeInKB) }}
+                  </dd>
+                  <dt v-if="cache.MaxCacheSizeInKB">
+                    {{ $t('pageInventory.table.maxCacheSizeInKB') }}:
+                  </dt>
+                  <dd v-if="cache.MaxCacheSizeInKB">
+                    {{ dataFormatter(cache.MaxCacheSizeInKB) }}
+                  </dd>
+                </dl>
+              </b-col>
+              <b-col class="mt-1" sm="6" xl="6">
+                <dl>
+                  <dt v-if="cache.OperationalMode">
+                    {{ $t('pageInventory.table.operationalMode') }}:
+                  </dt>
+                  <dd v-if="cache.OperationalMode">
+                    {{ dataFormatter(cache.OperationalMode) }}
+                  </dd>
+                  <dt v-if="cache.SocketDesignation">
+                    {{ $t('pageInventory.table.socketDesignation') }}:
+                  </dt>
+                  <dd v-if="cache.SocketDesignation">
+                    {{ dataFormatter(cache.SocketDesignation) }}
+                  </dd>
+                  <dt v-if="cache.Speed">
+                    {{ $t('pageInventory.table.speed') }}:
+                  </dt>
+                  <dd v-if="cache.Speed">
+                    {{ dataFormatter(cache.Speed) }}
+                  </dd>
+                  <dt v-if="cache.Status">
+                    {{ $t('pageInventory.table.status') }}:
+                  </dt>
+                  <dd v-if="cache.Status">
+                    {{ dataFormatter(cache.Status) }}
+                  </dd>
+                  <dt
+                    v-if="
+                      cache.SupportedSRAMType &&
+                      cache.SupportedSRAMType.length > 0
+                    "
+                  >
+                    {{ $t('pageInventory.table.supportedSRAMType') }}:
+                  </dt>
+                  <dd
+                    v-if="
+                      cache.SupportedSRAMType &&
+                      cache.SupportedSRAMType.length > 0
+                    "
+                  >
+                    <template v-for="(type, index) in cache.SupportedSRAMType">
+                      <template v-if="index !== 0">，</template>
+                      {{ dataFormatter(type) }}
+                    </template>
+                  </dd>
+                  <dt v-if="cache.SystemCacheType">
+                    {{ $t('pageInventory.table.systemCacheType') }}:
+                  </dt>
+                  <dd v-if="cache.SystemCacheType">
+                    {{ dataFormatter(cache.SystemCacheType) }}
+                  </dd>
+                </dl>
+              </b-col>
+            </b-row>
+          </template>
         </b-container>
       </template>
     </b-table>
