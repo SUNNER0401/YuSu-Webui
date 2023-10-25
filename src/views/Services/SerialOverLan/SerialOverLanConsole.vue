@@ -27,6 +27,21 @@
           >
             <screen-full class="SOL-toolbar-item" :element="element" />
           </b-navbar-brand>
+          <b-navbar-brand
+            id="SOL-record-information"
+            class="SOL-toolbar-item ml-1 mr-1"
+            :title="
+              isRecord
+                ? $t('pageKvm.recording')
+                : $t('pageKvm.brandTitle.recorder')
+            "
+          >
+            <record-information
+              class="SOL-toolbar-item"
+              :ws="ws"
+              @recordStatus="handleRecordStatus"
+            />
+          </b-navbar-brand>
         </div>
       </div>
       <div id="terminal" ref="panel2"></div>
@@ -40,12 +55,14 @@ import { FitAddon } from 'xterm-addon-fit';
 import { Terminal } from 'xterm';
 import StatusIcon from '@/components/Global/StatusIcon';
 import ScreenFull from '@/components/Global/ScreenFull';
+import RecordInformation from '@/components/Global/RecordInformation';
 
 export default {
   name: 'SerialOverLanConsole',
   components: {
     StatusIcon,
     ScreenFull,
+    RecordInformation,
   },
   props: {
     isFullWindow: {
@@ -60,6 +77,8 @@ export default {
   data() {
     return {
       resizeConsoleWindow: () => {},
+      isRecord: false,
+      ws: undefined,
     };
   },
   computed: {
@@ -100,10 +119,9 @@ export default {
     openTerminal() {
       const token = this.$store.getters['authentication/token'];
 
-      const ws = new WebSocket(`wss://${window.location.host}/console0`, [
+      this.ws = new WebSocket(`wss://${window.location.host}/console0`, [
         token,
       ]);
-
       // Refer https://github.com/xtermjs/xterm.js/ for xterm implementation and addons.
 
       const term = new Terminal({
@@ -111,8 +129,7 @@ export default {
         fontFamily:
           'SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
       });
-
-      const attachAddon = new AttachAddon(ws);
+      const attachAddon = new AttachAddon(this.ws);
       term.loadAddon(attachAddon);
 
       const fitAddon = new FitAddon();
@@ -133,10 +150,10 @@ export default {
       window.addEventListener('resize', this.resizeConsoleWindow);
 
       try {
-        ws.onopen = function () {
+        this.ws.onopen = function () {
           console.log('websocket console0/ opened');
         };
-        ws.onclose = function (event) {
+        this.ws.onclose = function (event: { code: string; reason: string }) {
           console.log(
             'websocket console0/ closed. code: ' +
               event.code +
@@ -147,6 +164,9 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    handleRecordStatus(data: boolean) {
+      this.isRecord = data;
     },
   },
 };
