@@ -15,8 +15,11 @@ const TableFilterMixin = {
         let returnRow = false;
         for (const { key, values } of filters) {
           const rowProperty = row[key];
+          if (values.length === 0) continue;
           if (rowProperty && includes(values, rowProperty)) {
             returnRow = true;
+          } else {
+            returnRow = false;
             break;
           }
         }
