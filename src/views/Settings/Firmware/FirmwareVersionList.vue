@@ -28,17 +28,17 @@ export default {
   computed: {
     bmcVersion() {
       return this.$store.getters['firmware/activeBmcFirmware']
-        ? this.$store.getters['firmware/activeBmcFirmware'].id
+        ? this.$store.state.firmware.bmcActiveFirmwareId
         : '--';
     },
     hostVersion() {
       return this.$store.getters['firmware/activeHostFirmware']
-        ? this.$store.getters['firmware/activeHostFirmware'].id
+        ? this.$store.state.firmware.hostActiveFirmwareId
         : '--';
     },
     cpldVersion() {
       return this.$store.getters['firmware/activeCpldFirmware']
-        ? this.$store.getters['firmware/activeCpldFirmware'].id
+        ? this.$store.state.firmware.cpldActiveFirmwareId
         : '--';
     },
     versionList() {

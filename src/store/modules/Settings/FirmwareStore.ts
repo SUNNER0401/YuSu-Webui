@@ -23,7 +23,8 @@ const getters = {
     bmcActiveFirmwareId: any;
   }) => {
     return state.bmcFirmware.find(
-      (firmware: { id: any }) => firmware.id === state.bmcActiveFirmwareId
+      (firmware: { version: string }) =>
+        firmware.version === state.bmcActiveFirmwareId
     );
   },
   activeHostFirmware: (state: {
@@ -31,7 +32,8 @@ const getters = {
     hostActiveFirmwareId: any;
   }) => {
     return state.hostFirmware.find(
-      (firmware: { id: any }) => firmware.id === state.hostActiveFirmwareId
+      (firmware: { version: string }) =>
+        firmware.version === state.hostActiveFirmwareId
     );
   },
   activeCpldFirmware: (state: {
@@ -39,7 +41,8 @@ const getters = {
     cpldActiveFirmwareId: any;
   }) => {
     return state.cpldFirmware.find(
-      (firmware: { id: any }) => firmware.id === state.cpldActiveFirmwareId
+      (firmware: { version: string }) =>
+        firmware.version === state.cpldActiveFirmwareId
     );
   },
   backupBmcFirmware: (state: {
@@ -70,18 +73,18 @@ const getters = {
 type Getters = ReturnGetters<typeof getters>;
 
 const mutations = {
-  setActiveBmcFirmwareId: (state: State, id: any) =>
-    (state.bmcActiveFirmwareId = id),
-  setActiveHostFirmwareId: (state: State, id: any) =>
-    (state.hostActiveFirmwareId = id),
-  setActiveCpldFirmwareId: (state: State, id: any) =>
-    (state.cpldActiveFirmwareId = id),
-  setBmcFirmware: (state: State, firmware: any) =>
-    (state.bmcFirmware = firmware),
-  setHostFirmware: (state: State, firmware: any) =>
-    (state.hostFirmware = firmware),
-  setCpldFirmware: (state: State, firmware: any) =>
-    (state.cpldFirmware = firmware),
+  setBmcFirmware: (state: State, firmware: any) => {
+    state.bmcFirmware = firmware;
+    state.bmcActiveFirmwareId = firmware[0].version;
+  },
+  setHostFirmware: (state: State, firmware: any) => {
+    state.hostActiveFirmwareId = firmware[0].version;
+    state.hostFirmware = firmware;
+  },
+  setCpldFirmware: (state: State, firmware: any) => {
+    state.cpldActiveFirmwareId = firmware[0].version;
+    state.cpldFirmware = firmware;
+  },
   setApplyTime: (state: State, applyTime: any) => (state.applyTime = applyTime),
   setTftpUploadAvailable: (state: State, tftpAvailable: any) =>
     (state.tftpAvailable = tftpAvailable),
@@ -111,46 +114,7 @@ const actions = {
   async getFirmwareInformation({
     dispatch,
   }: ActionContext<ActionNames, Multations, State, Getters>) {
-    await api
-      .all([
-        dispatch('getActiveHostFirmware'),
-        dispatch('getActiveBmcFirmware'),
-        dispatch('getActiveCpldFirmware'),
-      ])
-      .then(async () => {
-        await dispatch('getFirmwareInventory');
-      });
-  },
-  getActiveBmcFirmware({
-    commit,
-  }: ActionContext<ActionNames, Multations, State, Getters>) {
-    return api
-      .get('/redfish/v1/Managers/bmc')
-      .then(({ data: { Links } }) => {
-        const id = Links?.ActiveSoftwareImage['@odata.id'].split('/').pop();
-        commit('setActiveBmcFirmwareId', id);
-      })
-      .catch((error) => console.log(error));
-  },
-  getActiveHostFirmware({
-    commit,
-  }: ActionContext<ActionNames, Multations, State, Getters>) {
-    return api
-      .get('/redfish/v1/UpdateService/FirmwareInventory/bios_active')
-      .then(({ data: { Version } }) => {
-        commit('setActiveHostFirmwareId', Version);
-      })
-      .catch((error) => console.log(error));
-  },
-  getActiveCpldFirmware({
-    commit,
-  }: ActionContext<ActionNames, Multations, State, Getters>) {
-    return api
-      .get('/redfish/v1/UpdateService/FirmwareInventory/cpld_active')
-      .then(({ data: { Version } }) => {
-        commit('setActiveCpldFirmwareId', Version);
-      })
-      .catch((error) => console.log(error));
+    await dispatch('getFirmwareInventory');
   },
   async getFirmwareInventory({
     commit,
@@ -178,6 +142,12 @@ const actions = {
           location: any;
           status: any;
         }[] = [];
+        const cpldFirmware: {
+          version: any;
+          id: any;
+          location: any;
+          status: any;
+        }[] = [];
         response.forEach(({ data }: any) => {
           const firmwareType = data?.RelatedItem?.[0]?.['@odata.id']
             .split('/')
@@ -190,12 +160,21 @@ const actions = {
           };
           if (firmwareType === 'bmc') {
             bmcFirmware.push(item);
-          } else if (firmwareType === 'Bios') {
+          } else if (
+            data['@odata.id'] ===
+            '/redfish/v1/UpdateService/FirmwareInventory/bios_active'
+          ) {
             hostFirmware.push(item);
+          } else if (
+            data['@odata.id'] ===
+            '/redfish/v1/UpdateService/FirmwareInventory/cpld_active'
+          ) {
+            cpldFirmware.push(item);
           }
         });
         commit('setBmcFirmware', bmcFirmware);
         commit('setHostFirmware', hostFirmware);
+        commit('setCpldFirmware', cpldFirmware);
       })
       .catch((error) => {
         console.log(error);
