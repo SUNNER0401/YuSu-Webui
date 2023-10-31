@@ -298,9 +298,9 @@
                       cache.SupportedSRAMType.length > 0
                     "
                   >
-                    <template v-for="(type, index) in cache.SupportedSRAMType">
-                      <template v-if="index !== 0">，</template>
-                      {{ dataFormatter(type) }}
+                    <template v-for="(type, i) in cache.SupportedSRAMType">
+                      <span v-if="i !== 0" :key="i">，</span>
+                      <span :key="i">{{ dataFormatter(type) }}</span>
                     </template>
                   </dd>
                   <dt v-if="cache.SystemCacheType">
