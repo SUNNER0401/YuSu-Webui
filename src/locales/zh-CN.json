@@ -795,7 +795,9 @@
     "warningEvents": "警告",
     "viewMore": "查看更多",
     "BMCVersion": "BMC版本",
-    "hostVersion": "主机版本"
+    "hostVersion": "主机版本",
+    "PBFVersion": "主机PBF版本",
+    "cpldVersion": "CPLD版本"
   },
   "pagePostCodeLogs": {
     "allExportFilePrefix": "所有的POST代码日志",

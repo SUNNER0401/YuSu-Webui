@@ -6,6 +6,7 @@ const state = {
   bmcFirmware: [],
   hostFirmware: [],
   cpldFirmware: [],
+  hostPbfActiveFirmwareId: null,
   bmcActiveFirmwareId: null,
   hostActiveFirmwareId: null,
   cpldActiveFirmwareId: null,
@@ -45,6 +46,15 @@ const getters = {
         firmware.version === state.cpldActiveFirmwareId
     );
   },
+  activeHostPbfFirmware: (state: {
+    hostFirmware: any[];
+    hostPbfActiveFirmwareId: any;
+  }) => {
+    return state.hostFirmware.find(
+      (firmware: { pbfVersion: string }) =>
+        firmware.pbfVersion === state.hostPbfActiveFirmwareId
+    )?.pbfVersion;
+  },
   backupBmcFirmware: (state: {
     bmcFirmware: any[];
     bmcActiveFirmwareId: any;
@@ -75,14 +85,14 @@ type Getters = ReturnGetters<typeof getters>;
 const mutations = {
   setBmcFirmware: (state: State, firmware: any) => {
     state.bmcFirmware = firmware;
-    state.bmcActiveFirmwareId = firmware[0].version;
+    state.bmcActiveFirmwareId = firmware[0]?.version;
   },
   setHostFirmware: (state: State, firmware: any) => {
-    state.hostActiveFirmwareId = firmware[0].version;
+    state.hostActiveFirmwareId = firmware[0]?.version;
     state.hostFirmware = firmware;
   },
   setCpldFirmware: (state: State, firmware: any) => {
-    state.cpldActiveFirmwareId = firmware[0].version;
+    state.cpldActiveFirmwareId = firmware[0]?.version;
     state.cpldFirmware = firmware;
   },
   setApplyTime: (state: State, applyTime: any) => (state.applyTime = applyTime),
@@ -90,6 +100,8 @@ const mutations = {
     (state.tftpAvailable = tftpAvailable),
   setUpdateProgress: (state: State, updateProgress: any) =>
     (state.updateProgress = updateProgress),
+  setHostPbfVersion: (state: State, firmware: any) =>
+    (state.hostPbfActiveFirmwareId = firmware[0]?.pbfVersion),
 };
 type Multations = keyof typeof mutations;
 
@@ -98,6 +110,7 @@ const actionsNames = [
   'getActiveBmcFirmware',
   'getActiveHostFirmware',
   'getActiveCpldFirmware',
+  'getActiveHostPbfFirmware',
   'getFirmwareInventory',
   'getUpdateServiceSettings',
   'setApplyTimeOnReset',
@@ -141,6 +154,7 @@ const actions = {
           id: any;
           location: any;
           status: any;
+          pbfVersion: any;
         }[] = [];
         const cpldFirmware: {
           version: any;
@@ -157,6 +171,7 @@ const actions = {
             id: data?.Id,
             location: data?.['@odata.id'],
             status: data?.Status?.Health,
+            pbfVersion: data?.Oem?.PBFVersion,
           };
           if (firmwareType === 'bmc') {
             bmcFirmware.push(item);
@@ -175,6 +190,7 @@ const actions = {
         commit('setBmcFirmware', bmcFirmware);
         commit('setHostFirmware', hostFirmware);
         commit('setCpldFirmware', cpldFirmware);
+        commit('setHostPbfVersion', hostFirmware);
       })
       .catch((error) => {
         console.log(error);

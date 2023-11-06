@@ -794,7 +794,9 @@
     "warningEvents": "Warning",
     "viewMore": "View more",
     "BMCVersion": "BMC version",
-    "hostVersion": "Host version"
+    "hostVersion": "Host version",
+    "PBFVersion": "Host PBF version",
+    "cpldVersion": "CPLD version"
   },
   "pagePostCodeLogs": {
     "allExportFilePrefix": "All_POST_codes_log_",

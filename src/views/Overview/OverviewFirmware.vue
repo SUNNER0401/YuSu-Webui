@@ -10,6 +10,10 @@
           <dd v-if="BMCVersion">{{ dataFormatter(BMCVersion) }}</dd>
           <dt v-if="hostVersion">{{ $t('pageOverview.hostVersion') }}</dt>
           <dd v-if="hostVersion">{{ dataFormatter(hostVersion) }}</dd>
+          <dt v-if="PBFVersion">{{ $t('pageOverview.PBFVersion') }}</dt>
+          <dd v-if="PBFVersion">{{ dataFormatter(PBFVersion) }}</dd>
+          <dt v-if="cpldVersion">{{ $t('pageOverview.cpldVersion') }}</dt>
+          <dd v-if="cpldVersion">{{ dataFormatter(cpldVersion) }}</dd>
         </dl>
       </b-col>
     </b-row>
@@ -39,11 +43,20 @@ export default {
     BMCVersion() {
       return this.activeBmcFirmware?.version;
     },
+    activeCpldFirmware() {
+      return this.$store.getters[`firmware/activeCpldFirmware`];
+    },
+    cpldVersion() {
+      return this.activeCpldFirmware?.version;
+    },
     hostFirmware() {
       return this.$store.getters['firmware/activeHostFirmware'];
     },
     hostVersion() {
       return this.hostFirmware?.version;
+    },
+    PBFVersion() {
+      return this.$store.getters['firmware/activeHostPbfFirmware'];
     },
   },
   created() {

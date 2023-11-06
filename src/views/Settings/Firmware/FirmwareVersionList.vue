@@ -41,6 +41,11 @@ export default {
         ? this.$store.state.firmware.cpldActiveFirmwareId
         : '--';
     },
+    pbfVersion() {
+      return this.$store.getters['firmware/activeHostPbfFirmware']
+        ? this.$store.state.firmware.hostPbfActiveFirmwareId
+        : '--';
+    },
     versionList() {
       return [
         {
@@ -48,11 +53,15 @@ export default {
           version: this.bmcVersion,
         },
         {
-          name: 'Bios',
+          name: 'BIOS',
           version: this.hostVersion,
         },
         {
-          name: 'Cpld',
+          name: 'Host PBF',
+          version: this.pbfVersion,
+        },
+        {
+          name: 'CPLD',
           version: this.cpldVersion,
         },
       ];
