@@ -198,8 +198,8 @@
             </b-col>
           </b-row>
           <template v-for="(cache, index) in item.Oem">
-            <div :key="index" class="section-divider mb-3 mt-3"></div>
-            <b-row :key="index">
+            <div :key="index + '-div'" class="section-divider mb-3 mt-3"></div>
+            <b-row :key="index + '-row'">
               <b-col cols="12">
                 <h4 v-if="cache.CacheLevel === 'L1 cache'">
                   {{ $t('pageInventory.table.cacheLevelL1') }}
