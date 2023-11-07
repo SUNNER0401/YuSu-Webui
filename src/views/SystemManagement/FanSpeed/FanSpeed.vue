@@ -25,11 +25,7 @@
               <b-row>
                 <b-col>
                   <template v-for="(zoneInfo, index1) in zoneInfos">
-                    <b-form
-                      :key="index1"
-                      class="ml-4 mb-4"
-                      @submit="submitSetting(zoneInfo, pwmValues)"
-                    >
+                    <b-form :key="index1" class="ml-4 mb-4">
                       <b-row>
                         <b-col>
                           <b-row>
@@ -114,7 +110,7 @@
                               <b-button
                                 class="speed-confirm"
                                 variant="primary"
-                                type="submit"
+                                @click="submitSetting(zoneInfo, pwmValues)"
                                 >{{ $t('global.action.save') }}
                               </b-button>
                             </b-col>
