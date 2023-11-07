@@ -8,50 +8,62 @@
 </template>
 
 <script lang="ts">
+import { Terminal } from 'xterm';
+
 export default {
   name: 'RecordInformation',
   props: {
-    ws: {
-      type: WebSocket,
+    term: {
+      type: Terminal,
       default: undefined,
     },
   },
   data() {
     return {
       isRecord: false,
-      RecordingMessage: '',
-      listenFunction: (event: { data: any }) => {
-        const data = event.data;
-        let view = new Uint8Array(data);
-        for (let num of view) {
-          this.RecordingMessage = this.RecordingMessage.concat(
-            String.fromCharCode(num)
-          );
-        }
-        this.RecordingMessage = this.RecordingMessage.concat('\n');
-      },
+      recordMessageArray: [],
+      timer: undefined,
+      ondata: () => {},
     };
-  },
-  beforeDestroy() {
-    if (this.isRecord) {
-      this.ws.removeEventListener('message', this.listenFunction);
-    }
   },
   methods: {
     click() {
+      this.term.selectAll();
       this.isRecord = !this.isRecord;
       this.sendRecordStatus();
       if (this.isRecord) {
-        this.RecordingMessage = '';
-        this.ws.addEventListener('message', this.listenFunction);
+        this.onData = this.term.onData((key: any) => {
+          if (key === '\r' || key.charCodeAt() === 3) {
+            this.term.selectAll();
+            console.log(this.term.getSelection().trim() + '\r');
+            this.recordMessageArray.push(
+              this.term.getSelection().trim() + '\r'
+            );
+            this.term.reset();
+          }
+        });
+        this.recordMessageArray = [];
+        this.term.clear();
+        this.timer = setInterval(() => {
+          this.term.selectAll();
+          this.recordMessageArray.push(this.term.getSelection().trim());
+          this.term.reset();
+        }, 10000);
       } else {
-        this.ws.removeEventListener('message', this.listenFunction);
+        clearInterval(this.timer);
+        this.term.selectAll();
+        this.recordMessageArray.push(this.term.getSelection().trim());
+        this.term.reset();
+        let blob = new Blob(this.recordMessageArray, {
+          type: 'text/plain;charset=utf-8',
+        });
         let link = document.createElement('a');
         [link.href, link.download] = [
-          `data:text/json;charset=utf-8,${this.RecordingMessage}`,
+          URL.createObjectURL(blob),
           'SOL-Recording.txt',
         ];
         link.click();
+        this.onData.dispose();
       }
     },
     sendRecordStatus() {

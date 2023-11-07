@@ -534,8 +534,8 @@
       "cacheLevelL1": "L1_cache",
       "cacheLevelL2": "L2_cache",
       "cacheLevelL3": "L3_cache",
-      "cacheLocation":"Cache location",
-      "cacheSocketed":"Cache socket",
+      "cacheLocation": "Cache location",
+      "cacheSocketed": "Cache socket",
       "chassisType": "Chassis type",
       "connectTypesSupported": "Connect types supported",
       "count": "Count",
@@ -621,7 +621,8 @@
     "brandTitle": {
       "screenFull": "Screen Full",
       "screenShot": "Screen Shot",
-      "recorder": "Recorder"
+      "recorder": "Recorder",
+      "download": "download"
     },
     "recording": "Recording"
   },
@@ -1054,7 +1055,10 @@
     "disconnected": "Disconnected",
     "openNewTab": "Open in new tab",
     "status": "Status",
-    "subTitle": "SOL console redirects the server's serial port output to this window."
+    "subTitle": "SOL console redirects the server's serial port output to this window.",
+    "modal": {
+      "beforeLeaveRoute": "Recording action is busy now.If you leave this route, you will lose recording data. Are you sure to go on this action?"
+    }
   },
   "pageServerPowerOperations": {
     "currentStatus": "Current status",

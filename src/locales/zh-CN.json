@@ -535,7 +535,7 @@
       "cacheLevelL2": "二级缓存",
       "cacheLevelL3": "三级缓存",
       "cacheLocation": "缓存位置",
-      "cacheSocketed":"CacheSocketed",
+      "cacheSocketed": "CacheSocketed",
       "chassisType": "机箱类型",
       "connectTypesSupported": "支持的连接型号",
       "count": "数量",
@@ -622,7 +622,8 @@
       "screenFull": "全屏",
       "screenShot": "截屏",
       "immersionMode": "沉浸模式",
-      "recorder": "录制"
+      "recorder": "录制",
+      "download": "下载"
     },
     "recording": "正在录制"
   },
@@ -1055,7 +1056,10 @@
     "disconnected": "未连接",
     "openNewTab": "在新标签中打开",
     "status": "状态",
-    "subTitle": "SOL控制台将服务器的串口输出重定向到此窗口."
+    "subTitle": "SOL控制台将服务器的串口输出重定向到此窗口.",
+    "modal": {
+      "beforeLeaveRoute": "当前页面正在录制，如果离开将会丢失录制内容，是否继续？"
+    }
   },
   "pageServerPowerOperations": {
     "currentStatus": "当前状态",

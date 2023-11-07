@@ -37,14 +37,16 @@
             "
           >
             <record-information
+              ref="record-information"
               class="SOL-toolbar-item"
-              :ws="ws"
+              :term="backTerm"
               @recordStatus="handleRecordStatus"
             />
           </b-navbar-brand>
         </div>
       </div>
       <div id="terminal" ref="panel2"></div>
+      <div ref="backPanel" style="display: none"></div>
     </div>
   </div>
 </template>
@@ -79,6 +81,8 @@ export default {
       resizeConsoleWindow: () => {},
       isRecord: false,
       ws: undefined,
+      term: undefined,
+      backTerm: undefined,
     };
   },
   computed: {
@@ -129,11 +133,15 @@ export default {
         fontFamily:
           'SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
       });
+      this.backTerm = new Terminal();
       const attachAddon = new AttachAddon(this.ws);
       term.loadAddon(attachAddon);
+      this.backTerm.loadAddon(attachAddon);
 
       const fitAddon = new FitAddon();
       term.loadAddon(fitAddon);
+      this.backTerm.loadAddon(fitAddon);
+
       const SOL_THEME = {
         background: '#19273c',
         cursor: 'rgba(83, 146, 255, .5)',
@@ -142,6 +150,7 @@ export default {
       term.setOption('theme', SOL_THEME);
 
       term.open(this.$refs.panel2);
+      this.backTerm.open(this.$refs.backPanel);
       fitAddon.fit();
 
       this.resizeConsoleWindow = this._.throttle(() => {

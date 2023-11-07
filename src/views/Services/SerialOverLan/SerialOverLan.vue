@@ -9,6 +9,7 @@
 
         <page-section class="mb-0">
           <serial-over-lan-console
+            ref="serial-over-lan-console"
             :is-full-window="isFullWindow"
             :element="element"
           />
@@ -34,6 +35,33 @@ export default {
     return {
       setIsFullWindow: this.setIsFullWindow,
     };
+  },
+  beforeRouteLeave(to: any, from: any, next: any) {
+    if (this.$refs['serial-over-lan-console'].isRecord) {
+      this.$bvModal
+        .msgBoxConfirm(this.$t('pageSerialOverLan.modal.beforeLeaveRoute'), {
+          title: this.$t('global.status.warning'),
+          okTitle: this.$t('global.action.confirm'),
+          cancelTitle: this.$t('global.action.cancel'),
+        })
+        .then((confirm: boolean) => {
+          if (confirm) {
+            if (
+              this.$refs['serial-over-lan-console'].$refs['record-information']
+                .timer
+            ) {
+              clearInterval(
+                this.$refs['serial-over-lan-console'].$refs[
+                  'record-information'
+                ].timer
+              );
+            }
+            next();
+          }
+        });
+    } else {
+      next();
+    }
   },
   // You only can get dom after mounting operation.
   data() {
