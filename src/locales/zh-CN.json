@@ -1170,7 +1170,8 @@
       "serverRunning": "服务器运行",
       "serverConnectionEstablished": "服务器连接建立",
       "serverClosedSuccessfully": "服务器关闭成功",
-      "serverClosedWithErrors": "服务器关闭，出现错误"
+      "serverClosedWithErrors": "服务器关闭，出现错误",
+      "sessionAlreadyConnected": "会话已建立连接。"
     }
   },
   "pageAboutUs": {},

@@ -32,7 +32,7 @@ const NBD_STATE_TRANSMISSION = 5;
 
 export default class NBDServer {
   socketStarted: () => void;
-  socketClosed: (code: number) => void;
+  socketClosed: (ev: CloseEvent) => void;
   errorReadingFile: () => void;
   file: { size: number };
   id: any;
@@ -102,7 +102,7 @@ export default class NBDServer {
         `${endpoint} closed with code: ${ev.code} + reason: ${ev.reason}`
       );
       console.log(JSON.stringify(ev));
-      this.socketClosed(ev.code);
+      this.socketClosed(ev);
     };
     /* websocket event handlers */
     this._on_ws_open = function () {
@@ -198,7 +198,7 @@ export default class NBDServer {
           /* export size. */
 
           // eslint-disable-next-line prettier/prettier
-          view.setUint32(0, Math.floor(size / (2 ** 32)));
+          view.setUint32(0, Math.floor(size / 2 ** 32));
           view.setUint32(4, size & 0xffffffff);
           /* transmission flags: read-only */
           view.setUint16(8, NBD_FLAG_HAS_FLAGS | NBD_FLAG_READ_ONLY);
@@ -297,7 +297,7 @@ export default class NBDServer {
     }) {
       let offset;
       // eslint-disable-next-line prettier/prettier
-      offset = (req.offset_msB * 2 ** 32) + req.offset_lsB;
+      offset = req.offset_msB * 2 ** 32 + req.offset_lsB;
       if (offset > Number.MAX_SAFE_INTEGER) return ENOSPC;
       if (offset + req.length > Number.MAX_SAFE_INTEGER) return ENOSPC;
       if (offset + req.length > file.size) return ENOSPC;

@@ -152,8 +152,12 @@ export default {
         this.successToast(this.$t('pageVirtualMedia.toast.serverRunning'));
       device.nbd.errorReadingFile = () =>
         this.errorToast(this.$t('pageVirtualMedia.toast.errorReadingFile'));
-      device.nbd.socketClosed = (code: number) => {
-        if (code === 1000)
+      device.nbd.socketClosed = (ev: CloseEvent) => {
+        if (ev.reason == 'Session already connected') {
+          this.errorToast(
+            this.$t('pageVirtualMedia.toast.sessionAlreadyConnected')
+          );
+        } else if (ev.code === 1000)
           this.successToast(
             this.$t('pageVirtualMedia.toast.serverClosedSuccessfully')
           );

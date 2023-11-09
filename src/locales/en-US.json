@@ -1169,7 +1169,8 @@
       "serverRunning": "Server running",
       "serverConnectionEstablished": "Server connection established",
       "serverClosedSuccessfully": "Server closed successfully",
-      "serverClosedWithErrors": "Server closed with errors"
+      "serverClosedWithErrors": "Server closed with errors",
+      "sessionAlreadyConnected": "Session already connected."
     }
   },
   "pageAboutUs": {},
