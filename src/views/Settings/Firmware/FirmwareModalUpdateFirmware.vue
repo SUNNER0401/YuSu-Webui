@@ -47,7 +47,6 @@
         </b-progress-bar>
       </b-progress>
       <p style="float: left">{{ complete }}: {{ updateProgress }}%</p>
-      <p style="float: right">{{ activation }}</p>
     </b-modal>
     <b-modal
       id="modal-update-firmware-bmc-progress"
@@ -108,19 +107,6 @@ export default {
     },
     updateProgress() {
       return this.$$store.state.firmware.updateProgress;
-    },
-    activation() {
-      if (this.updateProgress >= 0 && this.updateProgress < 20)
-        return this.$t('pageFirmware.modal.state.uploading');
-      if (this.updateProgress >= 20 && this.updateProgress < 40)
-        return this.$t('pageFirmware.modal.state.startBurning');
-      if (this.updateProgress >= 40 && this.updateProgress < 90)
-        return this.$t('pageFirmware.modal.state.loadBios');
-      if (this.updateProgress >= 90 && this.updateProgress < 100)
-        return this.$t('pageFirmware.modal.state.burningBios');
-      if (this.updateProgress === 100)
-        return this.$t('pageFirmware.modal.state.success');
-      else return 'error';
     },
   },
 };
