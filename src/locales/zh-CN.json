@@ -964,7 +964,7 @@
     "ipmi": "网络 IPMI（带外 IPMI）",
     "ipmiDescription": "允许通过 IPMI 远程管理平台。 \nipmitool 等工具需要启用此设置。",
     "networkServices": "网络服务",
-    "ssh": "BMC 外壳（通过 SSH）",
+    "ssh": "BMC shell（通过 SSH）",
     "sshDescription": "允许通过 BMC 上的端口 22 通过 SSH 访问 shell 会话。",
     "modal": {
       "disableMessage": {
