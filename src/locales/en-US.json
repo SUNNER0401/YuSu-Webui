@@ -744,7 +744,8 @@
     "username": "Username",
     "alert": {
       "message": "Invalid username or password"
-    }
+    },
+    "rememberPassword": "Remember password"
   },
   "pageOperatingLogs": {
     "table": {

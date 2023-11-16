@@ -1,19 +1,20 @@
 <template>
   <b-form class="login-form" novalidate @submit.prevent="login">
+    <div id="corner-1" class="corner"></div>
+    <div id="corner-2" class="corner"></div>
+    <div id="corner-3" class="corner"></div>
+    <div id="corner-4" class="corner"></div>
     <alert class="login-error mb-4" :show="authError" variant="danger">
       <p id="login-error-alert">
         {{ $t('pageLogin.alert.message') }}
       </p>
     </alert>
-    <b-form-group label-for="language" :label="$t('pageLogin.language')">
-      <b-form-select
-        id="language"
-        v-model="$i18n.locale"
-        :options="languages"
-        data-test-id="login-select-language"
-      ></b-form-select>
-    </b-form-group>
-    <b-form-group label-for="username" :label="$t('pageLogin.username')">
+    <img id="logo" src="@/env/assets/images/OurBMC-logo.png" alt="" />
+    <b-form-group
+      label-cols="3"
+      label-for="username"
+      :label="$t('pageLogin.username')"
+    >
       <b-form-input
         id="username"
         v-model="userInfo.username"
@@ -32,26 +33,52 @@
       </b-form-invalid-feedback>
     </b-form-group>
     <div class="login-form__section mb-3">
-      <label for="password">{{ $t('pageLogin.password') }}</label>
-      <input-password-toggle>
-        <b-form-input
-          id="password"
-          v-model="userInfo.password"
-          aria-describedby="login-error-alert password-required"
-          :state="getValidationState($v.userInfo.password)"
-          type="password"
-          data-test-id="login-input-password"
-          class="form-control-with-button"
-          @input="$v.userInfo.password.$touch()"
-        >
-        </b-form-input>
-      </input-password-toggle>
+      <b-form-group
+        label-cols="3"
+        label-for="password"
+        :label="$t('pageLogin.password')"
+      >
+        <input-password-toggle>
+          <b-form-input
+            id="password"
+            v-model="userInfo.password"
+            aria-describedby="login-error-alert password-required"
+            :state="getValidationState($v.userInfo.password)"
+            type="password"
+            data-test-id="login-input-password"
+            class="form-control-with-button"
+            @input="$v.userInfo.password.$touch()"
+          >
+          </b-form-input>
+        </input-password-toggle>
+      </b-form-group>
       <b-form-invalid-feedback id="password-required" role="alert">
         <template v-if="!$v.userInfo.password.required">
           {{ $t('global.form.fieldRequired') }}
         </template>
       </b-form-invalid-feedback>
     </div>
+    <b-form-group
+      label-cols="8"
+      label-for="language"
+      :label="$t('pageLogin.language')"
+    >
+      <b-form-select
+        id="language"
+        v-model="$i18n.locale"
+        :options="languages"
+        data-test-id="login-select-language"
+      ></b-form-select>
+    </b-form-group>
+    <b-form-checkbox
+      id="checkbox-1"
+      v-model="status"
+      name="checkbox-1"
+      value="accepted"
+      unchecked-value="not_accepted"
+    >
+      {{ $t('pageLogin.rememberPassword') }}
+    </b-form-checkbox>
     <b-button
       class="mt-3"
       type="submit"
@@ -71,6 +98,7 @@ import Alert from '@/components/Global/Alert';
 import InputPasswordToggle from '@/components/Global/InputPasswordToggle';
 import { setRoutes } from '@/env/router/ourbmc';
 import VueRouter from 'vue-router';
+import Cookies from 'js-cookie';
 
 export default {
   name: 'Login',
@@ -79,8 +107,8 @@ export default {
   data() {
     return {
       userInfo: {
-        username: null,
-        password: null,
+        username: Cookies.getJSON('rememberInfo')?.username,
+        password: Cookies.getJSON('rememberInfo')?.password,
       },
       disableSubmitButton: false,
       languages: [
@@ -93,6 +121,7 @@ export default {
           text: '简体中文',
         },
       ],
+      status: 'not_accepted',
     };
   },
   computed: {
@@ -181,6 +210,24 @@ export default {
             if (RoleId) {
               this.$store.commit('global/setPrivilege', RoleId);
             }
+            if (this.status === 'accepted') {
+              Cookies.set(
+                'rememberInfo',
+                {
+                  username: username,
+                  password: password,
+                },
+                { expires: 7 }
+              );
+            } else {
+              Cookies.set(
+                'rememberInfo',
+                {
+                  username: username,
+                },
+                { expires: 7 }
+              );
+            }
           }
         )
         .catch((error: string) => console.log(error))
@@ -191,8 +238,67 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+img#logo {
+  position: relative;
+  width: 300px;
+  left: 50%;
+  transform: translate(-50%);
+  margin-bottom: 20px;
+}
 button[data-v-2c86e14e] {
-  background: #0050ff;
-  border-color: #0050ff;
+  background: #046eb8;
+  border-color: #046eb8;
+  width: 100%;
+  &:hover {
+    background: #22abff;
+  }
+}
+.login-form {
+  position: relative;
+  padding: 30px;
+  border-width: 5px;
+  border-style: solid;
+  border-image: linear-gradient(
+      to right,
+      transparent 0%,
+      #8bdeeb 50%,
+      transparent 100%
+    )
+    1;
+  ::v-deep.form-group label {
+    color: #444444;
+  }
+  .form-control.is-invalid {
+    border: none !important;
+  }
+  .corner {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    &#corner-1 {
+      top: -3px;
+      left: -3px;
+      border-left: 3px solid #046eb8;
+      border-top: 3px solid #046eb8;
+    }
+    &#corner-2 {
+      top: -3px;
+      right: -3px;
+      border-right: 3px solid #046eb8;
+      border-top: 3px solid #046eb8;
+    }
+    &#corner-3 {
+      bottom: -3px;
+      left: -3px;
+      border-left: 3px solid #046eb8;
+      border-bottom: 3px solid #046eb8;
+    }
+    &#corner-4 {
+      bottom: -3px;
+      right: -3px;
+      border-right: 3px solid #046eb8;
+      border-bottom: 3px solid #046eb8;
+    }
+  }
 }
 </style>

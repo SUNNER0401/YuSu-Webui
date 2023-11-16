@@ -5,25 +5,9 @@
       leave-active-class="animate__fadeOut"
     >
       <main>
-        <div key="1" class="login-brand mb-5">
-          <img src="@/env/assets/images/OurBMC-logo.png" :alt="altLogo" />
-        </div>
         <div v-show="onload" class="login-container">
           <div class="login-main">
             <div>
-              <transition-group
-                appear
-                name="animate__animated animate__bounce"
-                enter-active-class="animate__slideInDown"
-              >
-                <h1
-                  v-if="customizableGuiName"
-                  key="2"
-                  class="customizableGuiName h3 mb-5"
-                >
-                  {{ customizableGuiName }}
-                </h1>
-              </transition-group>
               <transition
                 appear
                 name="animate__animated animate__bounce"
@@ -88,18 +72,13 @@ export default {
   background: transparent;
 }
 .login-container {
-  display: flex;
-  flex-direction: column;
-  gap: $spacer * 2;
-  // max-width: 1400px;
-  min-width: 320px;
-  min-height: 100vh;
-  justify-content: space-around;
+  width: 100%;
+  height: 100%;
 
-  @include media-breakpoint-up('md') {
-    background-color: rgba(0, 0, 0, 0.05);
-    flex-direction: row;
-  }
+  background: linear-gradient(rgb(175 199 223 / 92%), transparent),
+    linear-gradient(90deg, #3da7cd, transparent),
+    linear-gradient(-90deg, #1a4d87, transparent);
+  background-blend-mode: screen;
 }
 
 .login-main {
@@ -107,7 +86,6 @@ export default {
   padding: $spacer * 3;
   padding-top: $spacer * 2;
   @include media-breakpoint-up('md') {
-    // background: $login-background-color;
     display: flex;
     flex-direction: column;
     flex: 1 1 75%;
@@ -115,16 +93,10 @@ export default {
     justify-content: center;
     align-items: center;
   }
-  & > div {
-    position: relative;
-    left: -15vw;
-  }
 }
 
 .login-form {
-  @include media-breakpoint-up('md') {
-    max-width: 360px;
-  }
+  width: 400px;
 }
 
 .login-aside {
@@ -160,8 +132,6 @@ main {
   top: 0;
   height: 100vh;
   width: 100vw;
-  background: url('~@/env/assets/images/login-background.webp') no-repeat fixed
-    center;
   background-size: 100% 100%;
   .customizableGuiName {
     color: #fb0000de;

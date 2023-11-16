@@ -745,7 +745,8 @@
     "username": "用户名",
     "alert": {
       "message": "用户名与密码不匹配"
-    }
+    },
+    "rememberPassword": "记住密码"
   },
   "pageOperatingLogs": {
     "table": {
