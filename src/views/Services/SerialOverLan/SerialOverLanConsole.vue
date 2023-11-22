@@ -224,6 +224,11 @@ export default {
       }
       ::v-deep .xterm-screen {
         height: 100vh !important;
+        width: 100% !important;
+        canvas {
+          height: 100% !important;
+          width: 100% !important;
+        }
       }
     }
   }
@@ -233,11 +238,10 @@ export default {
       position: relative;
       float: right;
       margin: 0;
-      height: 391px;
       width: calc(100% - 60px);
     }
     .SOL-toolbar {
-      height: 391px;
+      height: 408px;
       width: 60px;
     }
   }
