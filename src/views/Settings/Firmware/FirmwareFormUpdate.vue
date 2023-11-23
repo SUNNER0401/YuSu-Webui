@@ -276,8 +276,39 @@ export default {
       if (updatingFirmware['type'] == 'bmc') {
         this.$bvModal.hide('modal-update-firmware-bios-progress');
         this.$bvModal.show('modal-update-firmware-bmc-progress');
-        this.$$store.dispatch('controls/rebootBmc');
+        this.bmcUpdate(updatingFirmware.taskUrl);
       }
+    },
+    bmcUpdate(taskUrl: string) {
+      this.$$store
+        .dispatch('firmware/getUpdateinfo', taskUrl)
+        .then(
+          ({
+            TaskState,
+            TaskStatus,
+          }: {
+            TaskState: string;
+            TaskStatus: string;
+          }) => {
+            if (TaskState == 'Completed' && TaskStatus == 'OK') {
+              this.$$store.dispatch('controls/rebootBmc');
+              this.successToast(
+                this.$t('pageFirmware.toast.UpdatingRebootBmc')
+              );
+            } else if (TaskState == 'Stopping' && TaskStatus == 'OK') {
+              this.$bvModal.show('modal-update-firmware-bmc-progress');
+              this.errorToast(this.$t('pageFirmware.toast.errorStop'));
+            } else if (TaskState == 'Exception' && TaskStatus == 'Warning') {
+              this.$bvModal.show('modal-update-firmware-bmc-progress');
+              this.errorToast(this.$t('pageFirmware.toast.errorChecked'));
+            } else if (TaskState == 'Cancelled' && TaskStatus == 'Warning') {
+              this.$bvModal.show('modal-update-firmware-bmc-progress');
+              this.errorToast(this.$t('pageFirmware.toast.TimeoutCancelled'));
+            } else if (TaskState == 'Running' && TaskStatus == 'OK') {
+              this.bmcUpdate(taskUrl);
+            }
+          }
+        );
     },
     async dispatchWorkstationUpload(timerId: number | undefined) {
       return await this.$$store

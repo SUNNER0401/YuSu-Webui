@@ -503,7 +503,11 @@
       "verifyUpdate": "验证更新",
       "verifyUpdateMessage": "刷新应用程序以验证固件更新成功",
       "updateSuccessfully": "更新成功！",
-      "errorUpdate": "更新失败！"
+      "errorUpdate": "更新失败！",
+      "errorStop": "异常终止。",
+      "errorChecked": "校验失败。",
+      "TimeoutCancelled": "超时取消。",
+      "UpdatingRebootBmc": "BMC正在重启。"
     },
     "sectionTitleVersionList": "版本列表",
     "table": {

@@ -503,7 +503,11 @@
       "verifyUpdate": "Verify update",
       "verifyUpdateMessage": "Refresh the application to verify firmware updated successfully",
       "updateSuccessfully": "Update successfully!",
-      "errorUpdate": "Error update！"
+      "errorUpdate": "Error update！",
+      "errorStop": "Abnormal termination.",
+      "errorChecked": "Error checked.",
+      "TimeoutCancelled": "Timeout.",
+      "UpdatingRebootBmc": "BMC is rebooting."
     },
     "sectionTitleVersionList": "Version list",
     "table": {

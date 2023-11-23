@@ -312,9 +312,9 @@ const actions = {
   ) {
     return await api
       .get(taskUrl)
-      .then(({ data: { TaskState, PercentComplete } }) => {
-        commit('setUpdateProgress', PercentComplete);
-        return { TaskState };
+      .then(({ data }) => {
+        commit('setUpdateProgress', data.PercentComplete);
+        return { TaskState: data.TaskState, TaskStatus: data.TaskStatus };
       })
       .catch(() => {
         throw 'page not found!';
