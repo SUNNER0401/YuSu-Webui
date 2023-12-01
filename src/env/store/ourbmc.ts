@@ -2,7 +2,7 @@ import store from '@/store';
 import AlarmSettingStore from '@/store/modules/ServicesManagement/AlarmSetting/AlarmSettingStore';
 import FanSpeedStore from '@/store/modules/SystemManagement/FanSpeed/FanSpeedStore';
 import OperatingLogsStore from '@/store/modules/Diagnostic/OperatingLogs/OperatingLogsStore';
-import PcieStore from '@/store/modules/SystemManagement/SystemInformation/PcieStore';
+import PciStore from '@/store/modules/SystemManagement/SystemInformation/PciStore';
 import ConfugureManagementStore from '@/store/modules/Settings/ConfigureManagement';
 import RasLogsStore from '@/store/modules/Diagnostic/RasLogs/RasLogsStore';
 import PostCodeLogsStore from '@/store/modules/Diagnostic/PostCodeLogs/PostCodeLogsStore';
@@ -13,7 +13,7 @@ import PowerControlStore from '@/store/modules/SystemManagement/Power/PowerContr
 store.registerModule('alarmSetting', AlarmSettingStore);
 store.registerModule('fanSpeed', FanSpeedStore);
 store.registerModule('operatingLogs', OperatingLogsStore);
-store.registerModule('pcie', PcieStore);
+store.registerModule('pci', PciStore);
 store.registerModule('configure', ConfugureManagementStore);
 store.registerModule('rasLogs', RasLogsStore);
 store.registerModule('postCodeLogs', PostCodeLogsStore);

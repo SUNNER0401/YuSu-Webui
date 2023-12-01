@@ -612,7 +612,9 @@
     "toast": {
       "errorDisableIdentifyLed": "Error disabling Identify LED.",
       "errorEnableIdentifyLed": "Error enabling Identify LED."
-    }
+    },
+    "pci": "PCI",
+    "PCIDevices": "PCI devices"
   },
   "pageKvm": {
     "openNewTab": "Open in new tab",

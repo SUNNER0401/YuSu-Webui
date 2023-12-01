@@ -612,7 +612,9 @@
     "toast": {
       "errorDisableIdentifyLed": "关闭指示灯失败",
       "errorEnableIdentifyLed": "开启指示灯失败"
-    }
+    },
+    "pci": "PCI",
+    "PCIDevices": "PCI设备"
   },
   "pageKvm": {
     "openNewTab": "在新标签中打开",
