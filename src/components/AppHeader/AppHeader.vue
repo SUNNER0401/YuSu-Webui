@@ -326,6 +326,10 @@ export default {
 @mixin focus-box-shadow($padding-color: $navbar-color, $outline-color: $white) {
   box-shadow: inset 0 0 0 3px $padding-color, inset 0 0 0 5px $outline-color;
 }
+.btn-link {
+  margin: 0;
+  vertical-align: baseline;
+}
 .app-header {
   min-width: 1454px;
   .navbar-text,
@@ -368,6 +372,7 @@ export default {
   }
 
   .nav-item {
+    height: $header-height;
     fill: theme-color('light');
   }
 
