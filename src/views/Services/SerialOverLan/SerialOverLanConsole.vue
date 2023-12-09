@@ -27,26 +27,9 @@
           >
             <screen-full class="SOL-toolbar-item" :element="element" />
           </b-navbar-brand>
-          <b-navbar-brand
-            id="SOL-record-information"
-            class="SOL-toolbar-item ml-1 mr-1"
-            :title="
-              isRecord
-                ? $t('pageKvm.recording')
-                : $t('pageKvm.brandTitle.recorder')
-            "
-          >
-            <record-information
-              ref="record-information"
-              class="SOL-toolbar-item"
-              :term="backTerm"
-              @recordStatus="handleRecordStatus"
-            />
-          </b-navbar-brand>
         </div>
       </div>
       <div id="terminal" ref="panel2"></div>
-      <div ref="backPanel" style="display: none"></div>
     </div>
   </div>
 </template>
@@ -57,14 +40,12 @@ import { FitAddon } from 'xterm-addon-fit';
 import { Terminal } from 'xterm';
 import StatusIcon from '@/components/Global/StatusIcon';
 import ScreenFull from '@/components/Global/ScreenFull';
-import RecordInformation from '@/components/Global/RecordInformation';
 
 export default {
   name: 'SerialOverLanConsole',
   components: {
     StatusIcon,
     ScreenFull,
-    RecordInformation,
   },
   props: {
     isFullWindow: {
@@ -82,7 +63,6 @@ export default {
       isRecord: false,
       ws: undefined,
       term: undefined,
-      backTerm: undefined,
     };
   },
   computed: {
@@ -133,14 +113,11 @@ export default {
         fontFamily:
           'SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
       });
-      this.backTerm = new Terminal();
       const attachAddon = new AttachAddon(this.ws);
       term.loadAddon(attachAddon);
-      this.backTerm.loadAddon(attachAddon);
 
       const fitAddon = new FitAddon();
       term.loadAddon(fitAddon);
-      this.backTerm.loadAddon(fitAddon);
 
       const SOL_THEME = {
         background: '#19273c',
@@ -150,7 +127,6 @@ export default {
       term.setOption('theme', SOL_THEME);
 
       term.open(this.$refs.panel2);
-      this.backTerm.open(this.$refs.backPanel);
       fitAddon.fit();
 
       this.resizeConsoleWindow = this._.throttle(() => {
