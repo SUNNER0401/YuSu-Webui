@@ -285,6 +285,14 @@ export let setRoutes = () => {
           },
         },
         {
+          path: '/settings/power-restore-policy',
+          name: 'power-restore-policy',
+          component: () => import('@/views/Settings/PowerRestorePolicy'),
+          meta: {
+            title: i18n.t('appPageTitle.powerRestorePolicy'),
+          },
+        },
+        {
           path: '*',
           name: 'page-not-found',
           component: () => import('@/views/PageNotFound'),

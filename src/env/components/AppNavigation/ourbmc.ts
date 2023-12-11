@@ -238,5 +238,13 @@ export default {
         title: i18n.t('appPageTitle.rebootBmc'),
       },
     },
+    {
+      path: '/settings/power-restore-policy',
+      name: 'power-restore-policy',
+      component: () => import('@/views/Settings/PowerRestorePolicy'),
+      meta: {
+        title: i18n.t('appPageTitle.powerRestorePolicy'),
+      },
+    },
   ],
 };
