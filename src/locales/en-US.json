@@ -1065,6 +1065,9 @@
     "subTitle": "SOL console redirects the server's serial port output to this window.",
     "modal": {
       "beforeLeaveRoute": "Recording action is busy now.If you leave this route, you will lose recording data. Are you sure to go on this action?"
+    },
+    "brandTitle": {
+      "info": "If you plan to record sol logs, please do it via ssh."
     }
   },
   "pageServerPowerOperations": {

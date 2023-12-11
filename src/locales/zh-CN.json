@@ -1066,6 +1066,9 @@
     "subTitle": "SOL控制台将服务器的串口输出重定向到此窗口.",
     "modal": {
       "beforeLeaveRoute": "当前页面正在录制，如果离开将会丢失录制内容，是否继续？"
+    },
+    "brandTitle": {
+      "info": "若要记录SOL日志请使用ssh的方式。"
     }
   },
   "pageServerPowerOperations": {

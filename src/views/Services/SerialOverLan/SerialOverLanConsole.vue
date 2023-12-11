@@ -14,8 +14,18 @@
           </dd>
         </dl>
       </b-col>
-
-      <b-col v-if="!isFullWindow" class="d-flex justify-content-end"> </b-col>
+      <b-col>
+        <div class="d-flex justify-content-end">
+          <b-navbar-brand :title="$t('pageSerialOverLan.brandTitle.info')">
+            <div class="d-flex justify-content-center">
+              <b-icon
+                icon="exclamation-circle"
+                class="h3 icon SOL-icon-info"
+              ></b-icon>
+            </div>
+          </b-navbar-brand>
+        </div>
+      </b-col>
     </b-row>
     <div id="base-container">
       <div class="SOL-toolbar">
@@ -163,6 +173,13 @@ export default {
 .full-window-container {
   width: 97%;
   margin: 1.5%;
+}
+
+.SOL-icon-info {
+  &:hover {
+    cursor: pointer;
+    color: white;
+  }
 }
 
 #serial-over-lan-console {
