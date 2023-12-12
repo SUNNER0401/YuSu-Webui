@@ -296,13 +296,13 @@ export default {
                 this.$t('pageFirmware.toast.UpdatingRebootBmc')
               );
             } else if (TaskState == 'Stopping' && TaskStatus == 'OK') {
-              this.$bvModal.show('modal-update-firmware-bmc-progress');
+              this.$bvModal.hide('modal-update-firmware-bmc-progress');
               this.errorToast(this.$t('pageFirmware.toast.errorStop'));
             } else if (TaskState == 'Exception' && TaskStatus == 'Warning') {
-              this.$bvModal.show('modal-update-firmware-bmc-progress');
+              this.$bvModal.hide('modal-update-firmware-bmc-progress');
               this.errorToast(this.$t('pageFirmware.toast.errorChecked'));
             } else if (TaskState == 'Cancelled' && TaskStatus == 'Warning') {
-              this.$bvModal.show('modal-update-firmware-bmc-progress');
+              this.$bvModal.hide('modal-update-firmware-bmc-progress');
               this.errorToast(this.$t('pageFirmware.toast.TimeoutCancelled'));
             } else if (TaskState == 'Running' && TaskStatus == 'OK') {
               this.bmcUpdate(taskUrl);
