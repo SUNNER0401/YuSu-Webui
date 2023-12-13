@@ -17,7 +17,8 @@
         <b-col class="d-flex justify-content-end pr-1"></b-col>
       </b-row>
     </div>
-    <div id="terminal-kvm" ref="panel1" :class="terminalClass">
+    <div class="kvm-div" :class="terminalClass">
+      <div id="terminal-kvm" ref="panel1"></div>
       <div v-show="loadFinished" class="kvm-toolbar2">
         <div id="kvm-toolbar-menu-row">
           <div class="kvm-toolbar-menu">
@@ -156,7 +157,7 @@ export default {
     },
   },
   mounted() {
-    this.element = document.querySelector('#terminal-kvm');
+    this.element = document.querySelector('.kvm-div');
     this.openTerminal();
     setTimeout(() => {
       this.loadFinished = true;
@@ -189,18 +190,18 @@ export default {
     // },
     amendToolbar2Position() {
       let toolbar2 = document.querySelector('.kvm-toolbar2');
-      let div = document.querySelector('#terminal-kvm');
-      let canvas = document.querySelector(
-        '#terminal-kvm > div:nth-child(2) > canvas'
-      );
+      let div = document.querySelector('.kvm-div');
+      let kvmbox = document.querySelector('#terminal-kvm');
+      let canvas = document.querySelector('#terminal-kvm > div > canvas');
       if (!this.isFullWindow) {
-        toolbar2!.style.right = `calc(${div!.clientWidth}px - ${
-          canvas!.style.width
-        } - 61px)`;
+        toolbar2!.style.right = `-${toolbar2!.clientWidth}`;
+        toolbar2!.style.top = '0px';
         toolbar2!.style.height = canvas!.style.height;
       } else {
         toolbar2!.style.right = '0px';
-        toolbar2!.style.height = '100%';
+        toolbar2!.style.top = '0px';
+        toolbar2!.style.height = div!.style.height;
+        kvmbox!.style.height = '100%';
       }
     },
     closeTerminal() {
@@ -318,16 +319,15 @@ export default {
 .kvm-toolbar1 {
   width: 660px;
 }
-
-#terminal-kvm {
-  width: 873px;
+.kvm-div {
+  position: relative;
+  width: 609px;
   $canvaHeight: 100%;
   .kvm-toolbar2 {
-    float: right;
     background: #444444 !important;
     height: $canvaHeight;
     width: 7%;
-    position: relative;
+    position: absolute;
     place-items: center;
     .kvm-toolbar-menu {
       height: auto;
@@ -374,6 +374,7 @@ export default {
   ::v-deep canvas {
     &.immersionMode {
       cursor: none !important;
+      margin: 0;
     }
   }
   &.full-window {
