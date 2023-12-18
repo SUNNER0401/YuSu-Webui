@@ -97,11 +97,9 @@ export default {
       rfb: null,
       isConnected: false,
       status: Connecting,
-      resizeKvmWindow: null,
       element: null,
       shotArea: null,
       loadFinished: false,
-      timer: null,
     };
   },
   computed: {
@@ -149,61 +147,20 @@ export default {
             console.log('Your browser Not support!!!');
           }
         }
-        this.resizeKvmWindow();
-        setTimeout(() => {
-          this.amendToolbar2Position();
-        }, 500);
       },
     },
   },
   mounted() {
     this.element = document.querySelector('.kvm-div');
     this.openTerminal();
-    setTimeout(() => {
-      this.loadFinished = true;
-      this.amendToolbar2Position();
-      window.addEventListener(
-        'resize',
-        this._.throttle(() => {
-          this.amendToolbar2Position();
-        }, 1000)
-      );
-      this.shotArea = document.querySelector('#terminal-kvm > div > canvas');
-      document.querySelector(
-        '.kvm-toolbar2'
-      )!.style.height = this.shotArea.height;
-      this.timer = setInterval(() => {
-        if (!document.querySelector('.kvm-toolbar2')) return;
-        this.amendToolbar2Position();
-        this.shotArea.style.top = `calc( (100vh - ${this.shotArea.style.height}) / 2 )`;
-      }, 500);
-    }, 1700);
   },
   beforeDestroy() {
-    window.removeEventListener('resize', this.resizeKvmWindow);
-    clearInterval(this.timer);
     this.closeTerminal();
   },
   methods: {
     // sendCtrlAltDel() {
     //   this.rfb.sendCtrlAltDel();
     // },
-    amendToolbar2Position() {
-      let toolbar2 = document.querySelector('.kvm-toolbar2');
-      let div = document.querySelector('.kvm-div');
-      let kvmbox = document.querySelector('#terminal-kvm');
-      let canvas = document.querySelector('#terminal-kvm > div > canvas');
-      if (!this.isFullWindow) {
-        toolbar2!.style.right = `-${toolbar2!.clientWidth}`;
-        toolbar2!.style.top = '0px';
-        toolbar2!.style.height = canvas!.style.height;
-      } else {
-        toolbar2!.style.right = '0px';
-        toolbar2!.style.top = '0px';
-        toolbar2!.style.height = div!.style.height;
-        kvmbox!.style.height = '100%';
-      }
-    },
     closeTerminal() {
       this.rfb.disconnect();
       this.rfb = null;
@@ -220,31 +177,17 @@ export default {
       this.rfb.clipViewport = true;
       const that = this;
 
-      this.resizeKvmWindow = this._.throttle(() => {
-        setTimeout(that.setWidthToolbars, 0);
-      }, 1000);
-      window.addEventListener('resize', this.resizeKvmWindow);
-
       this.rfb.addEventListener('connect', () => {
         that.isConnected = true;
         that.status = Connected;
-        that.setWidthToolbars();
+        this.loadFinished = true;
+        this.shotArea = document.querySelector('#terminal-kvm > div > canvas');
       });
 
       this.rfb.addEventListener('disconnect', () => {
         this.isConnected = false;
         that.status = Disconnected;
       });
-    },
-    setWidthToolbars() {
-      if (
-        this.$refs.panel1.children &&
-        this.$refs.panel1.children.length > 0 &&
-        this.$refs.panel1.children[0].children.length > 0
-      ) {
-        this.$refs.toolbar1.style.width =
-          this.$refs.panel1.children[1].children[0].clientWidth - 10 + 'px';
-      }
     },
     powerOn() {
       const modalMessage = this.$t(
@@ -323,12 +266,17 @@ export default {
   position: relative;
   width: 609px;
   $canvaHeight: 100%;
+  #terminal-kvm {
+    overflow: auto;
+  }
   .kvm-toolbar2 {
     background: #444444 !important;
-    height: $canvaHeight;
+    height: 457px;
     width: 7%;
     position: absolute;
     place-items: center;
+    top: 0;
+    right: -7%;
     .kvm-toolbar-menu {
       height: auto;
       width: auto;
@@ -381,6 +329,11 @@ export default {
     .kvm-toolbar2 {
       height: 100%;
       width: 3%;
+      top: 0;
+      right: 0;
+    }
+    #terminal-kvm {
+      height: 100%;
     }
     ::v-deep canvas {
       position: relative;
