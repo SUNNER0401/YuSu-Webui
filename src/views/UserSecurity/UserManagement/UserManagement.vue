@@ -70,6 +70,10 @@
               @click-table-action="onTableRowAction($event, item)"
             >
               <template #icon>
+                <icon-password
+                  v-if="action.value === 'password'"
+                  :data-test-id="`userManagement-tableRowAction-passord-${index}`"
+                />
                 <icon-edit
                   v-if="action.value === 'edit'"
                   :data-test-id="`userManagement-tableRowAction-edit-${index}`"
@@ -101,6 +105,11 @@
       </b-col>
     </b-row>
     <!-- Modals -->
+    <modal-change-password
+      :user="activeUser"
+      :password-requirements="passwordRequirements"
+      @ok="changePassword"
+    />
     <modal-settings :settings="settings" @ok="saveAccountSettings" />
     <modal-user
       :user="activeUser"
@@ -117,9 +126,11 @@ import IconEdit from '@carbon/icons-vue/es/edit/20';
 import IconAdd from '@carbon/icons-vue/es/add--alt/20';
 import IconSettings from '@carbon/icons-vue/es/settings/20';
 import IconChevron from '@carbon/icons-vue/es/chevron--up/20';
+import IconPassword from '@carbon/icons-vue/es/password/20';
 
 import ModalUser from './ModalUser';
 import ModalSettings from './ModalSettings';
+import ModalChangePassword from './ModalChangePassword';
 import PageTitle from '@/components/Global/PageTitle';
 import TableRoles from './TableRoles';
 import TableToolbar from '@/components/Global/TableToolbar';
@@ -141,8 +152,10 @@ export default {
     IconEdit,
     IconSettings,
     IconTrashcan,
+    IconPassword,
     ModalSettings,
     ModalUser,
+    ModalChangePassword,
     PageTitle,
     TableRoles,
     TableRowAction,
@@ -172,10 +185,6 @@ export default {
           key: 'status',
           label: this.$t('pageUserManagement.table.status'),
         },
-        // {
-        //   key: 'maxDaysExpired',
-        //   label: this.$t('pageUserManagement.table.maxDaysExpired'),
-        // },
         {
           key: 'actions',
           label: '',
@@ -202,6 +211,12 @@ export default {
     };
   },
   computed: {
+    currentUsername() {
+      return this.$store.getters['global/username'];
+    },
+    userPrivilege() {
+      return this.$store.getters['global/userPrivilege'];
+    },
     allUsers() {
       return this.$store.getters['userManagement/allUsers'];
     },
@@ -222,8 +237,16 @@ export default {
               : user.Enabled
               ? 'Enabled'
               : 'Disabled',
-            // maxDaysExpired:user.MaxDaysExpired,
             actions: [
+              {
+                value: 'password',
+                enabled:
+                  user.UserName === this.currentUsername ||
+                  this.userPrivilege === 'Administrator'
+                    ? true
+                    : false,
+                title: this.$t('pageUserManagement.changePassword'),
+              },
               {
                 value: 'edit',
                 enabled: true,
@@ -278,8 +301,27 @@ export default {
           }
         });
     },
+    initModalChangePassword(user: { username: any }) {
+      this.activeUser = user;
+      this.$bvModal.show('modal-change-password');
+    },
     initModalSettings() {
       this.$bvModal.show('modal-settings');
+    },
+    changePassword(password: string) {
+      this.startLoader();
+      this.$$store
+        .dispatch('userManagement/changePassword', {
+          username: this.activeUser.username,
+          password,
+        })
+        .then(() => {
+          this.successToast(this.$t('pageSessions.table.settingSuccessfully'));
+        })
+        .catch(() => {
+          this.errorToast(this.$t('pageSessions.table.errorSetting'));
+        })
+        .finally(() => this.endLoader());
     },
     saveUser({ isNewUser, userData }: { isNewUser: boolean; userData: any }) {
       this.startLoader();
@@ -369,6 +411,9 @@ export default {
     },
     onTableRowAction(action: string, row: any) {
       switch (action) {
+        case 'password':
+          this.initModalChangePassword(row);
+          break;
         case 'edit':
           this.initModalUser(row);
           break;

@@ -134,6 +134,7 @@
           </b-col>
           <b-col>
             <b-form-group
+              v-if="newUser"
               :label="$t('pageUserManagement.modal.userPassword')"
               label-for="password"
             >
@@ -187,6 +188,7 @@
               </input-password-toggle>
             </b-form-group>
             <b-form-group
+              v-if="newUser"
               :label="$t('pageUserManagement.modal.confirmUserPassword')"
               label-for="password-confirmation"
             >
@@ -358,13 +360,14 @@ export default {
           minLength: minLength(this.passwordRequirements.minLength),
           maxLength: maxLength(this.passwordRequirements.maxLength),
           pattern: (value: string) => {
+            const trimValue = value.trim();
             let partern1 = /[a-zA-Z]+/;
             let partern2 = /[0-9]+/;
             let partern3 = /\W+/;
             let status =
-              partern1.test(value) &&
-              partern2.test(value) &&
-              partern3.test(value);
+              partern1.test(trimValue) &&
+              partern2.test(trimValue) &&
+              partern3.test(trimValue);
             return status;
           },
         },
@@ -459,8 +462,6 @@ export default {
     },
     requirePassword() {
       if (this.newUser) return true;
-      if (this.$v.form.password.$dirty) return true;
-      if (this.$v.form.passwordConfirmation.$dirty) return true;
       return false;
     },
     onOk(bvModalEvt: { preventDefault: () => void }) {

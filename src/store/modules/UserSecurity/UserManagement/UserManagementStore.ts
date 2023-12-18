@@ -124,6 +124,28 @@ const actions = {
       })
       .catch((error) => console.log(error));
   },
+  async changePassword(
+    { dispatch }: ActionContext<ActionNames, Multations, State, Getters>,
+    { username, password }: { username: string; password: string }
+  ) {
+    return await api
+      .patch(`/redfish/v1/AccountService/Accounts/${username}`, {
+        Password: password,
+      })
+      .then(() => dispatch('getUsers'))
+      .then(() =>
+        i18n.t('pageUserManagement.toast.successUpdateUser', {
+          username: username,
+        })
+      )
+      .catch((error) => {
+        console.log(error);
+        const message = i18n.t('pageUserManagement.toast.errorUpdateUser', {
+          username: username,
+        });
+        throw new Error(message as string);
+      });
+  },
   async createUser(
     { dispatch }: ActionContext<ActionNames, Multations, State, Getters>,
     {

@@ -54,7 +54,8 @@
       "required": "必要的",
       "search": "搜索",
       "selectAnOption": "选择一个选项",
-      "valueMustBeBetween": "数值范围为%{min} – %{max}"
+      "valueMustBeBetween": "数值范围为%{min} – %{max}",
+      "differentPassword": "前后密码输入不一致"
     },
     "status": {
       "copied": "已复制",
@@ -207,7 +208,9 @@
       "disconnectTitle": "断开会话连接",
       "disconnectMessage1": "您确定断开该会话的连接吗? 该操作无法撤销。",
       "disconnectMessage2": "您确定断开%{count}个会话的连接吗? 该操作无法撤销。",
-      "sessionTimeout": "会话超时时间(秒)"
+      "sessionTimeout": "会话超时时间(秒)",
+      "newPassword": "新密码",
+      "confirmPassword": "确认密码"
     },
     "table": {
       "clientID": "客户端ID",
@@ -216,7 +219,8 @@
       "searchSessions": "搜素会话",
       "setting": "会话设置",
       "settingSuccessfully": "设置成功",
-      "errorSetting": "设置失败"
+      "errorSetting": "设置失败",
+      "changePassword": "密码修改"
     },
     "toast": {
       "errorDelete": "断开%{count}个会话失败",
@@ -742,7 +746,8 @@
       "successDeleteUser": "删除用户'%{username}'。",
       "successSaveSettings": "保存用户设置成功。",
       "successUpdateUser": "更新用户'%{username}'。"
-    }
+    },
+    "changePassword": "修改密码"
   },
   "pageLogin": {
     "language": "语言",

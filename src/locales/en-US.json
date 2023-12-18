@@ -54,7 +54,8 @@
       "required": "Required",
       "search": "Search",
       "selectAnOption": "Select an option",
-      "valueMustBeBetween": "Value must be between %{min} – %{max}"
+      "valueMustBeBetween": "Value must be between %{min} – %{max}",
+      "differentPassword": "Confirming password is not same as password."
     },
     "status": {
       "copied": "Copied",
@@ -207,7 +208,9 @@
       "disconnectTitle": "Disconnect session| Disconnect sessions",
       "disconnectMessage1": "Are you sure you want to disconnect %{count} session? This action cannot be undone. | Are you sure you want to disconnect %{count} sessions? This action cannot be undone.",
       "disconnectMessage2": "Are you sure you want to disconnect %{count} session? This action cannot be undone. | Are you sure you want to disconnect %{count} sessions? This action cannot be undone.",
-      "sessionTimeout": "Session timeout(s)"
+      "sessionTimeout": "Session timeout(s)",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password"
     },
     "table": {
       "clientID": "Client ID",
@@ -216,7 +219,8 @@
       "searchSessions": "Search sessions",
       "setting": "Session setting",
       "settingSuccessfully": "Setting successfully.",
-      "errorSetting": "Error setting."
+      "errorSetting": "Error setting.",
+      "changePassword": "Change password"
     },
     "toast": {
       "errorDelete": "Error disconnecting %{count} session. | Error disconnecting %{count} sessions.",
@@ -741,7 +745,8 @@
       "successDeleteUser": "Deleted user '%{username}'.",
       "successSaveSettings": "Successfully saved account settings.",
       "successUpdateUser": "Updated user '%{username}'."
-    }
+    },
+    "changePassword": "Change password"
   },
   "pageLogin": {
     "language": "Language",
