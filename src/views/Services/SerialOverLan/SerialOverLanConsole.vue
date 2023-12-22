@@ -141,7 +141,7 @@ export default {
 
       this.resizeConsoleWindow = this._.throttle(() => {
         fitAddon.fit();
-      }, 1000);
+      }, 100);
       window.addEventListener('resize', this.resizeConsoleWindow);
 
       try {
@@ -232,9 +232,10 @@ export default {
       float: right;
       margin: 0;
       width: calc(100% - 60px);
+      height: 411px;
     }
     .SOL-toolbar {
-      height: 408px;
+      height: 409px;
       width: 60px;
     }
   }
