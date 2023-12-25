@@ -45,7 +45,7 @@
       "dateMustBeBefore": "Date must be before %{date}",
       "fieldRequired": "Field required",
       "invalidFormat": "Invalid format",
-      "simplePassword": "Password must contain letters, numbers and special characters",
+      "simplePassword": "Password must contain two of capital letters, lowercase letters, numbers and special characters.",
       "invalidValue": "Invalid value",
       "lengthMustBeBetween": "Length must be between %{min} – %{max} characters",
       "mustBeAtLeast": "Must be at least %{value}",
@@ -55,7 +55,9 @@
       "search": "Search",
       "selectAnOption": "Select an option",
       "valueMustBeBetween": "Value must be between %{min} – %{max}",
-      "differentPassword": "Confirming password is not same as password."
+      "differentPassword": "Confirming password is not same as password.",
+      "passwordContainUsername": "Password cannot contian username.",
+      "passwordContainHalfCircle": "Password cannot contain ‘ or ’."
     },
     "status": {
       "copied": "Copied",
@@ -713,7 +715,8 @@
       "unlock": "Unlock",
       "username": "Username",
       "userPassword": "User password",
-      "userUnlockMethod": "User unlock method"
+      "userUnlockMethod": "User unlock method",
+      "passwordsDifferent": "Password is diffenent from here."
     },
     "table": {
       "privilege": "Privilege",

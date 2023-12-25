@@ -23,8 +23,45 @@
               <template v-if="!$v.form.newPassword.required">
                 {{ $t('global.form.fieldRequired') }}
               </template>
-              <template v-if="!$v.form.newPassword.numeric">
-                {{ $t('global.form.invalidFormat') }}
+              <template
+                v-if="
+                  !$v.form.newPassword.minLength ||
+                  !$v.form.newPassword.maxLength
+                "
+              >
+                {{
+                  $t('pageUserManagement.modal.passwordMustBeBetween', {
+                    min: passwordRequirements.minLength,
+                    max: passwordRequirements.maxLength,
+                  })
+                }}
+              </template>
+              <template
+                v-else-if="
+                  $v.form.newPassword.required &&
+                  !$v.form.newPassword.pattern &&
+                  passwordErrorType == 'error1'
+                "
+              >
+                {{ $t('global.form.simplePassword') }}
+              </template>
+              <template
+                v-else-if="
+                  $v.form.newPassword.required &&
+                  !$v.form.newPassword.pattern &&
+                  passwordErrorType == 'error2'
+                "
+              >
+                {{ $t('global.form.passwordContainUsername') }}
+              </template>
+              <template
+                v-else-if="
+                  $v.form.newPassword.required &&
+                  !$v.form.newPassword.pattern &&
+                  passwordErrorType == 'error3'
+                "
+              >
+                {{ $t('global.form.passwordContainHalfCircle') }}
               </template>
             </b-form-invalid-feedback>
           </b-form-group>
@@ -65,6 +102,8 @@
 <script lang="ts">
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
+import { countOccurrences } from '@/utilities/toolFunctions';
+
 import {
   required,
   sameAs,
@@ -76,6 +115,10 @@ export default {
   name: 'ModalChangePassword',
   mixins: [VuelidateMixin, BVToastMixin],
   props: {
+    user: {
+      type: Object,
+      default: null,
+    },
     passwordRequirements: {
       type: Object,
       required: true,
@@ -87,6 +130,7 @@ export default {
         newPassword: '',
         confirmPassword: '',
       },
+      passwordErrorType: null,
     };
   },
   // @ts-ignore
@@ -99,14 +143,28 @@ export default {
           maxLength: maxLength(this.passwordRequirements.maxLength),
           pattern: (value: string) => {
             const trimValue = value.trim();
-            let partern1 = /[a-zA-Z]+/;
-            let partern2 = /[0-9]+/;
-            let partern3 = /\W+/;
-            let status =
-              partern1.test(trimValue) &&
-              partern2.test(trimValue) &&
-              partern3.test(trimValue);
-            return status;
+
+            const resultArray = [
+              /[a-z]+/.test(trimValue),
+              /[A-Z]+/.test(trimValue),
+              /[0-9]+/.test(trimValue),
+              /(\W|_)+/.test(trimValue),
+            ];
+            if (countOccurrences(resultArray, true) >= 2) {
+              if (trimValue.indexOf(this.user.UserName) != -1) {
+                this.passwordErrorType = 'error2';
+                return false;
+              }
+              if (/(‘|’)+/.test(trimValue)) {
+                this.passwordErrorType = 'error3';
+                return false;
+              }
+              this.passwordErrorType = null;
+              return true;
+            } else {
+              this.passwordErrorType = 'error1';
+              return false;
+            }
           },
         },
         confirmPassword: {

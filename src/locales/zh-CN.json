@@ -46,7 +46,7 @@
       "fieldRequired": "内容不可为空",
       "invalidFormat": "格式不合法",
       "invalidValue": "数值不合法",
-      "simplePassword": "密码必须包含字母，数字及特殊字符",
+      "simplePassword": "密码必须至少包含大写字母，小写字母，数字及特殊字符中的2个。",
       "lengthMustBeBetween": "长度需在%{min} – %{max}个字符",
       "mustBeAtLeast": "至少为%{value}",
       "optional": "可选的",
@@ -55,7 +55,9 @@
       "search": "搜索",
       "selectAnOption": "选择一个选项",
       "valueMustBeBetween": "数值范围为%{min} – %{max}",
-      "differentPassword": "前后密码输入不一致"
+      "differentPassword": "前后密码输入不一致",
+      "passwordContainUsername": "密码不可以包含用户名",
+      "passwordContainHalfCircle": "密码不可以包含 ‘ 和’"
     },
     "status": {
       "copied": "已复制",
@@ -714,7 +716,8 @@
       "unlock": "解锁",
       "username": "用户名",
       "userPassword": "用户密码",
-      "userUnlockMethod": "用户开启方法"
+      "userUnlockMethod": "用户开启方法",
+      "passwordsDifferent": "两次密码输入不一致"
     },
     "table": {
       "privilege": "权限",

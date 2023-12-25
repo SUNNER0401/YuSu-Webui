@@ -179,10 +179,30 @@
                   </template>
                   <template
                     v-else-if="
-                      $v.form.password.required && !$v.form.password.pattern
+                      $v.form.password.required &&
+                      !$v.form.password.pattern &&
+                      passwordErrorType == 'error1'
                     "
                   >
                     {{ $t('global.form.simplePassword') }}
+                  </template>
+                  <template
+                    v-else-if="
+                      $v.form.password.required &&
+                      !$v.form.password.pattern &&
+                      passwordErrorType == 'error2'
+                    "
+                  >
+                    {{ $t('global.form.passwordContainUsername') }}
+                  </template>
+                  <template
+                    v-else-if="
+                      $v.form.password.required &&
+                      !$v.form.password.pattern &&
+                      passwordErrorType == 'error3'
+                    "
+                  >
+                    {{ $t('global.form.passwordContainHalfCircle') }}
                   </template>
                 </b-form-invalid-feedback>
               </input-password-toggle>
@@ -215,7 +235,7 @@
                   <template
                     v-else-if="!$v.form.passwordConfirmation.sameAsPassword"
                   >
-                    {{ $t('pageUserManagement.modal.passwordsDoNotMatch') }}
+                    {{ $t('pageUserManagement.modal.passwordsDifferent') }}
                   </template>
                 </b-form-invalid-feedback>
               </input-password-toggle>
@@ -279,6 +299,7 @@ import {
   requiredIf,
   numeric,
 } from 'vuelidate/lib/validators';
+import { countOccurrences } from '@/utilities/toolFunctions';
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 import InputPasswordToggle from '@/components/Global/InputPasswordToggle';
 import Alert from '@/components/Global/Alert';
@@ -308,6 +329,7 @@ export default {
         manualUnlock: false,
         maxDaysExpired: '',
       },
+      passwordErrorType: null,
     };
   },
   computed: {
@@ -361,14 +383,27 @@ export default {
           maxLength: maxLength(this.passwordRequirements.maxLength),
           pattern: (value: string) => {
             const trimValue = value.trim();
-            let partern1 = /[a-zA-Z]+/;
-            let partern2 = /[0-9]+/;
-            let partern3 = /\W+/;
-            let status =
-              partern1.test(trimValue) &&
-              partern2.test(trimValue) &&
-              partern3.test(trimValue);
-            return status;
+            const resultArray = [
+              /[a-z]+/.test(trimValue),
+              /[A-Z]+/.test(trimValue),
+              /[0-9]+/.test(trimValue),
+              /(\W|_)+/.test(trimValue),
+            ];
+            if (countOccurrences(resultArray, true) >= 2) {
+              if (trimValue.indexOf(this.form.username) != -1) {
+                this.passwordErrorType = 'error2';
+                return false;
+              }
+              if (/(‘|’)+/.test(trimValue)) {
+                this.passwordErrorType = 'error3';
+                return false;
+              }
+              this.passwordErrorType = null;
+              return true;
+            } else {
+              this.passwordErrorType = 'error1';
+              return false;
+            }
           },
         },
         passwordConfirmation: {
