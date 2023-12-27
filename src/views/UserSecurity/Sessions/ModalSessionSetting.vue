@@ -3,6 +3,7 @@
     id="modal-session-setting"
     ref="modal"
     :title="$t('pageSessions.table.setting')"
+    @hidden="resetForm"
   >
     <b-form id="form-dns" @submit.prevent="handleSubmit">
       <b-row>
@@ -16,7 +17,8 @@
               v-model="form.SessionTimeout"
               type="text"
               :state="getValidationState($v.form.SessionTimeout)"
-              @input="$v.form.SessionTimeout.$touch()"
+              @blur="$v.form.SessionTimeout.$touch()"
+              @focus="$v.form.SessionTimeout.$reset()"
             />
             <b-form-invalid-feedback role="alert">
               <template v-if="!$v.form.SessionTimeout.required">
@@ -24,6 +26,14 @@
               </template>
               <template v-if="!$v.form.SessionTimeout.numeric">
                 {{ $t('global.form.invalidFormat') }}
+              </template>
+              <template v-if="!$v.form.SessionTimeout.between">
+                {{
+                  $t('global.form.fieldBetween', {
+                    min: 30,
+                    max: 86400,
+                  })
+                }}
               </template>
             </b-form-invalid-feedback>
           </b-form-group>
@@ -44,17 +54,17 @@
 <script lang="ts">
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 import BVToastMixin from '@/components/Mixins/BVToastMixin';
-import { required, numeric } from 'vuelidate/lib/validators';
+import { required, numeric, between } from 'vuelidate/lib/validators';
 
 export default {
   name: 'ModalSessionSetting',
   mixins: [VuelidateMixin, BVToastMixin],
-  computed: {
-    form() {
-      return {
-        SessionTimeout: this.$$store.getters['sessions/sessionTimeout'],
-      };
-    },
+  data() {
+    return {
+      form: {
+        SessionTimeout: 0,
+      },
+    };
   },
   // @ts-ignore
   validations() {
@@ -63,12 +73,17 @@ export default {
         SessionTimeout: {
           required,
           numeric,
+          between: between(30, 86400),
         },
       },
     };
   },
   mounted() {
-    this.$$store.dispatch('sessions/getSessionTimeout');
+    this.$$store.dispatch('sessions/getSessionTimeout').then(() => {
+      this.form.SessionTimeout = this.$$store.getters[
+        'sessions/sessionTimeout'
+      ];
+    });
   },
   methods: {
     onOk(bvModalEvt: { preventDefault: () => void }) {
@@ -80,6 +95,12 @@ export default {
       this.$nextTick(() => {
         this.$refs.modal.hide();
       });
+    },
+    resetForm() {
+      this.form.SessionTimeout = this.$$store.getters[
+        'sessions/sessionTimeout'
+      ];
+      this.$v.$reset();
     },
     async handleSubmit() {
       this.$v.$touch();

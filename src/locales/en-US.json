@@ -57,7 +57,8 @@
       "valueMustBeBetween": "Value must be between %{min} – %{max}",
       "differentPassword": "Confirming password is not same as password.",
       "passwordContainUsername": "Password cannot contian username.",
-      "passwordContainHalfCircle": "Password cannot contain ‘ or ’."
+      "passwordContainHalfCircle": "Password cannot contain ‘ or ’.",
+      "fieldBetween": "Interval: %{min}-%{max}"
     },
     "status": {
       "copied": "Copied",

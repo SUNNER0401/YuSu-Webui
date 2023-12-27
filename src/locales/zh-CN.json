@@ -57,7 +57,8 @@
       "valueMustBeBetween": "数值范围为%{min} – %{max}",
       "differentPassword": "前后密码输入不一致",
       "passwordContainUsername": "密码不可以包含用户名",
-      "passwordContainHalfCircle": "密码不可以包含 ‘ 和’"
+      "passwordContainHalfCircle": "密码不可以包含 ‘ 和’",
+      "fieldBetween": "数字区间: %{min}-%{max}"
     },
     "status": {
       "copied": "已复制",
