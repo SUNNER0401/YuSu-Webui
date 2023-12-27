@@ -1,11 +1,12 @@
 <template>
-  <el-container>
+  <el-container class="position-relative">
     <el-header
       ><app-header ref="focusTarget" class="app-header" @refresh="refresh"
     /></el-header>
-    <el-container id="body-container">
-      <el-aside> <app-navigation /></el-aside>
+    <el-container id="body-container" class="overflow-auto">
+      <el-aside class="position-fixed"> <app-navigation /></el-aside>
       <el-main
+        class="position-fixed"
         :class="{
           isFullScreen:
             $route.path === '/' ||
@@ -107,6 +108,7 @@ export default {
 
 .el-aside {
   width: $navigation-width !important;
+  height: calc(100% - #{$header-height});
   background-color: #d3dce6;
   color: #333;
   text-align: center;
@@ -116,7 +118,6 @@ export default {
   background-color: #e9eef3;
   color: #333;
   height: 100%;
-  width: 100%;
   left: $navigation-width;
   right: 0;
   padding: 0;
