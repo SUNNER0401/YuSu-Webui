@@ -203,10 +203,16 @@ import TableRowExpandMixin, {
   expandRowLabel,
 } from '@/components/Mixins/TableRowExpandMixin';
 import DataFormatterMixin from '@/components/Mixins/DataFormatterMixin';
+import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
 
 export default {
   components: { IconChevron, PageSection, StatusIcon },
-  mixins: [BVToastMixin, TableRowExpandMixin, DataFormatterMixin],
+  mixins: [
+    BVToastMixin,
+    TableRowExpandMixin,
+    DataFormatterMixin,
+    LoadingBarMixin,
+  ],
   data() {
     return {
       fields: [
@@ -252,9 +258,10 @@ export default {
     },
   },
   created() {
+    this.startLoader();
     this.$store.dispatch('bmc/getBmcInfo').finally(() => {
       // Emit initial data fetch complete to parent component
-      this.$root.$emit('hardware-status-bmc-manager-complete');
+      this.endLoader();
     });
   },
   methods: {

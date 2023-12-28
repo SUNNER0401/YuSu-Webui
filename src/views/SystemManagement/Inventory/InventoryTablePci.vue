@@ -45,10 +45,11 @@ import IconChevron from '@carbon/icons-vue/es/chevron--down/20';
 import TableRowExpandMixin, {
   expandRowLabel,
 } from '@/components/Mixins/TableRowExpandMixin';
+import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
 
 export default {
   components: { IconChevron, PageSection },
-  mixins: [TableRowExpandMixin],
+  mixins: [TableRowExpandMixin, LoadingBarMixin],
   data() {
     return {
       fields: [
@@ -74,9 +75,10 @@ export default {
     },
   },
   created() {
+    this.startLoader();
     this.$store.dispatch('pci/getPciInfo').finally(() => {
       // Emit initial data fetch complete to parent component
-      this.$root.$emit('hardware-status-pci-complete');
+      this.endLoader();
     });
   },
 };

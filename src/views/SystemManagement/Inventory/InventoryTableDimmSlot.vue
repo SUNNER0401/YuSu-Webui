@@ -181,6 +181,7 @@ import SearchFilterMixin, {
 import TableRowExpandMixin, {
   expandRowLabel,
 } from '@/components/Mixins/TableRowExpandMixin';
+import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
 
 export default {
   components: { IconChevron, PageSection, StatusIcon, Search, TableCellCount },
@@ -189,6 +190,7 @@ export default {
     DataFormatterMixin,
     TableSortMixin,
     SearchFilterMixin,
+    LoadingBarMixin,
   ],
   data() {
     return {
@@ -236,9 +238,10 @@ export default {
     },
   },
   created() {
+    this.startLoader();
     this.$store.dispatch('memory/getDimms').finally(() => {
       // Emit initial data fetch complete to parent component
-      this.$root.$emit('hardware-status-dimm-slot-complete');
+      this.endLoader();
     });
   },
   methods: {

@@ -1,4 +1,12 @@
 import i18n from '@/i18n';
+import TableSystem from '@/views/SystemManagement/Inventory/InventoryTableSystem';
+import TablePowerSupplies from '@/views/SystemManagement/Inventory/InventoryTablePowerSupplies';
+import TableDimmSlot from '@/views/SystemManagement/Inventory/InventoryTableDimmSlot';
+import TableFans from '@/views/SystemManagement/Inventory/InventoryTableFans';
+import TableBmcManager from '@/views/SystemManagement/Inventory/InventoryTableBmcManager';
+import TableChassis from '@/views/SystemManagement/Inventory/InventoryTableChassis';
+import TableProcessors from '@/views/SystemManagement/Inventory/InventoryTableProcessors';
+import TablePci from '@/views/SystemManagement/Inventory/InventoryTablePci';
 
 const roles = {
   administrator: 'Administrator',
@@ -88,6 +96,44 @@ export let setRoutes = () => {
           meta: {
             title: i18n.t('appPageTitle.inventory'),
           },
+          children: [
+            {
+              path: '',
+              redirect: 'system',
+            },
+            {
+              path: 'system',
+              component: TableSystem,
+            },
+            {
+              path: 'powerSupplies',
+              component: TablePowerSupplies,
+            },
+            {
+              path: 'dimmSlot',
+              component: TableDimmSlot,
+            },
+            {
+              path: 'fans',
+              component: TableFans,
+            },
+            {
+              path: 'bmcManager',
+              component: TableBmcManager,
+            },
+            {
+              path: 'chassis',
+              component: TableChassis,
+            },
+            {
+              path: 'processors',
+              component: TableProcessors,
+            },
+            {
+              path: 'pci',
+              component: TablePci,
+            },
+          ],
         },
         {
           path: '/system-management/performance-monitor',

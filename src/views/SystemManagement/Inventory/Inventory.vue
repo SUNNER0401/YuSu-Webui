@@ -5,84 +5,39 @@
     <!-- Service indicators -->
     <service-indicator />
 
-    <!-- Quicklinks section -->
-    <page-section :section-title="$t('pageInventory.quicklinkTitle')">
-      <b-row class="w-75">
-        <b-col v-for="column in quicklinkColumns" :key="column.id" xl="4">
-          <div v-for="item in column" :key="item.id">
-            <b-link
-              :href="item.href"
-              :data-ref="item.dataRef"
-              @click.prevent="scrollToOffset"
+    <div>
+      <b-card title="Card Title" no-body>
+        <b-card-header header-tag="nav">
+          <b-nav card-header pills fill>
+            <b-nav-item
+              v-for="item in links"
+              :key="item.id"
+              :to="item.path"
+              exact
+              exact-active-class="active"
             >
-              <jump-link /> {{ item.linkText }}
-            </b-link>
-          </div>
-        </b-col>
-      </b-row>
-    </page-section>
-
-    <!-- System table -->
-    <table-system ref="system" />
-
-    <!-- BMC manager table -->
-    <table-bmc-manager ref="bmc" />
-
-    <!-- Chassis table -->
-    <table-chassis ref="chassis" />
-
-    <!-- DIMM slot table -->
-    <table-dimm-slot ref="dimms" />
-
-    <!-- Fans table -->
-    <table-fans ref="fans" />
-
-    <!-- Power supplies table -->
-    <table-power-supplies ref="powerSupply" />
-
-    <!-- Processors table -->
-    <table-processors ref="processors" />
-
-    <!-- Assembly table -->
-    <!-- <table-assembly ref="assembly" /> -->
-
-    <!-- Pci table -->
-    <table-pci ref="pci" />
+              {{ item.linkText }}
+            </b-nav-item>
+          </b-nav>
+        </b-card-header>
+        <b-card-body>
+          <router-view></router-view>
+        </b-card-body>
+      </b-card>
+    </div>
   </b-container>
 </template>
 
 <script lang="ts">
 import PageTitle from '@/components/Global/PageTitle';
 import ServiceIndicator from './InventoryServiceIndicator';
-import TableSystem from './InventoryTableSystem';
-import TablePowerSupplies from './InventoryTablePowerSupplies';
-import TableDimmSlot from './InventoryTableDimmSlot';
-import TableFans from './InventoryTableFans';
-import TableBmcManager from './InventoryTableBmcManager';
-import TableChassis from './InventoryTableChassis';
-import TableProcessors from './InventoryTableProcessors';
-// import TableAssembly from './InventoryTableAssembly';
-import TablePci from './InventoryTablePci';
 import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
-import PageSection from '@/components/Global/PageSection';
-import JumpLink16 from '@carbon/icons-vue/es/jump-link/16';
 import JumpLinkMixin from '@/components/Mixins/JumpLinkMixin';
 
 export default {
   components: {
     PageTitle,
     ServiceIndicator,
-    TableDimmSlot,
-    TablePowerSupplies,
-    TableSystem,
-    TableFans,
-    TableBmcManager,
-    TableChassis,
-    TableProcessors,
-    // TableAssembly,
-    TablePci,
-    PageSection,
-    JumpLink: JumpLink16,
   },
   mixins: [LoadingBarMixin, JumpLinkMixin],
   beforeRouteLeave(to: any, from: any, next: () => void) {
@@ -96,109 +51,46 @@ export default {
       links: [
         {
           id: 'system',
-          dataRef: 'system',
-          href: '#system',
           linkText: this.$t('pageInventory.system'),
+          path: '/system-management/system-information/system',
         },
         {
           id: 'bmc',
-          dataRef: 'bmc',
-          href: '#bmc',
           linkText: this.$t('pageInventory.bmcManager'),
+          path: '/system-management/system-information/bmcManager',
         },
         {
           id: 'chassis',
-          dataRef: 'chassis',
-          href: '#chassis',
           linkText: this.$t('pageInventory.chassis'),
+          path: '/system-management/system-information/chassis',
         },
         {
           id: 'dimms',
-          dataRef: 'dimms',
-          href: '#dimms',
           linkText: this.$t('pageInventory.dimmSlot'),
+          path: '/system-management/system-information/dimmSlot',
         },
         {
           id: 'fans',
-          dataRef: 'fans',
-          href: '#fans',
           linkText: this.$t('pageInventory.fans'),
+          path: '/system-management/system-information/fans',
         },
         {
           id: 'powerSupply',
-          dataRef: 'powerSupply',
-          href: '#powerSupply',
           linkText: this.$t('pageInventory.powerSupplies'),
+          path: '/system-management/system-information/powerSupplies',
         },
         {
           id: 'processors',
-          dataRef: 'processors',
-          href: '#processors',
           linkText: this.$t('pageInventory.processors'),
+          path: '/system-management/system-information/processors',
         },
         {
-          id: 'assembly',
-          dataRef: 'assembly',
-          href: '#assembly',
-          linkText: this.$t('pageInventory.assemblies'),
+          id: 'pci',
+          linkText: this.$t('pageInventory.pci'),
+          path: '/system-management/system-information/pci',
         },
       ],
     };
-  },
-  computed: {
-    quicklinkColumns() {
-      // Chunk links array to 3 array's to display 3 items per column
-      return this._.chunk(this.links, 3);
-    },
-  },
-  created() {
-    this.startLoader();
-    const bmcManagerTablePromise = new Promise<void>((resolve) => {
-      this.$root.$on('hardware-status-bmc-manager-complete', () => resolve());
-    });
-    const chassisTablePromise = new Promise<void>((resolve) => {
-      this.$root.$on('hardware-status-chassis-complete', () => resolve());
-    });
-    const dimmSlotTablePromise = new Promise<void>((resolve) => {
-      this.$root.$on('hardware-status-dimm-slot-complete', () => resolve());
-    });
-    const fansTablePromise = new Promise<void>((resolve) => {
-      this.$root.$on('hardware-status-fans-complete', () => resolve());
-    });
-    const powerSuppliesTablePromise = new Promise<void>((resolve) => {
-      this.$root.$on('hardware-status-power-supplies-complete', () =>
-        resolve()
-      );
-    });
-    const processorsTablePromise = new Promise<void>((resolve) => {
-      this.$root.$on('hardware-status-processors-complete', () => resolve());
-    });
-    const serviceIndicatorPromise = new Promise<void>((resolve) => {
-      this.$root.$on('hardware-status-service-complete', () => resolve());
-    });
-    const systemTablePromise = new Promise<void>((resolve) => {
-      this.$root.$on('hardware-status-system-complete', () => resolve());
-    });
-    // const assemblyTablePromise = new Promise<void>((resolve) => {
-    //   this.$root.$on('hardware-status-assembly-complete', () => resolve());
-    // });
-    const pciTablePromise = new Promise<void>((resolve) => {
-      this.$root.$on('hardware-status-pci-complete', () => resolve());
-    });
-    // Combine all child component Promises to indicate
-    // when page data load complete
-    Promise.all([
-      bmcManagerTablePromise,
-      chassisTablePromise,
-      dimmSlotTablePromise,
-      fansTablePromise,
-      powerSuppliesTablePromise,
-      processorsTablePromise,
-      serviceIndicatorPromise,
-      systemTablePromise,
-      // assemblyTablePromise,
-      pciTablePromise,
-    ]).finally(() => this.endLoader());
   },
 };
 </script>
