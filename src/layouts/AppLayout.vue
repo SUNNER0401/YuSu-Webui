@@ -129,6 +129,7 @@ export default {
 
 .app-content {
   height: 100%;
+  overflow: auto;
 }
 
 body > .el-container {
