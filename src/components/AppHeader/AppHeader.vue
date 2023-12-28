@@ -383,30 +383,6 @@ export default {
     @include media-breakpoint-up($responsive-layout-bp) {
       height: $header-height;
     }
-
-    .helper-menu {
-      @include media-breakpoint-down(sm) {
-        background-color: gray('800');
-        width: 100%;
-        justify-content: flex-end;
-
-        .nav-link,
-        .btn {
-          padding: $spacer / 1.125 $spacer / 2;
-        }
-
-        .nav-link:focus,
-        .btn:focus {
-          @include focus-box-shadow($gray-800);
-        }
-      }
-
-      .responsive-text {
-        @include media-breakpoint-down(xs) {
-          @include sr-only;
-        }
-      }
-    }
   }
 
   .navbar-nav {

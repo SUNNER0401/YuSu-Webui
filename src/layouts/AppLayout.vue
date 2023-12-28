@@ -127,6 +127,10 @@ export default {
   position: fixed;
 }
 
+.app-content {
+  height: 100%;
+}
+
 body > .el-container {
   margin-bottom: 40px;
 }

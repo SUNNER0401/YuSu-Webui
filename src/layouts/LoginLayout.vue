@@ -7,15 +7,13 @@
       <main>
         <div v-show="onload" class="login-container">
           <div class="login-main">
-            <div>
-              <transition
-                appear
-                name="animate__animated animate__bounce"
-                enter-active-class="animate__fadeInUp"
-              >
-                <router-view class="login=form form-background" />
-              </transition>
-            </div>
+            <transition
+              appear
+              name="animate__animated animate__bounce"
+              enter-active-class="animate__fadeInUp"
+            >
+              <router-view class="login-form form-background" />
+            </transition>
           </div>
         </div>
       </main>
@@ -59,12 +57,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.spinner {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-12px) translateY(-12px);
-}
 .animate__bounceOutLeft {
   animation-duration: 1s;
 }
@@ -95,38 +87,6 @@ export default {
   }
 }
 
-.login-form {
-  width: 400px;
-}
-
-.login-aside {
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  gap: $spacer * 1.5;
-  margin-right: $spacer * 3;
-  margin-bottom: $spacer;
-
-  @include media-breakpoint-up('md') {
-    min-height: 100vh;
-    padding-bottom: $spacer;
-    flex: 1 1 25%;
-    margin-bottom: 0;
-  }
-}
-
-.login-aside__logo-brand:not(:empty) {
-  &::after {
-    content: '';
-    display: inline-block;
-    height: 2.5rem;
-    width: 2px;
-    background-color: gray('200');
-    margin-left: $spacer * 1.5;
-    vertical-align: middle;
-  }
-}
-
 main {
   position: absolute;
   top: 0;
@@ -148,10 +108,5 @@ main {
       height: 12vh;
     }
   }
-}
-.two-dimension {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
 }
 </style>

@@ -255,6 +255,8 @@ button[data-v-2c86e14e] {
 }
 .login-form {
   position: relative;
+  width: 400px;
+  margin: auto;
   padding: 30px;
   border-width: 5px;
   border-style: solid;
