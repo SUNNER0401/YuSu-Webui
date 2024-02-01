@@ -10,11 +10,7 @@
             data-test-id="appHeader-container-overview"
             :title="companyName"
           >
-            <img
-              class="header-logo"
-              src="@/env/assets/images/OurBMC-logo.png"
-              :alt="altLogo"
-            />
+            <img class="header-logo" :src="imageUrl" :alt="altLogo" />
           </b-navbar-brand>
         </b-navbar-nav>
         <div class="header-nav mx-auto">
@@ -180,6 +176,9 @@ export default {
       isFullscreen: false,
       companyName: process.env.VUE_APP_COMPANY_NAME,
       currentUserRole: null,
+      imageUrl: process.env.VUE_APP_HEAD_IMAGE
+        ? require(`@/env/assets/images/${process.env.VUE_APP_HEAD_IMAGE}`)
+        : require('@/env/assets/images/OurBMC-logo.png'),
     };
   },
   computed: {

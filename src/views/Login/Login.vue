@@ -9,7 +9,7 @@
         {{ $t('pageLogin.alert.message') }}
       </p>
     </alert>
-    <img id="logo" src="@/env/assets/images/OurBMC-logo.png" alt="" />
+    <img id="logo" :src="imageUrl" alt="" />
     <b-form-group
       label-cols="3"
       label-for="username"
@@ -122,6 +122,9 @@ export default {
         },
       ],
       status: 'not_accepted',
+      imageUrl: process.env.VUE_APP_LOGIN_IMAGE
+        ? require(`@/env/assets/images/${process.env.VUE_APP_LOGIN_IMAGE}`)
+        : require('@/env/assets/images/OurBMC-logo.png'),
     };
   },
   computed: {
