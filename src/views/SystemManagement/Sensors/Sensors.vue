@@ -89,6 +89,25 @@
               unitFormatter(data.item.units)
             }}</span>
           </template>
+          <template #cell(dynamicChart)="data">
+            <b-button
+              @click="
+                Task.createTask(
+                  data.item.name,
+                  data.item.type,
+                  data.item.memberId,
+                  data.item.lowerCaution,
+                  data.item.upperCaution,
+                  data.item.lowerCritical,
+                  data.item.upperCritical,
+                  data.item.currentValue,
+                  data.item.units
+                )
+              "
+            >
+              {{ $t('pageSensors.table.show') }}
+            </b-button>
+          </template>
         </b-table>
       </b-col>
     </b-row>
@@ -103,7 +122,7 @@ import TableFilter from '@/components/Global/TableFilter';
 import TableToolbar from '@/components/Global/TableToolbar';
 import TableToolbarExport from '@/components/Global/TableToolbarExport';
 import TableCellCount from '@/components/Global/TableCellCount';
-
+import Task from '@/utilities/windowTask';
 import BVTableSelectableMixin, {
   selectedRows,
   tableHeaderCheckboxModel,
@@ -185,6 +204,11 @@ export default {
           formatter: (this as any).dataFormatter,
           label: this.$t('pageSensors.table.upperCritical'),
         },
+        {
+          key: 'dynamicChart',
+          formatter: (this as any).dataFormatter,
+          label: this.$t('pageSensors.table.dynamicChart'),
+        },
       ],
       tableFilters: [
         {
@@ -199,6 +223,7 @@ export default {
       selectedRows: selectedRows,
       tableHeaderCheckboxModel: tableHeaderCheckboxModel,
       tableHeaderCheckboxIndeterminate: tableHeaderCheckboxIndeterminate,
+      Task: Task,
     };
   },
   computed: {
@@ -225,20 +250,9 @@ export default {
     },
   },
   created() {
-    let _this = this;
-    let currentPage = this.$route.name;
-    function watchAllSensors() {
-      if (_this.$route.name != currentPage) return;
-      setTimeout(() => {
-        _this.$store.dispatch('sensors/getAllSensors').finally(() => {
-          watchAllSensors();
-        });
-      }, 1000);
-    }
     this.startLoader();
     this.$store.dispatch('sensors/getAllSensors').finally(() => {
       this.endLoader();
-      watchAllSensors();
     });
   },
   methods: {

@@ -86,6 +86,8 @@ const actions = {
               lowerCritical: data.Thresholds?.LowerCritical?.Reading,
               upperCritical: data.Thresholds?.UpperCritical?.Reading,
               units: data.ReadingUnits,
+              type: data.ReadingType,
+              memberId: data.Id,
             };
           }
         );
@@ -109,6 +111,8 @@ const actions = {
           lowerCritical: any;
           upperCritical: any;
           units: any;
+          type: any;
+          memberId: any;
         }[] = [];
         Fans.forEach(
           (sensor: {
@@ -120,7 +124,12 @@ const actions = {
             LowerThresholdCritical: any;
             UpperThresholdCritical: any;
             ReadingUnits: any;
+            MemberId: any;
           }) => {
+            let fanType = 'fan_pwm';
+            if (sensor.ReadingUnits === 'RPM') {
+              fanType = 'fan_tach';
+            }
             sensorData.push({
               name: sensor.Name,
               status: sensor.Status.Health,
@@ -130,6 +139,8 @@ const actions = {
               lowerCritical: sensor.LowerThresholdCritical,
               upperCritical: sensor.UpperThresholdCritical,
               units: sensor.ReadingUnits,
+              type: fanType,
+              memberId: sensor.MemberId,
             });
           }
         );
@@ -142,6 +153,7 @@ const actions = {
             UpperThresholdNonCritical: any;
             LowerThresholdCritical: any;
             UpperThresholdCritical: any;
+            MemberId: any;
           }) => {
             sensorData.push({
               name: sensor.Name,
@@ -152,6 +164,8 @@ const actions = {
               lowerCritical: sensor.LowerThresholdCritical,
               upperCritical: sensor.UpperThresholdCritical,
               units: '℃',
+              type: 'temperature',
+              memberId: sensor.MemberId,
             });
           }
         );
@@ -175,6 +189,7 @@ const actions = {
             UpperThresholdNonCritical: any;
             LowerThresholdCritical: any;
             UpperThresholdCritical: any;
+            MemberId: any;
           }) => {
             return {
               name: sensor.Name,
@@ -185,6 +200,8 @@ const actions = {
               lowerCritical: sensor.LowerThresholdCritical,
               upperCritical: sensor.UpperThresholdCritical,
               units: 'V',
+              type: 'voltage',
+              memberId: sensor.MemberId,
             };
           }
         );

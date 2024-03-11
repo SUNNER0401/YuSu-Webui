@@ -23,6 +23,29 @@
           >
             <router-view ref="routerView" :key="routerKey" />
           </transition>
+          <window
+            v-for="task in Task.list"
+            :key="task.id"
+            :title="task.title"
+            :type="task.type"
+            :memberid="task.memberId"
+            :lowercaution="task.lowerCaution"
+            :uppercaution="task.upperCaution"
+            :lowercritical="task.lowerCritical"
+            :uppercritical="task.upperCritical"
+            :currentvalue="task.currentValue"
+            :units="task.units"
+            :is-active="task.isActive"
+            :is-minimize="task.isMinimize"
+            :is-maximize="task.isMaximize"
+            :mini-width="task.miniWidth"
+            :mini-left="task.miniLeft"
+            @active="Task.handleActive(task)"
+            @close="Task.handleClose(task)"
+            @minimize="Task.handleMinimize(task)"
+            @maximize="Task.handleMaximize(task)"
+          >
+          </window>
           <!-- Scroll to top button -->
           <button-back-to-top />
         </page-container>
@@ -36,10 +59,11 @@ import AppHeader from '@/components/AppHeader';
 import AppNavigation from '@/components/AppNavigation';
 import PageContainer from '@/components/Global/PageContainer';
 import ButtonBackToTop from '@/components/Global/ButtonBackToTop';
+import Window from '@/components/Global/Window';
 import JumpLinkMixin from '@/components/Mixins/JumpLinkMixin';
 import 'animate.css';
 import { Container, Header, Main, Aside } from 'element-ui';
-
+import Task from '@/utilities/windowTask';
 export default {
   name: 'App',
   components: {
@@ -51,11 +75,13 @@ export default {
     [Header.name]: Header,
     [Main.name]: Main,
     [Aside.name]: Aside,
+    Window,
   },
   mixins: [JumpLinkMixin],
   data() {
     return {
       routerKey: 0,
+      Task: Task,
     };
   },
   watch: {

@@ -1064,7 +1064,9 @@
       "name": "传感器",
       "status": "状态",
       "upperWarning": "上限危险值",
-      "upperCritical": "最大值"
+      "upperCritical": "最大值",
+      "dynamicChart": "动态图表",
+      "show": "显示"
     }
   },
   "pageSerialOverLan": {

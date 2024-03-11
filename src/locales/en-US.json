@@ -1063,7 +1063,9 @@
       "name": "Name",
       "status": "Status",
       "upperWarning": "Upper warning",
-      "upperCritical": "Upper critical"
+      "upperCritical": "Upper critical",
+      "dynamicChart": "Dynamic chart",
+      "show": "Show"
     }
   },
   "pageSerialOverLan": {
