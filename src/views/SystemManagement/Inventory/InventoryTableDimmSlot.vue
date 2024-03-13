@@ -50,19 +50,6 @@
         {{ value }}
       </template>
       <!-- Toggle identify LED -->
-      <template #cell(identifyLed)="row">
-        <b-form-checkbox
-          v-model="row.item.identifyLed"
-          name="switch"
-          switch
-          @change="toggleIdentifyLedValue(row.item)"
-        >
-          <span v-if="row.item.identifyLed">
-            {{ $t('global.status.on') }}
-          </span>
-          <span v-else> {{ $t('global.status.off') }} </span>
-        </b-form-checkbox>
-      </template>
       <template #row-details="{ item }">
         <b-container fluid>
           <b-row>
@@ -216,11 +203,6 @@ export default {
           label: this.$t('pageInventory.table.locationNumber'),
           formatter: (this as any).dataFormatter,
         },
-        {
-          key: 'identifyLed',
-          label: this.$t('pageInventory.table.identifyLed'),
-          formatter: (this as any).dataFormatter,
-        },
       ],
       searchFilter: searchFilter,
       searchTotalFilteredRows: 0,
@@ -252,14 +234,6 @@ export default {
     },
     onFiltered(filteredItems: string | any[]) {
       this.searchTotalFilteredRows = filteredItems.length;
-    },
-    toggleIdentifyLedValue(row: { uri: any; identifyLed: any }) {
-      this.$store
-        .dispatch('memory/updateIdentifyLedValue', {
-          uri: row.uri,
-          identifyLed: row.identifyLed,
-        })
-        .catch(({ message }: { message: string }) => this.errorToast(message));
     },
   },
 };
