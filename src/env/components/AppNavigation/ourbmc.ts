@@ -68,6 +68,14 @@ export default {
         title: i18n.t('appPageTitle.sensors'),
       },
     },
+    {
+      path: '/system-management/fan',
+      name: 'fan',
+      component: () => import('@/views/SystemManagement/Fan'),
+      meta: {
+        title: i18n.t('appPageTitle.fanSpeed'),
+      },
+    },
   ],
   diagnostic: [
     {
