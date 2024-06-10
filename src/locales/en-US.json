@@ -115,6 +115,7 @@
   },
   "appNavigation": {
     "systemManagement": "System",
+    "fan": "@:appPageTitle.fan",
     "resourceManagement": "Resource management",
     "securityAndAccess": "Security and access",
     "sessions": "@:appPageTitle.sessions",
@@ -159,6 +160,7 @@
     "systemInformation": "System Information"
   },
   "appPageTitle": {
+    "fan": "Fan Control",
     "changePassword": "Change password",
     "power": "Power",
     "sessions": "Sessions",
@@ -413,6 +415,28 @@
       "download": "Export",
       "import": "Deploy"
     }
+  },
+  "pageFan": {
+    "fanSpeedWantDes": "Enter speed you want 0-100",
+    "informations":{
+      "userManual":"User Manual",
+      "AutoControlInformation": "Automatic control mode: manual control and automatic control are mutually exclusive. The default is automatic control mode. In case of abnormality, the fan runs at full speed. During startup and restart, the fan runs at full speed to prevent the hardware temperature from being too high after the server is down",
+      "ManualControlInformaiton": "Manual control mode: the fan speed is controlled by percentage, 0 is the lowest speed, and 100 is the highest speed"
+    },
+    "controllers":{
+      "yes": "Yes",
+      "No":"No",
+      "confirmPattern":"Confirm"
+    },
+    "policies":{
+      "policiesTitle":"Fan policies",
+      "CurrentPatten":"Current Pattern :",
+      "fantitle": "Fan Controller",
+      "FanSpeed": "fan speed :",
+      "message": "message"
+    },
+      "AutoControlTitle": "AutoControl",
+      "ManualControlTitle": "ManualControl"
   },
   "pageFanSpeed": {
     "description": "This function is able to control and watch speed of each fans.",
