@@ -114,6 +114,7 @@
     "switchLanguage": "English"
   },
   "appNavigation": {
+    "fan": "@:appPageTitle.fan",
     "systemManagement": "系统管理",
     "resourceManagement": "资源管理",
     "securityAndAccess": "安全访问",
@@ -159,6 +160,7 @@
     "systemInformation": "系统信息"
   },
   "appPageTitle": {
+    "fan": "风扇控制",
     "changePassword": "修改密码",
     "power": "电源&功率",
     "sessions": "会话管理",
@@ -413,6 +415,28 @@
       "download": "配置导出",
       "import": "一键部署"
     }
+  },
+  "pageFan":{
+    "fanSpeedWantDes":"输入速度您想要0-100",
+    "informations":{
+      "userManual":"用户手册",
+      "AutoControlInformation":"自动控制模式：手动控制和自动控制互斥, 默认为自动控制模式",
+      "ManualControlInformaiton":"手动控制模式：风扇速度控制使用百分比控制, 0是最低速度, 100为最高速度"
+    },
+    "controllers":{
+      "yes": "是",
+      "No":"否",
+      "confirmPattern":"确认"
+    },
+    "policies":{
+      "policiesTitle":"风扇控制策略: ",
+      "CurrentPatten":"当前模式:",
+      "fantitle":"风扇控制器",
+      "FanSpeed": "风扇转速 :",
+      "message": "返回信息"
+    },
+      "AutoControlTitle": "自动控制",
+      "ManualControlTitle": "手动控制"
   },
   "pageFanSpeed": {
     "description": "该功能可以监测并控制风扇速度",
