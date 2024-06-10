@@ -169,6 +169,14 @@ export let setRoutes = () => {
           },
         },
         {
+          path: '/system-management/fan',
+          name: 'fan',
+          component: () => import('@/views/SystemManagement/Fan'),
+          meta: {
+            title: i18n.t('appPageTitle.fanSpeed'),
+          },
+        },
+        {
           path: '/diagnostic/event-logs',
           name: 'event-logs',
           component: () => import('@/views/Diagnostic/EventLogs'),
