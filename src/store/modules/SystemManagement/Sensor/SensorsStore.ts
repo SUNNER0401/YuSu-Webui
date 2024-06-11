@@ -1,6 +1,24 @@
 import api from '@/store/api';
 import { ReturnGetters, ActionContext } from '@/types/store';
 
+function color(item: any) {
+  if (item.Value >= item.CriticalHigh) return 'danger';
+  else if (item.Value >= item.WarningHigh) return 'warning';
+  else if (item.Value >= item.WarningLow) return 'success';
+  else if (item.Value > item.CriticalLow) return 'warning';
+  else if (item.Value <= item.CriticalLow) return 'danger';
+  else return 'light';
+}
+
+function status(item: any) {
+  if (item.Value >= item.CriticalHigh) return 'Critical';
+  else if (item.Value >= item.WarningHigh) return 'Warning';
+  else if (item.Value >= item.WarningLow) return 'OK';
+  else if (item.Value > item.CriticalLow) return 'Warning';
+  else if (item.Value <= item.CriticalLow) return 'Critical';
+  else return 'OK';
+}
+
 const state = {
   sensors: [] as any[],
 };
@@ -37,18 +55,57 @@ const actionsNames = [
 type ActionNames = typeof actionsNames[number];
 
 const actions = {
-  async getAllSensors({
-    dispatch,
-  }: ActionContext<ActionNames, Multations, State, Getters>) {
-    const collection = await dispatch('getChassisCollection');
-    if (!collection) return;
-    const promises = collection.reduce((acc: any[], id: any) => {
-      acc.push(dispatch('getSensors', id));
-      acc.push(dispatch('getThermalSensors', id));
-      acc.push(dispatch('getPowerSensors', id));
-      return acc;
-    }, []);
-    return await api.all(promises);
+  async getAllSensors({ commit }: any) {
+    const sensorData: {
+      name: string | undefined;
+      status: any;
+      currentValue: any;
+      upperCaution: any;
+      lowerCaution: any;
+      upperCritical: any;
+      lowerCritical: any;
+      _rowVariant: any;
+    }[] = [];
+    await api
+      .get('/xyz/openbmc_project/sensors/enumerate')
+      .then(({ data: { data } }) => {
+        Object.keys(data).forEach((key) => {
+          if (key.includes('utilization') == true) {
+            return false;
+          }
+          sensorData.push({
+            name: key.split('/').pop(),
+            status: status(data[key]),
+            currentValue: data[key].Value,
+            upperCaution: data[key].WarningHigh,
+            lowerCaution: data[key].WarningLow,
+            upperCritical: data[key].CriticalHigh,
+            lowerCritical: data[key].CriticalLow,
+            _rowVariant: color(data[key]),
+          });
+        });
+      })
+      .catch((error) => console.log(error));
+
+    await api
+      .get('/redfish/v1/Managers/fan/')
+      .then((response) => {
+        Object.keys(response.data).forEach((key) => {
+          sensorData.push({
+            name: key,
+            status: status(response.data[key]),
+            currentValue: response.data[key].Value,
+            upperCaution: response.data[key].WarningHigh,
+            lowerCaution: response.data[key].WarningLow,
+            upperCritical: response.data[key].CriticalHigh,
+            lowerCritical: response.data[key].CriticalLow,
+            _rowVariant: color(response.data[key]),
+          });
+        });
+      })
+      .catch((error) => console.log(error));
+    commit('setSensors', sensorData);
+    return;
   },
   async getChassisCollection() {
     return await api
