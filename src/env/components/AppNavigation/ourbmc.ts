@@ -53,14 +53,6 @@ export default {
       },
     },
     {
-      path: '/system-management/fan-speed',
-      name: 'fan-speed',
-      component: () => import('@/views/SystemManagement/FanSpeed'),
-      meta: {
-        title: i18n.t('appPageTitle.fanSpeed'),
-      },
-    },
-    {
       path: '/system-management/sensors',
       name: 'sensors',
       component: () => import('@/views/SystemManagement/Sensors'),
