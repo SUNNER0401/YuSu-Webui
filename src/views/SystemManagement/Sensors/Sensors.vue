@@ -156,6 +156,7 @@ export default {
     SearchFilterMixin,
   ],
   beforeRouteLeave(to: any, from: any, next: () => void) {
+    clearInterval(this.timer);
     this.hideLoader();
     next();
   },
@@ -251,6 +252,9 @@ export default {
   },
   created() {
     this.startLoader();
+    this.timer = setInterval(() => {
+      this.$store.dispatch('sensors/getAllSensors');
+    }, 3000);
     this.$store.dispatch('sensors/getAllSensors').finally(() => {
       this.endLoader();
     });
