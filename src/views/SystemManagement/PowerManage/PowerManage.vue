@@ -1,15 +1,17 @@
 <template>
   <b-container fluid="xl">
     <page-title />
-    <b-button variant="primary" @click="powerOpen">
-      {{ $t('power.powerOpen') }}
-    </b-button>
-    <b-button variant="primary" @click="powerClose">
-      {{ $t('power.powerClose') }}
-    </b-button>
-    <b-button variant="primary" @click="reboot">
-      {{ $t('power.reboot') }}
-    </b-button>
+    <page-section>
+      <b-button variant="primary" @click="powerOpen">
+        {{ $t('power.powerOpen') }}
+      </b-button>
+      <b-button variant="primary" @click="powerClose">
+        {{ $t('power.powerClose') }}
+      </b-button>
+      <b-button variant="primary" @click="reboot">
+        {{ $t('power.reboot') }}
+      </b-button>
+    </page-section>
   </b-container>
 </template>
 
