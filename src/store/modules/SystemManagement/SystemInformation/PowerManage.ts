@@ -23,7 +23,7 @@ const PowerManageStore = {
     },
     powerClose() {
       return api
-        .get('/redfish/v1/powerClose')
+        .get('/redfish/v1/powerclose')
         .then((response) => {
           console.log(response);
         })
