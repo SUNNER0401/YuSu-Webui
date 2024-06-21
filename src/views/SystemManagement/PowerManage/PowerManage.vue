@@ -44,19 +44,19 @@ export default {
     // auto control command
     powerOpen() {
       this.$store
-        .dispatch('PowerManage/powerOpen')
+        .dispatch('powerManage/powerOpen')
         .catch((error) => console.log(error))
         .finally();
     },
     powerClose() {
       this.$store
-        .dispatch('PowerManage/powerClose')
+        .dispatch('powerManage/powerClose')
         .catch((error) => console.log(error))
         .finally();
     },
     reboot() {
       this.$store
-        .dispatch('PowerManage/reboot')
+        .dispatch('powerManage/reboot')
         .catch((error) => console.log(error))
         .finally();
     },
