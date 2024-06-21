@@ -24,6 +24,7 @@ import BmcStore from './modules/SystemManagement/SystemInformation/BmcStore';
 import ProcessorStore from './modules/SystemManagement/SystemInformation/ProcessorStore';
 import AssemblyStore from './modules/SystemManagement/SystemInformation/AssemblyStore';
 import FanControlStore from './modules/SystemManagement/SystemInformation/FanControlStore';
+import PowerManageStore from './modules/SystemManagement/SystemInformation/PowerManage';
 import PoliciesStore from './modules/UserSecurity/Policies/PoliciesStore';
 import FactoryResetStore from './modules/ServicesManagement/FactoryReset/FactoryResetStore';
 
@@ -66,6 +67,7 @@ const modules = {
   virtualMedia: VirtualMediaStore,
   policies: PoliciesStore,
   fanControl: FanControlStore,
+  powerManage: PowerManageStore,
   factoryReset: FactoryResetStore,
 };
 
