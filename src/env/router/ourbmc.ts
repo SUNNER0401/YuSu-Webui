@@ -177,6 +177,14 @@ export let setRoutes = () => {
           },
         },
         {
+          path: '/system-management/power-manage',
+          name: 'power-manage',
+          component: () => import('@/views/SystemManagement/PowerManage'),
+          meta: {
+            title: i18n.t('appPageTitle.PowerManage'),
+          },
+        },
+        {
           path: '/diagnostic/event-logs',
           name: 'event-logs',
           component: () => import('@/views/Diagnostic/EventLogs'),
