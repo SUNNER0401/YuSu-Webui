@@ -145,6 +145,7 @@
     "certificates": "@:appPageTitle.certificates",
     "virtualMedia": "@:appPageTitle.virtualMedia",
     "power": "@:appPageTitle.power",
+    "PowerManage": "电源管理",
     "alarmSetting": "@:appPageTitle.alarmSetting",
     "fanSpeed": "@:appPageTitle.fanSpeed",
     "about": "@:appPageTitle.about",
@@ -160,6 +161,7 @@
     "systemInformation": "系统信息"
   },
   "appPageTitle": {
+    "PowerManage": "电源管理",
     "fan": "风扇控制",
     "changePassword": "修改密码",
     "power": "电源&功率",
@@ -195,6 +197,11 @@
     "configureManagement": "配置管理",
     "rasLogs": "RAS日志",
     "performanceMonitor": "性能监控"
+  },
+  "power": {
+    "powerOpen": "开机",
+    "powerClose": "关机",
+    "reboot": "重启"
   },
   "pageChangePassword": {
     "changePassword": "修改密码",
