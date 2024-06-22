@@ -60,6 +60,7 @@ module.exports = {
               @import "@/assets/styles/bmc/helpers";
               @import "@/env/assets/styles/_${envName}";
               @import "@/assets/styles/bootstrap/_helpers";
+              
             `;
           } else {
             // Include helper imports so single file components
@@ -72,6 +73,7 @@ module.exports = {
             return `
               @import "@/assets/styles/bmc/helpers";
               @import "@/assets/styles/bootstrap/_helpers";
+            
             `;
           }
         },

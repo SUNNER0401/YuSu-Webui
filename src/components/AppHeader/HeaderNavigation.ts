@@ -1,5 +1,6 @@
 import i18n from '@/i18n';
 
+
 export type NavItemType = {
   path: string;
   name: string;
