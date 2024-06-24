@@ -82,6 +82,14 @@ export let setRoutes = () => {
           },
         },
         {
+          path: '/chassis-management',
+          name: 'chassisManagement',
+          component: () => import('@/views/ChassisManagement'),
+          meta: {
+            title: i18n.t('appPageTitle.chassisManagement'),
+          },
+        },
+        {
           path: '/profile-settings',
           name: 'profile-settings',
           component: () => import('@/views/ProfileSettings'),
