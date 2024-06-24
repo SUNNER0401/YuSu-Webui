@@ -317,7 +317,7 @@ export default {
   top: -17px;
 }
 .list-group-item {
-  border: 1px solid $no-color;
+  border: 1px solid;
 }
 .power-cap-value-field {
   white-space: nowrap;
