@@ -27,6 +27,7 @@ import FanControlStore from './modules/SystemManagement/SystemInformation/FanCon
 import PowerManageStore from './modules/SystemManagement/SystemInformation/PowerManage';
 import PoliciesStore from './modules/UserSecurity/Policies/PoliciesStore';
 import FactoryResetStore from './modules/ServicesManagement/FactoryReset/FactoryResetStore';
+import MultimachineStore from './modules/SystemManagement/SystemInformation/Multimachine';
 
 import WebSocketPlugin from './plugins/WebSocketPlugin';
 import DateTimeStore from './modules/Settings/DateTimeStore';
@@ -68,7 +69,9 @@ const modules = {
   policies: PoliciesStore,
   fanControl: FanControlStore,
   powerManage: PowerManageStore,
+  // chassisManage: ChassisManageStore,
   factoryReset: FactoryResetStore,
+  multimachine: MultimachineStore,
 };
 
 type modulesType = typeof modules;
