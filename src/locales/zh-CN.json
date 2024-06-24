@@ -161,6 +161,7 @@
     "systemInformation": "系统信息"
   },
   "appPageTitle": {
+    "chassisManagement": "机箱管理",
     "PowerManage": "电源管理",
     "fan": "风扇控制",
     "changePassword": "修改密码",
