@@ -82,6 +82,14 @@ export let setRoutes = () => {
           },
         },
         {
+          path: '/multimachine',
+          name: 'multimachine',
+          component: () => import('@/views/Multimachine'),
+          meta: {
+            title: i18n.t('appPageTitle.multimachine'),
+          },
+        },
+        {
           path: '/profile-settings',
           name: 'profile-settings',
           component: () => import('@/views/ProfileSettings'),
