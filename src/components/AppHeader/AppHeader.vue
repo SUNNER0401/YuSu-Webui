@@ -23,6 +23,10 @@
             <el-menu-item id="overview-button" index="/">{{
               $t('appPageTitle.overview')
             }}</el-menu-item>
+            <!-- 添加按钮项，跳转到多设备概览页面 -->
+            <el-menu-item id="Multimachine-button" index="/multimachine">{{
+              $t('appPageTitle.multimachine')
+            }}</el-menu-item>
             <el-submenu index="/system-management">
               <template slot="title">{{
                 $t('appNavigation.systemManagement')
@@ -496,6 +500,12 @@ a.nav-link {
     }
   }
   #overview-button {
+    &:not(.is-active) {
+      color: #6a707c;
+    }
+  }
+  // 当按钮不能点击时候设置为灰色
+  #mutimachine-button {
     &:not(.is-active) {
       color: #6a707c;
     }
