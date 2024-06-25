@@ -23,6 +23,9 @@
             <el-menu-item id="overview-button" index="/">{{
               $t('appPageTitle.overview')
             }}</el-menu-item>
+            <el-menu-item id="overview-button" index="/chassis-management">{{
+              $t('appPageTitle.chassisManagement')
+            }}</el-menu-item>
             <el-submenu index="/system-management">
               <template slot="title">{{
                 $t('appNavigation.systemManagement')
