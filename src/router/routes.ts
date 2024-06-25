@@ -3,6 +3,7 @@ import ChangePassword from '@/views/ChangePassword/ChangePassword.vue';
 import ConsoleLayout from '@/layouts/ConsoleLayout.vue';
 import DateTime from '@/views/Settings/DateTime/DateTime.vue';
 import EventLogs from '@/views/Diagnostic/EventLogs/EventLogs.vue';
+import Multimachine from '@/views/Multimachine/Multimachine.vue';
 import FactoryReset from '@/views/Services/FactoryReset/FactoryReset.vue';
 import Firmware from '@/views/Settings/Firmware/Firmware.vue';
 import Inventory from '@/views/SystemManagement/Inventory/Inventory.vue';
@@ -83,10 +84,18 @@ const routes = [
   {
     path: '/',
     meta: {
-      requiresAuth: true,
+      // requiresAuth: true,
     },
     component: AppLayout,
     children: [
+      {
+        path: '/multimachine',
+        name: 'multimachine',
+        component: Multimachine,
+        meta: {
+          title: i18n.t('appPageTitle.multimachine'),
+        },
+      },
       {
         path: '',
         name: 'overview',
