@@ -25,6 +25,7 @@ import ProcessorStore from './modules/SystemManagement/SystemInformation/Process
 import AssemblyStore from './modules/SystemManagement/SystemInformation/AssemblyStore';
 import PoliciesStore from './modules/UserSecurity/Policies/PoliciesStore';
 import FactoryResetStore from './modules/ServicesManagement/FactoryReset/FactoryResetStore';
+import MultimachineStore from './modules/SystemManagement/SystemInformation/Multimachine';
 
 import WebSocketPlugin from './plugins/WebSocketPlugin';
 import DateTimeStore from './modules/Settings/DateTimeStore';
@@ -65,6 +66,7 @@ const modules = {
   virtualMedia: VirtualMediaStore,
   policies: PoliciesStore,
   factoryReset: FactoryResetStore,
+  multimachine: MultimachineStore,
 };
 
 type modulesType = typeof modules;
