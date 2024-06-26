@@ -2,27 +2,28 @@
   <b-card bg-variant="light" border-variant="light" class="mb-4">
     <!-- 标题 -->
     <div class="justify-content-between align-items-center d-flex flex-wrap">
-      <!-- 卡片标题 -->
-      <h3 class="h5 mb-0">路由001</h3>
+      <h3 class="h5 mb-0">{{ title }}</h3>
       <!-- 查看更多按钮 -->
       <b-link :to="to">{{ $t('pageMultimachine.viewMore') }}</b-link>
     </div>
     <!-- 内容 -->
     <b-row class="mt-3">
       <b-col sm="6">
+        <!--写死版 不需要可直接注释以下dl-->
         <dl>
-          <!-- 型号 -->
           <dt>{{ $t('pageMultimachine.model') }}</dt>
           <dd>{{ dataFormatter(model) }}</dd>
-          <!-- 序列号 -->
           <dt>{{ $t('pageMultimachine.serialNumber') }}</dt>
           <dd>{{ dataFormatter(serialNumber) }}</dd>
-          <!-- ip -->
           <dt>{{ $t('pageMultimachine.ipAddress') }}</dt>
           <dd>{{ dataFormatter(ipAddress) }}</dd>
-          <!-- 健康状态 -->
           <dt>{{ $t('pageMultimachine.health') }}</dt>
           <dd>{{ dataFormatter(health) }}</dd>
+        </dl>
+        <!-- 数据存放在data中 动态产生 -->
+        <dl v-for="(value, key) in data" :key="key">
+          <dt>{{ key }}</dt>
+          <dd>{{ value }}</dd>
         </dl>
       </b-col>
     </b-row>
@@ -33,6 +34,16 @@ import DataFormatterMixin from '@/components/Mixins/DataFormatterMixin';
 export default {
   name: 'MultimachineCard',
   mixins: [DataFormatterMixin],
+  props: {
+    data: {
+      type: Array,
+      default: () => [],
+    },
+    title: {
+      type: String,
+      default: 'Machinetest01',
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
