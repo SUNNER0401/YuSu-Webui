@@ -56,6 +56,6 @@ a {
   min-width: 300px;
   max-width: 330px;
   margin-right: 20px;
-  margin-left: 10px;
+  // margin-left: 10px;
 }
 </style>
