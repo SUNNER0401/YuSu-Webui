@@ -1,56 +1,24 @@
 <template>
-  <b-card bg-variant="light" border-variant="light" class="mb-4">
+  <b-card bg-variant="light" border-variant="light" class="mb-4 cardcontent">
     <div class="justify-content-between align-items-center d-flex flex-wrap">
       <h3 class="h5 mb-0">{{ title }}</h3>
       <b-link :to="to">{{ $t('pageMultimachine.viewMore') }}</b-link>
     </div>
-    <b-row class="mt-3">
-      <!-- 左边一列 -->
-      <b-col sm="6">
-        <!--写死版 不需要可直接注释以下dl-->
-        <dl>
-          <dt>{{ $t('pageMultimachine.model') }}</dt>
-          <dd>{{ dataFormatter(model) }}</dd>
-          <dt>{{ $t('pageMultimachine.serialNumber') }}</dt>
-          <dd>{{ dataFormatter(serialNumber) }}</dd>
-          <dt>{{ $t('pageMultimachine.ipAddress') }}</dt>
-          <dd>{{ dataFormatter(ipAddress) }}</dd>
-          <dt>{{ $t('pageMultimachine.health') }}</dt>
-          <dd>{{ dataFormatter(health) }}</dd>
-        </dl>
-        <!-- 数据存放在data中 动态产生 -->
-        <!-- <dl v-for="(value, key) in data" :key="key">
-          <dt>{{ key }}</dt>
-          <dd>{{ value }}</dd>
-        </dl> -->
-      </b-col>
-      <b-col sm="6">
-        <!--写死版 不需要可直接注释以下dl-->
-        <dl>
-          <dt>{{ $t('pageMultimachine.hostname') }}</dt>
-          <dd>{{ dataFormatter(hostname) }}</dd>
-          <dt>{{ $t('pageMultimachine.linkStatus') }}</dt>
-          <dd>{{ dataFormatter(linkStatus) }}</dd>
-          <dt>
-            <b-badge variant="warning">{{
-              $t('pageMultimachine.warning')
-            }}</b-badge>
-          </dt>
-          <dd>{{ dataFormatter(warning) }}</dd>
-          <dt>
-            <b-badge variant="danger">{{
-              $t('pageMultimachine.error')
-            }}</b-badge>
-          </dt>
-          <dd>{{ dataFormatter(error) }}</dd>
-        </dl>
-        <!-- 数据存放在data中 动态产生 -->
-        <!-- <dl v-for="(value, key) in data" :key="key">
-          <dt>{{ key }}</dt>
-          <dd>{{ value }}</dd>
-        </dl> -->
-      </b-col>
-    </b-row>
+    <div class="grid">
+      <dl v-for="(value, key) in data" :key="key">
+        <dt v-if="key === 'warning'">
+          <b-badge variant="warning">{{
+            $t('pageMultimachine.warning')
+          }}</b-badge>
+        </dt>
+        <dt v-else-if="key === 'error'">
+          <b-badge variant="danger">{{ $t('pageMultimachine.error') }}</b-badge>
+        </dt>
+        <dt v-else>{{ $t(`pageMultimachine.${key}`) }}</dt>
+        <!-- <dt>{{ $t(`pageMultimachine.${key}`) }}</dt> -->
+        <dd class="griddd">{{ value }}</dd>
+      </dl>
+    </div>
   </b-card>
 </template>
 <script>
@@ -77,9 +45,27 @@ a {
 }
 
 .card {
-  min-width: 300px;
-  max-width: 330px;
+  min-width: 258px;
+  max-width: 258px;
   margin-right: 20px;
+  min-height: 270px;
   // margin-left: 10px;
+}
+.cardcontent:hover {
+  box-shadow: 0 0 20px 2px #919090;
+  /*盒子阴影*/
+  transition: all 0.7s;
+  /*持续时间*/
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* 两列，每列占据可用空间的一半 */
+  padding-top: 10px;
+}
+.griddd {
+  margin-bottom: -0.5rem;
+  margin-left: 0px;
+  margin-top: 2px;
 }
 </style>

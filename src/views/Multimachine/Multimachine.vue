@@ -1,21 +1,24 @@
 <template>
   <b-container fluid>
     <page-title />
+    <!-- 分页页面切换器 -->
+    <div class="mt-3">
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        first-number
+        last-number
+        class="pagi"
+      ></b-pagination>
+    </div>
     <!-- Test测试所用 -->
-    <b-card-group>
-      <multimachine-card
-        v-for="n in numCards"
-        :key="n"
-        class="cardcontent"
-      ></multimachine-card>
-    </b-card-group>
+    <!-- <b-card-group>
+      <multimachine-card v-for="n in numCards" :key="n"></multimachine-card>
+    </b-card-group> -->
     <!-- 实际使用 -->
     <b-card-group>
-      <div
-        v-for="(value, key) in MultimachineCard"
-        :key="key"
-        class="cardcontent"
-      >
+      <div v-for="(value, key) in MultimachineCards" :key="key">
         <multimachine-card :data="value" :title="key"> </multimachine-card>
       </div>
     </b-card-group>
@@ -41,14 +44,93 @@ export default {
   },
   data() {
     return {
-      numCards: 11, // 初始值为15，等待后端数据更新
+      //卡片数量
+      numCards: 7,
+      //分页数据
+      rows: 100,
+      perPage: 1,
+      currentPage: 5,
     };
   },
   computed: {
     //定义一个计算属性计算属性
-    MultimachineCard() {
+    MultimachineCards() {
+      // example
+      //有几个传入的数组，那就渲染多少个块块
+      return {
+        test1: {
+          model: 18,
+          serialNumber: '1213',
+          ipAddress: '192.168.0.0',
+          health: 'yes',
+          hostname: 'local',
+          linkStatus: 'fine',
+          warning: '5',
+          error: '10',
+        },
+        test2: {
+          model: 18,
+          serialNumber: '12400',
+          ipAddress: '192.168.0.0',
+          health: 'no',
+          hostname: 'vdaf',
+          linkStatus: 'fine',
+          warning: '5',
+          error: '7',
+        },
+        test3: {
+          model: 18,
+          serialNumber: '1213',
+          ipAddress: '192.168.0.0',
+          health: 'yes',
+          hostname: 'local',
+          linkStatus: 'fine',
+          warning: '0',
+          error: '9',
+        },
+        test4: {
+          model: 18,
+          serialNumber: '1213',
+          ipAddress: '192.168.0.0',
+          health: 'yes',
+          hostname: 'local',
+          linkStatus: 'fine',
+          warning: '0',
+          error: '1',
+        },
+        test5: {
+          model: 18,
+          serialNumber: '1213',
+          ipAddress: '192.168.0.100',
+          health: 'yes',
+          hostname: 'local',
+          linkStatus: 'fine',
+          warning: '5',
+          error: '10',
+        },
+        test6: {
+          model: 18,
+          serialNumber: '1213',
+          ipAddress: '192.168.0.123',
+          health: 'yes',
+          hostname: 'local',
+          linkStatus: 'fine',
+          warning: '5',
+          error: '10',
+        },
+        test7: {
+          model: 18,
+          serialNumber: '7777',
+          ipAddress: '192.168.0.123',
+          health: 'yes',
+          hostname: 'sdfsf',
+          linkStatus: 'fine',
+          warning: '100',
+          error: '10',
+        },
+      };
       //返回 Vuex 状态管理getters中 multimachine/multimachineValue 的值
-      return this.$store.getters['multimachine/multimachineValue'];
+      // return this.$store.getters['multimachine/multimachineValue'];
     },
   },
   created() {
@@ -61,10 +143,7 @@ export default {
 };
 </script>
 <style>
-.cardcontent:hover {
-  box-shadow: 0 0 20px 2px #918f8f;
-  /*盒子阴影*/
-  transition: all 0.5s;
-  /*持续时间*/
+.pagi {
+  margin-right: 19px;
 }
 </style>
