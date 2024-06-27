@@ -3,11 +3,19 @@
     <page-title />
     <!-- Test测试所用 -->
     <b-card-group>
-      <multimachine-card v-for="n in numCards" :key="n"></multimachine-card>
+      <multimachine-card
+        v-for="n in numCards"
+        :key="n"
+        class="cardcontent"
+      ></multimachine-card>
     </b-card-group>
     <!-- 实际使用 -->
     <b-card-group>
-      <div v-for="(value, key) in MultimachineCard" :key="key">
+      <div
+        v-for="(value, key) in MultimachineCard"
+        :key="key"
+        class="cardcontent"
+      >
         <multimachine-card :data="value" :title="key"> </multimachine-card>
       </div>
     </b-card-group>
@@ -52,3 +60,11 @@ export default {
   },
 };
 </script>
+<style>
+.cardcontent:hover {
+  box-shadow: 0 0 20px 2px #918f8f;
+  /*盒子阴影*/
+  transition: all 0.5s;
+  /*持续时间*/
+}
+</style>
