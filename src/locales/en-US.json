@@ -822,7 +822,11 @@
     "serialNumber": "Serial number",
     "ipAddress": "IP address",
     "health": "Health",
-    "viewMore": "View more"
+    "viewMore": "View more",
+    "hostname": "Hostname",
+    "warning": "Warning",
+    "error": "Error",
+    "linkStatus": "Link status"
   },
   "pagePostCodeLogs": {
     "allExportFilePrefix": "All_POST_codes_log_",

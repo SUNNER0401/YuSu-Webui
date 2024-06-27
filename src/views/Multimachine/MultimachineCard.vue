@@ -1,13 +1,11 @@
 <template>
   <b-card bg-variant="light" border-variant="light" class="mb-4">
-    <!-- 标题 -->
     <div class="justify-content-between align-items-center d-flex flex-wrap">
       <h3 class="h5 mb-0">{{ title }}</h3>
-      <!-- 查看更多按钮 -->
       <b-link :to="to">{{ $t('pageMultimachine.viewMore') }}</b-link>
     </div>
-    <!-- 内容 -->
     <b-row class="mt-3">
+      <!-- 左边一列 -->
       <b-col sm="6">
         <!--写死版 不需要可直接注释以下dl-->
         <dl>
@@ -21,10 +19,36 @@
           <dd>{{ dataFormatter(health) }}</dd>
         </dl>
         <!-- 数据存放在data中 动态产生 -->
-        <dl v-for="(value, key) in data" :key="key">
+        <!-- <dl v-for="(value, key) in data" :key="key">
           <dt>{{ key }}</dt>
           <dd>{{ value }}</dd>
+        </dl> -->
+      </b-col>
+      <b-col sm="6">
+        <!--写死版 不需要可直接注释以下dl-->
+        <dl>
+          <dt>{{ $t('pageMultimachine.hostname') }}</dt>
+          <dd>{{ dataFormatter(hostname) }}</dd>
+          <dt>{{ $t('pageMultimachine.linkStatus') }}</dt>
+          <dd>{{ dataFormatter(linkStatus) }}</dd>
+          <dt>
+            <b-badge variant="warning">{{
+              $t('pageMultimachine.warning')
+            }}</b-badge>
+          </dt>
+          <dd>{{ dataFormatter(warning) }}</dd>
+          <dt>
+            <b-badge variant="danger">{{
+              $t('pageMultimachine.error')
+            }}</b-badge>
+          </dt>
+          <dd>{{ dataFormatter(error) }}</dd>
         </dl>
+        <!-- 数据存放在data中 动态产生 -->
+        <!-- <dl v-for="(value, key) in data" :key="key">
+          <dt>{{ key }}</dt>
+          <dd>{{ value }}</dd>
+        </dl> -->
       </b-col>
     </b-row>
   </b-card>
