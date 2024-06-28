@@ -69,6 +69,7 @@ a {
   margin-right: 20px;
   min-height: 270px;
   // margin-left: 10px;
+  border-radius: 10px;
 }
 .cardcontent {
   transition: all 0.7s ease;
@@ -101,5 +102,9 @@ a {
   font-size: 20px;
   color: red;
   font-weight: 600;
+}
+.card-body {
+  padding-bottom: 10px;
+  border-radius: 10px;
 }
 </style>
