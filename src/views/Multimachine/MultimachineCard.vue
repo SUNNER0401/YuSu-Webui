@@ -7,29 +7,53 @@
     <div class="grid">
       <dl v-for="(value, key) in data" :key="key" style="margin-bottom: 0.5rem">
         <dt style="font-size: 15px">
-          <template v-if="key === 'warning'">
-            <h4>
+          <!-- <template
+            v-if="
+              (key.toLowerCase() === 'warning' && value === 0) ||
+              (key.toLowerCase() === 'error' && value === 0)
+            "
+          >
+            {{ $t(`pageMultimachine.${key}`) }}
+          </template> -->
+          <template
+            v-if="
+              (key === 'warning' && value === 0) ||
+              (key === 'error' && value === 0)
+            "
+          >
+            {{ $t(`pageMultimachine.${key}`) }}
+          </template>
+          <template v-else-if="key === 'warning' && value != 0">
+            <div class="reminder">
               <b-badge variant="warning">{{
                 $t('pageMultimachine.warning')
               }}</b-badge>
-            </h4>
+            </div>
           </template>
-          <template v-else-if="key === 'error'">
-            <h4>
+          <template v-else-if="key === 'error' && value != 0">
+            <div class="reminder">
               <b-badge variant="danger">{{
                 $t('pageMultimachine.error')
               }}</b-badge>
-            </h4>
+            </div>
           </template>
           <template v-else>
             {{ $t(`pageMultimachine.${key}`) }}
           </template>
         </dt>
         <dd>
-          <template v-if="key === 'warning'">
+          <template
+            v-if="
+              (key === 'warning' && value === 0) ||
+              (key === 'error' && value === 0)
+            "
+          >
+            {{ value }}
+          </template>
+          <template v-else-if="key === 'warning' && value != 0">
             <span class="warning-data">{{ value }}</span>
           </template>
-          <template v-else-if="key === 'error'">
+          <template v-else-if="key === 'error' && value != 0">
             <span class="error-data">{{ value }}</span>
           </template>
           <template v-else>
@@ -94,17 +118,20 @@ a {
   margin-top: 2px;
 }
 .warning-data {
-  font-size: 20px;
+  font-size: 18px;
   color: orange;
   font-weight: 600;
 }
 .error-data {
-  font-size: 20px;
+  font-size: 18px;
   color: red;
   font-weight: 600;
 }
 .card-body {
   padding-bottom: 10px;
   border-radius: 10px;
+}
+.reminder {
+  font-size: 15px;
 }
 </style>

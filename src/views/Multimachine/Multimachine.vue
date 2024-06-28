@@ -1,17 +1,6 @@
 <template>
   <b-container fluid>
     <page-title />
-    <!-- 分页页面切换器 -->
-    <div class="mt-3">
-      <b-pagination
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="perPage"
-        first-number
-        last-number
-        class="pagi"
-      ></b-pagination>
-    </div>
     <!-- Test测试所用 -->
     <!-- <b-card-group>
       <multimachine-card v-for="n in numCards" :key="n"></multimachine-card>
@@ -22,6 +11,17 @@
         <multimachine-card :data="value" :title="key"> </multimachine-card>
       </div>
     </b-card-group>
+    <!-- 分页页面切换器 -->
+    <!-- <div class="mt-3">
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        first-number
+        last-number
+        class="pagi"
+      ></b-pagination>
+    </div> -->
   </b-container>
 </template>
 <script>
@@ -47,9 +47,9 @@ export default {
       //卡片数量
       numCards: 7,
       //分页数据
-      rows: 100,
-      perPage: 1,
-      currentPage: 5,
+      // rows: 34, //数据集中的总行数
+      // perPage: 8, //每页应显示的数据行数
+      // currentPage: 2, //当前用户正在查看的页码
     };
   },
   computed: {
@@ -65,28 +65,28 @@ export default {
           health: 'yes',
           hostname: 'local',
           linkStatus: 'fine',
-          warning: '5',
-          error: '10',
+          warning: '0',
+          error: '13',
         },
         test2: {
           model: 18,
-          serialNumber: '12400',
+          serialNumber: '556',
           ipAddress: '192.168.0.0',
           health: 'no',
           hostname: 'vdaf',
           linkStatus: 'fine',
-          warning: '5',
-          error: '7',
+          warning: '8',
+          error: '0',
         },
         test3: {
           model: 18,
-          serialNumber: '1213',
+          serialNumber: '345',
           ipAddress: '192.168.0.0',
           health: 'yes',
           hostname: 'local',
           linkStatus: 'fine',
-          warning: '0',
-          error: '9',
+          warning: '1',
+          error: '2',
         },
         test4: {
           model: 18,
@@ -100,33 +100,83 @@ export default {
         },
         test5: {
           model: 18,
-          serialNumber: '1213',
+          serialNumber: '1310',
           ipAddress: '192.168.0.100',
           health: 'yes',
           hostname: 'local',
           linkStatus: 'fine',
-          warning: '5',
-          error: '10',
+          warning: '0',
+          error: '0',
         },
         test6: {
           model: 18,
-          serialNumber: '1213',
+          serialNumber: '9490',
           ipAddress: '192.168.0.123',
           health: 'yes',
           hostname: 'local',
           linkStatus: 'fine',
-          warning: '5',
-          error: '10',
+          warning: '0',
+          error: '0',
         },
         test7: {
           model: 18,
-          serialNumber: '7777',
+          serialNumber: '4527',
           ipAddress: '192.168.0.123',
           health: 'yes',
           hostname: 'sdfsf',
           linkStatus: 'fine',
           warning: '100',
-          error: '10',
+          error: '0',
+        },
+        test8: {
+          model: 18,
+          serialNumber: '55558',
+          ipAddress: '192.168.0.123',
+          health: 'yes',
+          hostname: 'sdfsf',
+          linkStatus: 'fine',
+          warning: '0',
+          error: '1',
+        },
+        test9: {
+          model: 18,
+          serialNumber: '987',
+          ipAddress: '192.168.0.123',
+          health: 'yes',
+          hostname: 'sdfsf',
+          linkStatus: 'fine',
+          warning: '3',
+          error: '0',
+        },
+        test10: {
+          model: 18,
+          serialNumber: '657',
+          ipAddress: '192.168.0.123',
+          health: 'yes',
+          hostname: 'sdfsf',
+          linkStatus: 'fine',
+          warning: '10',
+          error: '0',
+        },
+        test11: {
+          model: 18,
+          serialNumber: '7563',
+          ipAddress: '192.168.0.123',
+          health: 'yes',
+          hostname: 'sdfsf',
+          linkStatus: 'fine',
+          warning: '3',
+          error: '0',
+        },
+        test12: {
+          model: 323,
+          serialNumber: '643',
+          ipAddress: '192.168.0.123',
+          health: 'yes',
+          hostname: 'sdfsf',
+          linkStatus: 'fine',
+          warning: '0',
+          error: '0',
         },
       };
       //返回 Vuex 状态管理getters中 multimachine/multimachineValue 的值
@@ -146,4 +196,30 @@ export default {
 .pagi {
   margin-right: 19px;
 }
+/* .page-item:first-child .page-link {
+  margin-left: 0;
+  background-color: #d9eff0;
+  border-radius: 3px;
+  color: black;
+}
+.page-link {
+  font-size: 18px;
+  border-radius: 2px;
+  height: 37.5px;
+  background-color: #d9eff0;
+  color: #000000;
+}
+.page-item.disabled .page-link {
+  background-color: #d7dcec;
+}
+.b-pagination .page-item.active button {
+  background-color: #d7dcec;
+  border-color: #d8d8d8;
+  box-shadow: inset 0px -2px #7a7a7a;
+}
+.page-link:hover {
+  color: #161616;
+  text-decoration: none;
+  background-color: #d7dcec;
+} */
 </style>
