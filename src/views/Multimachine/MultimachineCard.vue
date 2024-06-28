@@ -78,6 +78,10 @@ export default {
       type: String,
       default: 'Machinetest01',
     },
+    to: {
+      type: String,
+      default: '/machinedetails',
+    },
   },
 };
 </script>

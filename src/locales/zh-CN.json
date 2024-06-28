@@ -176,6 +176,7 @@
     "network": "网络设置",
     "overview": "首页",
     "multimachine":"机箱管理",
+    "machinedetails":"机箱详情",
     "pageNotFound": "页面未找到",
     "postCodeLogs": "POST Code",
     "powerRestorePolicy": "电源恢复方式",
@@ -820,6 +821,17 @@
   },
   "pageMultimachine":{
     "model":"型号",
+    "serialNumber": "序列号",
+    "ipAddress": "IP地址",
+    "health": "健康状态",
+    "viewMore": "查看更多",
+    "hostname": "主机名",
+    "error": "错误",
+    "warning": "警告",
+    "linkStatus": "链接状态"
+  },
+  "pageMachineDetails":{
+    "model": "型号",
     "serialNumber": "序列号",
     "ipAddress": "IP地址",
     "health": "健康状态",

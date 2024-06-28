@@ -176,6 +176,7 @@
     "network": "Network",
     "overview": "Overview",
     "multimachine":"Chassis",
+    "machinedetails":"MachineDetails",
     "pageNotFound": "Page not found",
     "postCodeLogs": "POST Code",
     "powerRestorePolicy": "Power restore policy",
@@ -818,6 +819,17 @@
     "cpldVersion": "CPLD version"
   },
   "pageMultimachine": {
+    "model": "Model",
+    "serialNumber": "Serial number",
+    "ipAddress": "IP address",
+    "health": "Health",
+    "viewMore": "View more",
+    "hostname": "Hostname",
+    "warning": "Warning",
+    "error": "Error",
+    "linkStatus": "Link status"
+  },
+  "pageMachineDetails":{
     "model": "Model",
     "serialNumber": "Serial number",
     "ipAddress": "IP address",
