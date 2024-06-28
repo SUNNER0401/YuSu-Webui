@@ -1,22 +1,41 @@
 <template>
   <b-card bg-variant="light" border-variant="light" class="mb-4 cardcontent">
     <div class="justify-content-between align-items-center d-flex flex-wrap">
-      <h3 class="h5 mb-0">{{ title }}</h3>
+      <h3 class="h5 mb-0" style="font-size: 20px">{{ title }}</h3>
       <b-link :to="to">{{ $t('pageMultimachine.viewMore') }}</b-link>
     </div>
     <div class="grid">
-      <dl v-for="(value, key) in data" :key="key">
-        <dt v-if="key === 'warning'">
-          <b-badge variant="warning">{{
-            $t('pageMultimachine.warning')
-          }}</b-badge>
+      <dl v-for="(value, key) in data" :key="key" style="margin-bottom: 0.5rem">
+        <dt style="font-size: 15px">
+          <template v-if="key === 'warning'">
+            <h4>
+              <b-badge variant="warning">{{
+                $t('pageMultimachine.warning')
+              }}</b-badge>
+            </h4>
+          </template>
+          <template v-else-if="key === 'error'">
+            <h4>
+              <b-badge variant="danger">{{
+                $t('pageMultimachine.error')
+              }}</b-badge>
+            </h4>
+          </template>
+          <template v-else>
+            {{ $t(`pageMultimachine.${key}`) }}
+          </template>
         </dt>
-        <dt v-else-if="key === 'error'">
-          <b-badge variant="danger">{{ $t('pageMultimachine.error') }}</b-badge>
-        </dt>
-        <dt v-else>{{ $t(`pageMultimachine.${key}`) }}</dt>
-        <!-- <dt>{{ $t(`pageMultimachine.${key}`) }}</dt> -->
-        <dd class="griddd">{{ value }}</dd>
+        <dd>
+          <template v-if="key === 'warning'">
+            <span class="warning-data">{{ value }}</span>
+          </template>
+          <template v-else-if="key === 'error'">
+            <span class="error-data">{{ value }}</span>
+          </template>
+          <template v-else>
+            {{ value }}
+          </template>
+        </dd>
       </dl>
     </div>
   </b-card>
@@ -51,11 +70,16 @@ a {
   min-height: 270px;
   // margin-left: 10px;
 }
+.cardcontent {
+  transition: all 0.7s ease;
+}
 .cardcontent:hover {
-  box-shadow: 0 0 20px 2px #919090;
-  /*盒子阴影*/
   transition: all 0.7s;
   /*持续时间*/
+  transform: scale(1.05);
+  /* 放大1.05倍 */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  /* 添加阴影 */
 }
 .grid {
   display: grid;
@@ -67,5 +91,15 @@ a {
   margin-bottom: -0.5rem;
   margin-left: 0px;
   margin-top: 2px;
+}
+.warning-data {
+  font-size: 20px;
+  color: orange;
+  font-weight: 600;
+}
+.error-data {
+  font-size: 20px;
+  color: red;
+  font-weight: 600;
 }
 </style>
