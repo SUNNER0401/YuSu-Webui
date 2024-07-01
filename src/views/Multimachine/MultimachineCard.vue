@@ -2,7 +2,13 @@
   <b-card bg-variant="light" border-variant="light" class="mb-4 cardcontent">
     <div class="justify-content-between align-items-center d-flex flex-wrap">
       <h3 class="h5 mb-0" style="font-size: 20px">{{ title }}</h3>
-      <b-link :to="to">{{ $t('pageMultimachine.viewMore') }}</b-link>
+      <b-link
+        :to="{
+          name: 'machinedetails',
+          params: { currentTitle: title },
+        }"
+        >{{ $t('pageMultimachine.viewMore') }}</b-link
+      >
     </div>
     <div class="grid">
       <dl v-for="(value, key) in data" :key="key" style="margin-bottom: 0.5rem">

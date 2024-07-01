@@ -185,7 +185,8 @@ export default {
   },
   created() {
     this.startLoader();
-    //每个一秒钟就获取一次值，从服务器或其他数据源获取最新的 MultimachineValue
+
+    // 需要打开！！！
     this.timer = setInterval(() => {
       this.$store.dispatch('multimachine/getMultimachineValue');
     }, 1000);
