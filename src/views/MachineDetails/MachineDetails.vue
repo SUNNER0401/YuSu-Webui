@@ -1,8 +1,16 @@
 <template>
-  <b-container fluid class="machine-details-container">
+  <b-container
+    fluid
+    class="machine-details-container"
+    style="margin-bottom: 50px"
+  >
     <div class="d-flex justify-content-between align-items-center mb-3">
       <page-title />
-      <b-button variant="secondary" @click="goBack">返回</b-button>
+      <button-group>
+        <b-button @click="activeTab--">前一项</b-button>
+        <b-button @click="activeTab++">后一项</b-button>
+        <b-button variant="secondary" @click="goBack">返回</b-button>
+      </button-group>
     </div>
     <b-card no-body class="custom-card">
       <b-tabs v-model="activeTab" justified card>
@@ -11,13 +19,36 @@
           :key="key"
           :title="machine.title"
         >
-          <div>
-            <h4>{{ machine.title }}</h4>
-            <ul>
-              <li>型号: {{ machine.model }}</li>
-              <li>序列号: {{ machine.serialNumber }}</li>
-              <li>IP地址: {{ machine.ipAddress }}</li>
-              <li>
+          <div class="machine-details-content">
+            <div class="part1">
+              <div class="rect"></div>
+              <div class="subtitle">{{ machine.title }}</div>
+              <!-- <h4>{{ machine.title }}</h4> -->
+              <div v-if="machine.powerStatus == 'on'" class="machine-status">
+                机器状态: {{ machine.powerStatus }}
+                <svg-icon icon-class="power-on" />
+              </div>
+              <div v-else class="machine-status">
+                机器状态: {{ machine.powerStatus }}
+                <svg-icon icon-class="power-off" />
+              </div>
+            </div>
+
+            <div class="part2">
+              <div class="machine-details-item">型号: {{ machine.model }}</div>
+              <div class="machine-details-item">
+                序列号: {{ machine.serialNumber }}
+              </div>
+              <div class="machine-details-item">
+                IP地址: {{ machine.ipAddress }}
+              </div>
+              <div class="machine-details-item">
+                主机名: {{ machine.hostname }}
+              </div>
+            </div>
+            <div class="divider"></div>
+            <div class="part3">
+              <div class="machine-details-item">
                 健康状态:
                 {{ machine.health }}
                 <svg-icon
@@ -25,41 +56,48 @@
                     machine.health === 'yes' ? 'healthy' : 'unhealthy'
                   "
                 />
-              </li>
-              <li>主机名: {{ machine.hostname }}</li>
-              <li>
-                连接状态: {{ machine.linkStatus
-                }}<svg-icon
-                  :icon-class="
-                    machine.linkStatus === 'fine' ? 'linkage-interrupt' : ''
-                  "
-                />
-              </li>
-              <li v-if="machine.warning !== '0'" style="color: orange">
+              </div>
+              <div
+                v-if="machine.warning !== '0'"
+                class="machine-details-item warning"
+              >
                 警告信息: {{ machine.warning }}
                 <svg-icon icon-class="warning" />
-              </li>
-              <li v-else>警告信息: {{ machine.warning }}</li>
-              <li v-if="machine.error !== '0'" style="color: red">
+              </div>
+              <div v-else class="machine-details-item">
+                警告信息: {{ machine.warning }}
+              </div>
+              <div class="machine-details-item">
+                连接状态: {{ machine.linkStatus }}
+                <svg-icon
+                  :icon-class="
+                    machine.linkStatus === 'fine'
+                      ? 'linkage-fine'
+                      : 'linkage-interrupt'
+                  "
+                />
+              </div>
+
+              <div
+                v-if="machine.error !== '0'"
+                class="machine-details-item error"
+              >
                 错误信息: {{ machine.error }}
                 <svg-icon icon-class="error" />
-              </li>
-              <li v-else>错误信息: {{ machine.error }}</li>
-              <li>
-                机器状态:{{ machine.power }}<svg-icon icon-class="power-on" />
-                <svg-icon icon-class="power-off" />
-              </li>
-            </ul>
+              </div>
+              <div v-else class="machine-details-item">
+                错误信息: {{ machine.error }}
+              </div>
+            </div>
+            <div class="divider"></div>
+            <div class="part4">
+              传感器：
+              <div class="sensorinfoshow">sfs</div>
+            </div>
           </div>
         </b-tab>
       </b-tabs>
     </b-card>
-    <div class="text-center">
-      <b-button-group class="mt-2">
-        <b-button @click="activeTab--">前一项</b-button>
-        <b-button @click="activeTab++">后一项</b-button>
-      </b-button-group>
-    </div>
   </b-container>
 </template>
 
@@ -119,9 +157,10 @@ export default {
           ipAddress: '192.168.0.0',
           health: 'yes',
           hostname: 'local',
-          linkStatus: 'fine',
+          linkStatus: 'interrupt',
           warning: '0',
           error: '13',
+          powerStatus: 'on',
         },
         test2: {
           model: 15,
@@ -132,6 +171,7 @@ export default {
           linkStatus: 'fine',
           warning: '8',
           error: '0',
+          powerStatus: 'off',
         },
         test3: {
           model: 123,
@@ -139,9 +179,10 @@ export default {
           ipAddress: '192.168.0.0',
           health: 'yes',
           hostname: 'local',
-          linkStatus: 'fine',
+          linkStatus: 'interrupt',
           warning: '1',
           error: '2',
+          powerStatus: 'on',
         },
         test4: {
           model: 787,
@@ -152,6 +193,7 @@ export default {
           linkStatus: 'fine',
           warning: '0',
           error: '1',
+          powerStatus: 'off',
         },
         test5: {
           model: 90,
@@ -162,6 +204,7 @@ export default {
           linkStatus: 'fine',
           warning: '0',
           error: '0',
+          powerStatus: 'on',
         },
         test6: {
           model: 18,
@@ -172,6 +215,7 @@ export default {
           linkStatus: 'fine',
           warning: '0',
           error: '0',
+          powerStatus: 'off',
         },
         test7: {
           model: 18,
@@ -182,6 +226,7 @@ export default {
           linkStatus: 'fine',
           warning: '100',
           error: '0',
+          powerStatus: 'on',
         },
         test8: {
           model: 18,
@@ -189,9 +234,10 @@ export default {
           ipAddress: '192.168.0.123',
           health: 'yes',
           hostname: 'sdfsf',
-          linkStatus: 'fine',
+          linkStatus: 'interrupt',
           warning: '0',
           error: '1',
+          powerStatus: 'on',
         },
         test9: {
           model: 18,
@@ -202,6 +248,7 @@ export default {
           linkStatus: 'fine',
           warning: '3',
           error: '0',
+          powerStatus: 'on',
         },
         test10: {
           model: 18,
@@ -209,9 +256,10 @@ export default {
           ipAddress: '192.168.0.123',
           health: 'yes',
           hostname: 'sdfsf',
-          linkStatus: 'fine',
+          linkStatus: 'interrupt',
           warning: '10',
           error: '0',
+          powerStatus: 'off',
         },
         test11: {
           model: 18,
@@ -222,6 +270,7 @@ export default {
           linkStatus: 'fine',
           warning: '3',
           error: '0',
+          powerStatus: 'off',
         },
         test12: {
           model: 323,
@@ -229,9 +278,10 @@ export default {
           ipAddress: '192.168.0.123',
           health: 'yes',
           hostname: 'sdfsf',
-          linkStatus: 'fine',
+          linkStatus: 'interrupt',
           warning: '0',
           error: '0',
+          powerStatus: 'off',
         },
       };
 
@@ -252,6 +302,13 @@ export default {
 </script>
 
 <style>
+.machine-details-item.warning {
+  color: orange;
+}
+
+.machine-details-item.error {
+  color: red;
+}
 .machine-details-container .custom-card {
   border-radius: 30px;
 }
@@ -264,16 +321,115 @@ export default {
   padding-top: 20px;
   padding-bottom: 20px;
 }
-
+.machine-details-container .nav-tabs .nav-link:hover {
+  box-shadow: 0 2px 6px rgb(0 0 0 / 53%);
+  transition: box-shadow 0.5s ease;
+  /* transition: all 0.7s; */
+}
 .machine-details-container .custom-card .card-body {
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
+  padding-top: 0px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .machine-details-container .nav-tabs .nav-link.active,
 .machine-details-container .nav-tabs .nav-item.show .nav-link {
-  color: #393737;
-  background-color: #91cfcaa8;
+  color: #000000;
+  background-color: #3f3f3f4a;
   border-color: #aca2a2b0 #aca2a2b0 #1d0606;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 53%);
+}
+.machine-details-container .nav-tabs .nav-link {
+  margin-bottom: 0px;
+  /* border: 1px solid #999999; */
+  color: #6c6c6c;
+  border-radius: 2px;
+}
+.machine-details-item {
+  font-size: 16px;
+}
+.machine-details-content {
+  display: flex;
+  flex-direction: column;
+}
+/* 分割线 */
+.divider {
+  border-bottom: 1px solid #5a5c5e;
+  margin: 8px 0;
+}
+.part1 {
+  border-bottom: 1px solid #dfe7ec;
+  height: 50px;
+  overflow: hidden;
+}
+.machine-status {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 100px;
+  margin-top: 12px;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+.part1 .rect {
+  display: block;
+  float: left;
+  width: 5px;
+  height: 30px;
+  margin-left: 5px;
+  margin-top: 5px;
+  background-color: #4c78e9;
+  margin-right: 10px;
+}
+
+.part1 .subtitle {
+  display: block;
+  float: left;
+  margin-top: 5px;
+  margin-left: 5px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.part2 {
+  display: flex;
+  margin-top: 5px;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+}
+
+.part2 div {
+  flex: 0 0 50%;
+  box-sizing: border-box;
+}
+
+.part3 .machine-details-item {
+  margin-top: 5px;
+}
+.part3 {
+  display: flex;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.part3 div {
+  flex: 0 0 50%;
+  /* 每个 div 占据父容器宽度的 50% */
+  box-sizing: border-box;
+  /* 包括 padding 和 border 在内 */
+}
+
+.loginfoshow {
+  background: aliceblue;
+  height: 300px;
+}
+
+.sensorinfoshow {
+  background: aliceblue;
+  height: 300px;
 }
 </style>
