@@ -1,10 +1,10 @@
 <template>
-  <b-container fluid>
+  <b-container fluid class="machine-details-container">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <page-title />
       <b-button variant="secondary" @click="goBack">返回</b-button>
     </div>
-    <b-card no-body>
+    <b-card no-body class="custom-card">
       <b-tabs v-model="activeTab" justified card>
         <b-tab
           v-for="(machine, key) in machines"
@@ -62,6 +62,7 @@
     </div>
   </b-container>
 </template>
+
 <script>
 import PageTitle from '@/components/Global/PageTitle';
 import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
@@ -249,38 +250,30 @@ export default {
   },
 };
 </script>
+
 <style>
-.nav-item {
-  background-color: aliceblue;
+.machine-details-container .custom-card {
+  border-radius: 30px;
 }
-.tab-pane fade {
-  background-color: antiquewhite;
-}
-.card-header {
+
+.machine-details-container .custom-card .card-header {
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
   background: linear-gradient(138deg, #acb6e56b, #86fde83d);
-  border-bottom: 0px solid rgba(0, 0, 0, 0.125);
+  border-bottom: 0;
   padding-top: 20px;
   padding-bottom: 20px;
 }
-.tab-content > .active {
-  font-size: 18px;
-}
-.card {
-  border-radius: 30px;
-}
-.card-header {
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
-}
-.card-body {
+
+.machine-details-container .custom-card .card-body {
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
 }
-.nav-tabs .nav-link.active,
-.nav-tabs .nav-item.show .nav-link {
+
+.machine-details-container .nav-tabs .nav-link.active,
+.machine-details-container .nav-tabs .nav-item.show .nav-link {
   color: #393737;
   background-color: #91cfcaa8;
   border-color: #aca2a2b0 #aca2a2b0 #1d0606;
 }
-/* 渐变切换效果 */
 </style>
