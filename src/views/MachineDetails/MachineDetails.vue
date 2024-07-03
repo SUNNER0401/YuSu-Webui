@@ -93,6 +93,7 @@
             <div class="part4">
               传感器：
               <div class="sensorinfoshow">sfs</div>
+              <sensors-card></sensors-card>
             </div>
           </div>
         </b-tab>
@@ -104,10 +105,12 @@
 <script>
 import PageTitle from '@/components/Global/PageTitle';
 import LoadingBarMixin from '@/components/Mixins/LoadingBarMixin';
+import SensorsCard from './SensorsCard.vue';
 export default {
   name: 'MachinedDetails',
   components: {
     PageTitle,
+    SensorsCard,
   },
   mixins: [LoadingBarMixin],
   beforeRouteLeave(to, from, next) {
