@@ -831,15 +831,20 @@
     "linkStatus": "链接状态"
   },
   "pageMachineDetails":{
+    "previousPage":"前一项",
+    "nextPage":"后一项",
+    "goBack":"返回",
+    "powerStatus": "电源状态",
     "model": "型号",
     "serialNumber": "序列号",
     "ipAddress": "IP地址",
     "health": "健康状态",
     "viewMore": "查看更多",
     "hostname": "主机名",
-    "error": "错误",
-    "warning": "警告",
-    "linkStatus": "链接状态"
+    "error": "错误信息",
+    "warning": "警告信息",
+    "linkStatus": "链接状态",
+    "sensors":"传感器"
   },
   "pagePostCodeLogs": {
     "allExportFilePrefix": "所有的POST代码日志",

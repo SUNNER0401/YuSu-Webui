@@ -7,9 +7,15 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
       <page-title />
       <button-group>
-        <b-button @click="activeTab--">前一项</b-button>
-        <b-button @click="activeTab++">后一项</b-button>
-        <b-button variant="secondary" @click="goBack">返回</b-button>
+        <b-button @click="activeTab--">
+          {{ $t('pageMachineDetails.previousPage') }}</b-button
+        >
+        <b-button @click="activeTab++">
+          {{ $t('pageMachineDetails.nextPage') }}</b-button
+        >
+        <b-button variant="secondary" @click="goBack">
+          {{ $t('pageMachineDetails.goBack') }}</b-button
+        >
       </button-group>
     </div>
     <b-card no-body class="custom-card">
@@ -23,33 +29,37 @@
             <div class="part1">
               <div class="rect"></div>
               <div class="subtitle">{{ machine.title }}</div>
-              <!-- <h4>{{ machine.title }}</h4> -->
               <div v-if="machine.powerStatus == 'on'" class="machine-status">
-                机器状态: {{ machine.powerStatus }}
+                {{ $t('pageMachineDetails.powerStatus')
+                }}{{ machine.powerStatus }}
                 <svg-icon icon-class="power-on" />
               </div>
               <div v-else class="machine-status">
-                机器状态: {{ machine.powerStatus }}
+                {{ $t('pageMachineDetails.powerStatus')
+                }}{{ machine.powerStatus }}
                 <svg-icon icon-class="power-off" />
               </div>
             </div>
 
             <div class="part2">
-              <div class="machine-details-item">型号: {{ machine.model }}</div>
               <div class="machine-details-item">
-                序列号: {{ machine.serialNumber }}
+                {{ $t('pageMachineDetails.model') }}{{ machine.model }}
               </div>
               <div class="machine-details-item">
-                IP地址: {{ machine.ipAddress }}
+                {{ $t('pageMachineDetails.serialNumber')
+                }}{{ machine.serialNumber }}
               </div>
               <div class="machine-details-item">
-                主机名: {{ machine.hostname }}
+                {{ $t('pageMachineDetails.ipAddress') }}{{ machine.ipAddress }}
+              </div>
+              <div class="machine-details-item">
+                {{ $t('pageMachineDetails.hostname') }} {{ machine.hostname }}
               </div>
             </div>
             <div class="divider"></div>
             <div class="part3">
               <div class="machine-details-item">
-                健康状态:
+                {{ $t('pageMachineDetails.health') }}
                 {{ machine.health }}
                 <svg-icon
                   :icon-class="
@@ -61,14 +71,15 @@
                 v-if="machine.warning !== '0'"
                 class="machine-details-item warning"
               >
-                警告信息: {{ machine.warning }}
+                {{ $t('pageMachineDetails.warning') }} {{ machine.warning }}
                 <svg-icon icon-class="warning" />
               </div>
               <div v-else class="machine-details-item">
-                警告信息: {{ machine.warning }}
+                {{ $t('pageMachineDetails.warning') }} {{ machine.warning }}
               </div>
               <div class="machine-details-item">
-                连接状态: {{ machine.linkStatus }}
+                {{ $t('pageMachineDetails.linkStatus')
+                }}{{ machine.linkStatus }}
                 <svg-icon
                   :icon-class="
                     machine.linkStatus === 'fine'
@@ -82,17 +93,16 @@
                 v-if="machine.error !== '0'"
                 class="machine-details-item error"
               >
-                错误信息: {{ machine.error }}
+                {{ $t('pageMachineDetails.error') }}{{ machine.error }}
                 <svg-icon icon-class="error" />
               </div>
               <div v-else class="machine-details-item">
-                错误信息: {{ machine.error }}
+                {{ $t('pageMachineDetails.error') }}{{ machine.error }}
               </div>
             </div>
             <div class="divider"></div>
             <div class="part4">
-              传感器：
-              <div class="sensorinfoshow">sfs</div>
+              {{ $t('pageMachineDetails.sensors') }}
               <sensors-card></sensors-card>
             </div>
           </div>

@@ -838,7 +838,12 @@
     "hostname": "Hostname",
     "warning": "Warning",
     "error": "Error",
-    "linkStatus": "Link status"
+    "linkStatus": "Link status",
+    "previousPage": "Previous",
+    "nextPage": "Next",
+    "goBack": "Go back",
+    "powerStatus": "Power Status",
+    "sensors": "Sensors"
   },
   "pagePostCodeLogs": {
     "allExportFilePrefix": "All_POST_codes_log_",
