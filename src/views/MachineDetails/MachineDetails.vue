@@ -109,6 +109,19 @@
         </b-tab>
       </b-tabs>
     </b-card>
+    <div class="text-center">
+      <b-button-group class="mt-2">
+        <b-button @click="activeTab--">
+          {{ $t('pageMachineDetails.previousPage') }}</b-button
+        >
+        <b-button @click="activeTab++">
+          {{ $t('pageMachineDetails.nextPage') }}</b-button
+        >
+        <b-button variant="secondary" @click="goBack">
+          {{ $t('pageMachineDetails.goBack') }}</b-button
+        >
+      </b-button-group>
+    </div>
   </b-container>
 </template>
 
@@ -434,15 +447,5 @@ export default {
   /* 每个 div 占据父容器宽度的 50% */
   box-sizing: border-box;
   /* 包括 padding 和 border 在内 */
-}
-
-.loginfoshow {
-  background: aliceblue;
-  height: 300px;
-}
-
-.sensorinfoshow {
-  background: aliceblue;
-  height: 300px;
 }
 </style>
