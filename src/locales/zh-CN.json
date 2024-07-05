@@ -134,6 +134,7 @@
     "userManagement": "@:appPageTitle.userManagement",
     "network": "@:appPageTitle.network",
     "overview": "@:appPageTitle.overview",
+    "multimachine":"@:appPageTitle.multimachine",
     "primaryNavigation": "Primary navigation",
     "postCodeLogs": "@:appPageTitle.postCodeLogs",
     "powerRestorePolicy": "@:appPageTitle.powerRestorePolicy",
@@ -178,6 +179,7 @@
     "login": "Login",
     "network": "网络设置",
     "overview": "首页",
+    "multimachine":"机箱管理",
     "pageNotFound": "页面未找到",
     "postCodeLogs": "POST Code",
     "powerRestorePolicy": "电源恢复方式",
@@ -846,6 +848,13 @@
     "hostVersion": "主机版本",
     "PBFVersion": "主机PBF版本",
     "cpldVersion": "CPLD版本"
+  },
+  "pageMultimachine":{
+    "model":"型号",
+    "serialNumber": "序列号",
+    "ipAddress": "IP地址",
+    "health": "健康状态",
+     "viewMore": "查看更多"
   },
   "pagePostCodeLogs": {
     "allExportFilePrefix": "所有的POST代码日志",
