@@ -134,6 +134,7 @@
     "userManagement": "@:appPageTitle.userManagement",
     "network": "@:appPageTitle.network",
     "overview": "@:appPageTitle.overview",
+    "multimachine":"@:appPageTitle.multimachine",
     "primaryNavigation": "Primary navigation",
     "postCodeLogs": "@:appPageTitle.postCodeLogs",
     "powerRestorePolicy": "@:appPageTitle.powerRestorePolicy",
@@ -176,6 +177,7 @@
     "login": "Login",
     "network": "Network",
     "overview": "Overview",
+    "multimachine":"Multimachine",
     "pageNotFound": "Page not found",
     "postCodeLogs": "POST Code",
     "powerRestorePolicy": "Power restore policy",
@@ -838,6 +840,13 @@
     "hostVersion": "Host version",
     "PBFVersion": "Host PBF version",
     "cpldVersion": "CPLD version"
+  },
+  "pageMultimachine": {
+    "model": "Model",
+    "serialNumber": "Serial number",
+    "ipAddress": "IP address",
+    "health": "Health",
+    "viewMore": "View more"
   },
   "pagePostCodeLogs": {
     "allExportFilePrefix": "All_POST_codes_log_",
