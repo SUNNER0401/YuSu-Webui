@@ -4,3 +4,282 @@
 
 // Custom BMC styles
 @import "./bmc/custom";
+@font-face {
+    font-family: "OurBmc Lanting";
+    src: url("~@/env/assets/fonts/OurBMC_Lanting/FZLTHJW.TTF") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+$font-family-base: Arial, 'OurBmc Lanting';
+
+// Custom theme colors
+$classic-indigo: #00b4d1;
+$energy-blue: #00C7FD;
+
+
+$red: #ed1c24;
+$orange: #ffa300;
+$yellow: #f3d54e;
+$green: #c4d600;
+$cyan: $energy-blue;
+$gray: #AEAEAE;
+$dark-gray: #808080;
+$light-gray: #E9E9E9;
+$black: #000000;
+$white: #ffffff;
+
+$danger: #f71008;
+$success: #61ff00;
+$warning: #FEC91B;
+
+$primary: #1b67d9;
+$secondary: $dark-gray;
+$Page-background-color: #f4f4f4;
+$card-background-color: linear-gradient(138deg, #acb6e56b, #86fde83d);
+$form-background-color: transparent;
+$card-header-color: #4eb4cb8a;
+$no-color: #00000000;
+$table-border-color: #3eb78542;
+$navigation-color: #161616;
+$login-background-color: #f4f4f4;
+$header-button-hover-background: #f8f8f8;
+
+$gray-100: $gray;
+
+$loading-color: $cyan;
+$navbar-color: $primary;
+
+//Some basic setting
+$header-height: 51px;
+$navigation-width: 280px;
+
+// Custom display details
+.status-icon.secondary {
+    fill: $light-gray !important;
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::after,
+.custom-checkbox .custom-control-input:indeterminate~.custom-control-label::before,
+.custom-control-input:checked~.custom-control-label::before {
+    background-color: $primary !important;
+}
+
+//Custom details of components
+* {
+    box-sizing: border-box;
+}
+
+div.form-background {
+    background-color: $form-background-color;
+}
+
+.card {
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, .75);
+}
+
+.card-header {
+    background-color: $card-header-color;
+}
+
+.card-body {
+    background: $card-background-color;
+
+    .list-group-item {
+        background-color: $no-color;
+    }
+}
+
+.table {
+    border: 2px solid;
+    border-color: $table-border-color;
+
+    td {
+        .btn-link {
+            white-space: nowrap;
+        }
+    }
+}
+
+// Set all input elements. 
+input.form-control,
+.form-background .custom-select:focus,
+.form-background .form-control:focus {
+    background-color: $Page-background-color;
+
+    &:focus {
+        background-color: white;
+        box-shadow: none !important;
+    }
+}
+
+.btn {
+    margin: 5px 3px;
+}
+
+.btn-primary {
+    border-radius: 20px;
+    border-color: transparent !important;
+
+    &.btn {
+        border-radius: 20px;
+    }
+
+    &:focus {
+        border-color: transparent;
+    }
+}
+
+.btn-secondary,
+.btn-danger {
+    border-radius: 20px;
+
+    &.btn {
+        border-radius: 20px;
+    }
+}
+
+#app {
+    .app-container {
+        // background: url('~@/env/assets/images/layout-background.jpg');
+        background: radial-gradient(circle at 10% 20%, rgb(239, 246, 249) 0%, rgb(206, 239, 253) 90%)
+    }
+}
+
+.custom-select {
+    background-color: $Page-background-color !important;
+
+    &:not([disabled]):hover {
+        box-shadow: 0px 0px 12px rgba(0, 0, 0, .25) inset;
+        cursor: pointer;
+    }
+}
+
+// Custom datails of app-content
+.app-content {
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .15);
+
+    .custom-select {
+        border-radius: 10px;
+    }
+
+    .b-table {
+        box-shadow: 4px 0px 10px rgba(0, 0, 0, .5);
+    }
+
+    width: calc(100%);
+    margin: 0 auto;
+    background: linear-gradient(to top, #77a3bd, #dbe5df);
+    padding-top: 10px;
+
+    #scrollToTopBtn {
+        bottom: 105px;
+        left: 95%;
+        width: 70px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        box-shadow: 1px 1px 10px rgba(0, 0, 0, .65);
+        white-space: nowrap;
+
+        &:hover {
+            box-shadow: none;
+        }
+    }
+}
+
+// Custom datails of app-header
+#app-header-user {
+    vertical-align: baseline;
+    height: $header-height;
+
+    button {
+        margin: 0;
+
+        &::after {
+            color: #444444;
+            transition: all 0.3s;
+        }
+    }
+
+    &:hover {
+        button {
+            background-color: $header-button-hover-background;
+        }
+    }
+}
+
+#terminal-kvm {
+    display: block;
+    height: 457px;
+
+    &>div:nth-child(2) {
+        display: block !important;
+        background: #00000000 !important;
+        overflow: hidden !important;
+        width: auto !important;
+    }
+}
+
+.app-header {
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, .5);
+
+    .nav-tags {
+        color: #444444;
+    }
+
+    .nav-link {
+        .status-icon {
+            vertical-align: middle;
+
+            svg {
+                vertical-align: top;
+                transition: all 0.3s;
+            }
+        }
+
+        &:hover {
+            background-color: white !important;
+
+            .status-icon {
+                svg {
+                    transform: rotate(360deg);
+                }
+            }
+        }
+    }
+
+    .btn-link {
+        &:hover {
+            background-color: white !important;
+        }
+    }
+}
+
+.login-container {
+
+    label,
+    dl {
+        dt {
+            color: $white;
+        }
+
+        color: $white;
+    }
+
+    .form-background {
+        background-color: transparent;
+    }
+
+    .btn-link {
+        &:hover {
+            background-color: transparent;
+            color: $white;
+        }
+    }
+
+    .alert {
+        width: 360px;
+    }
+}
