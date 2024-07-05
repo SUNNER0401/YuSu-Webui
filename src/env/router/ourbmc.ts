@@ -90,6 +90,14 @@ export let setRoutes = () => {
           },
         },
         {
+          path: '/machinedetails',
+          name: 'machinedetails',
+          component: () => import('@/views/MachineDetails'),
+          meta: {
+            title: i18n.t('appPageTitle.machinedetails'),
+          },
+        },
+        {
           path: '/profile-settings',
           name: 'profile-settings',
           component: () => import('@/views/ProfileSettings'),
