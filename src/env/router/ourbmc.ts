@@ -82,11 +82,11 @@ export let setRoutes = () => {
           },
         },
         {
-          path: '/chassis-management',
-          name: 'chassisManagement',
-          component: () => import('@/views/ChassisManagement'),
+          path: '/multimachine',
+          name: 'multimachine',
+          component: () => import('@/views/Multimachine'),
           meta: {
-            title: i18n.t('appPageTitle.chassisManagement'),
+            title: i18n.t('appPageTitle.multimachine'),
           },
         },
         {
