@@ -12,7 +12,8 @@
             $route.path === '/' ||
             $route.path === '/chassis-management' ||
             $route.name === 'page-not-found' ||
-            $route.path === '/profile-settings',
+            $route.path === '/profile-settings' ||
+            $route.path === '/multimachine',
         }"
       >
         <page-container class="app-content">
