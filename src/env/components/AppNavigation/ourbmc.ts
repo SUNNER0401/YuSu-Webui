@@ -3,6 +3,7 @@ import i18n from '@/i18n';
 export const FatherName = {
   '/': i18n.t('appPageTitle.overview'),
   multimachine: i18n.t('appPageTitle.multimachine'),
+  machinedetails: i18n.t('appPageTitle.machinedetails'),
   'system-management': i18n.t('appNavigation.systemManagement'),
   diagnostic: i18n.t('appNavigation.diagnostic'),
   'user-security': i18n.t('appNavigation.UserSecurity'),
@@ -35,6 +36,16 @@ export default {
       component: () => import('@/views/Multimachine'),
       meta: {
         title: i18n.t('appPageTitle.multimachine'),
+      },
+    },
+  ],
+  machinedetails: [
+    {
+      path: '/machinedetails',
+      name: 'machinedetails',
+      component: () => import('@/views/MachineDetails'),
+      meta: {
+        title: i18n.t('appPageTitle.machinedetails'),
       },
     },
   ],
