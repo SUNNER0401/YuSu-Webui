@@ -177,7 +177,8 @@
     "login": "Login",
     "network": "Network",
     "overview": "Overview",
-    "multimachine":"Multimachine",
+    "multimachine":"Chassis",
+    "machinedetails":"MachineDetails",
     "pageNotFound": "Page not found",
     "postCodeLogs": "POST Code",
     "powerRestorePolicy": "Power restore policy",
@@ -846,7 +847,27 @@
     "serialNumber": "Serial number",
     "ipAddress": "IP address",
     "health": "Health",
-    "viewMore": "View more"
+    "viewMore": "View more",
+    "hostname": "Hostname",
+    "warning": "Warning",
+    "error": "Error",
+    "linkStatus": "Link status"
+  },
+  "pageMachineDetails":{
+    "model": "Model",
+    "serialNumber": "Serial number",
+    "ipAddress": "IP address",
+    "health": "Health",
+    "viewMore": "View more",
+    "hostname": "Hostname",
+    "warning": "Warning",
+    "error": "Error",
+    "linkStatus": "Link status",
+    "previousPage": "Previous",
+    "nextPage": "Next",
+    "goBack": "Go back",
+    "powerStatus": "Power Status",
+    "sensors": "Sensors"
   },
   "pagePostCodeLogs": {
     "allExportFilePrefix": "All_POST_codes_log_",
