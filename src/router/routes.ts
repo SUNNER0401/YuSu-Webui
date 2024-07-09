@@ -218,7 +218,7 @@ const routes = [
         },
       },
       {
-        path: '/operations/firmware',
+        path: '/settings/firmware',
         name: 'firmware',
         component: Firmware,
         meta: {
