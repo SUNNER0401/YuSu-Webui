@@ -21,10 +21,11 @@
           >
             <form-file
               id="image-file"
+              v-model="selectedFiles"
               :disabled="isPageDisabled"
               :state="getValidationState($v.file)"
               aria-describedby="image-file-help-block"
-              @input="onFileUpload($event)"
+              @input="onFileUpload"
             >
               <template #invalid>
                 <b-form-invalid-feedback role="alert">
@@ -116,6 +117,7 @@ export default {
         process.env.VUE_APP_SERVER_OFF_REQUIRED === 'true',
       updateProgress: 0,
       updateFirmware: {},
+      selectedFiles: [], // 存储选中的文件数组
       options: [
         {
           text: this.$t('pageFirmware.form.updateFirmware.workstation'),
@@ -150,6 +152,7 @@ export default {
       this.$v.$reset();
       this.file = null;
       this.tftpFileAddress = null;
+      this.selectedFiles = []; // 重置选中的文件数组
     },
   },
   // @ts-ignore
