@@ -8,9 +8,12 @@
               {{ $t('pagePower.tabs.tab1.powerInfo.empty') }}
             </b-col>
             <template v-else>
-              <b-col v-for="(
+              <b-col
+                v-for="(
                   powerinformation, key1, index1
-                ) in tab1.powerInformations" :key="index1">
+                ) in tab1.powerInformations"
+                :key="index1"
+              >
                 <b-card class="power-supply-card" no-body>
                   <b-card-body>
                     <b-row>
@@ -36,7 +39,10 @@
                       </b-col>
                     </b-row>
                     <hr />
-                    <b-card-text v-for="(value2, key2, index2) in powerinformation" :key="index2">
+                    <b-card-text
+                      v-for="(value2, key2, index2) in powerinformation"
+                      :key="index2"
+                    >
                       <b-row>
                         <b-col>{{ key2 }}</b-col>
                         <b-col>
@@ -64,10 +70,18 @@
                     <b-col class="pl-0">
                       <div>
                         <b-button-group>
-                          <b-button :pressed="toggle1" variant="primary" @click="swap">
+                          <b-button
+                            :pressed="toggle1"
+                            variant="primary"
+                            @click="swap"
+                          >
                             W
                           </b-button>
-                          <b-button :pressed="toggle2" variant="primary" @click="swap">
+                          <b-button
+                            :pressed="toggle2"
+                            variant="primary"
+                            @click="swap"
+                          >
                             BTU/h
                           </b-button>
                         </b-button-group>
@@ -86,7 +100,10 @@
                     </b-col>
                     <b-col xl="4" class="reset-button">
                       <b-button variant="primary" @click="resetCalculate()">
-                        <img src="@/env/assets/images/refresh.svg" :alt="altLogo" />
+                        <img
+                          src="@/env/assets/images/refresh.svg"
+                          :alt="altLogo"
+                        />
                         {{ $t('pagePower.tabs.tab2.reset') }}
                       </b-button>
                     </b-col>
@@ -97,8 +114,10 @@
             <b-card-body>
               <b-list-group flush>
                 <b-row>
-                  <template v-for="(value, key, index) in tab2.powerCapInformation
-                    .fieldName">
+                  <template
+                    v-for="(value, key, index) in tab2.powerCapInformation
+                      .fieldName"
+                  >
                     <b-col :key="index" xl="6">
                       <b-list-group-item>
                         <b-row>
