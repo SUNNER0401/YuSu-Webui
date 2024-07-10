@@ -13,14 +13,6 @@
     <div class="grid">
       <dl v-for="(value, key) in data" :key="key" style="margin-bottom: 0.5rem">
         <dt style="font-size: 15px">
-          <!-- <template
-            v-if="
-              (key.toLowerCase() === 'warning' && value === 0) ||
-              (key.toLowerCase() === 'error' && value === 0)
-            "
-          >
-            {{ $t(`pageMultimachine.${key}`) }}
-          </template> -->
           <template
             v-if="
               (key === 'warning' && value === 0) ||
@@ -43,11 +35,7 @@
               }}</b-badge>
             </div>
           </template>
-          <template v-else>
-            {{ $t(`pageMultimachine.${key}`) }}
-          </template>
-        </dt>
-        <dd>
+          <template v-else> {{ $t(`pageMultimachine.${key}`) }}: </template>
           <template
             v-if="
               (key === 'warning' && value === 0) ||
@@ -65,7 +53,7 @@
           <template v-else>
             {{ value }}
           </template>
-        </dd>
+        </dt>
       </dl>
     </div>
   </b-card>
@@ -99,7 +87,6 @@ a {
 
 .card {
   min-width: 258px;
-  max-width: 258px;
   margin-right: 20px;
   min-height: 270px;
   // margin-left: 10px;
@@ -118,7 +105,6 @@ a {
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   /* 两列，每列占据可用空间的一半 */
   padding-top: 10px;
 }
