@@ -134,7 +134,7 @@
     "userManagement": "@:appPageTitle.userManagement",
     "network": "@:appPageTitle.network",
     "overview": "@:appPageTitle.overview",
-    "multimachine":"@:appPageTitle.multimachine",
+    "multimachine": "@:appPageTitle.multimachine",
     "primaryNavigation": "Primary navigation",
     "postCodeLogs": "@:appPageTitle.postCodeLogs",
     "powerRestorePolicy": "@:appPageTitle.powerRestorePolicy",
@@ -177,8 +177,8 @@
     "login": "Login",
     "network": "Network",
     "overview": "Overview",
-    "multimachine":"Chassis",
-    "machinedetails":"MachineDetails",
+    "multimachine": "Chassis",
+    "machinedetails": "MachineDetails",
     "pageNotFound": "Page not found",
     "postCodeLogs": "POST Code",
     "powerRestorePolicy": "Power restore policy",
@@ -421,25 +421,25 @@
   },
   "pageFan": {
     "fanSpeedWantDes": "Enter speed you want 0-100",
-    "informations":{
-      "userManual":"User Manual",
+    "informations": {
+      "userManual": "User Manual",
       "AutoControlInformation": "Automatic control mode: manual control and automatic control are mutually exclusive. The default is automatic control mode. In case of abnormality, the fan runs at full speed. During startup and restart, the fan runs at full speed to prevent the hardware temperature from being too high after the server is down",
       "ManualControlInformaiton": "Manual control mode: the fan speed is controlled by percentage, 0 is the lowest speed, and 100 is the highest speed"
     },
-    "controllers":{
+    "controllers": {
       "yes": "Yes",
-      "No":"No",
-      "confirmPattern":"Confirm"
+      "No": "No",
+      "confirmPattern": "Confirm"
     },
-    "policies":{
-      "policiesTitle":"Fan policies",
-      "CurrentPatten":"Current Pattern :",
+    "policies": {
+      "policiesTitle": "Fan policies",
+      "CurrentPatten": "Current Pattern :",
       "fantitle": "Fan Controller",
       "FanSpeed": "fan speed :",
       "message": "message"
     },
-      "AutoControlTitle": "AutoControl",
-      "ManualControlTitle": "ManualControl"
+    "AutoControlTitle": "AutoControl",
+    "ManualControlTitle": "ManualControl"
   },
   "pageFanSpeed": {
     "description": "This function is able to control and watch speed of each fans.",
@@ -843,6 +843,25 @@
     "cpldVersion": "CPLD version"
   },
   "pageMultimachine": {
+    "Board_Name": "Board_Name",
+    "CPU_Temp": "CPU_Temp",
+    "Factory_date": "Factory_date",
+    "Inlet_Temp": "Inlet_Temp",
+    "Outlet_Temp": "Outlet_Temp",
+    "P12V": "P12V",
+    "P3V3": "P3V3",
+    "P5V": "P5V",
+    "Product_Assert_Tag": "Product_Assert_Tag",
+    "Product_Name": "Product_Name",
+    "Product_Part_Number": "Product_Part_Number",
+    "Product_Serial_Number": "Product_Serial_Number",
+    "Product_Version": "Product_Version",
+    "Software_version_number": "Software_version_number",
+    "VCCIN": "VCCIN",
+    "VDDQ_AB": "VDDQ_AB",
+    "VDDQ_CD": "VDDQ_CD",
+    "VPP_AB": "VPP_AB",
+    "VPP_CD": "VPP_CD",
     "model": "Model",
     "serialNumber": "Serial number",
     "ipAddress": "IP address",
@@ -853,7 +872,7 @@
     "error": "Error",
     "linkStatus": "Link status"
   },
-  "pageMachineDetails":{
+  "pageMachineDetails": {
     "model": "Model",
     "serialNumber": "Serial number",
     "ipAddress": "IP address",
