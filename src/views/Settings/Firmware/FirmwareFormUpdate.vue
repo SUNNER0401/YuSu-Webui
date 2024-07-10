@@ -13,13 +13,12 @@
           ></b-form-radio-group>
         </b-form-group>
 
-        <!-- Workstation Upload -->
         <template v-if="isWorkstationSelected">
           <b-form-group
             :label="$t('pageFirmware.form.updateFirmware.imageFile')"
             label-for="image-file"
           >
-            <form-file
+            <multiple-file
               id="image-file"
               v-model="selectedFiles"
               :disabled="isPageDisabled"
@@ -32,7 +31,7 @@
                   {{ $t('global.form.required') }}
                 </b-form-invalid-feedback>
               </template>
-            </form-file>
+            </multiple-file>
           </b-form-group>
         </template>
 
@@ -90,11 +89,11 @@ import LoadingBarMixin, { loading } from '@/components/Mixins/LoadingBarMixin';
 import VuelidateMixin from '@/components/Mixins/VuelidateMixin';
 
 import Alert from '@/components/Global/Alert';
-import FormFile from '@/components/Global/FormFile';
+import MultipleFile from '@/components/Global/MultipleFile';
 import ModalUpdateFirmware from './FirmwareModalUpdateFirmware';
 
 export default {
-  components: { Alert, FormFile, ModalUpdateFirmware },
+  components: { Alert, ModalUpdateFirmware, MultipleFile },
   mixins: [BVToastMixin, LoadingBarMixin, VuelidateMixin],
   props: {
     isPageDisabled: {
