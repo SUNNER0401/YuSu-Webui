@@ -89,6 +89,14 @@ export default {
         title: i18n.t('appPageTitle.sensors'),
       },
     },
+    {
+      path: '/system-management/power-manage',
+      name: 'power-manage',
+      component: () => import('@/views/SystemManagement/PowerManage'),
+      meta: {
+        title: i18n.t('appPageTitle.PowerManage'),
+      },
+    },
   ],
   diagnostic: [
     {
