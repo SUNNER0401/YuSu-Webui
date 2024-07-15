@@ -146,7 +146,7 @@
     "certificates": "@:appPageTitle.certificates",
     "virtualMedia": "@:appPageTitle.virtualMedia",
     "power": "@:appPageTitle.power",
-    "PowerManage": "电源管理",
+    "PowerManage": "@:appPageTitle.powerManage",
     "alarmSetting": "@:appPageTitle.alarmSetting",
     "fanSpeed": "@:appPageTitle.fanSpeed",
     "about": "@:appPageTitle.about",
@@ -162,7 +162,7 @@
     "systemInformation": "系统信息"
   },
   "appPageTitle": {
-    "PowerManage": "电源管理",
+    "PowerManage": "开关面板",
     "fan": "风扇控制",
     "changePassword": "修改密码",
     "power": "电源&功率",
