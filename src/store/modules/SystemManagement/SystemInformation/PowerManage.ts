@@ -39,6 +39,15 @@ const PowerManageStore = {
         .catch((error) => console.log(error))
         .finally();
     },
+    vga() {
+      return api
+        .get('/redfish/v1/vga')
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => console.log(error))
+        .finally();
+    },
   },
 };
 

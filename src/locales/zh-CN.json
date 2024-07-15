@@ -204,7 +204,8 @@
   "power": {
     "powerOpen": "开机",
     "powerClose": "关机",
-    "reboot": "重启"
+    "reboot": "重启",
+    "vga":"VGA切换"
   },
   "pageChangePassword": {
     "changePassword": "修改密码",
